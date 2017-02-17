@@ -1,0 +1,410 @@
+\chapter{Termination, Cycling, and Degeneracy}
+\label{cha:cycling-degeneracy}
+
+
+We now deal first  with the question, whether the simplex method
+terminates. The quick answer is no, if it is implemented in a careless
+way. Notice that we have left it open to choose the entering variable
+(there could be several columns whose reduced cost are less than zero)
+and we also did not specify how to choose the exiting variable (there
+could be several basis elements $B_i$ with $u(B_i)>0$ and
+$x^*(B_i)/u(B_i)$ minimal to choose from. \emph{Pivoting rules}
+specify the alternative to choose from and there are pivoting rules,
+which prevent the simplex algorithm from \emph{cycling}. 
+
+
+
+The following is an example of cycling, see also
+\cite[p.~104]{BertsimasTsitsiklis97}. 
+
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{AAAARRR|X}   
+    \rowcolor{white}  
+    -3/4&   20& -1/2&    6&    0&    0&    0&    3\\ \hline
+    1/4&   -8&   -1&    9&    1&    0&    0&    0\\
+    1/2&  -12& -1/2&    3&    0&    1&    0&    0\\
+    0&    0&    1&    0&    0&    0&    1&    1\\
+  \end{tabularx}
+  %\quad \quad \quad   B = \{5,6,7\} 
+\end{displaymath}
+
+         
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{RAAAARR|X}   
+    \rowcolor{white}  
+    0&   -4& -7/2&   33&    3&    0&    0&    3\\ \hline
+    1&  -32&   -4&   36&    4&    0&    0&    0\\
+    0&    4&  3/2&  -15&   -2&    1&    0&    0\\
+    0&    0&    1&    0&    0&    0&    1&    1\\
+\end{tabularx}
+%\quad \quad \quad   B = \{1,6,7\} 
+\end{displaymath}
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{RRAAAAR|X}   
+    \rowcolor{white}  
+     0&     0&    -2&    18&     1&     1&     0&     3\\ \hline
+     1&     0&     8&   -84&   -12&     8&     0&     0\\
+     0&     1&   3/8& -15/4&  -1/2&   1/4&     0&     0\\
+     0&     0&     1&     0&     0&     0&     1&     1\\
+\end{tabularx}
+%\quad \quad \quad   B = \{1,2,7\} 
+\end{displaymath}
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{ARRAAAR|X}   
+    \rowcolor{white}  
+   1/4&     0&     0&    -3&    -2&     3&     0&     3\\ \hline
+   -3/64&     1&     0&  3/16&  1/16&  -1/8&     0&     0\\
+   1/8&     0&     1& -21/2&  -3/2&     1&     0&     0\\
+  -1/8&     0&     0&  21/2&   3/2&    -1&     1&     1\\
+\end{tabularx}
+%\quad \quad \quad   B = \{2,3,7\} 
+\end{displaymath}
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{AARAAAR|X}   
+    \rowcolor{white}  
+ -1/2&   16&    0&    0&   -1&    1&    0&    3\\ \hline
+ -5/2&   56&    1&    0&    2&   -6&    0&    0\\
+ -1/4& 16/3&    0&    1&  1/3& -2/3&    0&    0\\
+  5/2&  -56&    0&    0&   -2&    6&    1&    1\\
+\end{tabularx}
+%\quad \quad \quad   B = \{3,4,7\} 
+\end{displaymath}
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{AAARRAR|X}   
+    \rowcolor{white}  
+ -7/4&   44&  1/2&    0&    0&   -2&    0&    3\\ \hline
+  1/6&   -4& -1/6&    1&    0&  1/3&    0&    0\\
+  -5/4&   28&  1/2&    0&    1&   -3&    0&    0\\
+    0&    0&    1&    0&    0&    0&    1&    1\\
+\end{tabularx}
+%\quad \quad \quad   B = \{4,5,7\} 
+\end{displaymath}
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.7\textwidth}{AAAARRR|X}   
+    \rowcolor{white}  
+ -3/4&   20& -1/2&    6&    0&    0&    0&    3\\ \hline
+  1/4&   -8&   -1&    9&    1&    0&    0&    0\\
+  1/2&  -12& -1/2&    3&    0&    1&    0&    0\\
+    0&    0&    1&    0&    0&    0&    1&    1\\
+  \end{tabularx}
+%\quad \quad \quad   B = \{5,6,7\} 
+\end{displaymath}
+
+In fact we have not made any progress in the objective function value
+during all these pivots. Inspecting the pivot steps, we see that the
+problem lies in the fact that we have basic feasible solutions which
+are zero at some of the basic components. If this is never the case,
+then the simplex method terminates, as we show now. 
+
+
+Recall that a basis $B$ with reduced costs $\overline{c}\geq0$ is
+optimal, see Lemma~\ref{lem:14}. There is a weak converse to this
+lemma. Before we state it, we define the notion of degeneracy. 
+
+\begin{definition}[Degenerate basic solution]
+  \label{def:1}
+  A basic solution $x^*$ associated to the basis $B$ is \emph{degenerate}, if
+  there exists an index $i \in B$ with $x^*(i) =0$. If $x^*(i) \neq0$ for
+  all $i \in B$, then $x^*$ is called \emph{non-degenerate}. 
+\end{definition}
+
+
+\begin{lemma}
+  \label{lem:1}
+  Let $x^*$ be a non-degenerate basic feasible solution associated to
+  the basis $B= \{B_1,\ldots,B_m\}$. If there exists an index $i \in \{1,\ldots,n\}$ with
+  $\overline{c}(i)<0$, then $x^*$ is not optimal. 
+\end{lemma}
+
+\begin{proof}
+  Suppose that the reduced cost of variable $j$ is negative, 
+  $\overline{c}(j)<0$ and inspect the tableau of $B$ 
+  \begin{displaymath}
+    \begin{array}{c|c}
+      c^T - c_B^TA_B^{-1}A & -c_B^Tx^*_B \\ \hline 
+      A_B^{-1}A        & x^*_B.
+    \end{array}
+  \end{displaymath}
+Let $u(1),\ldots,u(m)$ be the components of the $j$-th column of the
+system matrix of the tableau. If $u(i)\leq0$ for all $i$, then the linear program is
+unbounded and the assertion follows. Otherwise let $K = \{ i \colon u(i) >
+0\}$ and let $i^*\in K$ be an index where the minimum 
+$\min \{x^*(B_i)/u(i) \colon i \in K\}$ is attained. The new objective
+function value after the pivot step is 
+\begin{equation}
+  \label{eq:3}
+  c^Tx^* + \overline{c}(j) x^*(B_{i^*})/u(i^*)
+\end{equation}
+and since $\overline{c}(j)<0$, this is smaller than $c^Tx^*$. \qed
+  
+\end{proof}
+
+
+
+This Lemma also shows that the simplex method terminates if the basic
+feasible solutions are all non-degenerate. 
+
+\begin{theorem}
+  \label{thr:2}
+  If all basic feasible solutions are non-degenerate, then the simplex
+  method terminates, regardless of the choice among the alternatives
+  among entering and leaving variables. 
+\end{theorem}
+
+
+\begin{proof}
+  The proof of the previous lemma, in particular equation~\eqref{eq:3}
+  shows that  the objective function value strictly improves each
+  iteration of the simplex method. Each tableau is uniquely defined by
+  a basis $B$. We never re-visit a tableau, since the objective
+  function is strictly increasing. The number of bases is bounded by
+  $\binom{n}{m}$. The assertion follows. \qed
+\end{proof}
+
+
+
+
+\subsubsection*{Perturbation}
+
+The termination argument for the simplex algorithm for linear programs,
+who do not have degenerate basic feasible solutions, is very simple and
+nice and in fact one can twist it into a pivot-rule for the
+simplex-algorithm which makes the simplex algorithm terminate.  
+
+We start with the  linear program 
+\begin{equation}
+  \label{eq:4}
+  \min\{c^Tx \colon x \in \setR^n, \, Ax=b, \, x\geq0\}
+\end{equation}
+and assume that $S\subseteq\{1,\ldots,n\}$ is a feasible basis with $A_S
+=I_m$. This assumption can be made, since we can replace $Ax = b$ with
+$A_S^{-1}Ax = A_S^{-1}b$.
+
+The idea is to transform \eqref{eq:4} into 
+into a linear program 
+\begin{equation}
+  \label{eq:5}
+  \min\{c^Tx \colon x \in \setR^n, \, Ax=b', \, x\geq0\}
+\end{equation}
+such that the following conditions hold. 
+\begin{enumerate}[i)]
+\item The LP~\eqref{eq:5} does not have degenerate basic solutions. \label{item:11}
+\item If $B$ is an infeasible basis of \eqref{eq:4}, then $B$ is also an
+  infeasible basis of~\eqref{eq:5}. \label{item:12}
+\item The LP~\eqref{eq:5} is feasible. \label{item:13}
+\end{enumerate}
+
+
+
+\begin{lemma}
+  \label{lem:2}
+  The simplex algorithm terminates on the linear
+  program~\eqref{eq:5}. If it 
+  asserts that the linear program~\eqref{eq:5} is unbounded, then the
+  linear program~\eqref{eq:4} is also unbounded. If it 
+  outputs an optimal basis of~\eqref{eq:5} then this basis is also
+  optimal for~\eqref{eq:4}. 
+\end{lemma}
+
+\begin{proof}
+  
+  
+  It follows from Theorem~\ref{thr:2} and the property~\ref{item:11})
+  that the simplex method terminates on the linear
+  program~\eqref{eq:5}. If it asserts that~\eqref{eq:5} is unmounded,
+  then there exists a $d\geq0$ with $Ad=0$ and $c^Td<0$. This means that
+  the linear program~\eqref{eq:4} is also unbounded. 
+  
+  Suppose therefore that the simplex method on~\eqref{eq:5} terminates
+  by outputting a 
+  basis $\wt{B}$. This basis 
+  $\wt{B}$ is a feasible basis of~\eqref{eq:4} by
+  property~\ref{item:12}). The reduced costs of this basis are the
+  same for the linear programs~\eqref{eq:4}  and~\eqref{eq:5} which
+  implies that $\wt{B}$ is also an optimal basis of \eqref{eq:5}.
+  \qed 
+\end{proof}
+
+
+Now we describe the construction of \eqref{eq:5}, more precisely the
+construction of $b'$, which is 
+\begin{equation}
+  \label{eq:6}
+  b' = b+ \mat{\varepsilon\\\varepsilon^2 \\\vdots \\\varepsilon^m}
+\end{equation}
+for some small $\varepsilon>0$. Since $\varepsilon>0$ the basic solution $x^*$ associated to
+$S$ with 
+\begin{displaymath}
+  x^*_S=b+\mat{\varepsilon \\ \vdots\\ \varepsilon^m}\text{ and }x^*_{\overline{S}}=0 
+\end{displaymath}
+  is  a basic
+feasible solution of~\eqref{eq:5} and thus~\ref{item:13}) follows. We show that we can
+choose an $\varepsilon>0$ such that \ref{item:12}) holds. Suppose that $B$ is an
+infeasible basis. This means that there exists an entry $i$ of $B$
+such that $(A_B^{-1} \, b)(i) < 0$. Clearly, we can choose $\varepsilon_B>0$
+small enough such that 
+\begin{equation}
+  \label{eq:7}
+  \left[A_B^{-1}\,\left(b+\mat{\varepsilon\\\vdots\\\varepsilon^m}\right)\right](i)<0
+\end{equation}
+and the basis $B$ is still infeasible for the linear
+program~\eqref{eq:5}. The most interesting property to infer is
+property~\ref{item:11}). Let $B$ be any basis and consider the vector
+\begin{equation}
+  \label{eq:8}
+  A_B^{-1} \left(b + \mat{\varepsilon\\\vdots\\\varepsilon^m}\right) 
+\end{equation}
+which determines the components of $x^*_B$ of the basic solution. If
+we treat $\varepsilon$ as a variable, then the $i$-th component of this
+vector~\eqref{eq:8} is a polynomial in $\varepsilon$ which we denote by
+$p_{iB}(\varepsilon)$. Each of the polynomials $p_{iB}(\varepsilon)$ is unequal to the
+zero polynomial,
+see exercise~\ref{item:14} which implies that there are only a finite
+(at most $m$) real-roots of $p_{iB}$. Consequently, there exists an
+$\varepsilon_{iB}>0$ for each $p_{iB}$ such that $p_{iB}(\varepsilon) \neq 0$ for each $\varepsilon
+\in ]0, \varepsilon_{iB}[$. 
+Thus if we choose $\varepsilon>0$ such that it is smaller than all $\varepsilon_B$ and
+all $\varepsilon_{iB}$ from above, then the perturbed problem with 
+\begin{displaymath}
+  b' = b + \mat{\varepsilon\\\vdots\\\varepsilon^m}
+\end{displaymath}
+satisfies the properties~\ref{item:11}-\ref{item:13}) from above. 
+
+
+\subsection{Symbolic computation with $\varepsilon$} 
+\label{sec:symb-comp-with}
+
+The good news is that we do not have to calculate with a concrete
+$\varepsilon>0$ at all. Let us understand which variable would leave the basis
+if we would calculate with a very small $\varepsilon$. 
+
+Recall that we consider the index set $K = \{ i \colon u(i)>0\}$, where
+$u$ is the pivot column of the tableau 
+\begin{displaymath}
+  \label{c:eq:37}
+  \begin{array}{c|c}
+    c^T - c_B^TA_B^{-1}A & -c_B^Tx^*_B \\ \hline 
+    A_B^{-1}A        & x^*_B.
+  \end{array}
+\end{displaymath}
+The leaving variable is  $B_i$, where $i \in K$ minimizes the expression
+$x^*(B_i) / u(i), \, i \in K$. We have 
+\begin{displaymath}
+  x^*(B_i) / u(i) = [(A_B^{-1} b)(i) + (A_B^{-1} \mat{\varepsilon\\\vdots\\\varepsilon^m}) (i)] / u(i). 
+\end{displaymath}
+
+\begin{definition}[Lexicographic order]
+  Let $u,v \in \setR^n$ be vectors. We have $u<_{lex}v$, if $u=v$ or if
+  the first nonzero component of $u-v$ is strictly negative. 
+\end{definition}
+
+Since $\varepsilon>0$ is arbitrarily  small we see that we need to find $i$
+such that the vector $ [ (A_B^{-1} b)(i) | (A_B^{-1})_i] / u(i)$ is lexicographically
+minimal. This is  the {\bf  lexicographic
+pivoting rule}: 
+
+
+\begin{enumerate}
+\item If $\overline{c}\geq0$, then {\bf output optimal basis $B$}
+  \label{c:item:3}
+\item Otherwise, let $j$ be an index with $\overline{c}(j)<0$ and let
+  $u = A_B^{-1}A^j$ be the $j$-th column of the system matrix of the
+  tableau. If $u\leq0$, then {\bf output $-\infty$}, the linear program is
+  unbounded. \label{c:item:7}
+\item Otherwise compute the 
+  vectors $[ (A_B^{-1} b) (i) | (A_B^{-1})_i] / u(i)$ 
+  for all $i =
+  1,\ldots,m$ with $u(i)>0$. Let $i^*$ be an index for which this vector
+  is lexicographically smallest. 
+  The index $B_{i^*}$ leaves the basis and $j$ enters the  basis, i.e., the new basis is $B' = B \setminus\{B_{i^*}\} \cup \{j\}$. 
+\item Update the tableau to 
+  \begin{displaymath}    
+  \begin{array}{c|c}
+    c^T - c_{B'}^TA_{B'}^{-1}A  & -c_{B'}^Tx^*_{B'} \\ \hline 
+    A_{B'}^{-1}A        & x^*_{B'}.
+  \end{array}
+\end{displaymath}
+\end{enumerate}
+
+
+\begin{theorem}
+  \label{thr:3}
+  The simplex method terminates, if the leaving variable is chosen
+  according to the lexicographic pivot rule above. 
+\end{theorem}
+
+
+\subsection{Bland's rule}
+
+The following is an alternative pivoting rule which avoids cycling,
+see, e.g.~\cite{Chvatal83}. 
+
+\begin{quote}
+  During an iteration of the simplex method
+  (Chapter~\ref{sec:one-iter-simpl}), find a smallest $j$ such  
+  that $\overline{c}(j)$ is less than $0$. Let this $j$ enter the
+  basis. 
+  
+  Out of all the indices $i$ that may leave the basis, choose the
+  smallest one. 
+\end{quote}
+
+%
+
+% Let us apply this rule for our example. We start with the tableau 
+% \begin{displaymath}
+%   \begin{tabularx}{0.7\textwidth}{AAAARRR|X}   
+%     \rowcolor{white}  
+%     -3/4&   20& -1/2&    6&    0&    0&    0&    3\\ \hline
+%     1/4&   -8&   -1&    9&    1&    0&    0&    0\\
+%     1/2&  -12& -1/2&    3&    0&    1&    0&    0\\
+%     0&    0&    1&    0&    0&    0&    1&    1\\
+%   \end{tabularx}
+%   %\quad \quad \quad   B = \{5,6,7\} 
+% \end{displaymath}
+% and let $1$ enter the basis. The ratios $x(i)/u(i)$ for $u(i)>0$ are
+% minimized at $i=1,2$. 
+
+
+
+
+
+\subsection*{Exercises}
+
+\begin{enumerate}
+\item Provide an example of a degenerate basic feasible solution $x^*$
+  and an associated basis $B$ which is optimal but whose reduced cost
+  vector $\overline{c}^T =c^T - c_B^T A_B^{-1}A$ does not satisfy
+  $\overline{c}\geq0$.\label{item:10} 
+\item Show that  $p_{iB}(\varepsilon)\neq 0$ holds for each $i\in \{1,\ldots,m\}$ and
+  each basis $B$. \label{item:14}
+\item Provide an example of a valid perturbation, as described above,
+  such that a basis $B$ which is feasible for the original
+  LP~\eqref{eq:4} is infeasible for the problem~\eqref{eq:5}. 
+  \label{item:15} 
+\end{enumerate}
+
+
+
+
+\bibliographystyle{abbrv}
+
+\bibliography{mybib,papers,books,my_publications}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End: 

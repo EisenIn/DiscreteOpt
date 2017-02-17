@@ -1,0 +1,379 @@
+\chapter{Algorithms and running time analysis} 
+\label{cha:runn-time-analys}
+
+
+
+An \emph{algorithm} executes a set of \emph{instructions}
+used in common programming languages like  arithmetic
+operations, comparisons or read/write instructions. The sequence of these instructions is controlled by \emph{loops and conditionals} like {\tt if, while, for} etc. 
+
+Each of these instructions requires \emph{time}. The \emph{running time} of an algorithm is the \emph{number of instructions} that the algorithm performs. This number depends on the \emph{input} of the algorithm. 
+
+
+\begin{example}
+\label{ex-a-1}
+  Consider the following algorithm to compute the product of two $n × n$ matrices. 
+    \begin{tabbing}            
+    {\bf for} \= $i=1,\dots,n$ \\ 
+              \> {\bf for} \= $j=1,\dots,n$ \\
+              \> \> $c_{ij} := 0$ \\
+              \> \> {\bf for} \= $k=1,\dots,n$ \\
+              \> \> \> $c_{ij} := c_{ij} + a_{ik} ⋅ a_{kj}$
+            \end{tabbing} 
+
+ The number of additions is $n^2 ⋅ (n-1)$ and the number of multiplications is $n^3$.
+ The number of store-instructions is $n^2 ⋅(n+1)$. The number of read-instructions is of similar magnitude. 
+\end{example}
+
+
+The above example shows that an \emph{exact counting} is sometimes
+tedious. Looking at the algorithm however, you quickly agree that
+there exists \emph{some constant} $c \in \R_{>0}$ such that the
+algorithm performs at most $c \cdot m \cdot n \cdot l$ instructions. 
+
+In the analysis of algorithms, one does usually not care so much about the constant $c$ above in the beginning. There are sub-fields of algorithms where this constant however matters. Especially for algorithms on large data sets, where access to external data is costly. However, this is another story that does not concern us here. When we analyze algorithms, we are interested in the \emph{asymptotic running time}. 
+
+\begin{definition}[$O$-notation]  
+
+ Let $T,f: \setN \to \setR_{\geq0}$ be functions. We say 
+  \begin{itemize}
+  \item \emph{$T(n) = O(f(n))$}, if there exist positive  constants
+    $n_o\in \setN$ and  $c\in\setR_{>0}$ 
+    with $$T(n) \leq c \cdot f(n) \text{ for all }n\geq n_0.$$  
+  \item \emph{$T(n) = \Omega(f(n))$}, if there exist constants   $n_o\in \setN$
+    and  $c\in\setR_{>0}$ 
+    with $$T(n) \geq c \cdot f(n)\text{ for all } n\geq n_0.$$
+  \item \emph{$T(n) = \Theta(f(n))$}  if $$T(n)=O(f(n))\text{ and }
+     T(n) = \Omega(f(n)).$$
+  \end{itemize}
+\end{definition}
+
+
+\begin{example}
+  The function $T(n)=2n^2 + 3n +1$ is in $O(n^2)$, since for all
+  $n\geq1$ one has $2n^2 + 3n + 1 \leq 6n^2$. Here $n_0 = 1$ and $c =
+  6$.  Similarly $T(n) = \Omega(n^2)$, since for each $n\geq1$ one has $2n^2 + 3n
+  +1\geq n^2$. Thus $T(n)$ is in $\Theta(n^2)$. 
+\end{example}
+
+We measure the running time of algorithms in terms of the \emph{length
+  of the input}.  The matrices $A$ and $B $ that are the input of the matrix-multiplication
+algorithm of Example~\ref{ex-a-1} consist of $n^2$ 
+numbers each. The algorithm runs in time $O(n^3 = (n^2)^{3/2})$. 
+
+
+What does it mean for an algorithm to be efficient? For us, this will
+mean that it runs in polynomial time. As a first definition of
+polynomial time algorithm, we say that an algorithm runs in
+\emph{polynomial time}, if there exists a constant $k$ such that the
+algorithm runs in time $O(n^k)$, where $n$ is the length of the input
+of the algorithm.
+
+However, we recall the \emph{binary} representation of natural numbers $n ∈ ℕ$. A sequence of bits $a_0,\dots,a_{k-1}$ with $a_j ∈ \{0,1\}$ for $0 ≤j≤k-1$ represents the number 
+\begin{displaymath}
+  ∑_{j=0}^{k-1} a_j ⋅ 2^j. 
+\end{displaymath}  
+Conversely, each positive natural number $n≥1$ has the binary representation that is found recursively by the following process. 
+If $n=1$, then its representation is $a_0 = 1$. 
+If $n>1$ and  is even, then the sequence representing $n$ is 
+\begin{displaymath}
+  0,b_0,\dots,b_{k-1},
+\end{displaymath}
+where $b_0,\dots,b_{k-1}$ is the representation of $n/2$. If $n>1$ and n is odd, then the sequence representing $n$ is 
+\begin{displaymath}
+  1,b_0,\dots,b_{k-1},
+\end{displaymath}
+where $b_0,\dots,b_{k-1}$ is the representation of $⌊n/2⌋$. This creates a representation with leading bit one, i.e. $a_{k-1}=1$. 
+By deleting \emph{leading zeros}, i.e., ensuring $a_{k-1}=1$, the representation of a natural positive number is unique, (see exercise~\ref{cha:runn-time-analys}.\ref{alg:ex2}). 
+
+
+
+\begin{example}
+  This example will make us revise the our first definition of a polynomial-time algorithm. 
+The input of this algorithm is a list of characters. Let us say that the list has $n$ elements. 
+ 
+ \label{ex-a-3}
+  \begin{tabbing}
+    Input: A list $L$ or characters \\
+    $s :=2$ \\
+    {\bf for} \= $c ∈ L$:\\
+              \> $s:= s ⋅ s$ \\
+    {\bf return} $s$         
+  \end{tabbing}
+  Then clearly, the algorithm carries out a polynomial, even linear,
+  number of operations in the input, if we consider an arithmetic
+  operation also as a basic operation that can be carried out in
+  constant time. However, the algorithm squares $2$
+  repeatedly, $n$
+  times to be precise. Thus, at the end, the variable $s$
+  holds the number $2^{2^n}$.
+  The number of \emph{bits} in the binary representation  that the return value
+  is $2^n$
+  which is \emph{exponential} in the input length. 
+\end{example}
+
+\begin{definition}
+  \label{def:2}
+  The \emph{size} of an integer $x$
+  is $\size(x) = \lceil\log( |x| +1)\rceil$
+  and for $x \in \setQ$,
+  $\size(x) = \size(p)+\size(q)$,
+  where $x = p/q$ with $p,q \in \setZ$, $q\geq1$ and $\gcd(p,q)=1$.   
+\end{definition}
+Thus the size of a number is asymptotically equal to the number of
+bits that are needed to store the number.  We now provide the
+definition of what a polynomial-time algorithm is.
+\begin{definition}
+  \label{def:1}
+  An  is \emph{polynomial time}, if there exists a
+  constant $k$
+  such that the algorithm performs $O(n^k)$
+  operations on rational numbers whose size is bounded by
+  $O(n^k)$.
+  Here $n$
+  is the number of bits that encode the input of the algorithm. We say that the algorithm runs in time $O(n^k)$. 
+\end{definition}
+
+We now use this definition to analyze the famous \emph{Euclidean} algorithm that computes the \emph{greatest common divisor} of two integers. 
+
+ For $a,b \in \setZ$, $b \neq0$ we say $b$ \emph{divides} $a$ if there
+    exists an $x \in \setZ$ such that $a = b \cdot  x$. We 
+    write    $b\mid a$.  
+   For $a,b,c \in \setZ$, if $c\mid a$ and $c\mid b$, then $c$ is a
+    \emph{common divisor} of $a$ and $b$. 
+    If at least one of the two integers $a$ and $b$ is non-zero,
+    then there exists a \emph{greatest common divisor} of $a$ and
+    $b$. It is denoted by \emph{$\gcd(a,b)$}. 
+    
+
+    How do we compute the greatest common divisor efficiently? The
+    following is called \emph{division with remainder}.  For
+    $a,b \in \setZ$
+    with $b >0$ there exist unique integers $q,r \in \setZ$ with
+    \begin{displaymath}
+      a = q\cdot b + r, \text{ and }  0\leq r <b. 
+    \end{displaymath}
+    Now clearly, 
+    for $a,b \in \setZ$ with $b >0$ and $q,r \in \setZ$ as above one has
+    $\gcd(a,b) = \gcd(b,r)$.  
+  This gives rise to the famous \emph{Euclidean algorithm}. 
+  \begin{algorithm}[Euclidean algorithm]
+    \label{alg:1}
+    \begin{tabbing}
+      Input: Integers $a ≥ b ≥0$ not both equal to zero \\
+      Output: The greatest common divisor $\gcd(a,b)$\\
+      {\bf if}  $(b=0)$ {\bf return} $a$ \\
+      {\bf else} \= \\
+      \> Compute $q,r ∈ ℕ$ with \=  $b > r ≥ 0$ and $a = q⋅b +r$ \\
+      \> \> (division with remainder)\\
+      \> {\bf return} $\gcd(b,r)$ 
+    \end{tabbing}
+  \end{algorithm}  
+%
+  \begin{theorem}
+    The Euclidean algorithm runs in time $O(n)$. 
+  \end{theorem}
+  \begin{proof}
+    Suppose that $a$ and $b$ have at most $n$ bits each.  Clearly, the
+    numbers in the course of the algorithm have at most $n$
+    bits. Furthermore, if $a \geq b$, then $r \leq a/2$, where $r$ is
+    the remainder of the division of $a$ by $b$. Thus each second
+    iteration, the first parameter of the input has one bit less. Thus
+    the number of operations is bounded by $O(n)$.
+  \end{proof}
+  
+\begin{example}
+\label{exe:det}
+The \emph{determinant} of a matrix $A ∈ ℝ^{n ×n}$ can be computed by the recursive formula 
+\begin{displaymath}
+  \det(A) = ∑_{i=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
+\end{displaymath}
+where $A_{1j}$ is the $(n-1)×(n-1)$ matrix that is obtained from $A$ by deleting its  first row and $j$-th column.  This yields the following algorithm. 
+
+\begin{tabbing}
+  Input: $A ∈ ℚ^{n  ×n}$ \\
+  Output: $\det(A)$ \\
+  
+  {\bf if} \= $(n=1)$ \\
+           \> {\bf return} $a_{11}$ \\
+  {\bf else} \\
+           \> $d:=0$  \\
+           \> {\bf for } \= $j=1,\dots,n$ \\
+           \>            \> $d:= (-1)^{1+j}⋅ \det(A_{1j}) +d$\\
+           \> {\bf return} $d$   
+\end{tabbing}
+This algorithm is \emph{recursive}. This basically means that a tree is constructed, where nodes of the tree correspond to recursive calls to the algorithm $\det(⋅)$ including the \emph{root} call. Any node that corresponds to a matrix with $k>1$ rows and columns is expanded by adding $k$ \emph{child nodes} corresponding to the recursive calls that are executed. Once the lower-level nodes of the tree cannot expanded anymore, one can evaluate the tree, in this case the determinant, in a bottom-up fashion. See 
+Let $T(n)$ denote the number of basic operations that the algorithm performs. Then $T(1) ≥1$ and 
+\begin{displaymath}
+  T(n) ≥ n ⋅ T(n-1), 
+\end{displaymath}
+which shows that $T(n) >= n! = 2^{\Omega({n \log n})}$ which is \emph{exponential} in $n$. 
+\end{example}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[height=5cm]{figures/DeterminantAlgoSlow.jpg}
+  \caption{An example of the recursion tree of the algorithm from Example~\ref{exe:det}. The tree corresponds to the run of the algorithm on input $\protect\smat{         3 & 7 & 5 \\ 2&9&8 \\ 1 & 3 & 3  }.$
+} 
+\end{figure}
+
+
+\section*{Exercises} 
+
+
+\begin{enumerate}
+\item Find the binary representation of $134$. 
+\item Show that the binary representation with leading bit one of a positive natural number is
+ unique. \label{alg:ex2}
+\item Show that there are $n$-bit numbers $a,b ∈ ℕ$ such that the  Euclidean algorithm on input $a$ and $b$ performs  $\Omega(n)$ arithmetic operations. \emph{Hint: Fibonacci numbers} 
+\item Show $n! =  2^{\Omega({n \log n})}$. 
+\item 
+Let $A ∈ ℝ^{n ×n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
+Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first $k$ rows and some of the $k$ columns of $A$. How many (recursive) calls of the form $\det(B)$ does the algorithm of Example~\ref{exe:det} create? 
+\item Let $A ∈ ℝ^{n ×n}$  and suppose that the $n^2$ components of $A$ are pairwise different. How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm  of Example~\ref{exe:det} remains exponential, even if it does not expands repeated subcalls. 
+\item Complete the  algorithm below such  that it adds two natural numbers  in binary representation  $a_0,\dots,a_{l-1}$,  $b_0,\dots,b_{l-1}$. What is the asymptotic running time (number of basic operations) of your algorithm? Can there be an asymptotically  faster algorithm? 
+
+  \begin{tabbing}
+    Input:~~ \= Two natural numbers $a$ and $b$  in their binary representation\\ 
+    \>   $a_0,\dots,a_{l-1}$, $b_0,\dots,b_{l-1}$. \\
+    Output: \> The binary representation $c_0,\dots,c_l$ of $a+b$ \\
+\pushtabs 	
+\\
+   $\mathrm{carry} := 0$ \\
+   {\bf for} \= $i=0, \dots, l-1$ \\
+             \> $c_i = \mathrm{carry} + a_i + b_i \pmod{2} $\\
+             \> $\mbox{carry} := $ \\
+   $c_l := $  \\
+   {\bf return} $c_0,\dots ,c_l$ \\   
+\poptabs
+  \end{tabbing}
+
+\end{enumerate}
+
+\section{Analysis of Gaussian elimination} 
+\label{sec:analys-gauss-elim}
+
+We recall Gaussian elimination. 
+
+\begin{algorithm}[Gaussian elimination]
+  \label{alg:3}
+  \begin{tabbing}
+    Input: $A ∈ ℚ^{m ×n}$  \\
+    Output: \= $A'$ in row echelon form such that there exists an invertible \\ 
+            \> $Q ∈ ℚ^{m × m}$ such that $Q⋅A = A'$ . \\
+            \pushtabs 
+\\
+$A' := A$ \\
+$i := 1$\\
+{\bf while} \=  ($i≤m$)  \\
+\> find \emph{minimal} $1 ≤ j ≤n$ such that there exists $k≥i$ such that $a'_{kj} ≠ 0$ \\
+\> If no such element exists, then {\bf stop} \\
+            \> swap rows $i$ and $k$ in $A'$ \\
+            \>  {\bf for} \= $k = i+1,\dots, m$ \\
+            \>            \> subtract $(a'_{kj}/a'_{ij})$ times row $i$ from row $k$ in $A'$  \\
+\> $i:=i+1$ 
+\poptabs        
+  \end{tabbing}
+\end{algorithm}
+
+\noindent 
+We can easily prove correctness of the algorithm. First of all, the algorithm does only perform elementary row-operations of the form 
+\begin{enumerate}[i)]
+\item swap two rows 
+\item subtract a multiple of one row from \emph{another row}. 
+\end{enumerate}
+This means that the resulting matrix $A'$ can be obtained via 
+\begin{displaymath}
+  A' = Q ⋅ A
+\end{displaymath}
+with a non-singular $Q ∈ ℚ^{m × m}$. On the other hand we have the following invariant. 
+\begin{quote}
+  After each iteration of the while-loop, the matrix $H$ obtained from the first  first $j$ columns of $A'$ is  in row-echelon form and rows $i,i+1,\dots,m$ of $H$  are entirely zero, see Figure\ref{fig:9}.  
+\end{quote}
+
+\begin{figure}
+  \label{fig:9}
+   \centering
+  \includegraphics[height=5cm]{figures/Echelon.jpg}
+  \caption{Gaussian elimination: The matrix $A'$ before  the $i$-th iteration of the while loop.}
+\end{figure}
+
+
+How many arithmetic operations does Gaussian elimination perform? Subtracting a multiple of one row from another row in $A'$ can be done in time $O(n)$ Thus the number of operations that are performed within the {\bf for}-loop are $O(m ⋅n)$ in total. There are $O(m)$ iterations through the while-loop. All-together this shows that Gaussian elimination performs $O(m^2 ⋅n)$ iterations.But how large can the numbers grow in the course of the Gaussian algorithm Could it be that numbers have to be manipulated, whose binary encoding length is \emph{exponential} in the total encoding length of the matrix $A$? Luckily the answer to this question is ``No''. To provide this answer, we have to show the following. 
+
+
+\begin{theorem}[Hadamard bound] 
+  Let $A \in \R^{n \times n}$ be non-singular. Then 
+  \begin{displaymath}
+    |\det(A)| \leq \prod_{i=1}^n \|a_i\|_2 \leq n^{n/2} \cdot B^n, 
+  \end{displaymath}
+  where $B$ is upper bound on absolute values of entries of $A$.
+\end{theorem}
+
+\begin{proof}
+  The Gram-Schmidt orthogonalization of $A$ yields a factorization 
+  \begin{displaymath}
+    A = Q \cdot R,
+  \end{displaymath}
+where $R$ is an upper triangular matrix with ones on the diagonal. The matrix $Q$ has orthogonal columns, where the length of the $i$-th column $q^{(i)}$ is upper bounded by the length of the $i$-th column of $A$. 
+The assertion follows from 
+\begin{displaymath}
+  \det(A)^2 = \det(Q)^2 = \det(Q^T) \det(Q) = \prod_i \|q^{(i)}\|^2. 
+\end{displaymath}
+\end{proof}
+
+
+
+\begin{corollary}
+\label{co:11}
+  If $A\in \setZ^{n\times n}$ is integral and each entry in absolute
+  value is bounded by $B$, then $\size(\det(A)) = O(n \log n+ n \cdot
+  \size(B))$.
+\end{corollary}
+% 
+
+
+\begin{corollary}
+  \label{co:10}
+   If $A\in \setQ^{n\times n}$ is a rational matrix and $φ$ is an upper bound on the size of each component of $A$, then $\size(\det(A)) = O( n^3 \cdot
+  φ)$.
+\end{corollary}
+
+\begin{proof}
+Suppose that $a_{ij} = p_{ij}/q_{ij}$ for each $ij$, where $p$ and $q$ are integers with $gcd(p,q)=1$. Then $(∏_{ij}q_{ij}) A$ is an integer matrix  and 
+\begin{displaymath}
+  \det(A) = (∏_{ij}q_{ij})^n \det((∏_{ij}q_{ij}) A). 
+\end{displaymath}
+The size of $(∏_{ij}q_{ij})^n $ is $O(n^2 φ)$ and the size of $\det((∏_{ij}q_{ij}) A$ is $O(n^3 φ)$ with Corollary~\ref{co:11} . 
+\end{proof}
+
+
+Now that we have shown that the determinant of a rational matrix is a number of polynomial encoding length, we can prove that Gaussian elimination is indeed a polynomial time algorithm.
+
+\begin{theorem}
+  \label{thr:9}
+The   Gaussian algorithm runs in polynomial time. 
+\end{theorem}
+
+\begin{proof}
+  We need to show that each entry of the part of $A'$ that still has to be transformed (the magenta-colored part of the matrix in Figure~\ref{fig:9}) is of polynomial size in the input encoding. 
+
+Consider the absolute value of the product of the pivot elements (red $x$'s in the Figure). Clearly, this product is the absolute value of the determinant of the matrix that is obtained from choosing the rows and columns of $A$. By Corollary~\ref{co:10} this rational number is of polynomial size in the input encoding of this sub-matrix and thus of $A$. 
+
+Now, consider a nonzero element $z$ in the part of $A'$ that still needs to be transformed (the magenta part in Figure~\ref{fig:9}). The absolute value of the  product of this element with the pivot elements is the absolute value of the submatrix that is obtained by choosing the corresponding rows and columns. Therefore, the rational number $z$ is of polynomial encoding length in the input. 
+\end{proof}
+
+
+
+\section*{Exercises} 
+\label{sec:exercises}
+
+\begin{enumerate}
+\item \label{item:3} Show that the matrix $Q ∈ ℚ^{m × m}$ that transforms $A$ into $A'$ in the Gaussian algorithm via $Q ⋅A = A'$ has entries that are od polynomial size in the binary encoding length of $A$. Prove that this holds after each iteration of the while loop. 
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End:

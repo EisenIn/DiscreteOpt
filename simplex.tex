@@ -1,0 +1,1078 @@
+\chapter{The development of the simplex method}
+\label{cha:introduction}
+
+
+
+In this chapter, we describe an algorithm which solves linear
+programming problems $\min\{c^Tx \colon Ax = b, \, x\geq0\}$ in
+equation standard form, where $A \in \setR^{m\times n}$ has full row-rank, i.e.,
+the rows of $A$ are linearly independent. Our presentation follows
+closely the one in~\cite{BertsimasTsitsiklis97}. 
+
+
+
+
+\section{Equation standard form}
+\label{sec:equat-stand-form}
+
+We have seen in Chapter~\ref{cha:introduction-1} that each linear
+program can be described in inequality standard form, i.e., as
+$\max\{c^Tx \colon Ax\leq b\}$. The simplex algorithm is conveniently
+described for linear programs in \emph{equation standard form} $\min\{c^Tx \colon
+Ax = b, \, x\geq0\}$.  
+%, where one can assume that the rows of $A$ are linearly independent. 
+
+The next example shows how to transform a linear program in inequality
+standard form in equation standard form.  Consider the linear program 
+\begin{equation}
+\label{eq:28}
+  \begin{array}{lrcl}
+    \text{maximize}   & 3 x_1 - 2x_2 \\
+    \text{subject to} & 2x_1 - x_2 & \leq & 4 \\
+                      & x_1 + 3x_2 & \leq & 5 \\
+                      & -x_1 & \leq & 0.     
+  \end{array}
+\end{equation}
+Our goal is to transform this linear program into one of the form
+$\min\{c^Tx \colon Ax = b, \, x\geq0\}$.  The objective function can be
+re-written as $\min -3x_1 + 2x_2$.  Furthermore, we observe that the
+last inequality of~\eqref{eq:28} can be re-written as $x_1\geq0$. The
+variable $x_2$ is not bounded from below. The trick is to split $x_2$
+into $x_2 = x_2^+ - x_2^-$, where $x_2^+,x_2^- \geq0$. The linear
+program then becomes 
+\begin{equation}
+  \label{eq:29}
+  \begin{array}{llcl}
+    \text{minimize}   & -3 x_1 + 2x_2^+ -2 x_2^- \\
+    \text{subject to} & 2x_1 - x_2^+ + x_2^- & \leq & 4 \\
+                      & x_1 + 3x_2^+ -3 x_2^- & \leq & 5 \\
+                      & x_1, x_2^+,x_2^- &\geq &0.
+  \end{array}
+\end{equation}
+Next we introduce two new \emph{slack variables} $z_1,z_2\geq0$, which
+model $z_1 = 4- (2x_1 - x_2^+ + x_2^-)$ and $z_2 = 5 - (x_1 + 3x_2^+
+-3 x_2^-)$ and obtain a linear program in equation
+standard form which is equivalent to~\eqref{eq:28} 
+\begin{displaymath}
+  \begin{array}{llcl}
+    \text{minimize }   & -3 x_1 + 2x_2^+ -2 x_2^- \\
+    \text{subject to }\, & 2x_1 - x_2^+ + x_2^- + z_1 & = & 4 \\
+                      & x_1 + 3x_2^+ -3 x_2^- + z_2  & = & 5 \\
+                      & x_1, x_2^+,x_2^-,z_1,z_2 & \geq &0.
+  \end{array}
+\end{displaymath}
+%
+In matrix notation, we can describe the transformation procedure from
+above as follows. The input is a linear program in inequality standard
+form $\max\{c^Tx \colon x \in \setR^n, \,Ax\leq b \}$ with $A \in \setR^{m\times n}$. From this, one creates the
+equivalent linear program 
+\begin{displaymath}
+  \begin{array}{ll}
+    \min & -c^T x^+ + c^T x^-  \\
+    & A x^+ - A x^- + I_m z =  b\\
+     &x^+, x^-, z  \geq 0  \\
+    & x^+,x^- \in \setR^n, z \in \setR^m,     
+  \end{array}
+\end{displaymath}
+where $I_m \in \setR^{m\times m}$ is the $m\times m$ identity matrix, i.e. for
+$1\leq i,j\leq m$ one has 
+\begin{displaymath}
+  I_m(i,j) = 
+  \begin{cases}
+    1, & \text{if } i=j\\
+    0 & \text{otherwise.}
+  \end{cases}
+\end{displaymath}
+
+
+\subsubsection*{The full row-rank assumption}
+
+We recall some definitions and facts from linear algebra.   For $A \in \setR^{m\times n}$
+the \emph{row-rank} of $A$ is the maximum number of linearly independent
+rows. The \emph{column-rank} of $A$ is the maximum number of linearly
+independent columns. The row-rank and column rank of $A$ are
+equal. This number is the \emph{rank} of $A$ and is denoted by
+$\rank(A)$. 
+
+\begin{definition}
+  \label{def:8}
+  A matrix $A \in \setR^{m\times n}$ has \emph{full row-rank}, if $\rank(A) =
+  m$. Similarly, $A$ has \emph{full column-rank}, if $\rank(A) =n$. 
+\end{definition}
+
+We now show that  we furthermore can assume that the matrix $A$ in the
+linear  program 
+\begin{equation}
+  \label{eq:30}
+  \min\{c^Tx \colon x \in \setR^n, \, Ax =b,\, x\geq0\}
+\end{equation}
+has full row-rank, i.e., the rows of $A$ are linearly independent. 
+To see this, suppose that $A\in \setR^{m\times n}$ does not have full row-rank. Then
+there is a row $a_j$ of $A$ which is in the span of the other rows,
+i.e., one has
+\begin{displaymath}
+  a_j = \sum_{\substack{i=1\\ i\neq j}}^m \lambda_i a_i \text{ with suitable numbers }
+  \lambda_i \in \setR, i\in \{1,\ldots,m\} \setminus\{j\}. 
+\end{displaymath}
+If $\sum_{\substack{i=1\\ i\neq j}}^m \lambda_i  b(i) = b(j)$, then one has for all  $x \in \setR^n$
+with 
+$a_i^Tx = b(i), i=1,\ldots,m, i\neq j$ also  $a_j^Tx =  b(j)$ which means that the
+$j$-th  equation in  $Ax = b$ can be removed. 
+If $\sum_{\substack{i=1\\ i\neq j}}^m \lambda_i  b(i) \neq b(j)$, then there does not exist an $x \in
+\setR^n$ with $Ax = b$ and the  LP~(\ref{eq:30}) is infeasible. 
+
+\begin{example}
+  \label{sec:full-row-rank}
+  Consider the linear program 
+  \begin{equation}
+    \label{eq:46}
+    \begin{array}{rl}
+      \min  x_1 + 2 \,x_2 + x_3 + 4 x_4 \\
+      x_1 + x_2 + 2 x_3 + 3 x_4 & = 5 \\
+      x_1 + 2 x_2 + x_3 + 4 x_4 & =7 \\
+      3x_1 +4x_2 + 5 x_3 + 10 x_4& = 17\\
+      x_1,x_2,x_3,x_4 \geq0. 
+    \end{array}
+  \end{equation}
+  The third equation is can be obtained by multiplying the first
+  equation with $2$ and adding it to the second equation. This linear
+  program is not of full row-rank and it is equivalent to the linear
+  program 
+  \begin{equation}
+    \label{eq:47}
+    \begin{array}{rl}
+      \min  x_1 + 2 \,x_2 + x_3 + 4 x_4 \\
+      x_1 + x_2 + 2 x_3 + 3 x_4 & = 5 \\
+      x_1 + 2 x_2 + x_3 + 4 x_4 & =7 \\
+      x_1,x_2,x_3,x_4 \geq0. 
+    \end{array}
+  \end{equation}
+  which is of full row-rank. The linear program 
+ \begin{displaymath}
+    \begin{array}{rl}
+      \min  x_1 + 2 \,x_2 + x_3 + 4 x_4 \\
+      x_1 + x_2 + 2 x_3 + 3 x_4 & = 5 \\
+      x_1 + 2 x_2 + x_3 + 4 x_4 & =7 \\
+      3x_1 +4x_2 + 5 x_3 + 10 x_4& = 15\\
+      x_1,x_2,x_3,x_4 \geq0. 
+    \end{array}
+  \end{displaymath}
+  is not of full row-rank but is infeasible, since, as before, the
+  third row of the constraint matrix is $2$ times the first row plus
+  the second row, however $2\cdot 5 + 7 =17 \neq 15$. 
+\end{example}
+
+
+
+\begin{assumption} 
+\label{assumption1}
+We assume in the following that our linear program which
+we want to solve is in equation standard form~\eqref{eq:30}, or in
+\emph{standard   form} for short, with $A\in \setR^{m\times n}$ having full
+row-rank. 
+\end{assumption}
+
+
+
+\section{Bases and basic solutions}
+\label{sec:bases-basic-solut}
+
+
+We use the following notation.  For an index set
+$I=\{i_1,\ldots,i_k\}\subseteq\{1,\ldots,n\}$, with $i_1<i_2<\cdots<i_k$, $A_I$ denotes
+the $m\times k$ matrix whose $j$-th column is $i_j$-th column $a^{i_j}$ of
+$A$ for $j=1,\ldots,k$.
+Similarly $c_I\in \setR^k$ denotes the vector whose $j$-th component is
+$c(i_j)$, $j=1,\ldots,k$.   
+\begin{example}
+  \label{ex:-2}
+  Let $A =\smat{2 & 3 & 1 \\ 4 & 5 & 6}$ and $I = \{2,3\}$, then $A_I
+  = \smat{3&1\\5&6}$.   
+\end{example}
+The proof of the next lemma is very similar to
+the proof of Carath\'eodory's theorem, Theorem~\ref{conv:thr:7}.
+It will help us to determine an optimal solution to~\eqref{eq:30}.
+
+
+
+  \begin{lemma}
+    \label{lem:8}    
+    Let $x^*$ be a feasible solution of the linear
+    program~\eqref{eq:30} and let $J = \{i \colon x^*(i)>0\}$ be the index
+    set corresponding to those components of $x^*$ which are strictly
+    positive. There exists a procedure that either asserts that the
+    linear program is unbounded or computes a solution $\wt{x}$
+    of~\eqref{eq:30} such that
+    \begin{enumerate}[i)]
+    \item     the index set $\wt{J}= \{ i \colon \wt{x}(i)>0\}$ is
+       contained in $J$, $\wt{J}\subseteq J$,
+    \item $A_{\wt{J}}$ has full column-rank,
+    \item $c^Tx^* \geq c^T\wt{x}$. 
+    \end{enumerate}
+
+   % If the linear program~\eqref{eq:30}  is feasible and  bounded,
+%    then there  exists an optimal solution  $x^* \in \setR^n$
+%    of~\eqref{eq:30} such that    $A_J$    has full column rank, where
+%    $J = \{ j \mid x^*(j)>0\}$.  
+  \end{lemma}
+
+
+  \begin{proof}    
+    Let $x^*$ be a feasible solution and suppose that the columns of
+    $A_J$ are linearly dependent.  The idea is now to compute a new
+    solution $x'$ with $J'=\{ j \colon  x'(j)>0\} \subset J$ and $c^T
+    x' \leq c^T x^*$ or to assert that the linear program is
+    unbounded.  After at most $n$  repetitions of this procedure,
+    one has found a solution $\wt{x}$  which satisfies the condition of the
+    theorem or one has asserted that the linear program is unbounded. 
+             
+
+    Let $\wb{J}$ be the index set $\wb{J}= \{1,\ldots,n\} \setminus J$.  Since
+    $A_J$ does not have full column rank there exists a $d \in \setR^n$
+    with $d\neq0$, $A\, d =0$ and $d(j)=0$ for each $j \in \wb{J}$.  Consider
+    the points 
+    \begin{equation}
+      \label{eq:32}
+        x^* \pm \lambda\, d  \text{ for } \lambda \in \setR.
+    \end{equation}
+    Since $A (x^* \pm \lambda d)
+    =b$ for each $\lambda \in \setR$, the only way to make  a point~\eqref{eq:32}
+    infeasible  is to violate the lower bounds $x^* \pm \lambda d \geq0$. Since
+    $x^*_J>0$ and $d_{\wb{J}} =0$ there exists 
+    a sufficiently small $\varepsilon^*>0$ such that for each $\lambda \in \setR$ with
+    $0 \leq \lambda \leq \varepsilon^*$ the point $x^* \pm \lambda d$ is feasible. 
+    
+    Suppose that $c^Td \neq0$. By multiplying $d$ with $-1$
+    we can assume that $c^Td <0$. If $d\geq0$, then $x^*+\lambda\,d\geq0$ for
+    each $\lambda\geq0$ and since $c^T(x^*+\lambda\,d) = c^Tx^* + \lambda c^Td$, we can
+    make the objective value of $x^*+\lambda\,d$ as small as we wish. Thus we
+    assert that the linear program is unbounded. Otherwise, let $K =
+    \{i \colon d(i) <0\}$ be the index set corresponding to the negative
+    components of $d$. How large can we choose $\lambda>0$ such $x^* + \lambda
+    d$ is still feasible?  For $\lambda>0$, the point  $x^* + \lambda \,d$  is
+    feasible if and only if 
+    \begin{equation}
+      \label{eq:33}
+      \lambda \leq \min\{- x^*(k) / d(k) \colon  k \in K\}. 
+    \end{equation}
+    Let $\lambda_{\max} = \min\{  - x^*(i) / d(i) \colon i \in K\}$ and let $k^*\in
+    K$
+    be an index, where the minimum is attained. The point
+    $x' = x^*+ \lambda_{\max} d$ is feasible, $c^Tx' < c^Tx^*$ and
+    since $x'(k^*)=0$ one has with $J' = \{ i \colon x'(i) >0\}$ also $J'\subset J$. 
+    
+    Suppose now that $c^Td = 0$. By multiplying $d$ with $-1$ if
+    necessary, we can assume that $d$ has strictly negative
+    components. We proceed as above with the index set $K$ and
+    $\lambda_{\max}$ to     construct a feasible  $x' = x^*+ \lambda_{\max} d$ with
+    $c^Tx' \leq c^Tx^*$ and  $J' = \{ i \colon x'(i) >0\}\subset J$.     
+  \qed
+\end{proof}
+
+\begin{example}
+  \label{exa:ll}
+  Consider the linear program~\eqref{eq:47} and the feasible solution
+  $x^* = (1,1,0,1)$. The set $J$ from the proof above is $J =
+  \{1,2,4\}$.  The vector $d^T = (-2, -1, 0, 1)$ satisfies $Ad=0$ and
+  $d_{\wb{J}} =0$. A largest $\lambda>0$ such that $(1,1,0,1) + \lambda (-2, -1, 0, 1)
+  \geq0$ is $\lambda_{\max} = 1/2$ and the new solution is $(1, 1, 0, 1)
+  + (1/2)\cdot  (-2, -1, 0, 1) = (0,0.5,0,1.5)$. This is a basic feasible
+  solution and the procedure described in the proof of
+  Lemma~\ref{lem:8} ends. 
+\end{example}
+
+
+
+\begin{definition}[Basis, basic solution, basic feasible solution]
+  \label{def:13}
+   A set $B\subseteq\{1,\ldots,n\}$ with $|B| = m$ and $A_B$ non-singular is
+   called \emph{basis}. A vector $x^* \in \setR^n$ is a \emph{basic
+     solution}, if there exists a basis $B$ with $x^*_B = A_B^{-1}b$
+   and $x^*_{\wb{B}}=0$, where $\wb{B} = \{1,\ldots,n\} \setminus B$. We say that
+   $x^*$ is associated to the basis $B$. If
+   additionally $x^*\geq0$ holds, then $x^*$ is a \emph{basic feasible
+     solution}. 
+\end{definition}
+
+
+  \begin{lemma}
+    \label{lem:3} Let  $x^* \in \setR^n$ be a feasible solution and let $J
+    = \{ i \colon x^*(i) \neq 
+    0\}$. If the columns of $A_J$ are linearly independent, then $x^*$
+    is a basic feasible solution.
+  \end{lemma}
+  \begin{proof}
+    Augment $J$ to index set $B\supseteq J$ such that $A_B$ is non-singular.
+    One has $A_Bx^*_B=b$ and $x^*(j)=0$ for all $j \notin B$, thus $x^*$
+    is a basic solution.  \qed
+  \end{proof}
+  
+
+In exercise~\ref{item:5} you are to prove that there could be several
+bases which are associated to a basic feasible solution $x^*$. 
+
+
+Exercise~\ref{ex:16} shows that there exist optimization problems
+$\min\{c^Tx  \colon x \in K\}$ where $K\subseteq\setR^n$ is closed and bounded which
+are bounded but do not have optimum solutions. A corollary of
+Lemma~\ref{lem:8} is that this cannot happen for linear programs. 
+
+\begin{corollary}
+  \label{co:2}
+  A bounded and feasible linear program has an optimal basic feasible
+  solution.  
+\end{corollary}
+
+\begin{proof}
+  Lemma~\ref{lem:8} together with Lemma~\ref{lem:3} shows that for
+  each feasible $x^*$, there exists a basic feasible solution with an
+  objective function value which is at most the objective function
+  value of $x^*$. 
+  Since the number of basic feasible solutions is finite, 
+  a bounded linear program has an optimal basic feasible solution.
+
+\end{proof}
+
+
+
+\section{A naive algorithm for linear programming} 
+ \label{sec:naive-algor-line}
+ 
+ Suppose that we have a bounded linear program $\min\{c^Tx \mid x \in
+ \setR^n, \,Ax = b,\, x\geq0\}$ in standard form. We can already describe a
+ finite algorithm which computes an optimal solution, if the linear
+ program is feasible. Lemma~\ref{lem:8} tells us that, if there exists
+ an optimal solution, then there exists also an optimal basic feasible
+ solution. 
+
+ 
+The algorithm maintains a value which reflects the \emph{best
+  objective value} observed so far. In the beginning this is $\infty$. 
+
+We now enumerate all index sets $B \in \binom{n}{m}$ and test, whether
+$A_B$ is non-singular with Gaussian elimination. If this is the case,
+we compute $x^*_B = A_B^{-1}b$ and check whether $x^*_B\geq0$. If this
+is also the case, we check whether $c_B^Tx^*_B$ is smaller than the
+previously best observed objective value and update this best
+objective function value if this is again the case.
+
+This algorithm is however very inefficient. The enumeration of all
+index sets $B \in \binom{2m}{m}$ requires already at least $2^m$
+steps. 
+If $m$ is large this is enormous, see exercise~\ref{item:6}. 
+The simplex algorithm is based on a smarter principle.
+It \emph{improves} a basic feasible solution, by replacing it by
+another basic feasible solution which is in the neighborhood of the
+previous one. We will describe this next.
+ 
+
+
+
+\section{Simplex method: First steps}
+\label{sec:simplex-method}
+
+ Consider the linear
+programming problem 
+\begin{equation}
+  \label{eq:40}
+  \begin{array}{r}
+  \begin{matrix}               
+    \min \quad \quad  & 2 x_1 & + & 3 x_2 & +&  4 x_3 & +&  4 x_4  & & \\
+                      & x_1   & + & 2 x_2 & + & 3 x_3 & + & 4 x_4 & =&  3 \\
+                      & x_1   & + & x_2  & + & x_3 & + & x_4 & = & 2                      \\                          
+  \end{matrix} \\
+  x_1,x_2,x_3,x_4 \geq0. 
+\end{array}
+\end{equation}
+The first two columns of the constraint matrix $A$ are linearly
+independent. Let us now compute $x^* \in \setR^n$ such that $x^*_B =
+A_B^{-1} \cdot \smat{3\\2}$. For this, we subtract the second row of the 
+system 
+\begin{displaymath}
+  \begin{matrix}    
+    x_1   & + & 2 x_2 & + & 3 x_3 & + & 4 x_4 & =&  3 \\
+    x_1   & + & x_2  & + & x_3 & + & x_4 & = & 2
+    \\                          
+  \end{matrix}
+\end{displaymath}
+from the first, to obtain 
+\begin{displaymath}
+  \begin{matrix}    
+         &   &  x_2 & + & 2 x_3 & + & 3 x_4 & =&  1 \\
+    x_1   & + & x_2  & + & x_3 & + & x_4 & = & 2
+    \\                          
+  \end{matrix}
+\end{displaymath}
+Then we subtract the first row from the second, to obtain 
+\begin{displaymath}
+  \begin{matrix}    
+         &  &  x_2 & + & 2 x_3 & + & 3 x_4 & =&  1 \\
+    x_1   & + &     & + & -1 x_3 & + & -2x_4 & = & 1
+    \\                          
+  \end{matrix}
+\end{displaymath}
+Finally we swap the first and second row, and obtain the system 
+\begin{displaymath}
+  \begin{matrix}       
+    x_1   & + &     & + & -1 x_3 & + & -2x_4 & = & 1    
+    \\                          
+    &   &  x_2 & + & 2 x_3 & + & 3 x_4 & =&  1 
+  \end{matrix}
+\end{displaymath}
+
+\begin{definition}[Elementary row-operations]
+  \label{def:14}
+  Let $A\in \setR^{m\times n}$ be a matrix. An \emph{elementary row operation}
+  on $A$ is the addition of a multiple of one row, to another row. 
+\end{definition}
+
+The following lemma is known from linear algebra. 
+\begin{lemma}
+  \label{lem:12}
+  Let $A,A' \in \setR^{m\times n}$ and $b , b' \in \setR^m$. If the matrix
+  $\left[A'|b'\right]$ results from  $\left[A|b\right]$ by a finite
+  series of elementary row operations, then  $\{x \in  \setR^n \colon Ax=b\} =
+  \{x \in  \setR^n \colon A'x=b'\}$. 
+\end{lemma}
+
+\noindent 
+In other words, we have re-written our linear program from above as 
+\begin{displaymath}
+ \begin{array}{r}
+  \begin{matrix}               
+    \min \quad  & 2 x_1 & + & 3 x_2 & +&  4 x_3 & +&  4 x_4  & & \\
+ &      x_1   & + &     & + & -1 x_3 & + & -2x_4 & = & 1    
+    \\                          
+&    &   &  x_2 & + & 2 x_3 & + & 3 x_4 & =&  1 
+  \end{matrix} \\
+  x_1,x_2,x_3,x_4 \geq0. 
+\end{array}
+\end{displaymath}  
+From this representation, we can easily read off the basic feasible
+solution $x_1=1, x_2=1, x_3 = 0, x_4 = 0$ associated to $B =
+\{1,2\}$. We now consider the system
+\begin{displaymath}
+   \begin{matrix}               
+    2 x_1 & + & 3 x_2 & +&  4 x_3 & +&  4 x_4  & =  & 0 \\
+    \hline
+      x_1   & + &     & + & -1 x_3 & + & -2x_4 & = & 1    
+    \\                          
+    &   &  x_2 & + & 2 x_3 & + & 3 x_4 & =&  1 
+  \end{matrix}. 
+\end{displaymath}
+If we subtract 2-times the second row and 3-times the third row from
+the first row, we obtain the system 
+\begin{displaymath}
+  \begin{matrix}    
+ & + &       & + &     0 x_3 & + &    -1x_4 & = &
+-5\\ \hline 
+1  x_1 & + &    0 x_2 & + &   -1x_3 & + &    -2 x_4 & = &    1\\
+     0x_1 & + &     1x_2 & + &     2x_3& + &     3x_4 & = &     1
+   \end{matrix}                             
+\end{displaymath}
+We have eliminated the basic variables in the first row. The entry
+behind the equality sign of the first row is the negative of the
+objective value of the basic feasible solution $(1,1,0,0)$. We write
+this in a more compact form as follows 
+\begin{equation}
+  \label{eq:36}
+  \begin{tabularx}{.3 \textwidth}{XXXX|X}
+    0   &      0 &     0  &    -1   &   -5\\ \hline 
+    1   &    0  &    -1  &    -2 &      1\\
+    0 &     1 &     2&     3  &     1
+  \end{tabularx}
+\end{equation}
+%
+The general interpretation of this approach is as follows. We
+start with 
+\begin{displaymath}
+   \begin{array}{c|c}
+    c^T  & 0 \\ \hline 
+   A        & b
+  \end{array}
+\end{displaymath}
+and, given a basis $B$ of $A$ compute 
+\begin{equation}
+  \label{eq:37}
+  \begin{array}{c|c}
+    c^T - c_B^TA_B^{-1}A & -c_B^Tx^*_B \\ \hline 
+    A_B^{-1}A        & x^*_B.
+  \end{array}
+\end{equation}
+\begin{definition}[Tableau, reduced costs]
+  The matrix \eqref{eq:37} is called the \emph{tableau} of the basis
+  $B$. The tableau is \emph{feasible} if $x^*_B\geq0$. The first row of
+  the tableau is the $0$-th row. The remaining $m$ rows constitute the
+  \emph{system-matrix} of the tableau. 
+
+  The vector $\overline{c}^T_B = c^T- c_B^TA_B^{-1}A$ is called the \emph{reduced cost vector} of $B$. For
+  $i \in \{1,\ldots,n\}$ $\overline{c}_B(i)$ is the reduced cost of the
+  variable $x_i$. 
+\end{definition}
+Now back to our concrete example. Is the solution $(1,1,0,0)$ optimal?
+The fact that the reduced cost of $x_4$ is negative suggests to make a
+\emph{basis change}. We want to include $x_4$ into the basis, since
+then the elimination of the variable $x_4$ in the $0$-th row will make
+the element in the top-right corner larger and, remembering that this
+entry is the negative of the objective function value, we would have
+obtained  a
+better solution. % We increase the  value of $x_4$ from $0$
+%to $\lambda>0$. How do we have to adapt $x_1$ and $x_2$?  We have to
+%maintain the following conditions  
+%\begin{displaymath}
+%  \begin{array}{c}
+%    x_1 -2 \lambda =1 \\
+%    x_2 + 3\lambda =1
+%  \end{array}
+%\end{displaymath}
+%which implies $x_1 = 1 + 2\lambda$ and $x_2 = 1- 3 \lambda$. We want to increase
+%$\lambda$ by the maximum amount. The only restriction that we have to
+%respect is that $x_1$ and $x_2$ must remain nonnegative. We could only
+%violate the constraint $x_2\geq0$ and this, only if $\lambda>1/3$.
+If $x_4$ should enter the basis, then which variable should leave,
+$x_1$ or $x_2$? If $x_1$ should leave the basis, then we need to apply
+elementary row-operations to turn the gray column below into the first
+unit vector and if $x_2$ should leave the basis, then this column should
+become the second unit vector. 
+
+\begin{equation}
+\label{eq:45}
+  \begin{tabularx}{0.5 \textwidth}{AAAB|X}
+\rowcolor{white}    0   &      0 &     0  &    -1   &   -5\\ \hline 
+    1   &    0  &    -1  &    -2 &      1\\
+    0 &     1 &     2&     3  &     1
+  \end{tabularx}
+\end{equation}
+If $x_1$ leaves the basis, then the tableau becomes infeasible. This
+is because the first entry of the gray column is negative.  We decide
+therefore to make the following basis change $B = \{1,2\} \to B' =\{ 1, 4\}$. To
+compute the new tableau for $B'$ we multiply the last row by $1/3$ 
+and  add $2$-times the last row to the second
+and add the last row to the first row of the tableau, to obtain 
+\begin{equation}
+  \label{eq:39}
+  \begin{array}{cccc|c}
+       0&   1/3&   2/3&     0& -14/3 \\ \hline
+       1&    2/3&   1/3&     0&   5/3\\
+     0&   1/3&   2/3&     1&   1/3
+   \end{array}
+ \end{equation}
+%
+The next lemma shows that the above is indeed the tableau of $B = \{1,4\}$.
+\begin{lemma}
+  \label{lem:13}
+  Let $B\subset\{1,\ldots,n\}$ be an index set %and let  linear program $\min\{c^Tx \colon x \in \setR^n,
+%  \, Ax=b, \, x\geq0\}$ 
+and    consider a matrix 
+  \begin{equation}
+    \label{eq:38}
+    \begin{array}{c|c}
+      d^T & \beta \\ \hline 
+      Q & q 
+    \end{array}
+  \end{equation}
+  where 
+  \begin{enumerate}[i)]
+  \item $[Q|q]$ can be obtained from $[A|b]$ via a series
+      of elementary row operations 
+  \item $[d^T|\beta] = [c^T | 0] + v^T$, where $v^T$ is in the row-span
+    of $[A|b]$ 
+  \item $d_B=0$ 
+  \item $Q_B = I_m$,
+  \end{enumerate}
+  then $B$ is a basis and \eqref{eq:38} is the tableau of $B$.
+\end{lemma}
+
+
+
+%The general description of we have done so far is the following. We
+%consider the system 
+%\begin{displaymath}
+%  \begin{array}{c}
+%  c^Tx = 0 \\ \hline 
+%  Ax = b
+%\end{array}
+%\end{displaymath}
+%and a basis $B$. Then we multiply $A$ by $A_B^{-1}$. The result is
+%that $(A_B^{-1}A)_B = I_m$. Let $B = \{j_1,\ldots,j_m\}$ be the basis with
+%$j_1<\cdots<j_m$. The $i$-th row of $A_B^{-1}A$ has a $1$ in the $j_i$-th
+%column.  Next we subtract for each $j_i \in B$,  $c(j_i)$ times the  $i$-th
+%row of $(A_B^{-1}A)_B$ from the row above the line to obtain 
+%\begin{equation}
+%  \label{eq:34}
+%  \begin{array}{c}
+%    (c^T - c_B^T A_B^{-1}A) x = -c_B^T x^*_B \\ \hline 
+%  A_B^{-1} A x = x^*_B   
+%  \end{array}
+%\end{equation}
+
+
+\section{The dual linear program}
+\label{sec:dual-linear-program}
+
+Our guess is that the tableau~\eqref{eq:39} is optimal. To confirm
+this suspicion, we introduce the concept of the dual
+linear program. 
+
+\begin{definition}[Dual of a linear program in standard form]
+  \label{def:15}
+  Let $\min\{c^Tx \colon x \in \setR^n, \, Ax=b, \, x\geq0\}$ be a linear
+  program in standard form. The linear program $\max\{ b^Ty \colon y \in
+  \setR^m, \,A^Ty \leq  c\}$ is  the \emph{dual linear program} of
+  $\min\{c^Tx \colon x \in \setR^n, \, Ax=b, \, x\geq0\}$.  The linear program
+   $\min\{c^Tx \colon x \in \setR^n, \, Ax=b, \, x\geq0\}$ is  the
+  \emph{primal linear program}.  
+\end{definition}
+
+\begin{example}
+  \label{sec:dual-linear-program-1}
+  The dual linear program of \eqref{eq:40} is 
+  \begin{equation}
+    \label{eq:41}
+    \begin{matrix}
+      \max \quad &  3 y_1 & + & 2 y_2 & & \\
+      4 y_1 & + & y_2 & \leq & 4 \\
+      3 y_1 & + & y_2 & \leq & 4\\
+      2 y_1 & + & y_2 & \leq & 3\\
+      y_1 & +& y_2 & \leq & 2
+    \end{matrix}
+  \end{equation}
+\end{example}
+
+In our example of the simplex method above, we have arrived at a basis
+$B = \{1,4\}$ whose reduced cost vector did not have a negative
+entry. The next theorem reveals  that such a basis, if it is
+feasible, also yields an optimal solution. 
+
+
+\begin{theorem}[Weak duality]
+  \label{thr:15}
+  Let $x^*$ and $y^*$ be feasible solutions of the primal and dual
+  respectively, then $c^Tx^* \geq b^Ty^*$. 
+\end{theorem}
+
+\begin{proof}
+  We have 
+  \begin{equation}
+    \label{eq:42}
+    b^T y^* = ({x^*}^TA^T) y^* = {x^*}^T (A^T y^*) \leq {x^*}^T c = c^Tx^*  % = c^T y^* 
+  \end{equation}
+ where the inequality in \eqref{eq:42} follows from the fact that
+ $x^*\geq0$ and $A^T y^* \leq c$. \qed  
+\end{proof}
+
+
+\begin{lemma}
+  \label{lem:14}
+  Let $x^*$ be a basic solution associated to the basis $B$. 
+  If the reduced cost vector of $B$ is non-negative and if
+  $x^*_B\geq0$, then $x^*$ is an optimal basic feasible solution. 
+\end{lemma}
+
+\begin{proof}
+  We show that $y^* = {A_B^{-1}}^T  c_B$ is a feasible solution of the
+  dual with objective value $b^Ty^* = c^Tx^*$. The assertion then
+  follows from weak duality. We have 
+  \begin{eqnarray*}
+    A^T y^* & = & A^T {A_B^{-1}}^T  c_B \\
+         & \leq & c,
+  \end{eqnarray*}
+  since $c^T - c_B^T A_B^{-1}A \geq0$. This means that $y^*$ is a
+  feasible dual solution. Its objective value 
+  is
+  \begin{eqnarray*}
+    b^Ty^* & = & {y^*}^T A x^* \\
+        & = & c_B^T A_B^{-1} A x^* \\
+        & = & c_B^T x^*_B\\
+        & = & c^Tx^*
+  \end{eqnarray*}
+  and the assertion follows. \qed 
+\end{proof}
+
+This shows that we have found in~\eqref{eq:39}  an optimal basic
+feasible solution $(5/3,0,0,1/3)$.  
+\begin{definition}[Optimal basis]
+  \label{def:2}
+  A basis $B$ with $\overline{c}^T = c^T - c_B^T A_B^{-1}A \geq0$
+  and with $A_B^{-1}b \geq0$ is   called an \emph{optimal basis}. 
+\end{definition}
+%
+We have seen above that an optimal basis $B$ yields an optimal basic
+feasible solution $x^*$ with $x^*_B = A_B^{-1}b$ and
+$x^*_{\overline{B}} = 0$. 
+
+
+\section{A larger example}
+\label{sec:larger-example}
+
+Before we describe the simplex method in full generality, we inspect
+another example. We consider the linear program 
+
+
+\begin{equation}
+\label{simpleq:44}
+  \begin{array}{c}
+  \begin{matrix}
+    \min \quad &  -5x_1 & - &  3 x_2 & - & 2 x_3 & &    \\
+        & 2x_1 &+& 3x_2 &+& x_3 &\leq&5 \\
+        & 4x_1 &+& x_2 &+& 2x_3 &\leq& 9 \\
+        & 3 x_1 &+& 4 x_2 &+& 2 x_3 &\leq& 10 \\
+
+       \end{matrix}\\
+       x_1,x_2,x_3\geq0
+\end{array}
+\end{equation}
+
+We add variables $x_4,x_5$ and $x_6$ and transform this linear program
+in standard form
+\begin{equation}
+\label{eq:44}
+  \begin{array}{r}
+  \begin{array}{cccccccccccccc}
+    \min \quad &   -5x_1 & - &  3 x_2 & - & 2 x_3  &   &    & & & & & &      \\
+               & 2x_1    & + &   3x_2 & + & x_3    & + & x_4 & & & & &
+               = & 5  \\
+        & 4x_1 &+& x_2 &+& 2x_3 & & & + & x_5  & &   &=& 9 \\
+      & 3 x_1 &+& 4 x_2 &+& 2 x_3 & & & & & & + & x_6= & 10 
+       \end{array}\\
+       x_1,x_2,x_3,x_4,x_5,x_6\geq0
+\end{array}
+\end{equation}
+%
+We start with the feasible basis $B = \{4,5,6\}$ and the corresponding
+tableau, where the red-columns correspond to basis elements 
+\begin{displaymath}
+  \begin{tabularx}{0.5\textwidth}{AAARRR|X}   
+\rowcolor{white}    -5&-4&-3&0&0&0&0\\\hline 
+   2&3&1&1&0&0&5\\
+   4&1&2&0&1&0&9\\
+   3&4&2&0&0&1&10 
+ \end{tabularx}
+\end{displaymath}
+The reduced cost of $x_1$ is negative, we decide to let $x_1$ enter
+the basis. We now want to transform the gray column into a unit
+vector such that the tableau is still feasible. The red columns
+are the basis-columns. 
+\begin{equation}
+\label{eq:1}
+  \begin{tabularx}{0.5\textwidth}{BAARRR|X}   
+\rowcolor{white}    -5&-4&-3&0&0&0&0\\\hline 
+   2&3&1&1&0&0&5\\
+   4&1&2&0&1&0&9\\
+   3&4&2&0&0&1&10 
+ \end{tabularx}
+\end{equation}
+We now need to decide, which element  should leave $B = \{4,5,6\}$. If
+it should be $4$, then the gray column should be transformed into
+$(1,0,0)^T$. Let us see what happens if we apply elementary
+row-operations on the system matrix of the tableau such that the first
+column becomes $(1,0,0)^T$. 
+\begin{displaymath}
+  \begin{tabularx}{0.5\textwidth}{RAAARR|X}   
+\rowcolor{white}    0&-4&-3&0&0&0&25/2\\\hline 
+   1&3/2&1/2&1/2&0&0&5/2\\
+   0&-5&0&-2&1&0&-1\\
+   0&2&1/2&-3/2&0&1&1/2 
+ \end{tabularx}
+\end{displaymath}
+The result is the tableau of $\{1,5,6\}$, the objective function value
+has improved but the basic solution of $\{1,5,6\}$ is not feasible,
+since $x^*(5) = -1$.
+
+
+What went wrong? Let us abstract from the specific situation and
+suppose that we have the following situation. We have a feasible basis
+$B = \{B_1,\ldots,B_m\}$ and a tableau  of the basis $B$. The reduced cost
+of $j$ are negative and we want to add $j$ to $B$. The picture below
+represents this situation, where the $j$-th column is the gray
+column. This column is also called the \emph{pivot column}. 
+
+\begin{center}
+  \begin{tabularx}{0.5\textwidth}{ABAAA|X}   
+       \rowcolor{white} & $\overline{c}(j)$ & &  & & $-c^Tx^*$ \\\hline
+       &$ u(1)$  & & & & $x^*(B_1)$  \\
+       &$\vdots$  & & & & $\vdots$  \\
+       &$ u(i)$  & & & & $x^*(B_i)$  \\
+       &$\vdots$  & & & & $\vdots$  \\
+       &$ u(m)$  & & & & $x^*(B_m)$  \\
+ \end{tabularx}
+\end{center}
+%
+If we now decide to let $B_i$ leave the basis, then we transform the
+gray column into the $i$-th unit vector with elementary row-operations
+and obtain 
+
+\begin{center}
+  \begin{tabular}{cGc|c}   
+     \rowcolor{white}   \hspace{2cm} &  $\overline{c}(j)$
+     &\hspace{2cm}  & 
+
+$-c^Tx^*$ \\ \hline
+&       $ 0 $  &&   $x^*(B_1) -  u(1) \cdot \frac{x^*(B_i)}{u(i)} $  \\
+&       $ \vdots $ && $\vdots$  \\
+&       $ 0 $  && $x^*(B_{i-1})- u(i-1) \cdot \frac{x^*(B_i)}{ u(i)}    $  \\
+&       $ 1$  && $x^*(B_i) / u(i)$  \\
+&       $ 0 $  &&  $x^*(B_{i+1})-   u(i+1)\cdot  \frac{x^*(B_i)}{ u(i)}  $  \\
+&       $ $  && $\vdots$  \\
+&       $ 0 $  &&   $x^*(B_m) - u(m) \cdot \frac{x^*(B_i)}{u(i)}$  
+ \end{tabular}
+\end{center}
+
+Then we eliminate the $\overline{c}(j)$ by adding $-\overline{c}(j)$
+times the $i$-th row of the system matrix to the zeroth row to obtain 
+
+
+
+\begin{center}
+  \begin{tabular}{cGc|c}   
+      \rowcolor{white}   \hspace{2cm} &  $0$
+        &\hspace{2cm}  &   $-c^Tx^* - \overline{c}(j)\cdot
+       x^*(B_i) / u(i)$ \\ \hline 
+   &       $ 0 $  &&   $x^*(B_1) -  u(1) \cdot \frac{x^*(B_i)}{u(i)} $  \\
+   &     $ \vdots $ && $\vdots$  \\
+   &    $ 0 $  &&  $x^*(B_{i-1})- u(i-1) \cdot \frac{x^*(B_i)}{ u(i)}    $  \\
+   &    $ 1$  && $x^*(B_i) / u(i)$  \\
+   &    $ 0 $  && $x^*(B_{i+1})-   u(i+1)\cdot  \frac{x^*(B_i)}{ u(i)}  $  \\
+   &    $ \vdots$  && $\vdots$  \\
+   &    $ 0 $  &&   $x^*(B_m) - u(m) \cdot \frac{x^*(B_i)}{u(i)}$  
+ \end{tabular}
+\end{center}
+
+Let us deduce a set of conditions, under which these sequence of
+operations are allowed and such that the obtained tableau is feasible. 
+
+
+\begin{enumerate}[a)]
+\item $u(i) >0$,\\ since if $u(i) \leq0$, then we either cannot divide by $u(i)$
+  or the basis is not feasible since $x^*(B_i) / u(i) <0$.  \label{item:1}
+\item $x^*(B_i) / u(i) = \min\{ x^*(B_j) / u(j) \colon B_j \in B, \, u(j)
+  >0\}$, \\
+  since the condition $x^*(B_j) - u(j) \cdot \frac{x^*(B_i)}{u(i)} \geq0$ is
+  satisfied for each $B_j \in B$ if and only if the condition holds. \label{item:2}
+\end{enumerate}
+
+
+Looking back at our example~\eqref{eq:1} we see that
+condition~\ref{item:2}) was violated. With $B_1=4,B_2=5,B_3=6$ we see
+that $x^*(B_1)/u(1) = 5/2$ and this is larger than $x^*(B_2)/u(2) =
+9/4$, which is the minimum of the ratios. We therefore let $B_2=5$
+leave the basis and obtain 
+
+\begin{displaymath}
+  \begin{tabularx}{0.6\textwidth}{RAARAR|X}   
+    \rowcolor{white}   
+     0& -11/4&  -1/2&     0&   5/4&     0&  45/4 \\ \hline 
+     0&   5/2&     0&     1&  -1/2&     0&   1/2 \\
+     1&   1/4&   1/2&     0&   1/4&     0&   9/4 \\
+     0&  13/4&   1/2&     0&  -3/4&     1&  13/4
+  \end{tabularx}
+\end{displaymath}
+%
+To arrive then at the feasible tableau of the basis $B' = \{1,4,6\}$
+we still need to swap the first and second row of the system matrix: 
+\begin{displaymath}
+  \begin{tabularx}{0.6\textwidth}{RAARAR|X}   
+    \rowcolor{white}   
+     0& -11/4&  -1/2&     0&   5/4&     0&  45/4 \\ \hline 
+     1&   1/4&   1/2&     0&   1/4&     0&   9/4 \\
+     0&   5/2&     0&     1&  -1/2&     0&   1/2 \\
+     0&  13/4&   1/2&     0&  -3/4&     1&  13/4
+  \end{tabularx}
+\end{displaymath}
+
+\subsection{One iteration of the simplex method} 
+\label{sec:one-iter-simpl}
+
+ We start with a feasible basis  $B \subseteq\{1,\ldots,n\}$ and an associated tableau 
+\begin{equation}
+  \label{eq:2}
+  \begin{array}{c|c}
+    \overline{c}^T  & -c_B^Tx^*_B \\ \hline 
+    A_B^{-1}A        & x^*_B.
+  \end{array}
+\end{equation}
+
+
+
+\noindent 
+{\bfseries The simplex algorithm} starts with a feasible tableau and
+keeps iterating the procedure below.
+
+
+
+\begin{enumerate}
+\item If $\overline{c}\geq0$, then {\bf output optimal basis $B$}
+  \label{item:3}
+\item Otherwise, let $j$ be an index with $\overline{c}(j)<0$ and let
+  $u = A_B^{-1}A^j$ be the $j$-th column of the system matrix of the
+  tableau. If $u\leq0$, then {\bf output $-\infty$}, the linear program is
+  unbounded. \label{item:7}
+\item Otherwise compute the ratios $x^*(B_i)/ u(i)$ for all $i =
+  1,\ldots,m$ with $u(i)>0$. Let $i^*$ be an index where this minimum is
+  attained. The index $B_{i^*}$ leaves the basis and $j$ enters the
+  basis, i.e., the new basis is $B' = B \setminus\{B_{i^*}\} \cup \{j\}$. 
+\item Update the tableau to 
+  \begin{displaymath}    
+  \begin{array}{c|c}
+    c^T - c_{B'}^TA_{B'}^{-1}A  & -c_{B'}^Tx^*_{B'} \\ \hline 
+    A_{B'}^{-1}A        & x^*_{B'}.
+  \end{array}
+\end{displaymath}
+\end{enumerate}
+%
+We need to justify that the we correctly assert in step~\ref{item:7} that the linear
+program is unbounded if $u\leq0$. 
+\begin{theorem}
+  \label{thr:1}
+  If $\overline{c}(j)<0$  and $u\leq0$, then the linear program is
+  unbounded. 
+\end{theorem}
+
+\begin{proof}
+  Consider the vector $d$ with $d_B = -u$ and $d(j) = 1$, which is
+  zero at all other components. Since $A d=0$ and since $d\geq0$, we
+  have that for each feasible $x^*$ and for each $\lambda\geq0$, also the
+  point $x^* + \lambda d$ is feasible. What is the objective function value
+  of $d$? 
+  \begin{eqnarray*}
+    c^Td & = & c(j) - c_B^T A_B^{-1} A \\
+        & = & \overline{c}(j) \\
+        & < & 0. 
+  \end{eqnarray*}
+  This means that  the objective function value of $x^* +
+  \lambda d$ which is $c^Tx^* + \lambda c^Td$ can be made as small as we wish by
+  increasing $\lambda$, without becoming infeasible.  The linear program is
+  unbounded. 
+  \qed 
+\end{proof}
+
+
+
+Let us continue our example. We decide to bring $2$ into the
+basis, since $\overline{c}(2) = -11/4 <0$. 
+
+\begin{displaymath}
+  \begin{tabularx}{0.8\textwidth}{RBARAR|X}   
+    \rowcolor{white}   
+     0& -11/4&  -1/2&     0&   5/4&     0&  45/4 \\ \hline 
+     1&   1/4&   1/2&     0&   1/4&     0&   9/4 \\
+     0&   5/2&     0&     1&  -1/2&     0&   1/2 \\
+     0&  13/4&   1/2&     0&  -3/4&     1&  13/4
+  \end{tabularx}
+\end{displaymath}
+
+We compute the ratios: $9, 1/5, 1$ and decide that the second
+ element of $\{1,4, 6\}$ should leave the basis, i.e., we want to have
+ the second unit vector in the pivot column. 
+
+
+\begin{displaymath}
+  \begin{tabularx}{0.8\textwidth}{RRBAAR|X}   
+    \rowcolor{white}       
+    0&      0&   -1/2&  11/10&   7/10&      0&   59/5\\ \hline 
+    1&      0&    1/2&  -1/10&   3/10&      0&   11/5\\
+    0&      1&      0&    2/5&   -1/5&      0&    1/5\\
+    0&      0&    1/2& -13/10&  -1/10&      1&   13/5\\
+  \end{tabularx}
+\end{displaymath}
+
+
+After one more iteration we obtain an obtimal feasible tableau
+
+\begin{displaymath}
+  \begin{tabularx}{0.8\textwidth}{ARRAAR|X}   
+    \rowcolor{white}       
+        1&    0&    0&    1&    1&    0&   14\\ \hline 
+        0&    1&    0&  2/5& -1/5&    0&  1/5\\
+        2&    0&    1& -1/5&  3/5&    0& 22/5\\
+       -1&    0&    0& -6/5& -2/5&    1&  2/5\\
+  \end{tabularx}
+\end{displaymath}
+
+
+
+
+
+\subsection{What  next?}
+\label{sec:further-questions}
+ The two main questions that we
+are next going to deal with   are the following.  
+\begin{enumerate}[I)]
+\item How do we find an initially feasible basis? \label{item:8}
+\item If we start from a feasible basis, does the simplex method
+  terminate? \label{item:9} 
+\end{enumerate}
+
+
+
+
+\section{Exercises}
+
+\begin{enumerate}
+\item Transform the following linear program into equation standard
+  form \label{item:4}
+  \begin{displaymath}
+    \begin{array}{c}
+      \begin{matrix}
+        \max \quad &  3x_1& +& 4x_2& +& 2 x_3& & \\
+             &  &  & x_2  & + & 2x_3 &\geq & 4 \\ 
+             &  2x_1 &+  & x_2 &+  &3x_3 &\leq & 10\\
+             &      &   & x_2   &   &    & \leq & 0 
+      \end{matrix}
+    \end{array}
+  \end{displaymath}
+\item  \label{item:5}    Provide an example of  a basic solution that can be
+  associated to two   different bases. %, thereby showing that the
+%  converse of Lemma~\ref{lem:3} is false. 
+ 
+\item This exercise should give you a sense of exponential growth as
+  one experiences it with the running time of the naive linear
+  programming algorithm. Have a look at this program. What is its
+  running time?  Experiment with different inputs and determine the
+  largest exponent for which the program needs less running time than
+  a day on your computer. Make an estimation on how many rows and
+  variables a linear program could have such that the naive algorithm
+  for linear programming finishes within a day on your computer.
+  \label{item:6} Estimate how many rows and variables a linear needs
+  to have such that the naive algorithm does not terminate on your
+  computer before our sun will stop to shine. 
+\begin{verbatim}
+#include <iostream>
+#include <cmath>
+
+using namespace std;  
+
+int main()
+{
+  
+  double n; 
+  
+  cout << "\n Enter the exponent" ;
+  cin >> n ;
+  long i,j;
+  j=0;
+  for (i=1; i<= pow(2.0,n); i++)
+    j = j+i;
+  
+  cout << j;
+
+}
+
+
+\end{verbatim}
+
+
+\item Prove Lemma~\ref{lem:13}. 
+\end{enumerate}
+
+
+
+
+\bibliographystyle{abbrv}
+
+\bibliography{mybib,papers,books,my_publications}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End: 

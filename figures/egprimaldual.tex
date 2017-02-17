@@ -1,0 +1,190 @@
+\documentclass[border=12pt,pstricks]{standalone}
+\usepackage{pstricks}
+
+\usepackage{pst-all}
+\usepackage{pst-coil}
+
+\newgray{vlg}{.85}
+\newgray{vvlg}{.95}
+
+\usepackage{amsmath}
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+\newcommand{\R}{\setR}
+\newcommand{\Z}{\setZ}
+\newcommand{\N}{\setN}
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+
+\begin{document}
+
+\begin{pspicture}(-1,-3)(2,10)%\showgrid     
+$ 
+\psmatrix[colsep=2cm,rowsep=1cm]
+  [mnode=circle]0 & [mnode=circle]0  & & 
+  [mnode=circle]2 & [mnode=circle]0         \\
+  [mnode=circle]0 & [mnode=circle]0  & & 
+  [mnode=circle]2 & [mnode=circle]0         \\
+                                            \\
+                                            \\
+  [mnode=circle]5 & [mnode=circle]0  & & 
+  [mnode=circle]5 & [mnode=circle]0         \\
+  [mnode=circle]5 & [mnode=circle]-3 & & 
+  [mnode=circle]6 & [mnode=circle]-3
+  \ncline{-}{1,1}{1,2}^{5}
+  \ncarc{-}{1,1}{2,2}>{2}
+  \ncline{-}{2,1}{1,2}<{9}
+  \ncline{-}{2,1}{2,2}_{3}    
+  \ncline{-}{1,4}{1,5}^{5}
+  \psset{linecolor=red}
+  \ncarc{->}{1,4}{2,5}>{2}
+  \psset{linecolor=black}
+  \ncline{-}{2,4}{1,5}<{9}
+  \ncline{-}{2,4}{2,5}_{3}
+  \psset{linecolor=green}  
+  \ncline{<-}{5,1}{5,2}^{5}
+  \psset{linecolor=red}
+  \ncarc{->}{5,1}{6,2}>{2}
+  \psset{linecolor=black}
+  \ncline{-}{6,1}{5,2}<{9}
+  \ncline{-}{6,1}{6,2}_{3}  
+  \psset{linecolor=red}  
+  \ncline{->}{5,4}{5,5}^{5}
+  \psset{linecolor=green}
+  \ncarc{<-}{5,4}{6,5}>{2}
+  \psset{linecolor=black}
+  \ncline{-}{6,4}{5,5}<{9}
+  \psset{linecolor=red}
+  \ncline{->}{6,4}{6,5}_{3}  
+\endpsmatrix
+$
+
+\psellipse(-10.43,6.77)(0.55,1.5)
+\psellipse(-7.76,6.77)(0.55,1.5)
+\rput(-10.43,8.5){$A$}
+\rput(-7.76,8.5){$B$}
+\rput(-10.43,8){$a$}
+\rput(-7.76,8){$b$}
+\rput(-10.43,6.5){$c$}
+\rput(-7.76,6.5){$d$}
+\rput(-9,4.8){$y^* = (0,0,0,0), E_{y^*}=\emptyset$}
+\rput(-9,4.4){$M=\emptyset, L=\{b,d\}, \delta=2$}
+
+\psellipse(-3.07,6.77)(0.55,1.5)
+\psellipse(-0.4,6.77)(0.55,1.5)
+\rput(-3.07,8.5){$A$}
+\rput(-0.4,8.5){$B$}
+\rput(-3.07,8){$a$}
+\rput(-0.4,8){$b$}
+\rput(-3.07,6.5){$c$}
+\rput(-0.4,6.5){$d$}
+\rput(-1.7,4.8){$y^* = (2,0,2,0), E_{y^*}=\{ad\}$}
+\rput(-1.7,4.4){$M=\{ad\}, L=\{b\}, \delta=3$}
+
+\psellipse(-10.43,0.85)(0.55,1.5)
+\psellipse(-7.76,0.85)(0.55,1.5)
+\rput(-10.43,2.6){$A$}
+\rput(-7.76,2.6){$B$}
+\rput(-10.43,2.1){$a$}
+\rput(-7.76,2.12){$b$}
+\rput(-10.43,0.6){$c$}
+\rput(-7.76,0.6){$d$}
+\rput(-9,-1){$y^* = (5,0,5,-3), E_{y^*}=\{ad,ba\}$}
+\rput(-9,-1.4){$M=\{ad\}, L=\{a,b,d\}, \delta=1$}
+
+\psellipse(-3.07,0.85)(0.55,1.5)
+\psellipse(-0.4,0.85)(0.55,1.5)
+\rput(-3.07,2.6){$A$}
+\rput(-0.4,2.6){$B$}
+\rput(-3.07,2.1){$a$}
+\rput(-0.4,2.12){$b$}
+\rput(-3.07,0.6){$c$}
+\rput(-0.4,0.6){$d$}
+\rput(-1.7,-1){$y^* = (5,0,6,-3), E_{y^*}=\{ab,da,cd\}$}
+\rput(-1.7,-1.4){$M=\{ab,cd\}, L=\emptyset$}
+
+
+
+\end{pspicture}
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

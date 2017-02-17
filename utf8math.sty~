@@ -1,0 +1,358 @@
+% -*- mode: latex; -*-
+% Include greek 
+% (c) 2003 Elmar Zander, Institute of Scientific Computing, TU Braunschweig
+% CVS: $Id: symbols.sty,v 1.33 2005/07/12 15:05:04 ezander Exp $
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{utf8math}[2010/09/12 Include Unicode math symbols directly
+in LaTeX]
+\typeout{Package: utf8math v1.0 <2003/05/12> (Elmar Zander)} 
+
+\RequirePackage{inputenc}
+
+\def\utfch@rundefined{}
+\def\defutfmathch@r#1#2{%
+  \ifx#2\utfch@rundefined%
+  \DeclareUnicodeCharacter{#1}{?%
+%    \PackageWarning{utf8math}{Unicode character U+#1 undefined}%
+%    \PackageError{utf8math}{Unicode character U+#1 undefined}%
+  }%
+  \else%
+  \DeclareUnicodeCharacter{#1}{\ensuremath{#2}}%
+  \fi%
+}
+
+
+\defutfmathch@r{0391}{A}
+\defutfmathch@r{0392}{B}
+\defutfmathch@r{0393}{\Gamma}
+\defutfmathch@r{0394}{\Delta}
+\defutfmathch@r{0395}{E}
+\defutfmathch@r{0396}{Z}
+\defutfmathch@r{0397}{H}
+\defutfmathch@r{0398}{\Theta}
+\defutfmathch@r{0399}{I}
+\defutfmathch@r{039A}{K}
+\defutfmathch@r{039B}{\Lambda}
+\defutfmathch@r{039C}{M}
+\defutfmathch@r{039D}{N}
+\defutfmathch@r{039E}{\Xi}
+\defutfmathch@r{039F}{O}
+\defutfmathch@r{03A0}{\Pi}
+\defutfmathch@r{03A1}{P}
+\defutfmathch@r{03A3}{\Sigma}
+\defutfmathch@r{03A4}{T}
+\defutfmathch@r{03A5}{Y}
+\defutfmathch@r{03A6}{\Phi}
+\defutfmathch@r{03A7}{X}
+\defutfmathch@r{03A8}{\Psi}
+\defutfmathch@r{03A9}{\Omega}
+
+\defutfmathch@r{03B1}{\alpha}
+\defutfmathch@r{03B2}{\beta}
+\defutfmathch@r{03B3}{\gamma}
+\defutfmathch@r{03B4}{\delta}
+\defutfmathch@r{03B5}{\epsilon}
+\defutfmathch@r{03B6}{\zeta}
+\defutfmathch@r{03B7}{\eta}
+\defutfmathch@r{03B8}{\theta}
+\defutfmathch@r{03B9}{\iota}
+\defutfmathch@r{03BA}{\kappa}
+\defutfmathch@r{03BB}{\lambda}
+\defutfmathch@r{03BC}{\mu}
+\defutfmathch@r{03BD}{\nu}
+\defutfmathch@r{03BE}{\xi}
+\defutfmathch@r{03BF}{o}
+\defutfmathch@r{03C0}{\pi}
+\defutfmathch@r{03C1}{\rho}
+\defutfmathch@r{03C2}{\varsigma}
+\defutfmathch@r{03C3}{\sigma}
+\defutfmathch@r{03C4}{\tau}
+\defutfmathch@r{03C5}{\upsilon}
+\defutfmathch@r{03C6}{\phi}
+\defutfmathch@r{03C7}{\chi}
+\defutfmathch@r{03C8}{\psi}
+\defutfmathch@r{03C9}{\omega}
+\defutfmathch@r{03D1}{\vartheta}
+%\defutfmathch@r{03D2}{\upsih}
+\defutfmathch@r{03D6}{\varpi}
+
+
+
+
+
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+
+%\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+%\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+%\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+%\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+
+
+\defutfmathch@r{2192}{\to} % FOR ALL (∀)
+
+
+\defutfmathch@r{2200}{\forall} % FOR ALL (∀)
+\defutfmathch@r{2201}{\complement} % COMPLEMENT (∁)
+\defutfmathch@r{2202}{\partial} % PARTIAL DIFFERENTIAL (∂)
+\defutfmathch@r{2203}{\exists} % THERE EXISTS (∃)
+\defutfmathch@r{2204}{\nexists} % THERE DOES NOT EXIST (∄)
+\defutfmathch@r{2205}{\emptyset\varnothing} % EMPTY SET (∅)
+\defutfmathch@r{2206}{\Delta} % INCREMENT (∆)
+\defutfmathch@r{2207}{\nabla} % NABLA (∇)
+\defutfmathch@r{2208}{\in} % ELEMENT OF (∈)
+\defutfmathch@r{2209}{\not\in} % NOT AN ELEMENT OF (∉)
+\defutfmathch@r{220A}{{\scriptstyle\in}} % SMALL ELEMENT OF (∊)
+\defutfmathch@r{220B}{\ni} % CONTAINS AS MEMBER (∋)
+\defutfmathch@r{220C}{\not\ni} % DOES NOT CONTAIN AS MEMBER (∌)
+\defutfmathch@r{220D}{{\scriptstyle\ni}} % SMALL CONTAINS AS MEMBER (∍)
+\defutfmathch@r{220E}{\utfch@rundefined} % END OF PROOF (∎)
+\defutfmathch@r{220F}{\prod} % N-ARY PRODUCT (∏)
+\defutfmathch@r{2210}{\coprod} % N-ARY COPRODUCT (∐)
+\defutfmathch@r{2211}{\sum} % N-ARY SUMMATION (∑)
+\defutfmathch@r{2212}{-} % MINUS SIGN (−)
+\defutfmathch@r{2213}{\mp} % MINUS-OR-PLUS SIGN (∓)
+\defutfmathch@r{2214}{\dot{+}} % DOT PLUS (∔)
+\defutfmathch@r{2215}{/} % DIVISION SLASH (∕)
+\defutfmathch@r{2216}{\backslash} % SET MINUS (∖)
+\defutfmathch@r{2217}{\ast} % ASTERISK OPERATOR (∗)
+\defutfmathch@r{2218}{\circ} % RING OPERATOR (∘)
+\defutfmathch@r{2219}{\cdot} % BULLET OPERATOR (∙)
+\defutfmathch@r{221A}{\sqrt} % SQUARE ROOT (√)
+\defutfmathch@r{221B}{\sqrt[3]{}} % CUBE ROOT (∛)
+\defutfmathch@r{221C}{\sqrt[4]{}} % FOURTH ROOT (∜)
+\defutfmathch@r{221D}{\propto} % PROPORTIONAL TO (∝)
+\defutfmathch@r{221E}{\infty} % INFINITY (∞)
+\defutfmathch@r{221F}{\utfch@rundefined} % RIGHT ANGLE (∟)
+\defutfmathch@r{2220}{\angle} % ANGLE (∠)
+\defutfmathch@r{2221}{\measuredangle} % MEASURED ANGLE (∡)
+\defutfmathch@r{2222}{\sphericalangle} % SPHERICAL ANGLE (∢)
+\defutfmathch@r{2223}{\mid} % DIVIDES (∣)
+\defutfmathch@r{2224}{\nmid} % DOES NOT DIVIDE (∤)
+\defutfmathch@r{2225}{\parallel} % PARALLEL TO (∥)
+\defutfmathch@r{2226}{\nparallel} % NOT PARALLEL TO (∦)
+\defutfmathch@r{2227}{\wedge} % LOGICAL AND (∧)
+\defutfmathch@r{2228}{\vee} % LOGICAL OR (∨)
+\defutfmathch@r{2229}{\cap} % INTERSECTION (∩)
+\defutfmathch@r{222A}{\cup} % UNION (∪)
+\defutfmathch@r{222B}{\int} % INTEGRAL (∫)
+\defutfmathch@r{222C}{\iint} % DOUBLE INTEGRAL (∬)
+\defutfmathch@r{222D}{\iiint} % TRIPLE INTEGRAL (∭)
+\defutfmathch@r{222E}{\oint} % CONTOUR INTEGRAL (∮)
+\defutfmathch@r{222F}{\oiint} % SURFACE INTEGRAL (∯)
+\defutfmathch@r{2230}{\utfch@rundefined} % VOLUME INTEGRAL (∰)
+\defutfmathch@r{2231}{\utfch@rundefined} % CLOCKWISE INTEGRAL (∱)
+\defutfmathch@r{2232}{\utfch@rundefined} % CLOCKWISE CONTOUR INTEGRAL (∲)
+\defutfmathch@r{2233}{\utfch@rundefined} % ANTICLOCKWISE CONTOUR INTEGRAL (∳)
+\defutfmathch@r{2234}{\therefore} % THEREFORE (∴)
+\defutfmathch@r{2235}{\because} % BECAUSE (∵)
+\defutfmathch@r{2236}{:} % RATIO (∶)
+\defutfmathch@r{2237}{::} % PROPORTION (∷)
+\defutfmathch@r{2238}{\utfch@rundefined} % DOT MINUS (∸)
+\defutfmathch@r{2239}{-:} % EXCESS (∹)
+\defutfmathch@r{223A}{\utfch@rundefined} % GEOMETRIC PROPORTION (∺)
+\defutfmathch@r{223B}{\utfch@rundefined} % HOMOTHETIC (∻)
+\defutfmathch@r{223C}{\sim} % TILDE OPERATOR (∼)
+\defutfmathch@r{223D}{\backsim} % REVERSED TILDE (∽)
+\defutfmathch@r{223E}{\utfch@rundefined} % INVERTED LAZY S (∾)
+\defutfmathch@r{223F}{\utfch@rundefined} % SINE WAVE (∿)
+\defutfmathch@r{2240}{\wr} % WREATH PRODUCT (≀)
+\defutfmathch@r{2241}{\nsim} % NOT TILDE (≁)
+\defutfmathch@r{2242}{\utfch@rundefined} % MINUS TILDE (≂)
+\defutfmathch@r{2243}{\simeq} % ASYMPTOTICALLY EQUAL TO (≃)
+\defutfmathch@r{2244}{\not\simeq} % NOT ASYMPTOTICALLY EQUAL TO (≄)
+\defutfmathch@r{2245}{\utfch@rundefined} % APPROXIMATELY EQUAL TO (≅)
+\defutfmathch@r{2246}{\utfch@rundefined} % APPROXIMATELY BUT NOT ACTUALLY EQUAL TO (≆)
+\defutfmathch@r{2247}{\utfch@rundefined} % NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO (≇)
+\defutfmathch@r{2248}{\approx} % ALMOST EQUAL TO (≈)
+\defutfmathch@r{2249}{\not\approx} % NOT ALMOST EQUAL TO (≉)
+\defutfmathch@r{224A}{\utfch@rundefined} % ALMOST EQUAL OR EQUAL TO (≊)
+\defutfmathch@r{224B}{\utfch@rundefined} % TRIPLE TILDE (≋)
+\defutfmathch@r{224C}{\utfch@rundefined} % ALL EQUAL TO (≌)
+\defutfmathch@r{224D}{\asymp} % EQUIVALENT TO (≍)
+\defutfmathch@r{224E}{\Bumpeq} % GEOMETRICALLY EQUIVALENT TO (≎)
+\defutfmathch@r{224F}{\bumpeq} % DIFFERENCE BETWEEN (≏)
+\defutfmathch@r{2250}{\doteq} % APPROACHES THE LIMIT (≐)
+\defutfmathch@r{2251}{\doteqdot} % GEOMETRICALLY EQUAL TO (≑)
+\defutfmathch@r{2252}{\fallingdotseq} % APPROXIMATELY EQUAL TO OR THE IMAGE OF (≒)
+\defutfmathch@r{2253}{\risingdotseq} % IMAGE OF OR APPROXIMATELY EQUAL TO (≓)
+\defutfmathch@r{2254}{:=} % COLON EQUALS (≔)
+\defutfmathch@r{2255}{=:} % EQUALS COLON (≕)
+\defutfmathch@r{2256}{\utfch@rundefined} % RING IN EQUAL TO (≖)
+\defutfmathch@r{2257}{\circeq} % RING EQUAL TO (≗)
+\defutfmathch@r{2258}{\utfch@rundefined} % CORRESPONDS TO (≘)
+\defutfmathch@r{2259}{\utfch@rundefined} % ESTIMATES (≙)
+\defutfmathch@r{225A}{\utfch@rundefined} % EQUIANGULAR TO (≚)
+\defutfmathch@r{225B}{\utfch@rundefined} % STAR EQUALS (≛)
+\defutfmathch@r{225C}{\triangleq} % DELTA EQUAL TO (≜)
+\defutfmathch@r{225D}{\utfch@rundefined} % EQUAL TO BY DEFINITION (≝)
+\defutfmathch@r{225E}{\utfch@rundefined} % MEASURED BY (≞)
+\defutfmathch@r{225F}{\utfch@rundefined} % QUESTIONED EQUAL TO (≟)
+\defutfmathch@r{2260}{\not=} % NOT EQUAL TO (≠)
+\defutfmathch@r{2261}{\equiv} % IDENTICAL TO (≡)
+\defutfmathch@r{2262}{\not\equiv} % NOT IDENTICAL TO (≢)
+\defutfmathch@r{2263}{\utfch@rundefined} % STRICTLY EQUIVALENT TO (≣)
+\defutfmathch@r{2264}{\leq} % LESS-THAN OR EQUAL TO (≤)
+\defutfmathch@r{2265}{\geq} % GREATER-THAN OR EQUAL TO (≥)
+\defutfmathch@r{2266}{\leqq} % LESS-THAN OVER EQUAL TO (≦)
+\defutfmathch@r{2267}{\geqq} % GREATER-THAN OVER EQUAL TO (≧)
+\defutfmathch@r{2268}{\gneqq} % LESS-THAN BUT NOT EQUAL TO (≨)
+\defutfmathch@r{2269}{\lneqq} % GREATER-THAN BUT NOT EQUAL TO (≩)
+\defutfmathch@r{226A}{\ll} % MUCH LESS-THAN (≪)
+\defutfmathch@r{226B}{\gg} % MUCH GREATER-THAN (≫)
+\defutfmathch@r{226C}{\between} % BETWEEN (≬)
+\defutfmathch@r{226D}{\utfch@rundefined} % NOT EQUIVALENT TO (≭)
+\defutfmathch@r{226E}{\nless} % NOT LESS-THAN (≮)
+\defutfmathch@r{226F}{\ngtr} % NOT GREATER-THAN (≯)
+\defutfmathch@r{2270}{\nleq} % NEITHER LESS-THAN NOR EQUAL TO (≰)
+\defutfmathch@r{2271}{\ngeq} % NEITHER GREATER-THAN NOR EQUAL TO (≱)
+\defutfmathch@r{2272}{\utfch@rundefined} % LESS-THAN OR EQUIVALENT TO (≲)
+\defutfmathch@r{2273}{\utfch@rundefined} % GREATER-THAN OR EQUIVALENT TO (≳)
+\defutfmathch@r{2274}{\utfch@rundefined} % NEITHER LESS-THAN NOR EQUIVALENT TO (≴)
+\defutfmathch@r{2275}{\utfch@rundefined} % NEITHER GREATER-THAN NOR EQUIVALENT TO (≵)
+\defutfmathch@r{2276}{\lessgtr} % LESS-THAN OR GREATER-THAN (≶)
+\defutfmathch@r{2277}{\gtrless} % GREATER-THAN OR LESS-THAN (≷)
+\defutfmathch@r{2278}{\not\lessgtr} % NEITHER LESS-THAN NOR GREATER-THAN (≸)
+\defutfmathch@r{2279}{\not\gtrless} % NEITHER GREATER-THAN NOR LESS-THAN (≹)
+\defutfmathch@r{227A}{\prec} % PRECEDES (≺)
+\defutfmathch@r{227B}{\succ} % SUCCEEDS (≻)
+\defutfmathch@r{227C}{\preceq} % PRECEDES OR EQUAL TO (≼)
+\defutfmathch@r{227D}{\succeq} % SUCCEEDS OR EQUAL TO (≽)
+\defutfmathch@r{227E}{\precsim} % PRECEDES OR EQUIVALENT TO (≾)
+\defutfmathch@r{227F}{\succsim} % SUCCEEDS OR EQUIVALENT TO (≿)
+\defutfmathch@r{2280}{\not\prec} % DOES NOT PRECEDE (⊀)
+\defutfmathch@r{2281}{\not\succ} % DOES NOT SUCCEED (⊁)
+\defutfmathch@r{2282}{\subset} % SUBSET OF (⊂)
+\defutfmathch@r{2283}{\supset} % SUPERSET OF (⊃)
+\defutfmathch@r{2284}{\not\subset} % NOT A SUBSET OF (⊄)
+\defutfmathch@r{2285}{\not\supset} % NOT A SUPERSET OF (⊅)
+\defutfmathch@r{2286}{\subseteq} % SUBSET OF OR EQUAL TO (⊆)
+\defutfmathch@r{2287}{\subseteq} % SUPERSET OF OR EQUAL TO (⊇)
+\defutfmathch@r{2288}{\not\subseteq} % NEITHER A SUBSET OF NOR EQUAL TO (⊈)
+\defutfmathch@r{2289}{\not\supseteq} % NEITHER A SUPERSET OF NOR EQUAL TO (⊉)
+\defutfmathch@r{228A}{\utfch@rundefined} % SUBSET OF WITH NOT EQUAL TO (⊊)
+\defutfmathch@r{228B}{\utfch@rundefined} % SUPERSET OF WITH NOT EQUAL TO (⊋)
+\defutfmathch@r{228C}{\utfch@rundefined} % MULTISET (⊌)
+\defutfmathch@r{228D}{\utfch@rundefined} % MULTISET MULTIPLICATION (⊍)
+\defutfmathch@r{228E}{\uplus} % MULTISET UNION (⊎)
+\defutfmathch@r{228F}{\sqsubset} % SQUARE IMAGE OF (⊏)
+\defutfmathch@r{2290}{\sqsupset} % SQUARE ORIGINAL OF (⊐)
+\defutfmathch@r{2291}{\sqsubseteq} % SQUARE IMAGE OF OR EQUAL TO (⊑)
+\defutfmathch@r{2292}{\sqsupseteq} % SQUARE ORIGINAL OF OR EQUAL TO (⊒)
+\defutfmathch@r{2293}{\sqcap} % SQUARE CAP (⊓)
+\defutfmathch@r{2294}{\sqcup} % SQUARE CUP (⊔)
+\defutfmathch@r{2295}{\oplus} % CIRCLED PLUS (⊕)
+\defutfmathch@r{2296}{\ominus} % CIRCLED MINUS (⊖)
+\defutfmathch@r{2297}{\otimes} % CIRCLED TIMES (⊗)
+\defutfmathch@r{2298}{\oslash} % CIRCLED DIVISION SLASH (⊘)
+\defutfmathch@r{2299}{\odot} % CIRCLED DOT OPERATOR (⊙)
+\defutfmathch@r{229A}{\circledcirc} % CIRCLED RING OPERATOR (⊚)
+\defutfmathch@r{229B}{\circledast} % CIRCLED ASTERISK OPERATOR (⊛)
+\defutfmathch@r{229C}{} % CIRCLED EQUALS (⊜)
+\defutfmathch@r{229D}{\circleddash} % CIRCLED DASH (⊝)
+\defutfmathch@r{229E}{\boxplus} % SQUARED PLUS (⊞)
+\defutfmathch@r{229F}{\boxminus} % SQUARED MINUS (⊟)
+\defutfmathch@r{22A0}{\boxtimes} % SQUARED TIMES (⊠)
+\defutfmathch@r{22A1}{\boxdot} % SQUARED DOT OPERATOR (⊡)
+\defutfmathch@r{22A2}{\vdash} % RIGHT TACK (⊢)
+\defutfmathch@r{22A3}{\dashv} % LEFT TACK (⊣)
+\defutfmathch@r{22A4}{\top} % DOWN TACK (⊤)
+\defutfmathch@r{22A5}{\bot} % UP TACK (⊥)
+\defutfmathch@r{22A6}{\vdash} % ASSERTION (⊦)
+\defutfmathch@r{22A7}{\models} % MODELS (⊧)
+\defutfmathch@r{22A8}{\utfch@rundefined} % TRUE (⊨)
+\defutfmathch@r{22A9}{\utfch@rundefined} % FORCES (⊩)
+\defutfmathch@r{22AA}{\utfch@rundefined} % TRIPLE VERTICAL BAR RIGHT TURNSTILE (⊪)
+\defutfmathch@r{22AB}{\utfch@rundefined} % DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE (⊫)
+\defutfmathch@r{22AC}{\not\vdash} % DOES NOT PROVE (⊬)
+\defutfmathch@r{22AD}{\utfch@rundefined} % NOT TRUE (⊭)
+\defutfmathch@r{22AE}{\utfch@rundefined} % DOES NOT FORCE (⊮)
+\defutfmathch@r{22AF}{\utfch@rundefined} % NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE (⊯)
+\defutfmathch@r{22B0}{\utfch@rundefined} % PRECEDES UNDER RELATION (⊰)
+\defutfmathch@r{22B1}{\utfch@rundefined} % SUCCEEDS UNDER RELATION (⊱)
+\defutfmathch@r{22B2}{\lhd} % NORMAL SUBGROUP OF (⊲)
+\defutfmathch@r{22B3}{\rhd} % CONTAINS AS NORMAL SUBGROUP (⊳)
+\defutfmathch@r{22B4}{\unlhd} % NORMAL SUBGROUP OF OR EQUAL TO (⊴)
+\defutfmathch@r{22B5}{\unrhd} % CONTAINS AS NORMAL SUBGROUP OR EQUAL TO (⊵)
+\defutfmathch@r{22B6}{\utfch@rundefined} % ORIGINAL OF (⊶)
+\defutfmathch@r{22B7}{\utfch@rundefined} % IMAGE OF (⊷)
+\defutfmathch@r{22B8}{\utfch@rundefined} % MULTIMAP (⊸)
+\defutfmathch@r{22B9}{\utfch@rundefined} % HERMITIAN CONJUGATE MATRIX (⊹)
+\defutfmathch@r{22BA}{\utfch@rundefined} % INTERCALATE (⊺)
+\defutfmathch@r{22BB}{\veebar} % XOR (⊻)
+\defutfmathch@r{22BC}{\barwedge} % NAND (⊼)
+\defutfmathch@r{22BD}{\utfch@rundefined} % NOR (⊽)
+\defutfmathch@r{22BE}{\utfch@rundefined} % RIGHT ANGLE WITH ARC (⊾)
+\defutfmathch@r{22BF}{\utfch@rundefined} % RIGHT TRIANGLE (⊿)
+\defutfmathch@r{22C0}{\bigwedge} % N-ARY LOGICAL AND (⋀)
+\defutfmathch@r{22C1}{\bigvee} % N-ARY LOGICAL OR (⋁)
+\defutfmathch@r{22C2}{\bigcap} % N-ARY INTERSECTION (⋂)
+\defutfmathch@r{22C3}{\bigcup} % N-ARY UNION (⋃)
+\defutfmathch@r{22C4}{\utfch@rundefined} % DIAMOND OPERATOR (⋄)
+\defutfmathch@r{22C5}{\cdot} % DOT OPERATOR (⋅)
+\defutfmathch@r{22C6}{\utfch@rundefined} % STAR OPERATOR (⋆)
+\defutfmathch@r{22C7}{\utfch@rundefined} % DIVISION TIMES (⋇)
+\defutfmathch@r{22C8}{\bowtie} % BOWTIE (⋈)
+\defutfmathch@r{22C9}{\utfch@rundefined} % LEFT NORMAL FACTOR SEMIDIRECT PRODUCT (⋉)
+\defutfmathch@r{22CA}{\utfch@rundefined} % RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT (⋊)
+\defutfmathch@r{22CB}{\utfch@rundefined} % LEFT SEMIDIRECT PRODUCT (⋋)
+\defutfmathch@r{22CC}{\utfch@rundefined} % RIGHT SEMIDIRECT PRODUCT (⋌)
+\defutfmathch@r{22CD}{\utfch@rundefined} % REVERSED TILDE EQUALS (⋍)
+\defutfmathch@r{22CE}{\utfch@rundefined} % CURLY LOGICAL OR (⋎)
+\defutfmathch@r{22CF}{\utfch@rundefined} % CURLY LOGICAL AND (⋏)
+\defutfmathch@r{22D0}{\Subset} % DOUBLE SUBSET (⋐)
+\defutfmathch@r{22D1}{\Supset} % DOUBLE SUPERSET (⋑)
+\defutfmathch@r{22D2}{\Cap} % DOUBLE INTERSECTION (⋒)
+\defutfmathch@r{22D3}{\Cup} % DOUBLE UNION (⋓)
+\defutfmathch@r{22D4}{\pitchfork} % PITCHFORK (⋔)
+\defutfmathch@r{22D5}{\utfch@rundefined} % EQUAL AND PARALLEL TO (⋕)
+\defutfmathch@r{22D6}{\lessdot} % LESS-THAN WITH DOT (⋖)
+\defutfmathch@r{22D7}{\gtrdot} % GREATER-THAN WITH DOT (⋗)
+\defutfmathch@r{22D8}{\lll} % VERY MUCH LESS-THAN (⋘)
+\defutfmathch@r{22D9}{\ggg} % VERY MUCH GREATER-THAN (⋙)
+\defutfmathch@r{22DA}{\lesseqgtr} % LESS-THAN EQUAL TO OR GREATER-THAN (⋚)
+\defutfmathch@r{22DB}{\gtreqless} % GREATER-THAN EQUAL TO OR LESS-THAN (⋛)
+\defutfmathch@r{22DC}{\utfch@rundefined} % EQUAL TO OR LESS-THAN (⋜)
+\defutfmathch@r{22DD}{\utfch@rundefined} % EQUAL TO OR GREATER-THAN (⋝)
+\defutfmathch@r{22DE}{\utfch@rundefined} % EQUAL TO OR PRECEDES (⋞)
+\defutfmathch@r{22DF}{\utfch@rundefined} % EQUAL TO OR SUCCEEDS (⋟)
+\defutfmathch@r{22E0}{\utfch@rundefined} % DOES NOT PRECEDE OR EQUAL (⋠)
+\defutfmathch@r{22E1}{\utfch@rundefined} % DOES NOT SUCCEED OR EQUAL (⋡)
+\defutfmathch@r{22E2}{\utfch@rundefined} % NOT SQUARE IMAGE OF OR EQUAL TO (⋢)
+\defutfmathch@r{22E3}{\utfch@rundefined} % NOT SQUARE ORIGINAL OF OR EQUAL TO (⋣)
+\defutfmathch@r{22E4}{\utfch@rundefined} % SQUARE IMAGE OF OR NOT EQUAL TO (⋤)
+\defutfmathch@r{22E5}{\utfch@rundefined} % SQUARE ORIGINAL OF OR NOT EQUAL TO (⋥)
+\defutfmathch@r{22E6}{\utfch@rundefined} % LESS-THAN BUT NOT EQUIVALENT TO (⋦)
+\defutfmathch@r{22E7}{\utfch@rundefined} % GREATER-THAN BUT NOT EQUIVALENT TO (⋧)
+\defutfmathch@r{22E8}{\utfch@rundefined} % PRECEDES BUT NOT EQUIVALENT TO (⋨)
+\defutfmathch@r{22E9}{\utfch@rundefined} % SUCCEEDS BUT NOT EQUIVALENT TO (⋩)
+\defutfmathch@r{22EA}{\not\lhd} % NOT NORMAL SUBGROUP OF (⋪)
+\defutfmathch@r{22EB}{\utfch@rundefined} % DOES NOT CONTAIN AS NORMAL SUBGROUP (⋫)
+\defutfmathch@r{22EC}{\utfch@rundefined} % NOT NORMAL SUBGROUP OF OR EQUAL TO (⋬)
+\defutfmathch@r{22ED}{\utfch@rundefined} % DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL (⋭)
+\defutfmathch@r{22EE}{\vdots} % VERTICAL ELLIPSIS (⋮)
+\defutfmathch@r{22EF}{\cdots} % MIDLINE HORIZONTAL ELLIPSIS (⋯)
+\defutfmathch@r{22F0}{\utfch@rundefined} % UP RIGHT DIAGONAL ELLIPSIS (⋰)
+\defutfmathch@r{22F1}{\ddots} % DOWN RIGHT DIAGONAL ELLIPSIS (⋱)
+\defutfmathch@r{22F2}{\utfch@rundefined} % ELEMENT OF WITH LONG HORIZONTAL STROKE (⋲)
+\defutfmathch@r{22F3}{\utfch@rundefined} % ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE (⋳)
+\defutfmathch@r{22F4}{\utfch@rundefined} % SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE (⋴)
+\defutfmathch@r{22F5}{\utfch@rundefined} % ELEMENT OF WITH DOT ABOVE (⋵)
+\defutfmathch@r{22F6}{\utfch@rundefined} % ELEMENT OF WITH OVERBAR (⋶)
+\defutfmathch@r{22F7}{\utfch@rundefined} % SMALL ELEMENT OF WITH OVERBAR (⋷)
+\defutfmathch@r{22F8}{\utfch@rundefined} % ELEMENT OF WITH UNDERBAR (⋸)
+\defutfmathch@r{22F9}{\utfch@rundefined} % ELEMENT OF WITH TWO HORIZONTAL STROKES (⋹)
+\defutfmathch@r{22FA}{\utfch@rundefined} % CONTAINS WITH LONG HORIZONTAL STROKE (⋺)
+\defutfmathch@r{22FB}{\utfch@rundefined} % CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE (⋻)
+\defutfmathch@r{22FC}{\utfch@rundefined} % SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE (⋼)
+\defutfmathch@r{22FD}{\utfch@rundefined} % CONTAINS WITH OVERBAR (⋽)
+\defutfmathch@r{22FE}{\utfch@rundefined} % SMALL CONTAINS WITH OVERBAR (⋾)
+\defutfmathch@r{22FF}{\utfch@rundefined} % Z NOTATION BAG MEMBERSHIP (⋿)
+
+
+
+%Fritz:
+\defutfmathch@r{27F6}{\longrightarrow}
+\defutfmathch@r{212C}{\mathscr{B}}
+\defutfmathch@r{211D}{\mathbb{R}}
+

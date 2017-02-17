@@ -1,0 +1,552 @@
+\chapter{Duality}
+\label{cha:duality}
+
+
+
+%\section{Weak and strong duality}
+
+
+Via the termination argument for the simplex algorithm, we can now
+prove the duality theorem. We are given a linear program
+\begin{equation}
+  \label{eq:91}
+  \max\{c^T x \colon x \in \setR^n, \, Ax \leq b\}, 
+\end{equation}
+called the \emph{primal} and its \emph{dual}
+\begin{equation}
+  \label{d:eq:9}
+  \min\{b^Ty \colon y \in \setR^m, \, A^T y = c,\, y\geq0\}.
+\end{equation}
+%
+We again formulate the theorem of weak duality in this setting. 
+\begin{theorem}[Weak duality]
+  If $x^*$ and $y^*$ are primal and dual feasible solutions respectively, then
+  $c^Tx^* \leq b^Ty^*$. 
+\end{theorem}
+
+\begin{proof}
+  We have $c^Tx^* = {y^*}^T A x^* \leq  {y^*}^T b$. \qed 
+\end{proof}
+
+The
+strong duality theorem tells us that if there exist feasible primal and
+dual solutions, then there exist feasible primal and dual solutions
+which have the same objective value. We can prove it with the simplex
+algorithm. 
+
+
+\begin{theorem}
+  \label{thr:4}
+  If the primal linear program is feasible and bounded, then so is 
+  the dual linear program. Furthermore in this case, both linear
+  programs have an optimal solution  and the optimal  values coincide. 
+\end{theorem}
+
+
+\begin{proof}
+  Suppose first that $A$ has full column rank.  The simplex method
+  finds an optimal basis $B$ of~\eqref{eq:91} with $x^*_B$ being an
+  optimal feasible solution. At the same time, we have a $\lambda \in
+  \R_{\geq 0}^m$ with $\lambda_i = 0$ if $i \notin B$ and $\lambda^TA
+  = c^T$. Notice that $\lambda$ is  a feasible solution of the dual linear program~\eqref{d:eq:9}. One has 
+  \begin{displaymath}
+    c^T x^*_B = \lambda^T A x_B^* = \lambda^T b,
+  \end{displaymath}
+  which shows the theorem in this case. 
+
+  If $A$ does not have full column rank, then we re-write the linear
+  program~\eqref{eq:91} as
+  \begin{equation}
+    \label{eq:d-1}
+    \max\{ c^T (x_1 - x_2) \colon A(x_1-x_2) \leq b, x_1\geq 0, x_2 \geq 0\}.  
+  \end{equation}
+  There is a dual solution that we partition into three parts
+  $\lambda_1,\lambda_2,\lambda_3 \geq 0$. Its dual objective function
+  value is $\lambda_1^Tb$. Furthermore 
+  \begin{displaymath}
+    \lambda_1^TA - \lambda_2 = c^T, \, - \lambda_1^TA - \lambda_3 = -c^T,
+  \end{displaymath}
+  which together with $\lambda_2,\lambda_3 \geq 0$ implies $
+  \lambda_1^TA = c^T$ and $\lambda_2=\lambda_3=0$. This means that $\lambda_1$ is an optimal dual solution. 
+
+\end{proof}
+
+
+ We can formulate dual linear programs also if the linear program is
+ not in inequality standard form. % Consider for example a linear program
+%  \begin{equation}
+%    \label{eq:92}
+%    \max\{c^Tx \colon x \in \setR^n, \, Ax \leq b, \, x\geq0\}. 
+%  \end{equation}
+%  We transform this into standard form via slack variables $z\geq0$ 
+%  \begin{displaymath}  
+%    \min\{-c^Tx + 0^Tz  \colon x\in \setR^n,z \in \setR^m, \, Ax +z =b, \, x,z\geq0\}. 
+%  \end{displaymath}
+%  The dual of this linear program in equation standard form is 
+%  \begin{displaymath}
+%    \max\{ b^Ty \colon [A \mid I_m]^T y \leq \smat{-c \\ 0}\}
+%  \end{displaymath}
+%  This can be re-formulated as 
+%  \begin{displaymath}
+%    \max\{ b^Ty \colon A^T y \leq-c, \, y\leq0\}. 
+%  \end{displaymath}
+%  Again, this is the same as 
+%  \begin{displaymath}
+%    \min\{ b^T(-y) \colon A^T (-y) \geq c, \, -y\geq0\} 
+%  \end{displaymath}
+%  and this finally is equivalent to 
+%  \begin{equation}
+%    \label{eq:93}
+%    \min\{ b^Ty \colon A^T y \geq c, \, y\geq0\}. 
+%  \end{equation}
+%
+ The procedure above can be described as follows. We transform a linear
+ program into a linear program in inequality  standard form and construct
+ its dual linear program. This dual is then transformed into
+ an equivalent  linear program again which is conveniently described. 
+
+ Let us perform such operations  on the dual linear
+ program 
+ \begin{displaymath}
+   \min\{ b^Ty \colon y \in \setR^m, \, A^T y = c, \, y\geq0\}
+ \end{displaymath}
+ of the primal $\max\{c^T x \colon x \in \setR^n, \, Ax \leq b\}$. 
+ We transform it into inequality  standard form 
+ \begin{displaymath}
+   \begin{array}{rcl}
+     \max - b^T y \\
+     A^T y & \leq & c \\
+     -A^Ty &\leq &-c\\
+     -I y &\leq &0. 
+   \end{array}
+ \end{displaymath}
+ The dual linear program of this is 
+ \begin{displaymath}
+   \begin{array}{rcl}
+     \min c^T x_1 - c^T x_2  \\
+     A x_1 - A x_2 - x_3 & = & -b \\
+    x_1,x_2,x_3\geq0 &&
+   \end{array}
+ \end{displaymath}
+ This is equivalent to 
+ \begin{displaymath}
+   \begin{array}{rcl}
+     \max c^T (x_2-x_1) \\
+     A (x_2-x_1) + x_3 & = & b \\
+     x_1,x_2,x_3 & \geq & 0
+   \end{array}
+ \end{displaymath}
+ which is equivalent to the primal linear program
+ \begin{displaymath}
+   \begin{array}{rcl}
+     \max c^T x \\
+     Ax & \leq & b. \\
+   \end{array}
+ \end{displaymath}
+ Loosely formulated one could say that ``The dual of the dual is the
+ primal''. But this, of course, is not to be understood as  a
+ mathematical statement.  In any case we can state the following
+ corollary. 
+
+ \begin{corollary}
+   \label{thr:5}
+   If the dual linear program has an optimal solution, then so does the
+   primal linear program and the objective values coincide.
+ \end{corollary}
+
+
+
+We present another example of duality that we will need later on. 
+Consider a linear program 
+\begin{equation}
+  \label{eq:40}
+  \begin{array}{rcl}
+    \max &c^Tx \\
+    Bx &  =&  b\\
+    Cx & \leq & d. 
+  \end{array}
+\end{equation}
+After
+re-formulation, we obtain 
+\begin{displaymath}
+  \begin{array}{rcl}
+    \max & c^Tx & \\ Bx & \leq &  b \\ -Bx & \leq & -b \\ Cx & \leq &  d
+  \end{array}
+\end{displaymath}
+We can form the dual of the latter problem
+and obtain 
+\begin{displaymath}
+  \begin{array}{l}
+    \min\, b^Ty_1 - b^Ty_2 + d^T y_3 \\
+  \begin{array}{rcl}
+   B^Ty_1 - B^T y_2 + C^T  y_3 & = &  c \\
+  y_1,y_2,y_3& \geq & 0.
+\end{array}
+\end{array}
+\end{displaymath}
+%where $m_1$ and $m_2$ are the number of
+%rows of $B$ and $C$ respectively. 
+But this linear program is
+equivalent to the linear program 
+\begin{equation}
+  \label{eq:41}
+  \begin{array}{c}
+    \min \, b^Ty_1 + d^T y_2 \\
+    \begin{array}{rcl}
+      B^Ty_1 + C^T  y_2 & = &  c \\  y_2& \geq & 0. 
+    \end{array}
+  \end{array}
+\end{equation}
+%
+This justifies to say that~\eqref{eq:41} is the dual of~\eqref{eq:40}.
+
+
+\section{Zero sum games} 
+\label{sec:zero-sum-games}
+
+Consider the following two-player game defined by a matrix $A \in
+\setR^{m\times n}$. The \emph{row-player} chooses a row $i \in \{1,\ldots,m\}$ and the
+column-player chooses a column $j \in \{1,\ldots,n\}$. Both players make
+this choice at the same time.  The \emph{payoff} for the
+row-player is then the matrix-element $A(i,j)$ whereas $A(i,j)$ also
+determines the \emph{loss} of the column player. In other words, the
+column player pays $A(i,j)$ to the row-player. If this number is
+negative, then the row-player actually pays the absolute value of
+$A(i,j)$ to the column player. 
+
+Consider for example the matrix 
+
+\begin{equation}
+  \label{eq:34}
+  A =
+  \begin{pmatrix}
+    5 & 1 & 3 \\
+    3 & 2 & 4 \\
+    -3 & 0 &1 
+  \end{pmatrix}. 
+\end{equation}
+
+If the row-player chooses the second row and the column player chooses
+the second-column, then the payoff for the row-player is $2$, whereas
+this is the loss of the column player.  
+
+The row-player is now interested in finding a strategy that maximizes
+his \emph{guaranteed} payoff. 
+For example, if he chooses row~$1$, then the best choice of the column
+player  would be column 2, since the second element of the first row
+is the smallest element of that row. Thus the strategy that maximizes
+the minimal possible payoff would be to choose row $2$. In other words
+\begin{displaymath}
+  \max_i \min_j A(i,j) = 2. 
+\end{displaymath}
+%
+What would be the column-player's best hedging strategy? He wants to
+choose a column such that the largest element in this column is
+minimized. This column would be the second one. In other words
+\begin{displaymath}
+  \min_j \max_i A(i,j) = 2. 
+\end{displaymath}
+Is it always the case that $\max_i \min_j A(i,j) = \min_j \max_i
+A(i,j)$? The next example shows that the answer is no: 
+\begin{equation}
+  \label{eq:36}
+  \begin{pmatrix}
+    -1 & 1 \\ 
+    1 & -1
+  \end{pmatrix}. 
+\end{equation}
+Here we have $ \max_i \min_j A(i,j) = -1$ and  $ \min_j \max_i A(i,j)
+= 1$. This can be interpreted as follows. If the column player knows
+beforehand, the row to be chosen by the row-player, then he would
+choose a column that results in a gain for him.  Similarly, if the
+row-player knows beforehand the column to be chosen by the
+column-player, then he can guarantee him a gain of one. 
+
+The idea is thus not to stick with a \emph{pure} strategy, but to play
+with a \emph{random} or \emph{mixed} strategy. If the row-player
+chooses each of the two rows above uniformly at random, then his
+expected payoff is zero. Similarly, if the column player chooses each
+of his two columns with probability $1/2$, then his expected payoff is
+zero as well. 
+
+\begin{definition}[Mixed strategy]
+  \label{def:1}
+  Let $A \in \setR^{m\times n}$ define a two-player matrix game. A mixed
+  strategy for the row-player is a vector $x \in \setR_{\geq0}^m$ with
+  $\sum_{i=1}^m x_i = 1$. A mixed strategy for the column player is a
+  vector $y \in  \setR_{\geq0}^n$ with $\sum_{j=1}^n y_i = 1$. 
+\end{definition}
+%
+Such mixed strategies define a probability distribution on the row and
+column indices respectively. If the row-player and column-player
+choose a row and column according to this distribution respectively,
+then the \emph{expected payoff} for the row-player is
+\begin{equation}
+  \label{eq:37}
+  E[\text{Payoff}]=x^TAy. 
+\end{equation}
+%
+For the game defined by~\eqref{eq:36} and $x^T=(1/2,1/2)$ and
+$y^T=(1/2,1/2)$ the expected payoff is $0$. 
+
+\begin{lemma}
+  \label{d:lem:10}
+  Let $A \in \setR^{m\times n}$, then 
+   \begin{displaymath}
+   \max_{x \in X} \min_{y\in Y} x^TA y \leq \min_{y\in Y} \max_{x\in X}
+   x^TAy,       
+  \end{displaymath}
+  where $X$ and $Y$ denote the set of mixed row and column-strategies
+  respectively. 
+\end{lemma}
+
+\begin{proof}
+  Let $x'$ and $y'$  be some fixed mixed strategies of the row and
+  column-player  respectively. Clearly 
+  \begin{displaymath}
+    \min_y {x'}^T A y \leq {x'}^T A y' \leq \max_x {x}^T A y',
+  \end{displaymath}
+  which implies the assertion. \qed 
+\end{proof}
+
+
+The next theorem is one of the best-known results in the field of
+\emph{game theory}. It states that there are mixed strategies $x'$ and
+$y'$ from above such that equality holds. It is proved with the
+theorem of strong duality. 
+
+\begin{theorem}[Minimax-Theorem]
+  \label{d:thr:7}
+  \begin{displaymath}
+   \max_{x \in X} \min_{y\in Y} x^TA y = \min_{y\in Y} \max_{x\in X}
+   x^TAy,       
+  \end{displaymath}
+  where $X$ and $Y$ denote the set of mixed row and column-strategies
+  respectively. 
+\end{theorem}
+\begin{proof}
+  Let us inspect the value $\max_{x \in X} \min_{y\in Y} x^TA y $. This
+  can be understood as to maximize the function 
+  \begin{displaymath}
+    f(x) = \min\{(x^TA) \cdot y \colon \sum_{j=1}^n y_j = 1, \, y\geq0\} . 
+  \end{displaymath}
+  Thus the value $f(x)$ is the optimal solution of a bounded and
+  feasible linear program. The dual of this linear program (for fixed
+  $x$) has only one variable $x_0$ and reads 
+  \begin{displaymath}
+    \max\{ x_0 \colon  x_0 \in \setR, \,  \mathbf{1} x_0 \leq A^T x\}. 
+  \end{displaymath}
+  But this shows that the maximum value of $f(x)$, where $x$ ranges
+  over all mixed row-strategies is the linear program 
+  \begin{equation}
+    \label{eq:38}
+    \begin{array}{rcl}
+      \max x_0 \\
+      \mathbf{1} x_0 - A^Tx &\leq&0 \\
+      \sum_{i=1}^m x_i & = & 1 \\
+      x & \geq & 0.
+    \end{array}
+  \end{equation}
+  Let us now inspect the value $\min_{y \in Y} \max_{x\in X} x^TA y
+  $. Again, by applying duality this can be computed with the linear
+  program 
+  \begin{equation}
+    \label{eq:39}
+    \begin{array}{rcl}
+      \min y_0 \\
+      \mathbf{1} y_0 - Ay &\geq&0 \\
+      \sum_{j=1}^n y_j & = & 1 \\
+      y & \geq & 0.
+    \end{array}
+  \end{equation} 
+It follows from the duality of \eqref{eq:41} and \eqref{eq:40} that
+the linear programs~\eqref{eq:38} and 
+\eqref{eq:39} are duals of each other. This proves the
+Minimax-Theorem. \qed 
+
+
+
+\end{proof}
+
+
+
+% \section{The classical   simplex algorithm} 
+% \label{sec:class-expl-simpl}
+
+% I have chosen to explain the simplex algorithm as a method to obtain
+% primal feasibility of the linear program 
+% \begin{equation}
+%   \label{eq:43}
+%   \max\{c^Tx \colon x \in \setR^n , \, Ax\leq b\}
+% \end{equation}
+% via improving the roofs. By duality, our description
+% can be re-interpreted as solving the linear program
+% \begin{equation}
+%   \label{eq:42}
+%   \min\{ b^T y \colon y \in \setR^m, \, A^T y =c , \, y \geq0\}
+% \end{equation}
+% where $A^T \in \setR^{n\times m}$ has now full row-rank. Recall that a roof is
+% set of row-indices $B$ of $A$ such that the corresponding rows are a basis
+% of $\setR^n$ and $c$ is a conic combination of these rows. The
+% translation of a roof to the classical setting~\eqref{eq:42} is a set
+% of $n$ linearly independent columns such that $c$ is a conic
+% combination of these columns. The corresponding \emph{basic feasible
+%   solution} is the vector $x^*$, where $x^*_B = {A_B^T}^{-1} c$ and
+% $x^*_{\overline{B}} = 0$. The simplex method can now be interpreted as
+% a method that improves the basic-feasible solution by letting a new
+% index enter the basis while another index leaves the basis. More on
+% this classical simplex versus the roof-interpretation can be found in 
+% exercise~\ref{d:item:3}
+
+
+\section{A proof of the duality theorem via Farkas' lemma}
+\label{sec:proof-dual-theor}
+
+Remember Farkas' lemma (Theorem~\ref{conv:thr:12}) which states that
+ $Ax =b, x\geq0$ has a solution if and only if for all $\lambda \in \setR^m$
+with $\lambda^T A \geq0$ one also has $\lambda^Tb \geq0$. In fact the duality
+theorem follows  from this. First,  we derive  another variant of
+Farkas' lemma.  
+
+\begin{theorem}[Second variant of Farkas' lemma]
+\label{dual:thr:2farkas}
+    Let $A \in \setR^{m\times n}$ and $b \in \setR^m$. The system $Ax\leq b$ has a
+    solution if and only if for all $\lambda\geq0$ with $\lambda^TA =0$ one has
+    $\lambda^Tb\geq0$. 
+\end{theorem}
+
+\begin{proof}
+  Necessity is clear: If $x^*$ is a feasible solution, $\lambda\geq0$ and
+  $\lambda^TA=0$, then $\lambda^T A x^* \leq\lambda^Tb$  implies $0 \leq \lambda^Tb$. 
+
+  On the other hand, $Ax\leq b$ has a solution if and only if 
+  \begin{equation}
+    \label{eq:10}
+    Ax^+ - Ax^-   + z = b, \, x^+,x^-,z\geq0
+  \end{equation}
+  has a solution. So, if $Ax\leq b$ does not have a solution, then also
+  \eqref{eq:10} does not have a solution. 
+  By  Farkas' lemma, 
+   there exists a 
+  $\lambda \in \setR^m$ with $\lambda^T \smat{A \ -A \ I_m}\geq0$ and $\lambda^Tb <0$. 
+  For this $\lambda$ one also  has $\lambda^TA = 0$ and  $\lambda\geq0$.
+\qed
+\end{proof}
+
+We are now ready to prove the theorem of strong duality via the second
+variant of Farkas' lemma. %In fact we prove Corollary~\ref{thr:5},
+%which serves our purpose, since, by the discussion preceding
+%Corollary~\ref{thr:5}, Theorem~\ref{thr:4} and Corollary~\ref{thr:5}
+%are equivalent.  
+
+\begin{proof}[of strong duality  via Farkas' lemma]
+  Let $\delta$ be the
+  objective function value of an optimal solution of the dual
+  $\max\{b^T y \colon y \in \setR^m, \, A^Ty \leq c\}$. 
+  For all $\varepsilon>0$, the system $A^T y \leq c, -b^Ty \leq - \delta -\varepsilon$ does not have
+  a solution. By the second variant of Farkas' lemma,
+  there exists a $\lambda\geq0$ with $\lambda^T \smat{-b^T \\ 
+    A^T} = 0$ and $\lambda^T \smat{-\delta -\varepsilon \\ c}<0$. 
+  Write $\lambda$ as
+  $\lambda = \smat{\lambda_1 \\ \lambda'}$ with $\lambda' \in \setR^n$.  
+  If $\lambda_1$ were zero, we could apply the second variant of Farkas' lemma
+  to the system $A^Ty \leq c$ and $\lambda'$, since we know that $A^Ty \leq c$ has a solution.
+  Therefore, we can conclude $\lambda_1 > 0$.
+  Furthermore, by scaling, we can assume $\lambda_1 =
+  1$. One has $\lambda'^TA^T = b^T$ and $\lambda'^Tc < \delta+\varepsilon$. The first
+  equation implies that $\lambda'$ is a feasible solution of the
+  primal (recall $\lambda'\geq0$). The second equation shows that the objective function value
+  of $\lambda'$ is less than $\delta+\varepsilon$. This means that 
+  the optimum value of the  primal linear program is also $\delta$,
+  since the primal has an optimal solution 
+  and $\varepsilon$ can be chosen arbitrarily small. 
+  \qed
+\end{proof}
+
+
+
+
+\subsection*{Exercises}
+
+\begin{enumerate}
+\item Formulate the dual linear program of 
+  \begin{displaymath}
+    \begin{array}{r c l}
+      \max \ 2 x_1 + 3 x_2 -7 x_3 & & \\
+      x_1 + 3 x_2 + 2 x_3 & = & 4\\
+      x_1 + x_2 & \leq & 8 \\
+      x_1 - x_3 & \geq  &-15\\
+      x_1,x_2 & \geq &0
+    \end{array}
+  \end{displaymath}
+\item Consider the following linear program 
+  \begin{displaymath}
+    \begin{array}{rcl}
+      \max \ x_1 + x_2 \\
+      2 x_1 + x_2 & \leq  & 6 \\
+      x_1 + 2x_2  & \leq & 8 \\
+      3x_1 + 4x_2 & \leq & 22 \\
+      x_1 + 5 x_2 & \leq & 23
+    \end{array}   
+  \end{displaymath}
+  Show that $(4/3, 10/3)$ is an optimal solution by providing a
+  suitable feasible dual solution. 
+
+\item Show that for $A \in \setR^{m\times n}$, one has 
+  \begin{displaymath}
+    \max_i \min_j A(i,j) \leq \min_j \max_i A(i,j). 
+  \end{displaymath}\label{d:item:2} 
+
+\item  \label{d:item:3} 
+ In the lecture you have seen the simplex algorithm for linear programs of the form 
+ $$ \max \{ c^Tx~:~Ax\leq b\}. $$
+ We will now derive a simplex algorithm for linear programs of the form
+ \begin{align} \label{eq:LPEqStandard} \min \{ c^Tx~:~Ax = b,~x\geq 0\} \end{align}
+with $c\in \R^n$ and $A\in \R^{m\times n}$, $b\in \R^m$.
+Throughout the exercise we assume that \eqref{eq:LPEqStandard} is feasible and bounded, and that $A$ has full row rank.
+
+For $i\in \{1, \ldots, n\}$ we define $A_i$ as the $i$-th column of $A$. Moreover, for some subset $B\subseteq \{1, \ldots, n\}$, $A_B$ is the matrix $A$ restricted to the columns corresponding to elements of $B$.
+
+A subset $B\subseteq \{1, \ldots, n\}$ with $|B|=m$ such that $A_B$ has full rank is called a \emph{basis}.
+The vector $x\in \R^n$ defined as $x_i := 0$ for all $i\notin B$ and $x_B:=A_B^{-1}b$ is called the \emph{basic solution} associated to $B$.
+Note that $x$ is a feasible solution to \eqref{eq:LPEqStandard} if and only if $x\geq 0$.
+
+
+
+Given a basis $B$ and let $j\in \{1, \ldots, n\}$, $j\notin B$. The vector $d\in \R^n$ defined as $d_j = 1$, $d_i=0$ for all $i\notin B$ and
+$d_B := - A_B^{-1} A_j$ is called the \emph{$j$-th basic direction}.
+
+Assume that the solution $x$ associated to $B$ is feasible. Moreover assume that $x_B>0$.
+\begin{enumerate}
+ \item Show that there is a $\theta >0$ such that $x+ \theta d$ is a feasible solution. Give a formula to compute the largest $\theta$ such that $x+ \theta d$ is feasible.
+ \item \label{it:basechange} Let $\theta^*$ be maximal. Show that there is a basis $B'$ such that $x+ \theta^* d$ is the basic solution associated to $B'$.
+ \item \label{it:improve} Let $x'=x+\theta d$. Show that the objective value of $x'$ changes by $\theta \left(c_j - c_B^TA_B^{-1} A_j\right)$.
+ \item \label{it:optimality} Consider a basis $B$ with basic feasible solution $x$. Show that if $c - c_B^T A_B^{-1} A \geq 0 $, then $x$ is an optimal solution to \eqref{eq:LPEqStandard}.
+\end{enumerate}
+This suggests the following algorithm: Start with some basis $B$ whose associated basic solution is feasible. Compute $\bar c := c - c_B^T A_B^{-1} A$. If $\bar c \geq 0$, we have an optimal solution (see \ref{it:optimality}). Otherwise, let $j$ be such that $\bar c_j < 0$. Part \ref{it:basechange} and \ref{it:improve} show that if we change the basis, 
+we find a feasible solution with an improved objective value. We repeat these steps until the vector $\bar c$ is nonnegative.
+
+This is the way the simplex algorithm usually is introduced in the literature. This algorithm is exactly the same as the one you learned in the lecture.
+To get an intuition why this is true, show the following:
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item Given a basis $B$, show that its associated basic solution is feasible if and only if $B$ is a \emph{basis} of the LP dual to \eqref{eq:LPEqStandard}.
+ \item Consider a basis $B$ and its associated feasible basic solution $x$. As seen before, $B$ is also a basis in the dual LP. 
+  Let $y$ be the vertex of that basis. 
+
+Show that for any $j\in \{1, \ldots, n\}$ we have $\bar c_j < 0$ if and
+only if  $A_j^T y > c_j$.
+\end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End: 

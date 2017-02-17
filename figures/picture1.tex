@@ -1,0 +1,20 @@
+\documentclass[border=12pt,pstricks]{standalone}
+\usepackage{pstricks}
+\newgray{vlg}{.85}
+\newgray{vvlg}{.95}
+\begin{document}
+\begin{pspicture}(-3,-3)(3,3)%\showgrid
+        \pspolygon[fillcolor=vlg,fillstyle=solid](-1,-2)(-2,1)(-1,2)(2,2)(1,-1)
+%      \psline{->}(0,-3)(0,3)
+%      \psline{->}(-3,0)(3,0)
+%      \rput(-.5,-.5){$(0,0)$}
+      \psdot(2,2)
+      \psdot(1,-1)
+      \psdot(-1,-2)
+      \psdot(-.5,-1.2)
+      \psdot(.5,1.5)
+      \psdot(-2,1)
+      \psdot(-1,2)
+    
+    \end{pspicture}
+\end{document}

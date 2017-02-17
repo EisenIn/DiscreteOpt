@@ -1,0 +1,343 @@
+% PRESENTATION MODE
+\documentclass[%handout, %
+frame number, %
+beamer,t,xcolor={pst,dvips,dvipsnames},%
+ hyperref={dvips,pdfstartview=FitH,pdfpagelabels=false,%
+ backref,unicode},usepdftitle=false,german,envcountsect]{beamer}
+
+\usepackage{beamerprosper}
+
+
+
+% HANDOUT MODE
+%\documentclass[handout,t,xcolor={pst,dvips,dvipsnames},%
+% hyperref={dvips,pdfstartview=FitH,pdfpagelabels=false,%
+% backref,unicode},usepdftitle=false]{beamer}
+
+\usepackage{alg}
+
+\makeatletter
+\let\@font@warningori\@font@warning
+\newcommand\shutup{\def\@font@warning##1{}}
+\newcommand\youcanspeak{\let\@font@warning\@font@warningori}
+
+\newcommand\Platz{\vspace{.3cm}}
+
+\makeatother 
+
+\usepackage{amssymb,amsbsy,latexsym}
+
+
+
+\usepackage{mathrsfs}
+\newcommand{\eF}{\mathscr{F}}
+
+
+\newcommand{\err}{\mathrm{Error}}
+
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\util}{\mathrm{util}}
+\usepackage{psfrag}
+\shutup
+\usepackage{fourier}
+\youcanspeak
+\usepackage[scaled=0.875]{helvet}
+
+
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amscd,amsthm}
+\usepackage{xspace}
+\usepackage{pstricks}
+\usepackage{pst-blur}
+\usepackage{pst-plot}
+\usepackage{pst-infixplot}
+\usepackage{infix-RPN}
+\usepackage[dvips]{epsfig}
+\usepackage[dvips]{thumbpdf}
+\usepackage{url}
+
+\newgray{vlg}{.85}
+\newgray{vvlg}{.95}
+
+\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=6pt}
+
+\newtheorem{Axiom}{Axiom}
+\newtheorem{exercise}{Übung}
+\newtheorem{Bemerkung}{Bemerkung}
+\newtheorem*{Bemerkung*}{Bemerkung}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{Definition*}{Definition}
+\newtheorem*{Satz*}{Satz}
+
+%\renewcommand{}{\mathtt{P}}
+%\graphicspath{{img/}}
+
+
+%%Bei Handout Modus wenn klein: 
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[letterpaper,landscape,border shrink=5mm]
+
+
+
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\ggT}{\mathrm{ggT}}
+
+%\newcommand{\R}{\setR}
+%\newcommand{\Q}{\setQ}
+%\newcommand{\Z}{\setZ}
+%\newcommand{\N}{\setN}
+
+\newcommand{\darkblue}[1]{\textcolor{darkblue}{#1}}
+\newcommand{\lightblue}[1]{\textcolor{lightblue}{#1}}
+\renewcommand{\blue}[1]{\textcolor{blue}{#1}}
+\renewcommand{\red}[1]{\textcolor{red}{#1}}
+\renewcommand{\green}[1]{\textcolor{green}{#1}}
+
+\newcommand{\Subsection}[1]{
+  \subsection{#1}
+  \title{\sc Part~\arabic{section}.\arabic{subsection}\\ #1}
+  \author{~}
+                                %\institute{University of Paderborn}
+  \date{}
+  \frame{\titlepage}
+}
+
+
+\newcommand{\Section}[1]{
+  \section{#1}
+  \title{\sc Part~\arabic{section}\\  #1}
+  \author{~}
+                                %\institute{University of Paderborn}
+  \date{}
+  \frame{\titlepage}
+}
+
+%\usecolortheme{orchid}
+
+%\usetheme{Warsaw}
+%\setbeamercovered{invisible}%transparent}
+%\setbeamertemplate{navigation symbols}{}
+
+% Beamer style
+\usefonttheme{serif}
+
+
+% Colours
+\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+\definecolor{titleblue}{rgb}{0,0,0.3}
+\definecolor{darkblue}{cmyk}{1,0.3,0,0}
+\definecolor{lightblue}{cmyk}{0.2,0.1,0,0}
+\definecolor{BoxColor}{rgb}{0.9,0.9,1}
+
+\setbeamercolor{frametitle}{fg=titleblue}
+\setbeamercolor{block body}{bg=BoxColor}
+\setbeamercolor{block title}{bg=lightblue}
+\setbeamercolor{section in head/foot}{bg=lightblue}
+\setbeamercolor{section in head/foot}{fg=titleblue}
+
+
+
+
+\setbeamerfont{frametitle}{series=\bfseries}
+
+%\setbeamertemplate{headline}{
+%   \begin{beamercolorbox}{section in head/foot}
+%      \small \vskip 5pt \hfill {\itshape Parameterised integer
+%      programming \& Integer cones} \hfill \null \vskip 5pt
+%   \end{beamercolorbox}}
+\setbeamertemplate{footline}{
+   %\begin{beamercolorbox}{section in head/foot}
+%      \small \vskip 5pt \hfill Gennady Shmonin 
+%  \hfill
+%      \insertframenumber \hspace*{5mm} \vskip 5pt
+%   \end{beamercolorbox}
+}
+%\setbeamertemplate{sidebar left}{}
+%\setbeamertemplate{sidebar right}{}
+
+%\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{description item}{\insertdescriptionitem\hfill}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+%% PSTricks setting
+%\psset{unit=1mm,shadow=true,shadowsize=1.5mm}
+%\psset{shadowangle=-45,blur=true,blurradius=1mm}
+%\psset{linestyle=none,linewidth=0,linecolor=BoxColor}
+%\psset{framearc=0.3,framesep=1,fillstyle=solid,fillcolor=BoxColor}
+
+% Useful & useless commands
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\transpose}{{\scriptscriptstyle\mathrm T}}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\inarcs}[1]{\delta^\text{in}(#1)}
+\providecommand{\outarcs}[1]{\delta^\text{out}(#1)}
+\providecommand{\C}{\mathcal{C}}
+
+\input{mathops}
+\usepackage{pst-node}
+\newcmykcolor{steelblue}{0.75 0.25 0 0.25}
+\newcmykcolor{lightmpigreen}{0.3 0 0.15 0}
+\newcmykcolor{darkmpigreen}{1 0 0.47 0.3}
+\newcmykcolor{verylightmpiblue}{0.3 0.15 0 0}
+\newcmykcolor{darkmpiblue}{1 0.6 0.1 0.55}
+\newcmykcolor{lightmpiblue}{0.67  0.37 0 0.33}
+
+%\newcmykcolor{lightbrick}{0 0.5 0.5 0}
+\newcmykcolor{lightbrick}{0.1 0.7 0.9 0}
+
+\renewcommand{\emph}[1]{{\darkmpigreen #1}}
+
+\newcommand{\wb}[1]{{\overline{#1}}}
+
+\newcommand{\ret}[1]{{\lightbrick #1}}
+
+
+\newcommand{\HOME}{/home/eisen}
+
+\newenvironment{dproblem}[2]{
+
+
+
+
+\begin{center}
+\psframebox{
+  \begin{minipage}{4in}  
+      
+    {\sc #1 \\}
+    #2
+  \end{minipage}
+}
+\end{center}}
+
+
+%\setbeamercovered{transparent}
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{}
+
+
+
+
+\newcommand{\bighead}[1]{%
+  \vspace{2cm}
+  \begin{center}
+    {\Large \color{blue}  \bf {#1}}
+  \end{center}}
+%\logo{\vspace{-.2cm}\epsfig{file=MyFigs/sulogo.eps,width=.6cm}}
+
+
+\title{Realtime Scheduling, Bin Packing and Directed Diophantine
+  Approximation}
+\author{~}
+\institute{}
+\date{}
+
+
+
+
+
+\begin{document}
+
+\begin{frame}{Course Optimization}
+  \begin{itemize}
+  \item Course language: English 
+  \item Your lecturer: Friedrich Eisenbrand
+  \item Your tutor: Nicolai Hähnle 
+  \item Lecture notes on the web {\tt
+      http://disopt.epfl.ch/page77769.html}  
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Exercises}
+  \begin{itemize}
+  \item  Exercises Thursday 11:15 - 12:00 (MA 11)
+  \item Assignment sheet published each Wednesday evening on website
+  \item We \emph{strongly recommend} that you hand in your solutions
+    (teamwork welcome) the following  Monday 15:00, in room MA B1 533 
+  \item We correct your solutions and give feedback 
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{Grades}
+  \begin{itemize}
+  \item Grades are determined by Midterm (30\%) and Final (70\%) 
+  \item Problems of exams are in the spirit of exercise sheets 
+  \end{itemize}  
+\end{frame}
+
+
+\begin{frame}[fragile]{Example}
+ Points: 
+$   (1,3), (2.8,3.3),(4,2),(5.5,2.1),(6,.2), (7,1.3), (7.5,1), (8.5,0.8) $
+
+Zimpl formulation: 
+
+{\small 
+\begin{verbatim}
+set I := { 1 to 8};
+param X[I] :=  <1> 1, <2> 2.8, <3> 4, <4> 5.5, 
+                <5> 6, <6> 7, <7> 7.5, <8> 8.5 ;
+param Y[I] :=  <1> 3, <2> 3.3, <3> 2, <4> 2.1, 
+                <5> .2, <6> 1.3, <7> 1, <8> .8 ;
+var h[I] >= -infinity <= infinity;
+var a  >= -infinity <= infinity ;
+var b  >= -infinity <= infinity ;
+minimize cost: sum <i> in I: h[i];
+subto c1: forall <i> in I:      h[i] >=   ( a * X[i] + b -Y[i]);
+subto c2: forall <i> in I:      h[i] >= - ( a * X[i] + b -Y[i]);
+\end{verbatim}
+}
+
+
+\end{frame}
+
+\begin{frame}{Solution}
+Zimpl  creates  linear program which is readable by linear
+programming solvers like
+\href{http://www2.isye.gatech.edu/~wcook/qsopt}{QSopt} or
+\href{http://soplex.zib.de/}{SoPlex}
+
+Optimal fitting-line
+w.r.t. the distance measure  is the line $y = -0.293333
+\cdot x + 3.293333$.
+
+
+  \begin{center}
+    
+    \begin{pspicture}(0,0)(11,4)\showgrid
+      \psdot(1,3)
+      \psdot(2.8,3.3)
+      \psdot(4,2)
+      \psdot(5.5,2.1)
+      \psdot(6,.2)
+      \psdot(7,1.3)
+      \psdot(7.5,1)
+      \psdot(8.5,0.8)
+      
+      \psline(0,3.293)(11,0)
+    \end{pspicture}
+  \end{center}
+\end{frame}
+
+
+\end{document}

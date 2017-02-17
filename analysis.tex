@@ -1,0 +1,131 @@
+
+\section{One iteration of the simplex algorithm}
+\label{sec:one-iter-simpl}
+
+
+In the following we will analyze the complexity of one iteration of the simplex algorithm.  We suppose that the 
+input data  $A \in \setQ^{m\times n}$, $c \in \setQ^n$, $b \in \setQ^{m}$ is rational. 
+
+Now if $A_B^{-1}$ has been computed, then $\lambda_B^T = c^T \cdot
+A_B^{-1} $ and $d$, which is the negative of a column of $A_B^{-1}$,
+can be computed with $O(n^2)$ operations.  To compute $K$ we have to
+compute $A\cdot d$. This can be done with $O(m\cdot n)$
+operations. The index of element entering the basis can be determined
+by computing $x^* = A_B^{-1} b_B$, $b - Ax^*$ and $Ad$.  Thus, if
+$A_B^{-1}$ is known, this amounts to a total of
+  \begin{displaymath}
+    O(m \cdot n) 
+  \end{displaymath}
+  arithmetic operations.
+  
+
+In order to argue that one iteration of the simplex algorithm runs in polynomial time, we have to show that  each of the numbers of  $A_B^{-1}$ has size that is polynomial in the size of the input and that 
+$A_B^{-1}$ can be quickly computed. 
+
+
+Let us first see how large the size of the numbers in $A_B^{-1}$ can be. 
+Suppose that 
+\begin{displaymath} 
+  A =
+  \begin{pmatrix}
+    p_{11}/q_{11} & \cdots & p_{1n}/q_{1n} \\
+             & \cdots &  \\
+   p_{n1}/q_{n1} & \cdots & p_{nn}/q_{nn} \\
+  \end{pmatrix} \in \setQ^{n\times n}.  
+\end{displaymath}
+is invertible. 
+The {size}  of the product of denominators $\prod_{i=1,j=1}^n q_{ij}$
+is  
+clearly  linear in the size of the input. 
+Now write $A = 1/Q \cdot A'$ where $Q$ is product of denominators and $A'\in
+  \setZ^{n\times n}$  
+ Since $A^{-1} = Q\cdot (A')^{-1} $ we only have to answer  this question for $A'$ instead of $A$. In other words, we can  assume that $A$ is integral. 
+
+
+
+ For $A \in \setR^{m\times n}$ and $1\leq i\leq m$ and $1\leq j\leq
+ n$, $A_{ij}$ denotes the matrix obtained from $A$ by deleting the
+ $i$-th row and $j$-th column.
+The following 
+matrix inversion formula is known as Cramer's rule. 
+\begin{displaymath}
+  A^{-1} = \frac{1}{\det(A)}
+  \begin{pmatrix}
+    \det(A_{11}) & - \det(A_{21}) & \det(A_{31}) & \hdots  \\\
+    -\det(A_{12}) &  \det(A_{22}) & - \det(A_{32}) & \hdots \\\
+    \det(A_{13}) & - \det(A_{23}) & \det(A_{33}) & \hdots \\\
+    \vdots          &     \vdots        & \vdots          & \hdots \\
+    \vdots          &     \vdots        & \vdots          & \hdots \\
+  \end{pmatrix}
+\end{displaymath}
+
+\begin{theorem}[Hadamard bound] 
+  Let $A \in \R^{n \times n}$ be non-singular. Then 
+  \begin{displaymath}
+    |\det(A)| \leq \prod_{i=1}^n \|a_i\|_2 \leq n^{n/2} \cdot B^n, 
+  \end{displaymath}
+  where $B$ is upper bound on absolute values of entries of $A$.
+\end{theorem}
+
+\begin{proof}
+  The Gram-Schmidt orthogonalization of $A$ yields a factorization 
+  \begin{displaymath}
+    A = Q \cdot R,
+  \end{displaymath}
+where $R$ is an upper triangular matrix with ones on the diagonal. The matrix $Q$ has orthogonal columns, where the length of the $i$-th column $q^{(i)}$ is upper bounded by the length of the $i$-th column of $A$. 
+The assertion follows from 
+\begin{displaymath}
+  \det(A)^2 = \det(Q)^2 = \det(Q^T) \det(Q) = \prod_i \|q^{(i)}\|^2. 
+\end{displaymath}
+\end{proof}
+
+
+
+\begin{corollary}
+  If $A\in \setZ^{n\times n}$ is integral and each entry in absolute
+  value is bounded by $B$, then $\size(\det(A)) = O(n \log n+ n \cdot
+  \size(B))$.
+\end{corollary}
+% 
+  
+\begin{corollary}  
+  Let $A \in \setQ^{n\times n}$  be an invertible matrix. The size of $A^{-1}$
+  is polynomial in the size of $A$. 
+\end{corollary}
+
+
+Now we known that the size of  $A_B^{-1}$ polynomial in the size of the input
+($A,b,c$)?  Now, how  expensive is it to compute $A_B^{-1}$? 
+Suppose basis $B$  is preceded by  $B'$ 
+with 
+\begin{displaymath}    
+  \begin{array}{lcrcl}
+    B'&=& \{b_1,\ldots,b_{k-1},& b'_{k}& ,b_{k+1},\ldots,b_n\} \\
+    B &=& \{b_1,\ldots,b_{k-1},& b_{k}& ,b_{k+1},\ldots,b_n\} \\
+  \end{array}
+\end{displaymath}
+Then  each row of  $A_B \cdot A_{B'}^{-1}$, except for row $k$, is the corresponding row of the $n\times n$ identity matrix except. Let the $k$-th row be $(v_1,v_2,\dots,v_n)$. We now only have to perform the elementary column operations that turn this row into the $k$-th unit vector on $A_{B'}^{-1}$ to obtain $A_B^{-1}$. In other words, the following algorithm computes $A_B^{-1}$ given $A_{B'}^{-1}$. 
+
+
+\begin{itemize}
+\item Compute $a_{b_k}^T \cdot A_{B'}^{-1} = (v_1,\ldots,v_k,\ldots,v_n)$ 
+\item For each column $i \neq k$: Subtract $v_i / v_k$ times column
+  $k$ from column $i$ 
+\item Divide column $k$ by $v_k$ 
+\end{itemize}
+
+This amounts to a total number of $O(n^2)$ arithmetic operations for the update. 
+We can conclude with the following theorem. 
+\begin{theorem}
+  \label{thr-a-4}
+  One iteration of the simplex algorithm requires a total number of
+  $O(m\cdot n)$ operations on rational numbers whose size is polynomial
+  in the input size. 
+\end{theorem}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End: 

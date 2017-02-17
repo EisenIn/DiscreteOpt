@@ -1,0 +1,440 @@
+\chapter{The two-phase simplex method}
+\label{cha:two-phase-simplex}
+
+We now deal with the first question raised at the end of
+Chapter~\ref{cha:introduction}. How do we find an initial basic
+feasible solution with which the simplex algorithm is started? \emph{Phase
+one} of the simplex method deals with the computation of an initial
+feasible basis, which is then handed over to \emph{phase two}, the simplex
+method as we described it so far. 
+
+\section{Phase one}
+\label{sec:phase-1}
+
+Suppose we have to solve a linear program 
+\begin{equation}
+  \label{eq:11}
+  \begin{array}{rcl}
+    \min c^Tx \\
+    A x & = & b \\
+    x & \geq& 0.
+  \end{array}
+\end{equation}
+By multiplying some rows with $-1$ if necessary, we can achive that
+the right-hand-side $b$ satisfies $b\geq0$. From this, we construct a
+linear program from which an initial basic solution is readily
+available
+\begin{equation}
+  \label{eq:12}
+  \begin{array}{rcl}
+    \min z_1+ \cdots+ z_m \\
+    A x +z & = & b \\
+    x,z & \geq& 0.
+  \end{array}
+\end{equation}
+The set $B = \{n+1,\ldots,n+m\}$ is a feasible basis with basic feasible
+solution $(x^*,z^*)$ defined by $x^* = 0$  and $z^* = b$. The next
+lemma is immediate. 
+\begin{lemma}
+  \label{lem:4}
+  The linear program~\eqref{eq:11} is infeasible if and only if the
+  optimum value of the linear program~\eqref{eq:12} is larger than
+  zero. 
+\end{lemma}
+\begin{proof}
+  If $x^*$ is a feasible solution of~\eqref{eq:11}, then $(x^*,0)$ is
+  a feasible solution of~\eqref{eq:12} with objective function value
+  equal to zero. Thus if~\eqref{eq:11} is feasible, then the optimum
+  value of \eqref{eq:12} is  zero (it cannot be smaller, since the
+  $z_i$ are nonnegative).  
+
+  If now, on the other hand, the optimum value of~\eqref{eq:12} is
+  zero, we can show that~\eqref{eq:11} is feasible. Since then, if
+  $(x^*,z^*)$ is an optimum solution of~\eqref{eq:12}, then $z^* = 0$
+  and thus $x^*$ is a feasible solution of~\eqref{eq:11}. \qed
+\end{proof}
+
+
+{Phase one} of the simplex method consists of solving the linear
+program~\eqref{eq:12} with the initial feasible basis
+$B=\{n+1,\ldots,n+m\}$.  If the objective value of the computed solution
+of~\eqref{eq:12} is larger than zero, we assert that \eqref{eq:11} is
+infeasible. 
+
+
+Otherwise, the goal is now to extract an initial feasible basis of
+this solution. 
+Let $B' \subseteq\{1,\ldots,m+n\}$ be the basis returned by the simplex
+algorithm and let $(x^*,0)$ be the associated basic feasible solution. If
+$B' \subseteq\{1,\ldots,m\}$, then this $B'$ is already a feasible  basis
+of~\eqref{eq:11}. It could however be that $B' \cap \{n+1,\ldots,n+m\} \neq
+\emptyset$. We could augment $B'
+\cap\{1,\ldots,m\}$ to a basis $B$ of $Ax = b, x\geq0$, provided that $A$ has
+full row-rank. 
+
+Instead we describe  an alternative method which uses tableau mechanism to
+\emph{drive the artificial variables out} of the basis $B'$. We
+describe it now. Let $B' = \{B_1,\ldots,B_m\}$ and suppose that $B_\ell\in
+\{n+1,\ldots,n+m\}$. We inspect the tableau of the basis $B'$
+of~\eqref{eq:11} 
+\begin{equation}
+  \label{eq:13}
+    \begin{array}{c|c}
+    * & * \\ \hline 
+    A_{B'}^{-1}A        & x^*_{B'}.
+  \end{array}
+\end{equation}
+If the $\ell$-th row of $ A_{B'}^{-1}A $ is zero, then the $\ell$-th row
+of the system $ A_{B'}^{-1}A x =  A_{B'}^{-1}b$ can be deleted from
+the tableau and $B':= B' - \{B_\ell\}$. 
+
+Otherwise there exists an entry in this row, which is unequal to zero.
+Let this entry be in column $j$. We now let $j$ enter the basis and
+let $B_\ell$ leave the basis by the appropriate pivot operations. 
+Observe that you may have to multiply the corresponding row by $-1$,
+if the pivot entry would be negative. 
+We continue these steps until there are no artificial variables left in
+the basis. 
+
+
+\subsection{An example}
+
+The following example is taken from~\cite[p.~114]{BertsimasTsitsiklis97}.
+
+Consider the linear program
+\begin{equation*}
+  \begin{array}{rccccccccc}
+    \min &  x_1 & + & x_2 & + & x_3 & & &  & \\
+    &x_1&+&2x_2&+&3x_3&&&=&3\\ 
+    &-x_1&+&2x_2&+&6x_3&&&=&2\\ 
+    &&-&4x_2&-&9x_3&&&=&-5\\ 
+    &&&&&3x_3&+&x_4&=&1 \\
+    &&&&x_1,&x_2,&x_3,&x_4&\geq&0\\
+  \end{array}
+\end{equation*}
+We form the auxiliary linear program to initialize phase one of the
+simplex algorithm. 
+
+\begin{displaymath}
+  \begin{array}{l}
+     \min   \quad \quad \quad \quad\quad \quad \quad \quad\quad  \quad \quad  x_5+x_6+x_7+x_8\\
+  \begin{array}{ccccccccccccccccc}   
+   x_1&+&2x_2&+&3x_3&&&+ &x_5&&&&&&&=&3\\ 
+   -x_1&+&2x_2&+&6x_3&&&&&+&x_6&&&&&=&2\\ 
+   &&4x_2&+&9x_3&&&&&&&+&x_7&&&=&5\\ 
+   &&&&3x_3&+&x_4&&&&&&&+&x_8&=&1 
+  \end{array}\\
+  x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8\geq0.
+\end{array}
+\end{displaymath}
+%
+By evaluating the reduced cost of the basis $B = \{5,6,7,8\}$ we
+arrive at the tableau 
+
+
+
+
+\begin{displaymath}
+  \begin{tabularx}{\textwidth}{XXXXXXXX|X}   
+   0&  -8& -21&  -1&   0&   0&   0&   0& -11\\\hline
+   1&   2&   3&   0&   1&   0&   0&   0&   3\\
+  -1&   2&   6&   0&   0&   1&   0&   0&   2\\
+   0&   4&   9&   0&   0&   0&   1&   0&   5\\
+   0&   0&   3&   1&   0&   0&   0&   1&   1\\
+ \end{tabularx}
+\end{displaymath}
+We let $4$ enter the basis and $8$ leaves the basis. The tableau for
+$B = \{4,5,6,7\}$ is 
+\begin{displaymath}
+  \begin{tabularx}{\textwidth}{XXXXXXXX|X}   
+   0&  -8& -18&   0&   0&   0&   0&   1& -10\\\hline
+   1&   2&   3&   0&   1&   0&   0&   0&   3\\
+  -1&   2&   6&   0&   0&   1&   0&   0&   2\\
+   0&   4&   9&   0&   0&   0&   1&   0&   5\\
+   0&   0&   3&   1&   0&   0&   0&   1&   1\\
+ \end{tabularx}
+\end{displaymath}
+Next, $3$ enters the basis and $4$ leaves again. We obtain the tableau
+of $B = \{3,5,6,7\}$. 
+\begin{displaymath}
+  \begin{tabularx}{\textwidth}{XXXXXXXX|X}   
+   0&  -8&   0&   6&   0&   0&   0&   7&  -4\\\hline
+   0&   0&   1& 1/3&   0&   0&   0& 1/3& 1/3\\
+   1&   2&   0&  -1&   1&   0&   0&  -1&   2\\
+  -1&   2&   0&  -2&   0&   1&   0&  -2&   0\\
+   0&   4&   0&  -3&   0&   0&   1&  -3&   2\\
+ \end{tabularx}
+\end{displaymath} 
+Next, $2$ enters the basis and $6$ leaves the basis. We obtain the
+tableau of $B = \{2,3,5,7\}$ 
+\begin{displaymath}
+  \begin{tabularx}{\textwidth}{XXXXXXXX|X}   
+   -4&    0&    0&   -2&    0&    4&    0&   -1&   -4\\\hline
+   -1/2&    1&    0&   -1&    0&  1/2&    0&   -1&    0\\
+   0&    0&    1&  1/3&    0&    0&    0&  1/3&  1/3\\
+   2&    0&    0&    1&    1&   -1&    0&    1&    2\\
+   2&    0&    0&    1&    0&   -2&    1&    1&    2\\
+
+  \end{tabularx}  
+\end{displaymath}
+Next, $1$ enters the basis and $5$ leaves. The tableau of $B =
+\{1,2,3,7\}$ is 
+\begin{displaymath}
+  \begin{tabularx}{\textwidth}{XXXXXXXX|X}  
+       0&    0&    0&    0&    2&    2&    0&    1&    0\\\hline
+       1&    0&    0&  1/2&  1/2& -1/2&    0&  1/2&    1\\
+       0&    1&    0& -3/4&  1/4&  1/4&    0& -3/4&  1/2\\
+       0&    0&    1&  1/3&    0&    0&    0&  1/3&  1/3\\
+       0&    0&    0&    0&   -1&   -1&    1&    0&    0\\
+  \end{tabularx}  
+\end{displaymath}
+Now we see that the $4$-th row of the matrix $A_B^{-1}A$ is
+zero. Thus, we can delete the last constraint. We arrive at the
+tableau 
+\begin{displaymath}
+  \begin{tabularx}{.8\textwidth}{XXXX|X}  
+       0&    0&    0&    0&    0\\\hline
+       1&    0&    0&  1/2&    1\\
+       0&    1&    0& -3/4&  1/2\\
+       0&    0&    1&  1/3&  1/3\\
+  \end{tabularx}  
+\end{displaymath}
+which is yields a feasible basic solution $x_1=1, x_2=1/2,
+x_3=1/3$. Phase two of the simplex algorithm is initiated with the
+tableau belonging to the basis $\{1,2,3\}$. 
+\begin{displaymath}
+  \begin{tabularx}{.8\textwidth}{XXXX|X}  
+       0&    0&    0&    -1/12&    -11/6\\\hline
+       1&    0&    0&  1/2&    1\\
+       0&    1&    0& -3/4&  1/2\\
+       0&    0&    1&  1/3&  1/3\\
+  \end{tabularx}  
+\end{displaymath}
+
+
+
+After one more iteration one arrives at the tableau  corresponding of
+the basis $B=\{1,2,4\}$. 
+\begin{displaymath}
+   \begin{tabularx}{.8\textwidth}{XXXX|X}  
+        0&    0&  1/4&    0& -7/4\\\hline
+        1&    0& -3/2&    0&  1/2\\
+        0&    1&  9/4&    0&  5/4\\
+        0&    0&    3&    1&    1\\
+   \end{tabularx}  
+\end{displaymath}
+
+
+\section{The dual simplex method}
+We briefly discuss also the dual simplex method. 
+
+\begin{definition}[Dual feasible basis]
+  A basis $B$ which yields nonnegative reduced cost $\overline{c}^T =
+  c^T - c_B^TA_B^{-1}A \geq0$ is called a \emph{dual feasible basis}.
+\end{definition}
+
+In the dual simplex method, we are given a tableau 
+\begin{equation}
+  \label{eq:14}
+  \begin{array}{c|c}
+    c^T - c_B^TA_B^{-1}A & -c_B^Tx^*_B \\ \hline 
+    A_B^{-1}A        & x^*_B.
+  \end{array}
+\end{equation}
+together with a dual feasible basis $B$ defining the tableau. 
+Suppose the basic solution $x^*$ with $x^*_B = A_B^{-1}b$ and $x^*_{\overline{B}} =
+0$ is not feasible, or in other words, the basis $B$ is not (primal)
+feasible, however dual feasible. We want to pivot to a new basis $B'$
+which remains dual feasible, whose objective function value
+$c_{B'}^Tx^*_{B'}$ is larger compared to $c_B^Tx^*_B$. Remember that
+this value is equal to the objective value of the corresponding dual
+solution and that  the dual linear program $\max\{b^Ty \colon A^Ty\leq c, \, x \in
+\setR^n\}$  is a maximization problem. 
+
+We now describe the pivot step which yields an improved dual feasible
+solution if the linear program does not have any degenerate basic
+solutions. By applying perturbation, or a suitable pivot rule, we can
+thereby achieve that the dual simplex method also eventually
+terminates. 
+
+
+Suppose that $x^*(B_i)$ is less than zero. We choose $B_i$ to
+\emph{exit} the basis $B$ and search for a $j \in \{1,\ldots,n\}$ that
+should enter the basis $B$ to form the new basis $B'$. This is in
+contrast to the primal simplex method, where we are choosing an
+entering variable first and then determine an exiting variable. 
+
+
+Let $a_1,\ldots,a_n, x^*(B_i)$ be the $i$-th row of the system matrix of
+the tableau~\eqref{eq:14}. 
+
+\begin{lemma}\label{lem:5}
+  If $a_i\geq0$ for each $i=1,\ldots,n$, then the linear program is
+  infeasible and the dual linear program is unbounded.   
+\end{lemma}
+
+\begin{proof}
+  The proof is straightforward with linear programming duality.
+  Clearly, there cannot be a feasible solution $\wt{x}\geq0$ of the
+  primal, since with this $\wt{x}$ one has $ \sum_{i=1}^n a_i \wt{x}_i =
+  x^*(B_i)<0$ which is impossible, since the $a_i$ are all greater
+  than or equal to $0$. The theorem of strong duality then implies
+  that the dual linear program is unbounded.  \qed
+\end{proof}
+
+
+Now let $j$ be an index with $a_j<0$. If we let $j$ enter the basis,
+then we must transform the tableau in such a way that the $j$-th
+column of the tableau becomes the $i$-th unit vector. We want to
+ensure that the tableau is still dual feasible. 
+
+To this end, we consider the $i$-th  row of the system matrix. 
+\begin{displaymath}
+  a_1,\ldots,a_j,\ldots,a_n,x^*(B_i)
+\end{displaymath}
+and multiply it with $1/a_j$ to obtain. 
+\begin{displaymath}
+  a_1/a_j,\ldots,a_{j-1}/a_j,1,a_{j+1}/a_j,\ldots,a_n/a_j,x^*(B_i)/a_j
+\end{displaymath}
+If we perform now elementary row operations on the tableau to have the
+$i$-th unit vector in the $j$-th column, then we would want the new
+reduced costs to remain nonnegative. The $k$-th reduced cost is 
+\begin{displaymath}
+  \overline{c}_k - \overline{c}_j a_k/a_j.
+\end{displaymath}
+If $a_k$ was positive, then the new reduced cost of $k$ is clearly
+positive as well. If $a_k<0$, then the new reduced cost of $k$ is
+nonnegative if and only if 
+\begin{displaymath}
+    \overline{c}_k /a_k\leq \overline{c}_j /a_j. 
+\end{displaymath}
+Let $K = \{j \colon a_j<0\}$ be the indices corresponding to negative
+entries of the $i$-th row of the system matrix of the tableau. 
+If $j\in K$ is an index with $a_j<0$ such that 
+\begin{displaymath}
+  \overline{c}_k /a_k\leq \overline{c}_j /a_j ,\, \text{ for all }k \in K,
+\end{displaymath}
+then $j$ can enter the basis and the dual objective value has strictly
+increased if there are no degenerate basic solutions. 
+
+This yields \emph{one iteration of the dual simplex method} which
+operates on a dual feasible basis $B$:
+\begin{enumerate}
+\item If $x^*_B\geq0$, then output the optimal basis $B$. 
+\item Else let $i$ be an index with $x^*(B_i)<0$. If the $i$-th row of
+  the system matrix contains only nonnegative entries, the assert that
+  the linear program is infeasible and that the dual linear program is
+  unbounded. 
+\item Let $K = \{i \colon a_i <0\}$ and let $j \in K$ be an index with 
+  \begin{displaymath}
+    \overline{c}_j /a_j = \max\{ \overline{c}_k /a_k \colon k \in K\}.
+  \end{displaymath}
+\item The index  $i$ leaves the basis and $j$ enters the basis. 
+\item Update the tableau. 
+\end{enumerate}
+
+Notice that the update step strictly reduces the upper-right entry in
+the tableau if $\overline{c}_j >0$. Again, by a perturbation argument,
+we can achieve that such a degeneracy never occurs and the dual
+simplex method terminates. 
+
+
+\begin{example}[See p. 162 in~\cite{BertsimasTsitsiklis97}]
+  
+  \begin{displaymath}
+  \begin{tabularx}{.5 \textwidth}{XXXX|X}
+    1   &      1 &      0  &    0   &   0 \\ \hline 
+    -1   &     -2 &    1  &    0   &    -2\\
+    -1   &     0   &     0  &    1   &    -1
+  \end{tabularx} 
+ \quad \quad \quad  B = \{3,4\}
+\end{displaymath} 
+
+ \begin{displaymath}
+  \begin{tabularx}{.5 \textwidth}{XXXX|X}
+    1/2   &      0 &    1/2  &    0   &   -1 \\ \hline 
+    1/2   &     1 &    -1/2  &    0   &    1\\
+    -1   &     0   &     0   &    1   &    -1
+  \end{tabularx} 
+ \quad \quad \quad  B = \{2,4\}
+\end{displaymath} 
+
+ \begin{displaymath}
+  \begin{tabularx}{.5 \textwidth}{XXXX|X}
+    0   &      0 &    1/2  &    1/2   &   -3/2 \\ \hline 
+    1   &     0   &     0   &    -1   &    1\\
+    0   &     1  &    -1/2  &    1/2   &    1/2 
+  \end{tabularx} 
+ \quad \quad \quad  B = \{1,2\}
+\end{displaymath} 
+
+
+
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{enumerate}
+\item Solve the following linear program using the two-phase simplex method:
+\begin{eqnarray*}
+\min &  2x_1 +3x_2 +3x_3 + x_4 - 2 x_5   & \\
+\text{s.t.}   &  x_1 + x_2 + 4 x_4 + x_5    = 2  &  \\
+    &   x_1 + 2x_2 +  - 3 x_4 + x_5    = 2 &  \\
+    &    x_1 -4 x_2 + 3 x_3 = 1 &  \\
+    &   x_1,x_2,x_3,x_4 \geq 0
+\end{eqnarray*}
+During the first phase, let the following indices enter the basis in this order: $1,2,5$.
+Use the lexicographic pivoting rule to decide which index will leave the basis in each step.
+\item Solve the following simplex tableau using the dual simplex method.
+\begin{center}
+\begin{tabular}[ht]{|c|c|c|c|c||c|}
+  \hline
+   $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ &  \\
+  \hline
+    $3$ & $2$ & $1$ & $0$ & $0$  & $0$ \\
+  \hline
+  \hline
+    $-2$ & $2$ & $-1$ & $1$ & 0 & $-3$\\
+  \hline
+	$-2$ & $-1$ & $1$ & $0$ & $1$ &  $-1$ \\
+  \hline
+\end{tabular}
+\end{center}
+\item Consider the following simplex tableau:
+\begin{center}%This exercise is taken from the Bertsimas book
+\begin{tabular}[ht]{|c|c|c|c|c||c|}
+  \hline
+   $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ &  \\
+  \hline
+    $\delta$ & $-2$ & $0$ & $0$ & $0$  & $-10$ \\
+  \hline
+  \hline
+    $-1$ & $\eta$ & $1$ & $0$ & 0 & $4$\\
+  \hline
+	$\alpha$ & $-4$ & $0$ & $1$ & $0$ &  $1$ \\
+  \hline
+	$\gamma$ & $3$ & $0$ & $0$ & $1$ &  $\beta$ \\
+  \hline
+\end{tabular}
+\end{center}
+The current basic variables are $x_3,x_4,x_5$.
+The entries $\alpha, \beta, \gamma, \delta, \eta$ in the tableau are unknown parameters.
+
+For each one of the following statements, find some parameter values that will make the statement true.
+\begin{enumerate}
+\item The current solution is feasible but not optimal.
+\item The current solution is optimal.
+\item The optimal cost is $-\infty$.
+\end{enumerate}
+\end{enumerate}
+
+
+\bibliographystyle{abbrv}
+
+\bibliography{mybib,papers,books,my_publications}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "lecture"
+%%% End: 

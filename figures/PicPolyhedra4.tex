@@ -1,0 +1,135 @@
+\documentclass[border=12pt,pstricks]{standalone}
+\usepackage{pstricks}
+
+\usepackage{pst-node}
+\usepackage{pst-coil}
+
+\newgray{vlg}{.85}
+\newgray{vvlg}{.95}
+
+\usepackage{amsmath}
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+\newcommand{\R}{\setR}
+\newcommand{\Z}{\setZ}
+\newcommand{\N}{\setN}
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+
+\begin{document}
+   \psset{unit=1cm}
+    \begin{pspicture}(0,0.5)(4,3.5)
+    \cnode*(2,0.5){3pt}{1}
+    \cnode*(3,1){3pt}{2}
+\cnode*(3,2){3pt}{3}
+\cnode*(2,2.5){3pt}{4}
+\cnode*(1,1.5){3pt}{5}
+
+\ncline{1}{2}
+\ncline{2}{3}
+\ncline[linecolor=red]{3}{4}
+\ncline{4}{5}
+\ncline[linecolor=red]{5}{1}
+%\ncline{1}{3}
+
+\pnode(0.5,0.5){a}
+\pnode(0,2){b}
+\pnode(1.5,3.5){c}
+\pnode(2.5,3.5){d}
+\pnode(4,2.5){e}
+\pnode(4,0.5){f}
+
+\ncline{2}{f}
+\ncline{3}{e}
+\ncline{4}{c}
+\ncline{4}{d}
+\ncline{5}{b}
+\ncline{5}{a}
+
+\psellipse[linecolor=blue](2.1,1.5)(1.5,1.3)
+
+\end{pspicture}
+
+
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,169 @@
+\documentclass[border=12pt,pstricks]{standalone}
+\usepackage{pstricks}
+
+\usepackage{pst-node}
+\usepackage{pst-coil}
+
+\newgray{vlg}{.85}
+\newgray{vvlg}{.95}
+
+\usepackage{amsmath}
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+\newcommand{\R}{\setR}
+\newcommand{\Z}{\setZ}
+\newcommand{\N}{\setN}
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+
+\begin{document}
+ \psset{unit=1.5cm}  
+   \begin{pspicture}(0,3)(5,7)
+%    \showgrid
+%    \cnodeput(0,10){v1}{$v_1$}
+    \scriptsize
+   
+    
+    \cnodeput(1,5){a}{$a$}
+%    \rput(0,10){$a$}
+
+    \cnodeput(2,6){b}{$b$}
+    \cnodeput(4,6){c}{$c$}
+
+    \cnodeput(2,4){d}{$d$}
+    \cnodeput(4,4){e}{$e$}
+
+%     \cnodeput(2,6){b}{$b$}
+%     \cnodeput(4,6){c}{$c$}
+    
+    
+    \ncarc[linecolor=red]{->}{a}{b}
+    \Aput*[.01cm]{$1/1$}
+    \ncarc{->}{b}{a}
+    \Aput*[.01cm]{$-1/2$}
+    
+    \ncarc{->}{a}{d}
+    \Aput*[.01cm]{$3/1$}
+    
+    \ncarc[linecolor=red]{->}{d}{a}
+    \Aput*[.01cm]{$-3/1$}
+
+
+    \ncarc[linecolor=red]{->}{b}{d}
+    \Aput*[.01cm]{$1/1$}
+    
+    \ncarc{->}{d}{b}
+    \Aput*[.01cm]{$-1/2$}
+
+
+    \ncline{->}{b}{c}
+    \Aput*[.01cm]{$2/4$}
+    
+
+    \ncline{->}{c}{d}
+    \Aput*[.01cm]{$-3/2$}
+    
+    \ncline{->}{d}{e}
+    \Aput*[.01cm]{$7/2$}
+   
+  
+
+     \pnode(.2,5){in}
+%     \rput(0,5){$3$}
+%     \ncline[linewidth=3pt]{->}{in}{a}
+
+
+     \pnode(2,3.2){o1}
+%     \rput(2,3){$1$}
+%     \ncline[linewidth=3pt]{->}{d}{o1}
+
+     \pnode(4.8,6){o2}
+%     \rput(5,6){$2$}
+%     \ncline[linewidth=3pt]{->}{c}{o2}       
+%     \pnode(-1,10){iv}
+%     \ncline[linewidth=3pt]{->}{iv}{v1}
+%     \rput(-1.5,10){$2$}
+  \end{pspicture}
+
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
