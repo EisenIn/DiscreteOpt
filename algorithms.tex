@@ -12,7 +12,7 @@ Each of these instructions requires \emph{time}. The \emph{running time} of an a
 
 \begin{example}
 \label{ex-a-1}
-  Consider the following algorithm to compute the product of two $n × n$ matrices. 
+  Consider the following algorithm to compute the product of two $n × n$ matrices $A,B ∈ ℚ^{n ×n}$: 
     \begin{tabbing}            
     {\bf for} \= $i=1,\dots,n$ \\ 
               \> {\bf for} \= $j=1,\dots,n$ \\
@@ -20,8 +20,8 @@ Each of these instructions requires \emph{time}. The \emph{running time} of an a
               \> \> {\bf for} \= $k=1,\dots,n$ \\
               \> \> \> $c_{ij} := c_{ij} + a_{ik} ⋅ a_{kj}$
             \end{tabbing} 
-
- The number of additions is $n^2 ⋅ (n-1)$ and the number of multiplications is $n^3$.
+%
+ The number of additions that are carried out is $n^2 ⋅ (n-1)$ and the number of multiplications is $n^3$.
  The number of store-instructions is $n^2 ⋅(n+1)$. The number of read-instructions is of similar magnitude. 
 \end{example}
 
@@ -29,7 +29,7 @@ Each of these instructions requires \emph{time}. The \emph{running time} of an a
 The above example shows that an \emph{exact counting} is sometimes
 tedious. Looking at the algorithm however, you quickly agree that
 there exists \emph{some constant} $c \in \R_{>0}$ such that the
-algorithm performs at most $c \cdot m \cdot n \cdot l$ instructions. 
+algorithm performs at most $c ⋅ n^3$ instructions. 
 
 In the analysis of algorithms, one does usually not care so much about the constant $c$ above in the beginning. There are sub-fields of algorithms where this constant however matters. Especially for algorithms on large data sets, where access to external data is costly. However, this is another story that does not concern us here. When we analyze algorithms, we are interested in the \emph{asymptotic running time}. 
 
@@ -63,13 +63,13 @@ numbers each. The algorithm runs in time $O(n^3 = (n^2)^{3/2})$.
 
 
 What does it mean for an algorithm to be efficient? For us, this will
-mean that it runs in polynomial time. As a first definition of
+mean that it runs in \emph{polynomial time}. As a first definition of
 polynomial time algorithm, we say that an algorithm runs in
 \emph{polynomial time}, if there exists a constant $k$ such that the
 algorithm runs in time $O(n^k)$, where $n$ is the length of the input
 of the algorithm.
 
-However, we recall the \emph{binary} representation of natural numbers $n ∈ ℕ$. A sequence of bits $a_0,\dots,a_{k-1}$ with $a_j ∈ \{0,1\}$ for $0 ≤j≤k-1$ represents the number 
+However, we recall the \emph{binary} representation of natural numbers $n ∈ ℕ$. A sequence of \emph{bits} $a_0,\dots,a_{k-1}$ with $a_j ∈ \{0,1\}$ for $0 ≤j≤k-1$ represents the number 
 \begin{displaymath}
   ∑_{j=0}^{k-1} a_j ⋅ 2^j. 
 \end{displaymath}  
@@ -120,6 +120,7 @@ The input of this algorithm is a list of characters. Let us say that the list ha
   $\size(x) = \size(p)+\size(q)$,
   where $x = p/q$ with $p,q \in \setZ$, $q\geq1$ and $\gcd(p,q)=1$.   
 \end{definition}
+Here $\gcd(p,q)$ denotes the \emph{greatest common divisor} of $p$ and $q$ which we define precisely below. 
 Thus the size of a number is asymptotically equal to the number of
 bits that are needed to store the number.  We now provide the
 definition of what a polynomial-time algorithm is.
@@ -231,7 +232,7 @@ which shows that $T(n) >= n! = 2^{\Omega({n \log n})}$ which is \emph{exponentia
 \item 
 Let $A ∈ ℝ^{n ×n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
 Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first $k$ rows and some of the $k$ columns of $A$. How many (recursive) calls of the form $\det(B)$ does the algorithm of Example~\ref{exe:det} create? 
-\item Let $A ∈ ℝ^{n ×n}$  and suppose that the $n^2$ components of $A$ are pairwise different. How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm  of Example~\ref{exe:det} remains exponential, even if it does not expands repeated subcalls. 
+\item Let $A ∈ ℝ^{n ×n}$  and suppose that the $n^2$ components of $A$ are pairwise different. How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm  of Example~\ref{exe:det} remains exponential, even if it does not expand repeated subcalls. 
 \item Complete the  algorithm below such  that it adds two natural numbers  in binary representation  $a_0,\dots,a_{l-1}$,  $b_0,\dots,b_{l-1}$. What is the asymptotic running time (number of basic operations) of your algorithm? Can there be an asymptotically  faster algorithm? 
 
   \begin{tabbing}
@@ -299,7 +300,7 @@ with a non-singular $Q ∈ ℚ^{m × m}$. On the other hand we have the followin
 \end{figure}
 
 
-How many arithmetic operations does Gaussian elimination perform? Subtracting a multiple of one row from another row in $A'$ can be done in time $O(n)$ Thus the number of operations that are performed within the {\bf for}-loop are $O(m ⋅n)$ in total. There are $O(m)$ iterations through the while-loop. All-together this shows that Gaussian elimination performs $O(m^2 ⋅n)$ iterations.But how large can the numbers grow in the course of the Gaussian algorithm Could it be that numbers have to be manipulated, whose binary encoding length is \emph{exponential} in the total encoding length of the matrix $A$? Luckily the answer to this question is ``No''. To provide this answer, we have to show the following. 
+How many arithmetic operations does Gaussian elimination perform? Subtracting a multiple of one row from another row in $A'$ can be done in time $O(n)$ Thus the number of operations that are performed within the {\bf for}-loop are $O(m ⋅n)$ in total. There are $O(m)$ iterations through the while-loop. All-together this shows that Gaussian elimination performs $O(m^2 ⋅n)$ iterations. But how large can the numbers grow in the course of the Gaussian algorithm? Could it be that numbers have to be manipulated, whose binary encoding length is not polynomial in the total encoding length of the matrix $A$? Luckily the answer to this question is ``No''. To provide this answer, we have to show the following. 
 
 
 \begin{theorem}[Hadamard bound] 
@@ -369,7 +370,7 @@ The   Gaussian algorithm runs in polynomial time.
   have been done in advance, so that no further swaps occur during the
   algorithm.  Consider the absolute value of the product of the pivot
   elements (red $x$'s
-  in the Figure). This product is the absolute value of the
+  in the Figure). This  is the absolute value of the
   determinant of the submatrix of $A$,
   that is obtained by choosing the first $i-1$
   rows and the columns in which the pivot elements lie.  By
@@ -397,7 +398,7 @@ The   Gaussian algorithm runs in polynomial time.
 \label{sec:exercises}
 
 \begin{enumerate}
-\item \label{item:3} Show that the matrix $Q ∈ ℚ^{m × m}$ that transforms $A$ into $A'$ in the Gaussian algorithm via $Q ⋅A = A'$ has entries that are od polynomial size in the binary encoding length of $A$. Prove that this holds after each iteration of the while loop. 
+\item \label{item:3} Show that the matrix $Q ∈ ℚ^{m × m}$ that transforms $A \in ℚ^{m × n}$ into $A'$ in the Gaussian algorithm via $Q ⋅A = A'$ has entries that are od polynomial size in the binary encoding length of $A$. 
 \end{enumerate}
 
 %%% Local Variables:
