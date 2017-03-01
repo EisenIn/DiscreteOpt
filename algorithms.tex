@@ -282,7 +282,7 @@ $i := 1$\\
 We can easily prove correctness of the algorithm. First of all, the algorithm does only perform elementary row-operations of the form 
 \begin{enumerate}[i)]
 \item swap two rows 
-\item subtract a multiple of one row from \emph{another row}. 
+\item subtract a multiple of one row from \emph{another} row. 
 \end{enumerate}
 This means that the resulting matrix $A'$ can be obtained via 
 \begin{displaymath}
@@ -399,6 +399,132 @@ The   Gaussian algorithm runs in polynomial time.
 
 \begin{enumerate}
 \item \label{item:3} Show that the matrix $Q ∈ ℚ^{m × m}$ that transforms $A \in ℚ^{m × n}$ into $A'$ in the Gaussian algorithm via $Q ⋅A = A'$ has entries that are od polynomial size in the binary encoding length of $A$. 
+\end{enumerate}
+
+
+\section{Fast matrix multiplication} 
+\label{sec:fast-matr-mult}
+
+
+We conclude this chapter on the analysis of algorithms with a result
+of Volker Strassen~\cite{strassen1969gaussian} who showed that two
+$n ×n$
+matrices can be multiplied in time (number of arithmetic operations)
+$O(n^{2.805})$.
+This algorithm was published in 1969 and it showed as well that a
+matrix can be inverted within the same timebound, see~\cite{AHU74}. 
+
+Our task is to compute the product 
+
+\begin{equation}
+  \label{eq:str:1}
+C =   A \cdot B  
+\end{equation}
+for two $n ×n$ matrices. We have seen that straightforward matrix-multiplication (Example~\ref{ex-a-1}) requires $O(n^3)$ arithmetic operations. 
+We can assume, by padding $A$ and $B$ with zeroes, that $n = 2^\ell$ for some $\ell ∈ ℕ_0$. 
+
+If we split the matrices $A$ and $B$ into 4 $n/2 × n/2$ matrices 
+\begin{equation}
+  \label{eq:str:3}
+  A =
+  \begin{pmatrix}
+    A_{11} & A_{12} \\ 
+    A_{21} & A_{22} 
+  \end{pmatrix} \, \text{ and }  B =
+  \begin{pmatrix}
+    B_{11} & B_{12} \\ 
+    B_{21} & B_{22} 
+  \end{pmatrix}
+\end{equation}
+Then 
+\begin{displaymath}
+  \begin{pmatrix}
+    C_{11} & C_{12} \\
+    C_{21} & C_{22}
+  \end{pmatrix}
+   =
+  \begin{pmatrix}
+    A_{11}\cdot B_{11} + A_{12}\cdot B_{21} & \, &  A_{11}\cdot B_{12} + A_{12}\cdot B_{22}  \\
+        A_{21}\cdot B_{11} + A_{22}\cdot B_{21} &\, &     A_{21}\cdot B_{12} + A_{22}\cdot B_{22} 
+  \end{pmatrix}.
+\end{displaymath}
+Thus wan can reduce \emph{one}   multiplication of two $n ×n$ matrices to $8$ multiplications of two $n/2 × n/2$ matrices. For the running time, one obtains the recurrence 
+\begin{equation}
+  \label{eq:stra:4}
+  T(n ) = 8 \cdot T(n/2) + Θ(n^2) 
+\end{equation}
+which leads again to $T(n) = Θ(n^3)$, see exercise \ref{item:str:4}). 
+
+Strassen discovered that one can preprocess the input matrices in such a way that the correct result can be retrieved from the result  $7$ multiplications of $n/2 × n/2$ matrices. The preprocessing and retrival time is $O(n)$ which yields the recursion 
+\begin{equation}
+  \label{eq:str:5}
+  T(n) = 7 \cdot T(n/2) + O(n^2). 
+\end{equation}
+
+The idea is to compute the $7$ matrices
+\begin{eqnarray*}
+  M_1 & = & (A_{11} + A_{22}) \cdot (B_{11}+ B_{22}) \\
+  M_2 & = & (A_{21} + A_{22}) \cdot B_{11} \\
+  M_3 & = & A_{11} \cdot (B_{12} - B_{22}) \\
+  M_4 & = & A_{22} \cdot (B_{21} - B_{22}) \\
+  M_5 & = & (A_{11} + A_{12})\cdot B_{22} \\
+  M_6 & = & (A_{21}-A_{11}) \cdot (B_{11}+B_{12}) \\
+  M_7 & = & (A_{12}-A_{22}) \cdot  (B_{21} + B_{22})\\. 
+\end{eqnarray*}
+This amounts to $O(n^2)$ arithmetic operations and $7$ multiplications of $n/2 × n/2$ matrices. From $M_1,\dots,M_7$ one can retrieve 
+\begin{eqnarray*}
+C_{11} & = & M_1 + M_4 - M_5 + M_7\\
+C_{12} & = & M_3 + M_5 \\
+C_{21} & = & M_2 + M_4\\
+C_{22} & = & M_1 - M_2 + M_3 + M_6.  
+\end{eqnarray*}
+again with $O(n^2)$ arithmetic operations. 
+
+
+\begin{algorithm}[Fast matrix multiplication ($\mathrm{FMM}$)]
+
+  \begin{tabbing}
+    Input: Two $n ×n$ matrices $A$ and $B$ \\
+    Output: $C = \mathrm{FMM}(A,B)$, the product $ A\cdot B$ \\
+
+    {\bf if}  $n=1$ return $a_{11} ⋅b_{11}$ \\
+    {\bf else} \=  \\
+               \>  $M_1 = \mathrm{FMM} (A_{11} + A_{22} , B_{11}+ B_{22}) $ \\
+               \> $M_2 = \mathrm{FMM}(A_{21} + A_{22},  B_{11})$ \\
+               \> $M_3  = \mathrm{FMM} A_{11} , B_{12} - B_{22}) $\\
+               \> $M_4  = \mathrm{FMM}( A_{22} , (B_{21} - B_{22})$ \\
+               \> $M_5  = \mathrm{FMM}(A_{11} + A_{12}, B_{22})$ \\
+               \> $M_6  = \mathrm{FMM} (A_{21}-A_{11}, B_{11}+B_{12}) $\\
+               \> $M_7  = \mathrm{FMM} (A_{12}-A_{22}, B_{21} + B_{22})$\\ 
+               \> Compute the matrices $C_{11}, C_{12}, C_{21}, C_{22}$ from $M_1,\dots,M_7$ \\
+               \> {\bf return} $C$
+  \end{tabbing}
+\end{algorithm}
+
+  \begin{figure}
+    \centering
+     \includegraphics[height=8cm]{figures/Strassen.pdf}
+    \caption{The analysis of the Strassen algorithm. }
+    \label{fig:str:1}
+  \end{figure}
+
+
+  \begin{theorem}[Strassen]
+    \label{thr:10}
+    Two $n × n$ matrices can be multiplied in time (number of arithmetic operations) $O(n^{2+ \log_2(7/4)})$. 
+  \end{theorem}
+
+
+
+  \begin{proof}
+    See Figure~\ref{fig:str:1}. 
+
+  \end{proof}
+
+\section*{Exercises}
+
+\begin{enumerate}
+\item Show that the recursion \eqref{eq:stra:4} has the solution $T(n) = Θ (n^3)$.  \label{item:str:4}
 \end{enumerate}
 
 %%% Local Variables:
