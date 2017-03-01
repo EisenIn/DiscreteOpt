@@ -248,7 +248,7 @@ Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first
    $c_l := $  \\
    {\bf return} $c_0,\dots ,c_l$ \\   
 \poptabs
-  \end{tabbing}
+  \end{tabbing} \label{item:ex:7}
 
 \end{enumerate}
 
@@ -503,7 +503,7 @@ again with $O(n^2)$ arithmetic operations.
 
   \begin{figure}
     \centering
-     \includegraphics[height=8cm]{figures/Strassen.pdf}
+     \includegraphics[height=8cm]{figures/Strassen2.pdf} 
     \caption{The analysis of the Strassen algorithm. }
     \label{fig:str:1}
   \end{figure}
@@ -525,6 +525,22 @@ again with $O(n^2)$ arithmetic operations.
 
 \begin{enumerate}
 \item Show that the recursion \eqref{eq:stra:4} has the solution $T(n) = Θ (n^3)$.  \label{item:str:4}
+\item Describe an algorithm that multiplies two $n$-bit integers in time $O(n^2)$. You may use the algorithm to add two $n$-bit integers from exercise~\ref{cha:runn-time-analys}.\ref{item:ex:7}.  
+\item Suppose $n = 2^\ell $  and $a,b ∈ ℕ$ are two $n$-bit integers. Consider the numbers $a_h$ and $a_l$ which are represented by the first $n/2$ bits and the last $n/2$ bits of $a$ respectively. Likewise the numbers $b_h$ and $b_l$ are the numbers represented by the first half and the second half of the bit-representation of $b$. 
+  \begin{enumerate}[i)]
+  \item Show $a = a_h ⋅ 2^{n/2} + a_l$ and  $b = b_h ⋅ 2^{n/2} + b_l$
+  \item Show $a⋅b = a_h ⋅ b_h ⋅ 2^n + (a_h ⋅ b_l + a_l ⋅ b_h) ⋅2^{n/2} + a_l ⋅b_l$ 
+  \item Conclude very carefully that two $n$-bit
+    numbers can be multiplied by resorting to three multiplications of
+    $n/2$-bit numbers and $O(n)$ basic  operations.
+  \item Conclude that two $n$-bit
+    numbers can be computed in time $O(n^{\log_2(3)})$
+    elementary bit operations.
+  \end{enumerate}
+
+
+
+
 \end{enumerate}
 
 %%% Local Variables:
