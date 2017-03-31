@@ -209,7 +209,7 @@ We have described one iteration of the simplex algorithm. We iterate this proced
      $
         \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
       $
-      is attained \\
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
 
       \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
     \end{tabbing}
@@ -255,7 +255,7 @@ In the case where the linear program~\eqref{eq:s-1} is degenerate, we cannot arg
      $
         \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
       $
-      is attained \\
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
 
       \> \>\emph{update} $B := B \setminus\{i^*\} \cup \{k^*\}$             
     \end{tabbing}
@@ -430,7 +430,7 @@ performed on the perturbed linear program~\eqref{eq:pert-3}. For this, assume th
      $
         \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
       $
-      is attained \\
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
 
       \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
     \end{tabbing}
