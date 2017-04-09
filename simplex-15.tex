@@ -208,7 +208,7 @@ We have described one iteration of the simplex algorithm. We iterate this proced
      $
         \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
       $
-      is attained \\
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
 
       \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
     \end{tabbing}
@@ -242,9 +242,10 @@ In the case where the linear program~\eqref{eq:s-1} is degenerate, we cannot arg
  \begin{tabbing}
       Start with feasible basis $B$ \\[1ex]
       {\tt while} \= $B$ is not optimal \\ [.7ex]
+      \> Compute $\lambda \in \setR^n$ such that $\lambda^TA_B = c^T$ \\
       \> Let $i^* \in B$ be the \emph{ smallest index} with $\lambda_i<0$ \\
-      \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
-      and $a_i^T d = -1$ \\ 
+      \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i^*\}$
+      and $a_{i^*}^T d = -1$ \\ 
       \> Determine $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$\\[.7ex]  
       \> {\tt if} \= $K = \emptyset$ \\   
       \> \> \emph{assert LP unbounded} \\
@@ -253,7 +254,7 @@ In the case where the linear program~\eqref{eq:s-1} is degenerate, we cannot arg
      $
         \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
       $
-      is attained \\
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
 
       \> \>\emph{update} $B := B \setminus\{i^*\} \cup \{k^*\}$             
     \end{tabbing}
@@ -425,6 +426,7 @@ where we imagine that $\eps$ tends to zero from above.  Each of the expressions 
  \begin{tabbing}
       Start with feasible basis $B$ of the \emph{perturbed} linear program~\eqref{eq:pert-4} \\[1ex]
       {\tt while} \= $B$ is not optimal \\ [.7ex]
+      \> Compute $\lambda \in \setR^n$ such that $\lambda^TA_B = c^T$ \\
       \> Let $i \in B$ be index with $\lambda_i<0$ \\
       \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
       and $a_i^T d = -1$ \\ 
