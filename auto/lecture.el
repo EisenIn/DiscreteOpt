@@ -19,8 +19,8 @@
    (TeX-run-style-hooks
     "latex2e"
     "algorithms"
-    "introduction"
     "convex"
+    "introduction"
     "simplex-15"
     "analysis"
     "polyhedra"
@@ -60,8 +60,6 @@
     "plw"
     "psv"
     "ip"
-    "size"
-    "conv"
     "SV"
     "eps"
     "beps"
