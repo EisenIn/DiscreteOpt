@@ -197,7 +197,6 @@ We have described one iteration of the simplex algorithm. We iterate this proced
  \begin{tabbing}
       Start with feasible basis $B$ \\[1ex]
       {\tt while} \= $B$ is not optimal \\ [.7ex]
-      \> Compute $\lambda \in \setR^n$ such that $\lambda^TA_B = c^T$ \\
       \> Let $i \in B$ be index with $\lambda_i<0$ \\
       \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
       and $a_i^T d = -1$ \\ 
@@ -410,7 +409,16 @@ where $\eps>0$ is sufficiently small. This linear program is
 non-degenerate. What is nice is that this perturbation does not have
 to be computed explicitly. We can formulate a pivot rule for the
 non-perturbed linear program \eqref{eq:pert-5} that is conform with the pivoting that is
-performed on the perturbed linear program~\eqref{eq:pert-3}. For this, assume that $B$ is a feasible basis of the perturbed linear program~\eqref{eq:pert-3}. By  Lemma~\ref{lem:per-2}, $B$ is also feasible for the unperturbed linear program. Let us now consider the iteration of the simplex algorithm at the basis $B$. As before, we choose $i \in B$ with $\lambda_i<0$ arbitrary and compute $d \in \R^n$. Now we have to determine the unique index of the inequality of \eqref{eq:pert-4} that is hit first, when moving in the direction of $d$. This is the largest index $k$ among those indices of $K$ where the minimum $\min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td$ is attained. Thus the following variant of the simplex algorithm ensures termination. 
+performed on the perturbed linear program~\eqref{eq:pert-3}. For this, assume that $B$ is a feasible basis of the perturbed linear program~\eqref{eq:pert-3}. By  Lemma~\ref{lem:per-2}, $B$ is also feasible for the unperturbed linear program. Let us now consider the iteration of the simplex algorithm at the basis $B$. As before, we choose $i \in B$ with $\lambda_i<0$ arbitrary and compute $d \in \R^n$. Now we have to determine the unique index of the inequality of \eqref{eq:pert-4} that is hit first, when moving in the direction of $d$ in the perturbed linear program. 
+
+This index can be determined as follows. As before, we determine  $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$ and we let $\wt{K}\subseteq K $ be those indices of $K$ where the minimum $\min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td$ is attained. In the perturbed program we would have to determine the unique minimum 
+\begin{equation}\label{eq:p2}
+  b_k + \eps^k  - a_k^T A_B^{-1} (b_B + (p_\eps)_B)/a_k^Td, \,\,\, k \in \wt{K},
+\end{equation}
+where we imagine that $\eps$ tends to zero from above.  Each of the expressions in~\eqref{eq:p2} is a polynomial in $\eps$. The index that will leave in the perturbed linear program is the one that corresponds to the lexicographically minimal polynomial in~\eqref{eq:p2}. 
+
+
+
 
 
 \begin{algorithm}[Simplex with largest index leaving rule]
@@ -426,11 +434,8 @@ performed on the perturbed linear program~\eqref{eq:pert-3}. For this, assume th
       \> {\tt if} \= $K = \emptyset$ \\   
       \> \> \emph{assert LP unbounded} \\
       \> {\tt else} \\
-      \> \> Let $k \in K$ be the \emph{largest} index where 
-     $
-        \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
-      $
-      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
+      \> \> Let $k \in K$ be the index corresponding to the lexicographically\\
+      \> \> smallest polynomial of the form~\eqref{eq:p2} \\
 
       \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
     \end{tabbing}
