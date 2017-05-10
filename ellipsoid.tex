@@ -347,7 +347,135 @@ The ellipsoid method is now easily described.
 \end{proof}
 
 
-\subsection{The separation problem}
+
+\section{Deciding feasibility}
+\label{sec:deciding-feasibility}
+Suppose that we have to decide the feasibility of $P = \{x ∈  ℝ^n : Ax ≤ b\}$
+using the ellipsoid method described above. Here $A ∈ ℤ^{m ×n}$
+and $b ∈ ℤ^{m}$.
+In the following $B$
+is an upper bound on the absolute values of the components of $A$
+and $b$.
+
+To apply the ellipsoid method we have to take care of the following items: 
+\begin{enumerate}[i)]
+\item We have to find a starting ball that contains a subset of the feasible region. \label{item:4}
+\item We have to deal with the fact that $P$ might not be full dimensional even if it is feasible.  \label{item:7}
+\item We have to bound the volume $P$ from below, if $P$ is full dimensional. \label{item:8}
+\end{enumerate}
+
+
+We first deal with the issue~\ref{item:4}). 
+Suppose that there exists a feasible point $x^*$ and consider the index sets 
+$I = \{ i : x^*_i ≥0 \}$ and $J = \{j : x^*_j ≥0\}$.    The polyhedron 
+\begin{displaymath}
+P' =   \{ x ∈ ℝ^n : Ax ≤b, x_i ≥ 0, i ∈ I, \, x_j ≤ 0, j ∈ J\}
+\end{displaymath}
+is contained in $P$ and it has vertices. Clearly $P'$ is described by a system of inequalities $Cx≤d$ where each component of $C$ and $d$ is bounded by $B$ in absolute value. 
+
+A vertex $v^*$ of $P'$ is of the form $v^* = C_B^{-1} b_B$ for a basis $B$ of $C$. Since $C_B^{-1} = \widetilde{C_B} / \det(C_B)$ where $\widetilde{C_B} \in ℤ^{n ×n}$ is the adjoint of $C_B$. Each component of $\widetilde{C_B}$ is, by the Hadamard bound, bounded by $B^n ⋅ n^{n/2}$.  It follows that $\|v^*\|_∞$ is bounded by 
+ $n^{n/2+1} ⋅ B^{n+1}$. We can thus conclude that $P$ is infeasible if and only if 
+ \begin{displaymath}
+   P ∩ \{ x ∈ ℝ^n : \|x\|_∞ ≤ n^{n/2+1} ⋅ B^{n+1} \}
+ \end{displaymath}
+is infeasible. 
+For this polyhedron, we have a starting ellipsoid which is the ball of radius $n^{n/2+1} ⋅ B^{n+1} $ around $0$.  
+
+
+Next, we deal with the issue~\ref{item:7}). 
+\begin{exercise}
+  \label{el:ex:11}
+  Let $P = \{ x \in \setR^n \mid Ax\leq b\}$ be a polyhedron and $\varepsilon>0$ be a
+  real number. Show that $P_\varepsilon = \{ x \in \setR^n \mid Ax\leq b+ \varepsilon\cdot
+  \mathbf{1}\}$ is full-dimensional if $P \neq \emptyset$.
+\end{exercise}
+
+
+The above exercise raises the following question.  Is there an $\varepsilon>0$
+such that $P_\varepsilon = \emptyset$ if and only if $P = \emptyset$ and furthermore is the
+binary encoding length of this $\varepsilon$ polynomial in the binary encoding
+length of $A$ and $b$? 
+
+We recall the Farkas' lemma (Theorem~\ref{thr:7}). 
+\begin{theorem}
+  \label{el:thr:24}
+  The system $Ax\leq b$ does not have a solution if and only if there
+  exists a nonnegative vector $\lambda \in \setR^m_{\geq0}$ such that $\lambda^TA = 0$
+  and $\lambda^Tb=-1$. 
+\end{theorem}
+
+
+%Again, suppose  $A\in \setZ^{m\times n}$ and $b\in \setZ^m$ and let $B$ be the largest absolute
+%value of a coefficient of $A$ and $b$.  If $Ax\leq b$ is not feasible,
+%then there exists a $\lambda\geq0$ such that $\lambda^T(A|b) = (\mathbf{0}|-1)$. 
+If $Ax ≤b$ is infeasible, then the polyhedron 
+\begin{displaymath}
+  \{ λ ∈ ℝ^m : λ^TA = 0, \, λ^T b = -1 , \, λ ≥0 \} 
+\end{displaymath}
+has vertices. As we have argued before, there exists a vertex $λ^*$ of $P$ such that $\|λ^*\| ≤ n^{n/2+1} ⋅  B^{n+1}  $. 
+
+Now let $\varepsilon =  (2 ⋅ m ⋅ n^{n/2+1} ⋅ B^{n+1})^{-1}$. Then $|{λ^*}^T \mathbf{1} \cdot \varepsilon |<1$ and thus 
+\begin{equation}
+  \label{el:eq:42}
+  \lambda^T (b+ \varepsilon \cdot \mathbf{1}) <0. 
+\end{equation}
+%
+Consequently the system $Ax\leq b+\varepsilon \cdot \mathbf{1}$ 
+is infeasible if and only
+if $Ax\leq b$ is infeasible. Furthermore, if $Ax\leq b+\varepsilon \cdot \mathbf{1}$  is feasible, then the polyhedron described by this set of inequalities is full-dimensional. 
+Notice again that the encoding length of
+$\varepsilon$ is polynomial in the encoding length of $Ax\leq b$.  % and we conclude
+% with the main theorem of this section. 
+
+% This discussion is summarized in the following lemma. 
+
+% \begin{lemma}
+%   \label{lem:2}
+%   Let $A ∈ ℤ^{m ×n}$ and $b ∈ ℤ^m$ and let $B$ be an upper bound on the absolute value of the entries of $A$ and $b$ and let $K = (2 ⋅ m ⋅ n^{n/2+1} ⋅ B^{n+1})$. 
+% Then $Ax ≤ b $ is feasible if and only of $ K ⋅ A x ≤ K ⋅ b + \mathbf{1}$ is feasible. The binary encoding length of $ K ⋅ A x ≤ K ⋅ b + \mathbf{1}$ is polynomial in the binary encoding length of $Ax ≤b$. 
+% \end{lemma}
+
+Next we deal with issue~\ref{item:8}.  We ask ourselves the following question. If $P = \{x ∈ ℝ^n : Ax ≤b\}$ is full-dimensional and bounded, what is a lower bound on $\vol(P)$? 
+
+If $P$ is full-dimensional, then $P$ contains $n+1$ affinely independent vertices $v_1,\dots,v_{n+1}$, see Exercise~\ref{exercise:3}.  Each of these vertices is of the form $v_i = v_i'/q_i$, where $v_i' ∈ ℤ^n$ and $q_i$ is a $n×n$-sub-determinant of $A$. Consequently 
+\begin{eqnarray*}
+  \vol(P) & ≥ & (1/  ∏_{i=1}^{n+1} q_i) ⋅ \vol(\conv(v'_1,\dots,v'_{n+1})) \\
+          & ≥ & (B^{n}⋅ n^{n/2} )^{-n}⋅ 1/n!,
+\end{eqnarray*}where the last inequality follows from the Hadamard bound and Exercise~\ref{exercise:1} and Exercise~\ref{exercise:2}. 
+A crude bound on $\vol(P)$ is thus $\vol(P) ≥ 1 / (B^{n^2} ⋅ n^{2⋅n^2})$. 
+
+
+We can conclude with the following theorem. 
+
+\begin{theorem}
+  \label{thr:11}
+  Let $Ax ≤ b$ be a system of linear inequalities with $A∈ℤ^{m×n}$ and $b∈ℤ^{m}$. Let $B$ be an upper bound on the absolute value of the entries of $A$ and $b$. The ellipsoid medthod can decide in time polynomial in $n,m$ and $\log B$ whether $Ax ≤ b$ is feasible. 
+\end{theorem}
+
+
+The next theorem follows from binary search. Its proof is an exercise. 
+
+
+
+\begin{theorem}
+\label{thr:12}
+Let $\max\{c^Tx : x ∈ ℝ^n, \, Ax ≤b\}$ be a linear program with $A ∈ ℤ^{m×n}$, $b ∈ ℤ^{m}$, $c ∈ Ζ^{n}$.  Let $B$ be an upper bound on the absolute value of the entries of $A$ and $b$. The ellipsoid method finds an optimal solution of the linear program if one exists in time polynomial in $n,m$ and $\log B$. 
+  Let $Ax ≤ b$ be a system of linear inequalities with $A∈ℤ^{m×n}$ and $b∈ℤ^{m}$. Let $B$ be an upper bound on the absolute value of the entries of $A$ and $b$. The ellipsoid can decide in time polynomial in $n,m$ and $\log B$ whether $Ax ≤ b$ is feasible. 
+\end{theorem}
+
+
+\subsection*{Exercises} 
+
+\begin{enumerate}
+\item Show the following. If $P⊆ℝ^n$ is a bounded and full-dimensional polyhedron, then there exist vertices $v_1,\dots,v_{n+1}$ of $P$ that are affinely independent, i.e., $v_2-v_1, v_3-v_1, \dots, v_{n+1}-v_1$ are linearly independent. \emph{Hint: If $a^Tx = β$ is some hyperplane, where $a ∈ ℝ^n \setminus \{0\}$, then there exists a vertex of $P$ that is not contained in that hyperplane.}\label{exercise:3}
+\item Show that $\vol(\conv(0,e_1,\dots,e_n)) = 1/n!$ \label{exercise:1}
+\item Let $a_1,\dots,a_n ∈ℤ^n$ be linearly independent. Show that
+  \begin{displaymath}
+    \vol(\conv(0,a_1,\dots,a_n)) = |\det(a_1,\dots,a_n)| /n!. 
+  \end{displaymath} \label{exercise:2}
+\end{enumerate}
+
+\section{The separation problem}
 \label{el:sec:separation-problem}
 
 At this point we can already notice a very important fact. Inspect
@@ -430,12 +558,13 @@ spanning tree w.r.t. the edge costs.
   \emph{Ignore the occurring rounding errors!} 
 \end{exercise}
 
-\section{How to start and when to stop}
+\section{How to start and when to stop }
 \label{el:sec:how-start-when-1}
 
 In our description of the ellipsoid method, we did not explain yet what
 the initial ellipsoid  is and when we can stop with asserting
 that $P$ is either not full-dimensional or unbounded. 
+
 
 Suppose therefore that $P = \{ x \in \setR^n \mid Ax\leq b\}$ is
 full-dimensional and bounded with $A\in \setZ^{m\times n}$ and $b\in \setZ^m$. Let
@@ -612,56 +741,6 @@ changing the status of $P \neq \emptyset$ or $P = \emptyset$. Notice that the
 the binary encoding length of the old inequalities.
 
 
-\subsection{Full-dimensionality}
-\label{el:sec:full-dimensionality}
-
-
-\begin{exercise}
-  \label{el:ex:11}
-  Let $P = \{ x \in \setR^n \mid Ax\leq b\}$ be a polyhedron and $\varepsilon>0$ be a
-  real number. Show that $P_\varepsilon = \{ x \in \setR^n \mid Ax\leq b+ \varepsilon\cdot
-  \mathbf{1}\}$ is full-dimensional if $P \neq \emptyset$.
-\end{exercise}
-
-
-The above exercise raises the following question.  Is there an $\varepsilon>0$
-such that $P_\varepsilon = \emptyset$ if and only if $P = \emptyset$ and furthermore is the
-binary encoding length of this $\varepsilon$ polynomial in the binary encoding
-length of $A$ and $b$? 
-
-Here we have a third version of Farkas' Lemma (we saw the firt one 
-in Theorem~\ref{conv:thr:12} and the second one in 
-Exercise~\ref{conv:ex:10} of chapter~\ref{conv:cha:convex-sets} and 
-in Theorem~\ref{dual:thr:2farkas}).
-\begin{theorem}
-  \label{el:thr:24}
-  The system $Ax\leq b$ does not have a solution if and only if there
-  exists a nonnegative vector $\lambda \in \setR^m_{\geq0}$ such that $\lambda^TA = 0$
-  and $\lambda^Tb=-1$. 
-\end{theorem}
-
-
-Let $A\in \setZ^{m\times n}$ and $b\in \setZ^m$ and let $B$ be the largest absolute
-value of a coefficient of $A$ and $b$.  If $Ax\leq b$ is not feasible,
-then there exists a $\lambda\geq0$ such that $\lambda^T(A|b) = (\mathbf{0}|-1)$. We
-want to estimate the largest absolute value of a coefficient of $\lambda$
-with Cramer's rule and the Hadamard inequality.  We can choose $\lambda$
-such that the  nonzero
-coefficients of $\lambda$ are the unique solution of a system of equations
-$Cx=d$, where each coefficient has absolute value at most $B$. By
-Cramer's rule and the Hadamard inequality we can thus  choose $\lambda$
-such that $|\lambda(i)| \leq (n\cdot B)^n$.  Now let $\varepsilon = 1 / \left((n+1) \cdot (n \cdot
-  B)^n \right) $. Then $|\lambda^T \mathbf{1} \cdot \varepsilon |<1$ and thus 
-\begin{equation}
-  \label{el:eq:42}
-  \lambda^T (b+ \varepsilon \cdot \mathbf{1}) <0. 
-\end{equation}
-%
-Consequently the system $Ax\leq b+\varepsilon \cdot \mathbf{1}$ 
-is infeasible if and only
-if $Ax\leq b$ is infeasible.  Notice again that the encoding length of
-$\varepsilon$ is polynomial in the encoding length of $Ax\leq b$ and we conclude
-with the main theorem of this section. 
 
 \begin{theorem}
   \label{el:thr:25}
