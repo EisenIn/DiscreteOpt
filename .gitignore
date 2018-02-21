@@ -10,7 +10,8 @@
 *.fot
 *.cb
 *.cb2
-
+*~
+*.el
 ## Intermediate documents:
 *.dvi
 *-converted-to.*
@@ -18,6 +19,9 @@
 # *.ps
 # *.eps
 # *.pdf
+
+auto/ 
+auto/*.el
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
