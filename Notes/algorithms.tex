@@ -526,11 +526,11 @@ again with $O(n^2)$ arithmetic operations.
 \begin{enumerate}
 \item Suppose we are given three $n×n$ matrices $A,B,C ∈ ℤ^{n×n}$ and we want to test whether $A ⋅ B = C$ holds. We could multiply $A$ and $B$ and then compare the result with $C$. This would amount to running time (number of arithmetic operations) of $O(n^3)$ with the standard matrix-multiplication algorithm. 
 
-We now show how to perform an efficient\emph{randomized test}. Suppose that you can draw a vector $v ∈ \{0,1\}^n$  i.i.d. at random in time $O(n)$. The idea is then to compute the product $B ⋅v$ and then the product $A ⋅ (B ⋅v)$ and afterwards $C ⋅ v$, all in time $O(n^2)$. Show the following. 
+We now show how to perform an efficient \emph{randomized test}. Suppose that you can draw a vector $v ∈ \{0,1\}^n$  i.i.d. at random in time $O(n)$. The idea is then to compute the product $B ⋅v$ and then the product $A ⋅ (B ⋅v)$ and afterwards $C ⋅ v$, all in time $O(n^2)$. Show the following. 
 
 \begin{enumerate}
 \item If $A⋅B \neq C$, then $P(A ⋅ (B ⋅v) = C⋅v) ≤1/2$. 
-\item Let $v_1,\dots,v_k∈ \{0,1\}^n$ be i.i.d. at random and suppose that  $A⋅C \neq C$. The probability of the event: $A ⋅ (B ⋅v_i) = C⋅v_i$ for each $i=1,\dots,k$ is bounded by $1/2^k$. 
+\item Let $v_1,\dots,v_k∈ \{0,1\}^n$ be i.i.d. at random and suppose that  $A⋅B \neq C$. The probability of the event: $A ⋅ (B ⋅v_i) = C⋅v_i$ for each $i=1,\dots,k$ is bounded by $1/2^k$. 
 \item Conclude that there is an algorithm that runs in time $O(k⋅n^2)$ which tests whether $A⋅B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$. 
 \end{enumerate}
 \item Show that the recursion \eqref{eq:stra:4} has the solution $T(n) = Θ (n^3)$.  \label{item:str:4}
