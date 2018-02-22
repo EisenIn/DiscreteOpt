@@ -4,6 +4,8 @@
 \usepackage{bbm}
 \usepackage{import}
 
+\usepackage{url}
+
 
 \newcommand{\solution}{
 \bigskip\noindent
@@ -15,8 +17,9 @@
 \faculty{Prof. Eisenbrand}
 \term{Spring 2018}
 \publishdate{February 22, 2018}
-\duedate{\textbf{Problem 8} can be \textbf{submitted} until March 2 12:00 noon
-  into the box in front of MA C1 563. }
+\duedate{\textbf{Problem 8} can be \textbf{submitted} until March 2 12:00 noon,
+%  into the box in front of MA C1 563. }
+  please send the source code in C++ to \url{igor.malinovic@epfl.ch} . }
 \problemset{Assignment~1}
 
 \begin{document}
@@ -38,7 +41,17 @@ Provide a certificate (as in Theorem $0.1$ in the lecture notes) of the unsolvab
     \end{pmatrix}
   \end{displaymath}
 
- \problem Show the ``if'' direction of the Farkas' lemma: given $A\in \R^{m\times n}, b\in \R^m$, if there exist a $\lambda \in \R^m_{\geqslant 0}$ such that $\lambda^\top A=0$ and $\lambda^\top b=-1$, then the system $Ax\leq b$ is unfeasible. 
+ \problem Show the ``if'' direction of the Farkas' lemma: given $A\in \R^{m\times n}, b\in \R^m$, if there exist a $\lambda \in \R^m_{\geqslant 0}$ such that $\lambda^\top A=0$ and $\lambda^\top b=-1$, then the system $Ax\leq b$ is unfeasible.
+ 
+\problem Consider the following linear program:
+\begin{center}
+\begin{tabular}{rllllll}
+$\max$ & \ & $x$ & $+$ & $y$ & \ & \\ 
+s.t. & \ & $3x$ & $+$ & $2y$ & $\leq$ & $6$ \\ 
+\ & \ & $x$ & $+$ & $4y$ & $\leq$ & $4$. \
+\end{tabular} 
+\end{center} 
+The solution $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the objective value $11/5$. Provide a certificate that this is an optimal solution.
 
 \problem Find the binary representation of $235$. 
 
@@ -46,27 +59,27 @@ Provide a certificate (as in Theorem $0.1$ in the lecture notes) of the unsolvab
  
 \problem Show that there are $n$-bit numbers $a,b \in \N$ such that the  Euclidean algorithm on input $a$ and $b$ performs  $\Omega(n)$ arithmetic operations. \emph{Hint: Fibonacci numbers} 
 
-\problem 
-The \emph{determinant} of a matrix $A \in \R^{n \times n}$ can be computed by the recursive formula 
-\begin{displaymath}
-  \det(A) = \sum_{i=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
-\end{displaymath}
-where $A_{1j}$ is the $(n-1)×(n-1)$ matrix that is obtained from $A$ by deleting its first row and $j$-th column.  This yields the following recursive algorithm (see the lecture notes, Example 1.4). 
-
-\begin{tabbing}
-  Input: $A \in \R^{n \times n}$ \\
-  Output: $\det(A)$ \\
-  
-  {\bf if} \= $(n=1)$ \\
-           \> {\bf return} $a_{11}$ \\
-  {\bf else} \\
-           \> $d:=0$  \\
-           \> {\bf for } \= $j=1,\dots,n$ \\
-           \>            \> $d:= (-1)^{1+j}⋅ \det(A_{1j}) +d$\\
-           \> {\bf return} $d$   
-\end{tabbing}
-
-\newpage
+%\problem 
+%The \emph{determinant} of a matrix $A \in \R^{n \times n}$ can be computed by the recursive formula 
+%\begin{displaymath}
+%  \det(A) = \sum_{i=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
+%\end{displaymath}
+%where $A_{1j}$ is the $(n-1)×(n-1)$ matrix that is obtained from $A$ by deleting its first row and $j$-th column.  This yields the following recursive algorithm (see the lecture notes, Example 1.4). 
+%
+%\begin{tabbing}
+%  Input: $A \in \R^{n \times n}$ \\
+%  Output: $\det(A)$ \\
+%  
+%  {\bf if} \= $(n=1)$ \\
+%           \> {\bf return} $a_{11}$ \\
+%  {\bf else} \\
+%           \> $d:=0$  \\
+%           \> {\bf for } \= $j=1,\dots,n$ \\
+%           \>            \> $d:= (-1)^{1+j}⋅ \det(A_{1j}) +d$\\
+%           \> {\bf return} $d$   
+%\end{tabbing}
+%
+%\newpage
 
 Let $A \in \R^{n \times n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
 \begin{enumerate}[a)]
@@ -88,8 +101,5 @@ We now show how to perform an efficient \emph{randomized test}. Suppose that you
 
 \problemstar Let $a$ and $b$ be two natural numbers with binary representations 
    $a_0,\dots,a_{l-1}$ and $b_0,\dots,b_{l-1}$, respectively. Given that $a > b$ design an algorithm which outputs $c=a-b$ in its binary representation with leading bit one. Additionally,
-   we require this algorithm to have the running time of $O(l)$ basic operations. 
-
-\problem
-As a programming exercise implement the algorithm from the previous problem in C++.
+   we require this algorithm to have the running time of $O(l)$ basic operations. The algorithm shall be implemented in C++.
 \end{document}
