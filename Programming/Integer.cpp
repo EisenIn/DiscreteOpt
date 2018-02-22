@@ -122,10 +122,10 @@ for (unsigned i =0; i<1000; i++) // Perform 1000 tests
 {
 
 
-    for (int i = 0; i < 20; i++) // Create random 20-bit numbers g1 and g2
+    for (int j = 0; j < 20; j++) // Create random 20-bit numbers g1 and g2
       {
-          g1[i]=rand() % 2;
-          g2[i]=rand() % 2;
+          g1[j]=rand() % 2;
+          g2[j]=rand() % 2;
       }
 
     if( (i%10) ==  0)

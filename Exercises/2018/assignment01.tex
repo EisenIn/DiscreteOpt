@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2018}
+\publishdate{February 22, 2018}
+\duedate{\textbf{Problem 8} can be \textbf{submitted} until March 2 12:00 noon
+  into the box in front of MA C1 563. }
+\problemset{Assignment~1}
+
+\begin{document}
+\makeheader
+
+\problem
+Provide a certificate (as in Theorem $0.1$ in the lecture notes) of the unsolvability of the linear equation 
+  \begin{displaymath}
+    \begin{pmatrix}
+      2 & 1 & 0 \\
+      5 & 4 & 1 \\
+      7 & 5 & 1
+    \end{pmatrix} \,
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ x_3 
+    \end{pmatrix} =
+    \begin{pmatrix}
+      1\\2\\4
+    \end{pmatrix}
+  \end{displaymath}
+
+ \problem Show the ``if'' direction of the Farkas' lemma: given $A\in \R^{m\times n}, b\in \R^m$, if there exist a $\lambda \in \R^m_{\geqslant 0}$ such that $\lambda^\top A=0$ and $\lambda^\top b=-1$, then the system $Ax\leq b$ is unfeasible. 
+
+\problem Find the binary representation of $235$. 
+
+\problem Show that the binary representation with leading bit one of a positive natural number is unique.
+ 
+\problem Show that there are $n$-bit numbers $a,b \in \N$ such that the  Euclidean algorithm on input $a$ and $b$ performs  $\Omega(n)$ arithmetic operations. \emph{Hint: Fibonacci numbers} 
+
+\problem 
+The \emph{determinant} of a matrix $A \in \R^{n \times n}$ can be computed by the recursive formula 
+\begin{displaymath}
+  \det(A) = \sum_{i=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
+\end{displaymath}
+where $A_{1j}$ is the $(n-1)×(n-1)$ matrix that is obtained from $A$ by deleting its first row and $j$-th column.  This yields the following recursive algorithm (see the lecture notes, Example 1.4). 
+
+\begin{tabbing}
+  Input: $A \in \R^{n \times n}$ \\
+  Output: $\det(A)$ \\
+  
+  {\bf if} \= $(n=1)$ \\
+           \> {\bf return} $a_{11}$ \\
+  {\bf else} \\
+           \> $d:=0$  \\
+           \> {\bf for } \= $j=1,\dots,n$ \\
+           \>            \> $d:= (-1)^{1+j}⋅ \det(A_{1j}) +d$\\
+           \> {\bf return} $d$   
+\end{tabbing}
+
+\newpage
+
+Let $A \in \R^{n \times n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
+\begin{enumerate}[a)]
+\item
+Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first $k$ rows and $k$ of the columns of $A$. How many (recursive) calls of the form $\det(B)$ does the algorithm create? 
+
+\item How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm remains exponential, even if it does not expand repeated subcalls. 
+\end{enumerate}
+
+\problem Suppose we are given three $n \times n$ matrices $A,B,C \in \Z^{n \times n}$ and we want to test whether $A \cdot B = C$ holds. We could multiply $A$ and $B$ and then compare the result with $C$. This would amount to running time (number of arithmetic operations) of $O(n^3)$ with the standard matrix-multiplication algorithm. 
+
+We now show how to perform an efficient \emph{randomized test}. Suppose that you can draw a vector $v \in \{0,1\}^n$  i.i.d. at random in time $O(n)$. The idea is then to compute the product $B \cdot v$ and then the product $A \cdot (B \cdot v)$ and afterwards $C \cdot v$, all in time $O(n^2)$. Show the following. 
+
+\begin{enumerate}[a)]
+\item If $A \cdot B \neq C$, then $P(A \cdot (B \cdot v) = C \cdot v) \leq 1/2$. 
+\item Let $v_1,\dots,v_k \in \{0,1\}^n$ be i.i.d. at random and suppose that  $A \cdot B \neq C$. The probability of the event: $A \cdot (B \cdot v_i) = C \cdot v_i$ for each $i=1,\dots,k$ is bounded by $1/2^k$. 
+\item Conclude that there is an algorithm that runs in time $O(k \cdot n^2)$ which tests whether $A \cdot B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$. 
+\end{enumerate}
+
+\problemstar Let $a$ and $b$ be two natural numbers with binary representations 
+   $a_0,\dots,a_{l-1}$ and $b_0,\dots,b_{l-1}$, respectively. Given that $a > b$ design an algorithm which outputs $c=a-b$ in its binary representation with leading bit one. Additionally,
+   we require this algorithm to have the running time of $O(l)$ basic operations. 
+
+\problem
+As a programming exercise implement the algorithm from the previous problem in C++.
+\end{document}
