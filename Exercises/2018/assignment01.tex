@@ -81,13 +81,13 @@ The solution $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the obj
 %
 %\newpage
 
-Let $A \in \R^{n \times n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
-\begin{enumerate}[a)]
-\item
-Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first $k$ rows and $k$ of the columns of $A$. How many (recursive) calls of the form $\det(B)$ does the algorithm create? 
-
-\item How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm remains exponential, even if it does not expand repeated subcalls. 
-\end{enumerate}
+%Let $A \in \R^{n \times n}$  and suppose that the $n^2$ components of $A$ are pairwise different.
+%\begin{enumerate}[a)]
+%\item
+%Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first $k$ rows and $k$ of the columns of $A$. How many (recursive) calls of the form $\det(B)$ does the algorithm create? 
+%
+%\item How many different submatrices can be obtained from $A$ by deleting the first $k$ rows and some set of $k$ columns? Conclude that the algorithm remains exponential, even if it does not expand repeated subcalls. 
+%\end{enumerate}
 
 \problem Suppose we are given three $n \times n$ matrices $A,B,C \in \Z^{n \times n}$ and we want to test whether $A \cdot B = C$ holds. We could multiply $A$ and $B$ and then compare the result with $C$. This would amount to running time (number of arithmetic operations) of $O(n^3)$ with the standard matrix-multiplication algorithm. 
 
