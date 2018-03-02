@@ -34,7 +34,7 @@ Describe an algorithm that multiplies two $n$-bit integers in time $O(n^2)$. You
   \begin{enumerate}[i)]
   \item Show that $a = a' + a'' \cdot 2^{n/2}$ and  $b = b' + b'' \cdot 2^{n/2}$.
   \item Show that $a \cdot b = a' \cdot b' + (a' \cdot b'' + a'' \cdot b') \cdot 2^{n/2} + a'' \cdot b'' \cdot 2^n $. 
-  \item Show that $(a'b''+a''b') = (a'+b')(a''+b'') - a'\cdot a'' - b'\cdot b''$. 
+  \item Show that $(a'b''+a''b') = (a'+a'')(b'+b'') - a'\cdot b' - a'' \cdot b''$. 
   \item Design a recursive algorithm for $n$-bit integer multiplication whose running time $T(n)$  satisfies the recursion 
     \begin{displaymath}
       T(n) \leq  3 \cdot T( n/2  ) + c \cdot n,
@@ -53,7 +53,7 @@ where $c>1$ is some constant.
 \problem 
 The \emph{determinant} of a matrix $A \in \R^{n \times n}$ can be computed by the recursive formula 
 \begin{displaymath}
-  \det(A) = \sum_{i=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
+  \det(A) = \sum_{j=1}^n (-1)^{1+j}a_{1j} \det(A_{1j}),
 \end{displaymath}
 where $A_{1j}$ is the $(n-1)×(n-1)$ matrix that is obtained from $A$ by deleting its first row and $j$-th column.  This yields the following recursive algorithm (see the lecture notes, Example 1.4). 
 
@@ -80,7 +80,7 @@ Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first
   
 \problem In this exercise, you will see that matrix multiplication is in some sense not harder than matrix inversion. 
 
-Suppose that $I(n)$ is a function that satisfies $I(3\,n) = O(I(n))$ and that a non-singular  $n \times n$ matrix can be inverted using $I(n)$ arithmetic operations. Show that two $n \times n $ matrices $A$ and $B$ can be multiplied using $O(I(n))$ arithmetic operations. 
+Suppose that $I(n)$ with $I(n)=\Omega(n^2)$ is a function that satisfies $I(3\,n) = O(I(n))$ and that a non-singular  $n \times n$ matrix can be inverted using $I(n)$ arithmetic operations. Show that two $n \times n $ matrices $A$ and $B$ can be multiplied using $O(I(n))$ arithmetic operations. 
 
 \emph{Hint: Construct an upper triangular $3n \times 3n$-matrix that contains $A$ and $B$. }
 
