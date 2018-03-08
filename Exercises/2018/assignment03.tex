@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2018}
+\publishdate{March 8, 2018}
+\duedate{\textbf{Problem 6} can be \textbf{submitted} until March 16 12:00 noon
+  into the box in front of MA C1 563. }
+\problemset{Assignment~3}
+
+\begin{document}
+\makeheader
+
+\problem
+Show that the recursion 
+$T(n) = 8 \cdot T(n/2) + \theta(n^2)$, with the initial condition $T(1)=\theta(1)$,
+has the solution $T(n) = \theta(n^3)$. 
+
+\problem
+Let $I$ be an index set and $C_i \subseteq \R^n$ be a convex set for each $i \in I$, prove that $\cap_{i \in I}C_i$ is a convex set (Proposition 3.1 in the lecture notes). 
+%Argue further that the set of feasible solutions of a linear program is convex.
+
+\problem
+Given an extreme point $v$ of a convex set $K$. Show that $v$ cannot be written as a convex combination of
+other points in $K$.
+
+\problem 
+Let \eqref{eq:lp-inequality} be a linear program in inequality standard form, i.e.
+\begin{align} \label{eq:lp-inequality}
+\max\{ c^\trans x \mid Ax \le b, x \in \R^n \}
+\end{align}
+where $A \in \R^{m \times n}$, $b\in \R^m$, and $c\in\R^n$.
+
+Prove that there is an equivalent linear program (\ref{eq:lp-equality}) of the form
+\begin{align} \label{eq:lp-equality}
+\min\{ \tilde c^\trans x \mid \tilde Ay = \tilde b, y \ge 0, y \in \R^{\tilde n} \}
+\end{align}
+where $\tilde A \in \R^{\tilde m \times \tilde n}$, $\tilde b \in \R^{\tilde m}$, and $\tilde c \in \R^{\tilde n}$
+are such that every optimal point of \eqref{eq:lp-inequality} corresponds to an optimal point of \eqref{eq:lp-equality}
+and vice versa.
+
+Linear programs of the form \eqref{eq:lp-equality} are said to be in \emph{equality standard form}.
+
+\problem
+Consider the following linear program:
+\begin{align*}
+	\max \qquad a + 3b \\
+	\text{s.t.} \qquad a + b &\le 2 \\
+	  a &\le 1 \\
+		-a &\le 0 \\
+		-b &\le 0
+\end{align*}
+Compute the optimal solution via vertex enumeration. Give an alternative proof/certificate that the vertex you found is an optimal solution.
+
+\problemstar
+Suppose that $A\in \R^{m\times n}$ has full-column rank and $x^*$ is a feasible solution to $Ax \leq b$. Provide an algorithm that computes an extreme point of $P = \{x : Ax \leq b\}$ in polynomial time in the dimension and the encoding length of $A,b,x^*$.
+
+
+\end{document}
