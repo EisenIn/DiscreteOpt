@@ -44,7 +44,7 @@ where $A \in \R^{m \times n}$, $b\in \R^m$, and $c\in\R^n$.
 
 Prove that there is an equivalent linear program (\ref{eq:lp-equality}) of the form
 \begin{align} \label{eq:lp-equality}
-\min\{ \tilde c^\trans x \mid \tilde Ay = \tilde b, y \ge 0, y \in \R^{\tilde n} \}
+\min\{ \tilde c^\trans y \mid \tilde Ay = \tilde b, y \ge 0, y \in \R^{\tilde n} \}
 \end{align}
 where $\tilde A \in \R^{\tilde m \times \tilde n}$, $\tilde b \in \R^{\tilde m}$, and $\tilde c \in \R^{\tilde n}$
 are such that every optimal point of \eqref{eq:lp-inequality} corresponds to an optimal point of \eqref{eq:lp-equality}
@@ -65,6 +65,10 @@ Compute the optimal solution via vertex enumeration. Give an alternative proof/c
 
 \problemstar
 Suppose that $A\in \R^{m\times n}$ has full-column rank and $x^*$ is a feasible solution to $Ax \leq b$. Provide an algorithm that computes an extreme point of $P = \{x : Ax \leq b\}$ in polynomial time in the dimension and the encoding length of $A,b,x^*$.
+
+\smallskip
+
+\textit{Hint: See the proof of Theorem 3.2 in the lecture notes.}
 
 
 \end{document}
