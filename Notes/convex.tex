@@ -252,6 +252,22 @@ The relevance of vertices for linear programming is reflected in the following t
   
 \end{proof}
 
+
+
+\begin{corollary}
+  \label{co:12}
+  A linear program $\max \{ c^Tx : x ∈ ℝ^n, \, Ax ≤ b\}$ which is feasible and bounded has an optimal solution. 
+\end{corollary}
+
+
+\begin{proof}
+  The linear program 
+  \begin{displaymath}
+    \max \{ c^Tx^+ -c^T x^- : x^+,x^- ∈ ℝ^n, x^+≥0, \, x^‐≥0, \, A(x^+-x^-) ≤ b\}
+  \end{displaymath}
+ is feasible and bounded and the rank of the constraint matrix is $2\,n$.  Thus, by Theorem~\ref{thr:2} possesses an optimal solution. $x^+,x^-$. This corresponds to an optimal solution $x^+-x^-$ of the linear program $\max \{ c^Tx : x ∈ ℝ^n, \, Ax ≤ b\}$. 
+\end{proof}
+
 \section{Linear, affine, conic  and convex hulls}
 \label{conv:cha:linear-affine-convex}
 
