@@ -341,11 +341,11 @@ The assertion follows from
 \end{corollary}
 
 \begin{proof}
-Suppose that $a_{ij} = p_{ij}/q_{ij}$ for each $ij$, where $p$ and $q$ are integers with $gcd(p,q)=1$. Then $(∏_{ij}q_{ij}) A$ is an integer matrix  and 
+Suppose that $a_{ij} = p_{ij}/q_{ij}$, where $p_{ij}$ and $q_{ij}$ are integers with $gcd(p_{ij},q_{ij})=1$ for each $i,j$. Then $(∏_{ij}q_{ij}) A$ is an integer matrix  and 
 \begin{displaymath}
-  \det(A) = (∏_{ij}q_{ij})^n \det((∏_{ij}q_{ij}) A). 
+  \det(A) = (∏_{ij}q_{ij})^{-n} \det((∏_{ij}q_{ij}) A). 
 \end{displaymath}
-The size of $(∏_{ij}q_{ij})^n $ is $O(n^2 φ)$ and the size of $\det((∏_{ij}q_{ij}) A$ is $O(n^3 φ)$ with Corollary~\ref{co:11} . 
+The size of $(∏_{ij}q_{ij})^{-n} $ is $O(n^3 φ)$ and the size of $\det((∏_{ij}q_{ij}) A$ is also $O(n^3 φ)$ thanks to Corollary~\ref{co:11} . 
 \end{proof}
 
 
