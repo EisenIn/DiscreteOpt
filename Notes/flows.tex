@@ -249,8 +249,8 @@ adds $v$ to the queue $Q$ as last element.
     For each $i \in \{1,\ldots,n-1\}$ there exists a point in time where:
     \begin{enumerate}[i)]
     \item     $Q$ contains precisely  the elements  of $V_i$
-      \label{item:1}
-    \item for each $v \in V_i$,  $D[v] = d(s,v)$ \label{item:2}
+      \label{item:f1}
+    \item for each $v \in V_i$,  $D[v] = d(s,v)$ \label{item:f2}
     \item for each $v \in V_i$  one has   $\pi[v]v$
       is an arc and $\pi[v] \in V_{i-1}$. 
     \end{enumerate}
@@ -293,7 +293,7 @@ $\pi[v] \in V_{i-1}$.  \qed
 
 
 \begin{definition}[Directed tree]
-  \label{f:def:6}
+  \label{def:t6}
   A \emph{directed  tree} is a directed graph $T = (V,A)$ with 
   $|A| = |V| -1$ and containing a node $r \in V$ such that there 
   exists a path from $r$ to all other nodes of $T$. 
@@ -317,7 +317,7 @@ $\pi[v] \in V_{i-1}$.  \qed
 \end{proof}
 
 \begin{definition}
-  \label{f:def:7}
+  \label{def:t7}
   The tree $T$ from lemma~\ref{lem:18} is the \emph{shortest-path-tree}
    of the (unweighted) directed graph $G = (V,A)$. 
 \end{definition}
@@ -846,7 +846,7 @@ method to compute minimum length walks.
 
 
 \begin{theorem}
-  \label{f:thr:1}
+  \label{thr:1f2}
   For each $k=0,\ldots,n$ and for each $v \in V$ 
   \begin{displaymath}
     f_k(v)  = \min\{ c(P) \colon  P \text{ is an } s-v\text{-walk traversing
@@ -1581,7 +1581,7 @@ a negative cycle marked by the red edges.} \label{ex:net:2}
 
 
 \begin{algorithm}[Cycle Canceling Algorithm]
-  \label{alg:1}
+  \label{alg:c1}
   ~\\
   \begin{enumerate}
   \item  establish a feasible flow $f$ in the network
