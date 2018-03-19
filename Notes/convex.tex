@@ -119,7 +119,9 @@ to study properties of convex sets.
 
 
 \begin{definition}
-  An inequality $a^Tx \leq \beta$ is \emph{valid} for a  set $K \subseteq \R^n$ if each $x^* \in K$ satisfies $a^Tx^* \leq \beta$. 
+  An inequality $a^Tx \leq \beta$ is \emph{valid} for a  set $K \subseteq \R^n$ if each $x^* \in K$ satisfies $a^Tx^* \leq \beta$.  If in addition $(c^Tx = \delta) \cap K \neq\emptyset$,
+then $c^Tx\leq\delta$ is a \emph{supporting inequality} and $c^Tx = \delta$ is a
+\emph{supporting hyperplane}. 
 \end{definition}
 
 
@@ -855,18 +857,14 @@ $\{0\}$.
 
 
 
-\subsection{Faces}
-\label{po:sec:faces}
-
-An inequality $c^Tx\leq\delta$    is called \emph{valid} for $P$ if each $x
-\in P$ satisfies $c^Tx\leq\delta$. If in addition $(c^Tx = \delta) \cap P \neq\emptyset$,
-then $c^Tx\leq\delta$ is a \emph{supporting inequality} and $c^Tx = \delta$ is a
-supporting hyperplane. 
-
-A set $F\subseteq\setR^n$ is called a \emph{face} of $P$ if there exists a
-valid inequality $c^Tx\leq\delta$ for $P$ with $F = P \cap (c^Tx = \delta)$. 
-
-
+%\subsection{Faces}
+%\label{po:sec:faces}
+\begin{definition}
+  \label{def:f4}
+  A set $F\subseteq\setR^n$ is called a \emph{face} of $P$ if there exists a
+  valid inequality $c^Tx\leq\delta$ for $P$ with $F = P \cap (c^Tx = \delta)$. 
+\end{definition}
+ 
 \begin{lemma}
   \label{po:lem:4}
   A set $\emptyset \neq F \subseteq \setR^n$ is a face of $P$
