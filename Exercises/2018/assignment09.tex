@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+\newcommand{\vol}{\mathrm{vol}}
+\DeclareMathOperator{\conv}{conv}
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2018}
+\publishdate{April 26, 2018}
+\duedate{\textbf{Problem 2} can be \textbf{submitted} until May 4, 12:00 noon,
+  into the box in front of MA C1 563. }
+\problemset{Assignment~9}
+
+\begin{document}
+\makeheader
+
+\problem
+Suppose you are given an algorithm that on input $A \in \Z^{m \times n}$  and $b \in \Z^m$ decides the feasibility of the system $Ax \leq b$, in time poly$(n,m,\log B)$, where $B = \max\{|A_{ij}|, |b_i|: \ i \in [m], j \in [n] \}$. 
+%For simplicity assume that $A$ has full column rank.
+\begin{enumerate}[a)]
+\item 
+	Briefly argue that without loss of generality we can assume $P:=\{x \in \R^n: \ Ax \leq b \}$ to be a polytope (use Problem 3 from Assignment 8). 
+\item
+	Design an algorithm that computes a basic feasible solution of $Ax \leq b$ in time poly$(n,m,\log B)$.
+	
+\smallskip 
+
+\textit{Hint: a) implies that $P$ has vertices, and each hyperplane $H_i := \{x \in \R^n: \ A_ix = b_i \}$, where $A_i$ is the $i$-th row of $A$, either contains a vertex of $P$ or $P \cap H_i = \emptyset$.}	
+\end{enumerate} 
+
+\problemstar
+Show the following. If $P \subseteq \R^n$ is a bounded and full-dimensional polyhedron, then there exist vertices $v_1,\dots,v_{n+1}$ of $P$ that are affinely independent, i.e., $v_2-v_1, v_3-v_1, \dots, v_{n+1}-v_1$ are linearly independent. \emph{Hint: If $a^Tx = \beta$ is some hyperplane, where $a \in \R^n \setminus \{0\}$, then there exists a vertex of $P$ that is not contained in that hyperplane.}
+
+\problem
+Let $a_1,\dots,a_n \in \Z^n$ be linearly independent. Show that
+  $$    \vol(\conv(0,a_1,\dots,a_n)) = |\det(a_1,\dots,a_n)| /n!. $$
+  
+\problem
+Let $a \in \Q^n$, $A \in \Q^{m \times n}$ and $b \in \Q^m$ be given as the input and $P:=\{ x \in \R^n: \ Ax \leq b \}$. Show that the corresponding \textit{separation problem} can be solved in time polynomial in $m$, $n$, and the binary encoding length of $a, A$ and $b$: Determine whether $a\in P$ and if not compute an inequality $c^Tx\leq \beta$ which is valid for $P$ with $c^Ta>\beta$.
+
+\problem
+Generalize the Half-ball lemma shown in class. Given vectors $c \in \R^n$ and $a\in \R^n$, and a symmetric positive definite matrix $A \in \R^{n\times n}$, provide a formula for the ellipsoid containing:
+\begin{enumerate}[a)]
+	\item
+	  The half-ball $H=\{x \in \R^n \mid \|x\|\leq 1, \ c^Tx \geq 0 \}$;
+	\item
+	  The half-ellipsoid $\mathcal{H}(A,a)=\{x \in \R^n \mid (x-a)^TA^{-1}(x-a)\leq 1, \ c^Tx \leq c^Ta \}$. 
+\end{enumerate}
+
+\end{document}
