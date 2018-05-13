@@ -584,8 +584,8 @@ e.g.~\cite[Theorem~4.4.1]{MarsdenHoffman93}.
 \begin{theorem}
   \label{conv:thr:10}
   Let $K\subseteq\setR^n$ be a closed  convex set and $x^* \in \setR^n \setminus K$, then there
-  exists an inequality $a^Tx\geq\beta$ such that $a^T y > \beta$ holds for all
-  $y \in K$ and $a^Tx^*<\beta$. 
+  exists an inequality $a^Tx ≤ \beta$ such that $a^T y < \beta$ holds for all
+  $y \in K$ and $a^Tx^*>\beta$. 
 \end{theorem}
 
 \begin{proof}
@@ -594,22 +594,17 @@ e.g.~\cite[Theorem~4.4.1]{MarsdenHoffman93}.
   compact, there exists a point $k^* \in K$ with minimal distance to
   $x^*$. Consider the midpoint $m = 1/2(k^*+x^*)$ on the line-segment
   $\overline{k^*x^*}$   and the hyperplane $a^Tx = \beta$ with $\beta = a^Tm$ and $a =
-  (k^*-x^*)$. Clearly, $a^T x^* = \beta - 1/2 \|k^*-x^*\|^2$ and $a^T k^*
-  = \beta +  1/2 \|k^*-x^*\|^2$. Suppose that there exists a $k' \in K$
-  with $a^T k' \leq \beta$. The points $\lambda k^* + (1-\lambda) k', \,\lambda \in [0,1]$ are in 
-  $K$ by the convexity of $K$, thus we can also assume that $k'$ lies
-  on the hyperplane, i.e., $a^Tk' = \beta$. This means that there exists
-  a vector $x'$ which is orthogonal to $a$   and $k' = m +
-  x'$. The distance squared  of a point $\lambda k^* + (1-\lambda) k'$  with $\lambda \in [0,1]$
-  to $m$  is, by Pythagoras equal to 
-  \begin{displaymath}
-    \lambda^2  \|\frac{1}{2} a\|^2 + (1-\lambda)^2 \|x'\|^2.
-  \end{displaymath}
-  As a function of $\lambda$, this is increasing 
-  at $\lambda=1$. Thus there exists a point on the line-segment $\lambda x^* +
-  (1-\lambda) k'$  which is closer to $m$ than $k^*$. This point is also
-  closer to $x^*$ than $k^*$, which is a contradiction.  Therefore
-  $a^Tk >\beta$ for each $k \in K$. 
+  (x^* - k^*)$.%  Clearly, $a^T x^* = \beta - 1/2 \|k^*-x^*\|^2$ and $a^T k^*
+  % = \beta +  1/2 \|k^*-x^*\|^2$.
+
+  Clearly $a^T x^* > β$ and $a^T k^* < β$. Suppose now that there exists a point $k' ∈ K$ with $a^T k' ≥ β$. Since the line segment spanned by $k^*$ and $k'$ is contained in $K$, we can assume that $a^T k' = β$ holds. This means that $k' = k^* + a/2 + x'$, where $x'$ is orthogonal to $a$. Again, by convexity $ k^* + λ(a/2 + x') ∈ K$ for $0≤λ≤1$. But the square of the distance of such a point to $x^*$ is 
+  \begin{eqnarray*}
+    \|x^* - k^* - λ(a/2 + x')\|^2 & = & \|(1-λ/2) a - λ x'\|^2 \\
+    & = & (1-λ/2)^2 \| a\|^2  + λ^2  \|x'\|^2 \\ 
+  \end{eqnarray*}
+  
+  As a function of $\lambda$, this is decreasing 
+  at $\lambda=0$. Thus there exists a point on the line segment between $k^*$ and $k'$ which is closer to $x^*$ than $k^*$ and this is a contradiction. 
   \qed 
 \end{proof}
 
@@ -627,7 +622,7 @@ e.g.~\cite[Theorem~4.4.1]{MarsdenHoffman93}.
   $\lambda^TA\geq0$ and $x^*\geq0$. 
 
   Now suppose that $Ax = b, \,x\geq0$ does not have a solution. Then,
-  with   $X\subseteq\setR^n$ being  the set of column vectors of $A$, 
+  with   $X\subseteq\setR^m$ being  the set of column vectors of $A$, 
   $b$ is not in $\cone(X)$. The set $\cone(X)$ is convex and
   closed, see exercise~\ref{conv:item:2}. Theorem~\ref{conv:thr:10} implies 
   that there is an inequality $\lambda^Tx \geq \beta$ such that $\lambda^Ty > \beta$ for
