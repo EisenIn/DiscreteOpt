@@ -1,0 +1,3 @@
+1) Discuss inference rules for inequalities carefully
+2) Focus on polyhedral combinatorics
+3) Use Analysis 2 to prove Farkas' lemma and duality
