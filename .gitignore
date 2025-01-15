@@ -12,6 +12,7 @@
 *.cb2
 *~
 *.el
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*
@@ -19,6 +20,11 @@
 # *.ps
 # *.eps
 # *.pdf
+
+
+#Mac
+
+*Store
 
 auto/ 
 auto/*.el
@@ -173,6 +179,7 @@ TSWLatexianTemp*
 # WinEdt
 *.bak
 *.sav
+*.*\#
 
 # Texpad
 .texpadtmp
