@@ -2,6 +2,33 @@
 \chapter{Preface}
 \label{cha:preface}
 
+
+\section{Optimization problems}
+\label{sec:optim-probl}
+
+An \emph{optimization problem} is a patr $(ℱ,c)$, where $ℱ$ is a set, referred to as the set of \emph{feasible solutions},  and $c: ℱ ⟶ ℝ$ is a function, that is called the \emph{objective} or \emph{cost function}. The problem is to find an element $x ∈ ℱ$ such that
+\begin{displaymath}
+  c(x) ≤ c(y) \text{ holds for all } y ∈ ℱ. 
+\end{displaymath}
+Such an $x∈ ℱ$  is then an \emph{optimal solution} of the optimization problem.
+Since the task is to find a minimum solution, we also write 
+\begin{displaymath}
+  \min \{ c(x) : e ∈ ℱ\}. 
+\end{displaymath}
+
+
+
+\begin{example}
+  \label{exe:1}
+  From linear algebra we know the problem of minimizing a \emph{quadratic form} $ x^T A x$, where $A ∈ ℝ^{d×d}$ is a symmetric matrix,  over the sphere $S^{(d-1)}  = \{ x ∈ ℝ^d ： \|x\| = 1 \} ⊆ ℝ^d$.  Thus, in this case,  $ℱ = S^{(d-1)}$ and $c(x) = x^T A x$.
+
+If $v ∈ ℝ^d \setminus \{0\}$ is an eigenvector corresponding to the minimal eigenvalue $λ_{\min}$ of $A$, then $v \ \|v\|$ is an optimal solution of the optimization problem. 
+
+
+\section{Certificates}
+\label{sec:certificates}
+
+\end{example}
 A central topic in linear algebra is the theory around  linear equations 
 \begin{equation} 
 \label{p:eq:1}
@@ -62,7 +89,7 @@ To shed a bit of light on this second question, let us consider a vector $λ ∈
 \end{equation}
 If there exists a $λ \in ℝ^m_{≥0}$ such that 
 \begin{equation}
-  \label{p:Farkas}
+  \label{p:Farkas} 
   λ^T A = 0^T \text{ and } λ^T b = -1,
 \end{equation}
 then this $λ$ \emph{certifies} that~\eqref{p:ineq} is infeasible. In the case of infeasibility, can such a $λ≥0$ always be found? Among the many results presented in  this course,  we will show that the answer is ``yes''. 
