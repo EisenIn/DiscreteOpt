@@ -219,8 +219,8 @@ is optimal.
 \label{sec:linear-programming}
 We use the following notation. For a matrix $A \in \setR^{m\times n}$, $i\in
 \{1,\ldots,m\}$ and $ j \in \{ 1,\ldots,n\}$ we denote 
-the  $i$-th row of  $A$ by  $a_i$ and the $j$-th column of $A$ by
-$a^j$. With  $A_{ij}$ we denote the element of $A$ which is in the $i$-th
+the  $i$-th row of  $A$ by  $a^T_i$ and the $j$-th column of $A$ by
+$a^j$. With  $a_{ij}$ we denote the element of $A$ which is in the $i$-th
 row and $j$-th column of $A$. For a vector $v \in \setR^m$ and $i\in
 \{1,\ldots,m\}$ we denote the $i$-th element of $v$ by $v_i$. 
 
@@ -290,6 +290,61 @@ consists of
   \end{displaymath}
   for some matrix $A\in \setR^{m\times n}$ and some vector $b \in \setR^m$. 
 \end{definition}
+
+
+\begin{example}
+  \label{exe:1}
+  Let us convert the following linear program to an equivalent linear program in inequality standard form. The objective is to minimize
+\begin{displaymath}
+  2 x_1 + 5 x_2 - 8 x_3 
+\end{displaymath}
+such that $x_1,x_2,x_3$ satisfy the constraints
+\begin{equation}
+  \label{eq:2}
+  x_1+ x_3 ≥ 6, 
+\end{equation}
+\begin{equation}
+  \label{eq:3}
+  -x_1 + 3 x_2 - 5 x_3  = -4, 
+\end{equation}
+as well as the lower bounds
+\begin{equation}
+  \label{eq:4}
+  x_1≥0, x_2 ≥ 0, x_3 ≤ 0.
+\end{equation}
+
+The constraint \eqref{eq:2} is equivalent to
+\begin{displaymath}
+   - x_1- x_3 ≤  -6 
+ \end{displaymath}
+ and \eqref{eq:3} is equivalent to the conjunction of the two constraints
+ \begin{displaymath}
+   \begin{array}{c}
+     -x_1 + 3 x_2 - 5 x_3  ≤ -4 \\
+      x_1 -3  x_2 + 5 x_3  ≤  4.  
+   \end{array}
+ \end{displaymath}
+ The lower  bounds $ x_1≥0, x_2 ≥ 0$ in \eqref{eq:4} can be re-written as  $ - x_1≤0$ and $ -x_2 ≤ 0$. Finally, by multiplying the objective function by $-1$ we can transfer to a maximization problem and obtain the linear program
+ \begin{displaymath}
+     \max (-2, -5, 8)\,  x 
+ \end{displaymath}
+subject to $x ∈ ℝ^3$ satisfying 
+ \begin{displaymath}
+   A =
+   \begin{pmatrix}
+     - 1 & 0 & -1  \\
+     -1 &  3 & - 5   \\
+     1 &  -3 &  5   \\
+     -1& 0 & 0 \\
+     0 & -1 & 0\\
+     0 & 0 & -1      
+   \end{pmatrix} x ≤   
+   \begin{pmatrix}
+     -6\\ -4\\ 4\\ 0 \\ 0\\ 0
+   \end{pmatrix}.
+ \end{displaymath}
+\end{example}
+
 
 \begin{definition}
 \label{def:10}
@@ -671,6 +726,27 @@ and so can 28\% of the income from selling the second product.
   Would this investment pay off?
 \end{enumerate}
 
+\item Reformulate the following linear program in inequality standard form. 
+The objective is to minimize
+\begin{displaymath}
+  -3 x_1 + 3 x_2 + 5 x_3 
+\end{displaymath}
+such that $x_1,x_2,x_3$ satisfy the constraints
+\begin{equation}
+  \label{eq:2}
+  x_2+ 3 x_3 ≥ 4, 
+\end{equation}
+\begin{equation}
+  \label{eq:3}
+  2x_1 + 2  x_2 - 4 x_3  = -4, 
+\end{equation}
+as well as the lower bounds
+\begin{equation}
+  \label{eq:4}
+  x_1≥0, x_2 ≥ 0, x_3 ≥ 0.
+\end{equation}
+
+  
 \item A factory produces two different products.
 To create one unit of product 1, it needs one unit of raw material $A$
 and one unit of raw material $B$.
