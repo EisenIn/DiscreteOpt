@@ -6,29 +6,99 @@
 \section{Optimization problems}
 \label{sec:optim-probl}
 
-An \emph{optimization problem} is a patr $(ℱ,c)$, where $ℱ$ is a set, referred to as the set of \emph{feasible solutions},  and $c: ℱ ⟶ ℝ$ is a function, that is called the \emph{objective} or \emph{cost function}. The problem is to find an element $x ∈ ℱ$ such that
+An \emph{optimization problem} is a pair $(ℱ,f)$, where $ℱ$ is a set, referred to as the set of \emph{feasible solutions},  and $f: ℱ ⟶ ℝ$ is a function, that is called the \emph{objective} or \emph{cost function}. The problem is to find an element $x ∈ ℱ$ such that
 \begin{displaymath}
-  c(x) ≤ c(y) \text{ holds for all } y ∈ ℱ. 
+  f(x) ≥ f(y) \text{ holds for all } y ∈ ℱ. 
 \end{displaymath}
 Such an $x∈ ℱ$  is then an \emph{optimal solution} of the optimization problem.
-Since the task is to find a minimum solution, we also write 
+Since the task is to find a global  maximum solution, we also write 
 \begin{displaymath}
-  \min \{ c(x) : e ∈ ℱ\}. 
+  \max \{ c(x) : e ∈ ℱ\}. 
 \end{displaymath}
 
-
+If the objective is to minimize $f(x)$ or, in other words, to find an $x ∈ ℱ$ with  
+\begin{displaymath}
+  f(x) ≤ f(y) \text{ for all } y ∈ ℱ,
+\end{displaymath}
+then this can be understood as the optimization problem $(ℱ,-f)$, since 
+\begin{displaymath}
+  -f(x) ≥ - f(y) \text{ for all } y ∈ ℱ \text{ if and only if }  f(x) ≤ f(y) \text{ for all } y ∈ ℱ. 
+\end{displaymath}
 
 \begin{example}
   \label{exe:1}
-  From linear algebra we know the problem of minimizing a \emph{quadratic form} $ x^T A x$, where $A ∈ ℝ^{d×d}$ is a symmetric matrix,  over the sphere $S^{(d-1)}  = \{ x ∈ ℝ^d ： \|x\| = 1 \} ⊆ ℝ^d$.  Thus, in this case,  $ℱ = S^{(d-1)}$ and $c(x) = x^T A x$.
+  From linear algebra we know the problem of maximizing  a
+  \emph{quadratic form} $ x^T A x$ over the sphere
+  $S^{(d-1)} = \{ x ∈ ℝ^d ： \|x\| = 1 \} ⊆ ℝ^d$, where $A ∈ ℝ^{d×d}$ is a symmetric
+  matrix.  Thus, in this case,   $ℱ = S^{(d-1)}$ and $f(x) = x^T A x$ and we write
+  \begin{displaymath}
+    \max\left\{ x^T A x ： x ∈S^{(d-1)} \right\}. 
+  \end{displaymath}
+  If $v ∈ ℝ^d \setminus \{0\}$ is an eigenvector of $A$ corresponding to the
+  maximal eigenvalue $λ_{\max} ∈ ℝ$ of $A$, then $v \ \|v\|$ is an optimal
+  solution of the optimization problem.
 
-If $v ∈ ℝ^d \setminus \{0\}$ is an eigenvector corresponding to the minimal eigenvalue $λ_{\min}$ of $A$, then $v \ \|v\|$ is an optimal solution of the optimization problem. 
+  Following the discussion above, we see that an $x^* ∈ S^{(d-1)}$ is an optimal solution of
+  \begin{displaymath}
+    \min\left\{ x^T A x ： x ∈S^{(d-1)} \right\} 
+  \end{displaymath}
+  if and only if $x^*$ is an optimal solution of
+   \begin{displaymath}
+    \max\left\{ x^T (-A) x ： x ∈S^{(d-1)} \right\} . 
+  \end{displaymath}
+  We have seen that such an optimal solution is an eigenvector of $A$ corresponding to the minimal eigenvalue $λ_{\min}$ of $A$. 
+\end{example}
+
+
+
+
+\bigskip 
+
+Central to this course is the \emph{linear programming} or \emph{linear optimization} problem.  This is an optimization problem $(ℱ,f)$  where the set $ℱ$ is described by \emph{linear inequalities}
+\begin{displaymath}
+  ℱ = \{ x ∈ ℝ^n ： Ax ≤ b\}, 
+\end{displaymath}
+where $A ∈ ℝ^{m ×n}$ is a matrix and $b ∈ ℝ^{m}$ is a vector. The objective function $f： ℝ^n ⟶ℝ$   is linear and of the form $f(x) = c^Tx$ for a given vector $c ∈ ℝ^n$.  
+
+
+\begin{example}
+  \label{ex-0:2}
+    \begin{figure}
+      \centering
+      \input{./Ipe/Triangle.tex}  
+      \caption{The set $ℱ$ in example~\ref{ex-0:2}}. 
+      \label{fig:10}
+    \end{figure}
+
+  Let $A ∈ ℝ^{3 ×2}$ be the matrix
+  \begin{displaymath}
+    A =
+    \begin{pmatrix}
+      -1 & 1 \\
+      1 & 1 \\
+      0 & -1 
+    \end{pmatrix}
+  \end{displaymath}
+  and $b ∈ ℝ^3$ be the vector
+  \begin{displaymath}
+    b =
+    \begin{pmatrix}
+      1 \\ 1 \\ 0
+    \end{pmatrix}
+  \end{displaymath}
+  The set $ℱ ⊆ ℝ^2$ is the set of all points in the plane that satisfy all three inequalities. If we set the objective function as $f(x) = x_2$, then $x = (0,1)^T$ is an optimal solution.   
+\end{example}
+The linear optimization problem is one of the most important types of mathematical optimization problems. It has numerous applications in science and engineering and, in particular, modern fields like \emph{machine learning}.
+
+In this course, we will learn  the theory of linear optimization and develop \emph{efficient algorithms} to solve linear programming problems. This means that we do not content ourselves with an algorithm that is correct, but we want this algorithm to be capable to solve large scale problems within a short time. 
+
+
 
 
 \section{Certificates}
 \label{sec:certificates}
 
-\end{example}
+
 A central topic in linear algebra is the theory around  linear equations 
 \begin{equation} 
 \label{p:eq:1}
@@ -102,19 +172,29 @@ then this $λ$ \emph{certifies} that~\eqref{p:ineq} is infeasible. In the case o
 \end{theorem}
 
 
-Central to this course is the \emph{linear programming} or \emph{linear optimization} problem.  There, one is given a system of linear inequalities~\eqref{p:ineq} together with a linear objective function $f(x) = c^Tx$ for some fixed $c ∈ℝ^n$. The task is to solve 
-\begin{equation}
-  \label{eq:1}
-  \max\{ c^Tx : x ∈ ℝ^n, \, Ax \leq b\}, 
-\end{equation}
-or in other words, to find an $x^* ∈ ℝ^n$ that is a solution of \eqref{p:ineq} such that $c^T x^* ≥ c^T y^*$ for each solution $y^*$ of \eqref{p:ineq}, if such an $x^*$ exists. 
-The linear optimization problem is one of the most important types of mathematical optimization problems. It has numerous applications in science and engineering and, in particular, modern fields like \emph{machine learning}.
+\bigskip
 
-In this course, we will learn  the theory of linear optimization and develop \emph{efficient algorithms} to solve linear programming problems. This means that we do not content ourselves with an algorithm that is correct, but we want this algorithm to be capable to solve large scale problems within a short time. 
+More generally, we will learn about certificates of optimality of linear optimization problems. Lets consider again example~\ref{exe:1}. How can we certify that $x^* = (0,1)^T$ is an optimal solution of the linear program.
 
-\emph{Efficient algorithms} is a subfield of computational mathematics on its own. Before we begin with our considerations on linear programming, we will have to learn the basics of it. 
+Each point $x^*$ in $ℱ$ must satisfy the first two linear inequalities
+\begin{displaymath}
+  -x_1 + x_2 ≤ 1 \text{ and }  x_1 + x_2 ≤ 1. 
+\end{displaymath}
+But then such an $x^*$ satisfies also the \emph{sum} of these two inequalities
+\begin{displaymath}
+   (-x_1 + x_2) + (x_1 + x_2) ≤ 1  +1 
+ \end{displaymath}
+ which simplifies to
+ \begin{displaymath}
+x_2 ≤1. 
+ \end{displaymath}
+ But $x_2$ is the objective function. We have just shown that the objective function value of any point is at most $1$. Since this objective function value at $x^* = (0,1)^T$ is \emph{equal} to one, we have certified optimality of $x^*$.
 
+ \bigskip
 
+The general theory that makes certification of optimility possible for linear optimization is the theory of \emph{duality}. It is a rich theory with many other applications in discrete mathematics. We will touch upon many of them.
+
+ 
 
 
 
