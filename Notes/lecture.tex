@@ -14,6 +14,10 @@
 \usetikzlibrary{arrows.meta,patterns}
 \usetikzlibrary{ipe} % ipe compatibility library
 
+\usepackage{tikzit}
+\input{./TIKZ/digraph.tikzstyles}
+
+
 \usepackage{listings}
 \lstset{ 
   language = Python
@@ -35,7 +39,7 @@
 \newcommand{\fancybox}[2][Title of the box]{%
   \begin{center}
     \begin{tikzpicture}
-      \node [mybox] (box){%       
+      \node [mybox] (box){%        
         \begin{minipage}{0.8\textwidth}
           #1\\[1ex]          
           #2
@@ -197,7 +201,7 @@
 
 \date{\today}
 \author{Friedrich Eisenbrand} 
-\title{Linear Optimization}
+\title{Discrete Optimization}
 \subtitle{These are notes of my course Discrete Optimization. They are constantly updated. }
 
 

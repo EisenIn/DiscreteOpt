@@ -67,29 +67,24 @@
 \definecolor{black}{rgb}{0,0,0}
 \definecolor{white}{rgb}{1,1,1}
 \begin{tikzpicture}[ipe stylesheet]
-  \filldraw[ipe pen heavier, -{>[ipe arrow large]}, fill=lightgray]
-    (256, 704)
-     -- (192, 640)
-     -- (320, 640)
-     -- cycle;
-  \draw[ipe pen heavier, -{>[ipe arrow large]}]
-    (128, 640)
-     -- (384, 640);
-  \draw[ipe pen heavier, -{>[ipe arrow large]}]
-    (256, 576)
-     -- (256, 768);
+  \draw[blue, ipe pen ultrafat]
+    (218.3906, 410.3906)
+     -- (252.8945, 444.8945)
+     -- (305.7695, 320)
+     -- (236.2969, 320)
+     -- (218.3906, 410.3906);
+  \draw[ipe pen ultrafat]
+    (128, 320)
+     -- (336, 528);
+  \draw[ipe pen ultrafat]
+    (128, 320)
+     -- (336, 320)
+     -- (336, 320);
+  \draw[ipe pen ultrafat]
+    (128, 320)
+     -- (336, 448);
   \node[ipe node]
-     at (384, 624) {$x_1$};
-  \node[ipe node]
-     at (272, 768) {$x_2$};
-  \filldraw[ipe pen heavier, fill=lightgray]
-    (320, 640)
-     -- (320, 632);
-  \filldraw[ipe pen heavier, fill=lightgray]
-    (256, 704)
-     -- (248, 704);
-  \node[ipe node]
-     at (320, 624) {$1$};
-  \node[ipe node]
-     at (248, 712) {$1$};
+     at (240, 416) {$b \in Q$};
+  \pic[ipe mark large, blue]
+     at (240, 400) {ipe disk};
 \end{tikzpicture}

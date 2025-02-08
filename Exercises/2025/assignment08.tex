@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2018}
+\publishdate{April 19, 2018}
+\duedate{\textbf{Problem 1} can be \textbf{submitted} until April 27, 12:00 (noon)
+  into the box in front of MA C1 563. }
+\problemset{Assignment~8}
+
+\begin{document}
+\makeheader
+
+\problemstar
+Consider the following problem. We are given $B\in \N$, and a set of integer points 
+$$S=\{p\in \Z^n: \ 0\leq p_i\leq B, \ \forall i=1,\dots,n\},$$ 
+whose points are all colored blue but one, which is red. We have an oracle that, given $i \in \{1,\dots,n\}$ and $\alpha \in \{0,\dots,B\}$, tells us whether there exists a red point $x^* \in S$ with $x^*_i \leq \alpha$. 
+%given vectors $l, r\in \R^n$, tells us whether the red point in $S$ is contained in the box $S\cap\{x\in \R^n: l_i\leq x_i\leq r_i \;\forall\; i=1,\dots,n\}$ or not. 
+Give an algorithm to find the red point using $O(n\log(B))$ many oracle calls.
+
+
+
+\problem
+Let $P := \{x \in \R^n: \ Ax = b, \, x \geq 0 \}$ be a polyhedron and $\min\{cx: x \in P \}$ be the corresponding primal linear program. Assume that all the coefficients of $A$, $b$ and $c$ are integral and bounded in absolute value by given $B \in N$, and furthermore let $L := B^n n^{n/2}$.
+\begin{enumerate}[(a)]
+	\item Show the following: If $x_1, x_2$ are vertices of $P$ and $cx_1 \neq cx_2$, then $|cx_1 - cx_2| \geq  1/L^2$.
+	\item Let $x^*$ and $y^*$ be feasible solutions of the primal and dual linear program respectively. Conclude the following from the above: If $| cx^* - by^*| < 1/L^2$, then each vertex $x$ of $P$ with $cx \leq cx^*$ is an optimal solution of the primal. 
+\end{enumerate}
+
+\problem
+Let $Ax \leq b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by $B$ in absolute value. Show that $Ax \leq b$ is feasible if and only if $Ax \leq b$ , $-B^{n} \cdot n^{n/2} \cdot n \cdot B \leq x_i \leq B^{n} \cdot n^{n/2} \cdot n \cdot B, \ \forall i \in [n]$ is feasible.
+
+ \smallskip
+ 
+Hint: Consider a feasible point $x^*$ and the index sets $I = \{i : \ x^*_i \geq 0\}$ and $J = \{j : x^*_j \leq 0\}$. The polyhedron defined by $Ax \leq b, \ x_i \geq 0, \ i \in I, \ x_j \leq 0, \ j \in J$ is feasible and has vertices. Estimate the infinity norm of a vertex. 
+
+\problem
+Let $A \in \R^{n \times n}$ be an invertible matrix and $b \in \R^{n}$ a vector. The ellipsoid $E(A,b)$ is defined as the image of the unit ball under the linear mapping $t(x) = Ax+b$. Show that
+$$E(A,b) = \{ x \in \R^n: (x-b)^\top A^{-\top} A^{-1} (x-b) \leq 1 \}.$$
+	
+\problem
+Draw $E(A,b)$ for $A = \begin{pmatrix} 1 & 3  \\ 2 & 5 \end{pmatrix}$ and $b  = \begin{pmatrix} 1   \\ 2 \end{pmatrix}$.
+
+\problem
+Show that the unit simplex $\Delta = \text{conv} \{ 0, e_1, \cdots, e_n \} \subset \R^{n}$ has volume $\dfrac{1}{n!}$.
+
+\problem
+Let $P = \{ x \in \R^{n} : Ax \leq b \}$ be a full dimensional $0/1$ polytope and $c \in \Z^n$. 	We will show how we can use the ellipsoid method to solve the optimization problem $\max \{  c^{\top} x : x \in P \}$. \\
+	
+\noindent Define $z^* := \max \{ c^{\top} x : x \in P \}$ and $c_{\max} := \max \{ |c_i| : 1 \leq i \leq n \}$. 
+
+\begin{enumerate}
+\item[i)] Show that the ellipsoid method requires $O(n^3 \log (n) c_{max})$ iterations to decide whether $P \cap  (c^\top x \geq \beta) = \emptyset$ for some integer $\beta$. (Find a suitable initial ellipsoid and stopping value  $L$)
+\item[ii)] Show that we can use binary search to find $z^*$ with $\log(n c_{\max})$ calls to the ellipsoid method.
+\item[iii)] Show how you can find an optimal solution $x^*$ such that $c^{\top} x^* = z^*$ in polynomial time.
+\end{enumerate}
+
+
+\end{document}

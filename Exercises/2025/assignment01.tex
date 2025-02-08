@@ -1,0 +1,127 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../Notes/tikzit}
+\usepackage{../../Notes/utf8math}
+
+\input{../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2025}
+\publishdate{February 18, 2025}
+\duedate{ }
+\problemset{Assignment~1}
+
+\begin{document}
+\makeheader
+
+\problem
+Provide a certificate (as in Theorem $1.1$ in the lecture notes) of the unsolvability of the linear equation 
+  \begin{displaymath}
+    \begin{pmatrix}
+      2 & 1 & 0 \\
+      5 & 4 & 1 \\
+      7 & 5 & 1
+    \end{pmatrix} \,
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ x_3 
+    \end{pmatrix} =
+    \begin{pmatrix}
+      1\\2\\4
+    \end{pmatrix}
+  \end{displaymath}
+
+  \problem
+
+  Let $A ∈ ℝ^{3 ×2}$ be the matrix
+  \begin{displaymath}
+    A =
+    \begin{pmatrix}
+      -1 & 1 \\
+      1 & 1 \\
+      0 & -1 
+    \end{pmatrix}
+  \end{displaymath}
+  and $b ∈ ℝ^3$ be the vector
+  \begin{displaymath}
+    b =
+    \begin{pmatrix}
+      1 \\ 1 \\ -2
+    \end{pmatrix}
+  \end{displaymath}
+defining the system of inequalities $Ax ≤b$ that does not have a feasible solution. Find a Farkas' certificate, i.e., a  $λ ∈ ℝ^3_{≥0}$ with $λ^TA = 0$ and $λ^T b = -1$. 
+  
+
+ \problem Show the ``if'' direction of the Farkas' lemma: given $A\in \R^{m\times n}, b\in \R^m$, if there exist a $\lambda \in \R^m_{\geqslant 0}$ such that $\lambda^\top A=0$ and $\lambda^\top b=-1$, then the system $Ax\leq b$ of linear inequalities does not have a solution. 
+ 
+\problem Consider the following linear program:
+\begin{center}
+\begin{tabular}{rllllll}
+$\max$ & \ & $x$ & $+$ & $y$ & \ & \\ 
+s.t. & \ & $3x$ & $+$ & $2y$ & $\leq$ & $6$ \\ 
+\ & \ & $x$ & $+$ & $4y$ & $\leq$ & $4$. \
+\end{tabular} 
+\end{center} 
+The solution $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the objective value $11/5$. Provide a certificate that this is an optimal solution.
+
+
+\newpage 
+\problem
+
+ Let $G = (V,A)$ be a directed graph and $s,t ∈ V$ be two designated vertices. For a vertex $v ∈ V$ we let
+  \begin{displaymath}
+    δ^+(v) = \{ (u,v) ： u ∈ V, \, (u,v) ∈A\} \text{ and } δ^i(v) = \{ (v,u) ： u ∈ V, \, (v,u) ∈A\}
+  \end{displaymath}
+  the \emph{arcs entering} and \emph{leaving} $u$ respectively.  Consider the following inequalities
+  \begin{equation} 
+    \begin{array}{rclc}      \displaystyle 
+    ∑_{a ∈ δ^+(v) } x_a -  ∑_{a ∈ δ^-(v) } x_a & = &  0 & \, \quad v ∈ V \setminus \{s,t\} \\ \displaystyle 
+      ∑_{a ∈ δ^+(s) } x_a -  ∑_{a ∈ δ^-(s) } x_a & = &  -1 & \\
+      \displaystyle 
+      ∑_{a ∈ δ^+(t) } x_a -  ∑_{a ∈ δ^-(t) } x_a & = &  1 & \\
+      x_a &≥& 0 & a ∈A.
+    \end{array}
+    \label{eq:1}
+  \end{equation}
+  
+  \begin{enumerate}[a)] 
+  \item Consider the following digraph with $s$ and $t$ and a partial assignment of arc variables. Can this partial assignment be completed to a feasible solution satisfying the inequalities~\eqref{eq:1}? If yes, complete the assignment.
+    \begin{center}
+          \input{../../Notes/TIKZ/flow-1.tikz}   
+    \end{center}
+\item Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If there is a path connecting $s$ and $t$ in $G$, then the system of inequalities~\eqref{eq:1} has a feasible solution
+  \item (*)  Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If  the system of inequalities~\eqref{eq:1} has a feasible solution, then  there is a path connecting $s$ and $t$ in $G$. 
+   \end{enumerate}
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

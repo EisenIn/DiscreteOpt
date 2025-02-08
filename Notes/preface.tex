@@ -50,9 +50,30 @@ then this can be understood as the optimization problem $(ℱ,-f)$, since
 \end{example}
 
 
+\begin{example}
+  \label{exe:4}
+  
+
+  A \emph{directed  graph} is a tuple $G = (V,A)$, where $V$ is a finite set of elements, called the
+    \emph{vertices} of $G$ and  $A\subseteq(V\times V)$ is the set of
+  \emph{arcs} of $G$. We denote an arc by its two defining nodes $(u,v) \in
+  A$. The graph is \emph{weighted} if additionally equipped with a function $w: A ⟶ ℝ$ that maps the set of arcs to the reals. A \emph{simple path} is a finite sequence of \emph{distinct} vertices $P = v_1,v_2,\dots,v_k$  such that $(v_i,v_{i+1}) ∈A$ for each $i ∈ \{1,\dots,k-1\}$. The path is from $v_1$ to $v_k$ and the \emph{length} of the path $P$ is defined as
+  \begin{displaymath}
+    ℓ(P) = ∑_{i=1}^{k-1 } w(v_i,v_{i+1}). 
+  \end{displaymath}
 
 
-\bigskip 
+\begin{figure} \centering  
+ \input{./TIKZ/test.tikz}   
+  \caption{Example of a weighted directed graph with $6$ nodes and $8$ arcs. A shortest path from $a$ to $f$ is  the node sequence $a,b,e,f$. Its length is equal to $2$.}
+\label{fig:11}
+\end{figure}
+
+The \emph{shortest path problem} is now as follows. Given a  directed graph $G = (V,A)$  with non-negative weights $w: A ⟶ ℝ_+$  and two designated vertices $s$ and $t ∈V$, determine a path from $s$ to $t$ of minimal length. In our setting this is then the tuple $(ℱ,f)$, where $ℱ$ is the set of all paths from $s$ to $t$ in $G$ and $f(P)$ is equal to $-1$ times $ℓ(P)$. 
+
+\end{example}
+
+\subsection*{Linear programming}
 
 Central to this course is the \emph{linear programming} or \emph{linear optimization} problem.  This is an optimization problem $(ℱ,f)$  where the set $ℱ$ is described by \emph{linear inequalities}
 \begin{displaymath}
@@ -86,9 +107,13 @@ where $A ∈ ℝ^{m ×n}$ is a matrix and $b ∈ ℝ^{m}$ is a vector. The objec
       1 \\ 1 \\ 0
     \end{pmatrix}
   \end{displaymath}
-  The set $ℱ ⊆ ℝ^2$ is the set of all points in the plane that satisfy all three inequalities. If we set the objective function as $f(x) = x_2$, then $x = (0,1)^T$ is an optimal solution.   
+  The set $ℱ ⊆ ℝ^2$ is the set of all points $(x_1,x_2)^T ∈ ℝ^2$ in the plane that satisfy all three inequalities
+  \begin{displaymath}
+    -x_1+ x_2 ≤1, \,  x_1+ x_2 ≤1, \text{ and } x_2 ≥0. 
+  \end{displaymath} This set $ℱ$ is the triangle depicted in Figure~\ref{fig:10}. 
+  If we set the objective function as $f(x) = x_2$, then $x = (0,1)^T$ is an optimal solution.   
 \end{example}
-The linear optimization problem is one of the most important types of mathematical optimization problems. It has numerous applications in science and engineering and, in particular, modern fields like \emph{machine learning}.
+The linear optimization problem is one of the most important types of mathematical optimization problems. It has numerous applications in science and engineering and, in particular, modern fields like \emph{machine learning}. In fact, the shortest 
 
 In this course, we will learn  the theory of linear optimization and develop \emph{efficient algorithms} to solve linear programming problems. This means that we do not content ourselves with an algorithm that is correct, but we want this algorithm to be capable to solve large scale problems within a short time. 
 
@@ -217,6 +242,32 @@ The general theory that makes certification of optimility possible for linear op
     \end{pmatrix}
   \end{displaymath}
 \item Show the ``if'' direction of the Farkas' lemma (Theorem~\ref{thr:7}). 
+\item The directed graph $G = (V,A)$ is \emph{complete}, if $A = \{(u,v) ： u≠v ∈ V\}$. Let $s ≠ t ∈V$ be two designated vertices. How many directed paths connect $s$ and $t$ in $G$? Find a formula with parameter $n = |V|$. 
+\item Let $G = (V,A)$ be a directed graph and $s,t ∈ V$ be two designated vertices. For a vertex $v ∈ V$ we let
+  \begin{displaymath}
+    δ^+(v) = \{ (u,v) ： u ∈ V, \, (u,v) ∈A\} \text{ and } δ^i(v) = \{ (v,u) ： u ∈ V, \, (v,u) ∈A\}
+  \end{displaymath}
+  the \emph{arcs entering} and \emph{leaving} $u$ respectively.  Consider the following inequalities
+  \begin{equation} 
+    \begin{array}{rclc}      \displaystyle 
+    ∑_{a ∈ δ^+(v) } x_a -  ∑_{a ∈ δ^-(v) } x_a & = &  0 & \, \quad v ∈ V \setminus \{s,t\} \\ \displaystyle 
+      ∑_{a ∈ δ^+(s) } x_a -  ∑_{a ∈ δ^-(s) } x_a & = &  -1 & \\
+      \displaystyle 
+      ∑_{a ∈ δ^+(t) } x_a -  ∑_{a ∈ δ^-(t) } x_a & = &  1 & \\
+      x_a &≥& 0 & a ∈A.
+    \end{array}
+    \label{eq:1}
+  \end{equation}
+  
+  \begin{enumerate}[a)] 
+  \item Consider the following digraph with $s$ and $t$ and a partial assignment of arc variables. Can this partial assignment be completed to a feasible solution satisfying the inequalities~\eqref{eq:1}? If yes, complete the assignment.
+    \begin{center}
+          \input{./TIKZ/flow-1.tikz}   
+    \end{center}
+\item Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If there is a path connecting $s$ and $t$ in $G$, then the system of inequalities~\eqref{eq:1} has a feasible solution
+  \item (*)  Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If  the system of inequalities~\eqref{eq:1} has a feasible solution, then  there is a path connecting $s$ and $t$ in $G$. 
+   \end{enumerate}
+  
 \end{enumerate}
 
 
