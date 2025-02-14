@@ -95,9 +95,9 @@ The solution $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the obj
 
  Let $G = (V,A)$ be a directed graph and $s,t ∈ V$ be two designated vertices. For a vertex $v ∈ V$ we let
   \begin{displaymath}
-    δ^+(v) = \{ (u,v) ： u ∈ V, \, (u,v) ∈A\} \text{ and } δ^i(v) = \{ (v,u) ： u ∈ V, \, (v,u) ∈A\}
+    δ^+(v) = \{ (u,v) ： u ∈ V, \, (u,v) ∈A\} \text{ and } δ^-(v) = \{ (v,u) ： u ∈ V, \, (v,u) ∈A\}
   \end{displaymath}
-  the \emph{arcs entering} and \emph{leaving} $u$ respectively.  Consider the following inequalities
+  the \emph{arcs entering} and \emph{leaving} $v$ respectively.  Consider the following inequalities
   \begin{equation} 
     \begin{array}{rclc}      \displaystyle 
     ∑_{a ∈ δ^+(v) } x_a -  ∑_{a ∈ δ^-(v) } x_a & = &  0 & \, \quad v ∈ V \setminus \{s,t\} \\ \displaystyle 
