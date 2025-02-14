@@ -1,8 +1,4 @@
  
-
-
-
-
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND THEMES
 %----------------------------------------------------------------------------------------
@@ -17,6 +13,8 @@
 \newcommand\tabb{\hspace{.75cm}}
 
 \usepackage{mathrsfs}
+%\usepackage{ulem}
+
 \usepackage{color}
 \definecolor{navy}{RGB}{0,0,205}
 \definecolor{NavyBlue}{RGB}{0,0,205}
@@ -34,10 +32,14 @@
 
 \newcommand{\scriptgray}[1]{{ \scriptsize \color{gray}#1}}
 
+\DeclareMathOperator{\lcm}{lcm}
+
+\newcommand{\toright}[1]{{ \hfill{\scriptgray{#1}}}}
 
 \newcommand{\cone}{\operatorname{cone}}
 \newcommand{\intcone}{\operatorname{intcone}}
-
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\rank}{\operatorname{Rank}}
 
 \renewcommand\geq{\geqslant}
 \usepackage{hyperref}
@@ -45,7 +47,7 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and  \bottomrule in tables  
 \usepackage{svg} %allows using svg figures
 \usepackage{tikz}
-\input{../ipestyle} 
+\input{ipestyle} 
 
 \usepackage[utf8]{inputenc} 
 \usepackage{utf8math}
@@ -107,7 +109,7 @@
 %----------------------------------------------------------------------------------------
 
 \title{Discrete Optimization}
-\subtitle{Information on MATH-261}
+\subtitle{MATH-261}
 
 \author[Eisenbrand]{Fritz Eisenbrand}
 
@@ -115,16 +117,22 @@
  
 
 \date{}
-
 %----------------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
 %----------------------------------------------------------------------------------------
 
 \begin{document}
+
+\begin{frame}[plain]
+    % Print the title page as the first slide
+    \titlepage
+\end{frame}
+
+\pagestyle{empty} 
+
 \include{body}
  
 \end{document}
-
 
 
 %%%Local Variables:
