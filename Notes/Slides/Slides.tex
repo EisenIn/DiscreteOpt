@@ -8,6 +8,8 @@
 
 \usetheme{SimplePlusAIC}
 
+
+\renewcommand\emph[1]{{\color{darkred} #1}}
 \newcommand\myemph[1]{{\color{darkred} #1}}
 \newcommand\platz{\vspace{.7cm}}
 \newcommand\tabb{\hspace{.75cm}}
@@ -46,8 +48,17 @@
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and  \bottomrule in tables  
 \usepackage{svg} %allows using svg figures
+
+
+
 \usepackage{tikz}
-\input{ipestyle} 
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../tikzit}
+\input{../TIKZ/digraph.tikzstyles}
+
+
 
 \usepackage[utf8]{inputenc} 
 \usepackage{utf8math}
@@ -131,6 +142,7 @@
 \pagestyle{empty} 
 
 \include{body}
+\include{lecture01}
  
 \end{document}
 
