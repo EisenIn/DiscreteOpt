@@ -4,10 +4,10 @@
 %----------------------------------------------------------------------------------------
 \documentclass[aspectratio=169,xcolor=dvipsnames,noframenumbering]{beamer}
 
-
-
 \usetheme{SimplePlusAIC}
 
+
+\renewcommand\emph[1]{{\color{darkred} #1}}
 \newcommand\myemph[1]{{\color{darkred} #1}}
 \newcommand\platz{\vspace{.7cm}}
 \newcommand\tabb{\hspace{.75cm}}
@@ -40,14 +40,30 @@
 \newcommand{\intcone}{\operatorname{intcone}}
 \newcommand{\poly}{\operatorname{poly}}
 \newcommand{\rank}{\operatorname{Rank}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
 
 \renewcommand\geq{\geqslant}
 \usepackage{hyperref}
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and  \bottomrule in tables  
 \usepackage{svg} %allows using svg figures
+
+
+
 \usepackage{tikz}
-\input{ipestyle} 
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../tikzit}
+\input{../TIKZ/digraph.tikzstyles}
+
+
 
 \usepackage[utf8]{inputenc} 
 \usepackage{utf8math}
@@ -66,7 +82,7 @@
 \usepackage{subcaption}
 \newcommand*{\defeq}{\stackrel{\text{def}}{=}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
+
 
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\B}{\mathcal{B}}
@@ -121,6 +137,8 @@
 %	PRESENTATION SLIDES
 %----------------------------------------------------------------------------------------
 
+
+%\includeonly{lecture02}
 \begin{document}
 
 \begin{frame}[plain]
@@ -131,6 +149,8 @@
 \pagestyle{empty} 
 
 \include{body}
+\include{lecture01}
+\include{lecture02}
  
 \end{document}
 
