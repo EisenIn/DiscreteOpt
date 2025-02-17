@@ -409,7 +409,8 @@ Task: Find  $x ∈ ℱ$ s.t.
       \end{column}       
     \end{columns}
   \end{frame}  
-   
+
+  
 \begin{frame}{}
 
     \begin{columns}
@@ -422,6 +423,487 @@ Task: Find  $x ∈ ℱ$ s.t.
     \end{columns}
   \end{frame}  
    
+
+
+
+
+\begin{frame}{Example: Production planning} 
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \emph{Spring} and \emph{Nebsi}
+
+      \medskip 
+      Per $100 ℓ$:  
+      \begin{tabular}{c|c|c|c}
+        &  A &  B & Profit  \\\hline
+        Spring      & $3ℓ$          & $8ℓ$ & $100$ CHF\\\hline 
+        Nebsi      & $6ℓ$           & $4ℓ$ & $125$ CHF
+      \end{tabular}
+
+      \medskip
+
+      In stock: $30ℓ$ of~$A$; ~~ $44ℓ$ of ~$B$
+
+       \bigskip
+
+       Capacity of transport barrels:
+
+       \medskip 
+       Spring: $500 ℓ$    Nebsi: $400ℓ$  
+
+       \bigskip
+
+       Production plan: $(x_1,x_2)$ 
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Example: Production planning} 
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \emph{Spring} and \emph{Nebsi}
+
+      \medskip 
+      Per $100 ℓ$:  
+      \begin{tabular}{c|c|c|c}
+        &  A &  B & Profit  \\\hline
+        Spring      & $3ℓ$          & $8ℓ$ & $100$ CHF\\\hline 
+        Nebsi      & $6ℓ$           & $4ℓ$ & $125$ CHF
+      \end{tabular}
+
+      \medskip
+
+      In stock: $30ℓ$ of~$A$; ~~ $44ℓ$ of ~$B$
+
+       \bigskip
+
+       Capacity of transport barrels:
+
+       \medskip 
+       Spring: $500 ℓ$    Nebsi: $400ℓ$  
+
+       \bigskip
+
+       Production plan: $(x_1,x_2)$ 
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{The linear program}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{equation*}
+  \begin{array}[]{l rcl}
+    \text{max.} & 100\cdot x_1 + 125 \cdot x_2 \\
+    \text{ s.t.:} &  3\cdot x_1 + 6 \cdot x_2 & \leq & 30 \\
+    &    8\cdot x_1 + 4 \cdot x_2 & \leq & 44 \\
+    & x_1 & \leq & 5\\
+    & x_2 & \leq & 4\\
+     & x_1 & \geq & 0\\
+    & x_2 & \geq & 0\\
+  \end{array}
+\end{equation*}
+    \end{column}
+    \begin{column}{.5\textwidth}
+
+      \begin{tikzpicture}[scale=.5]       
+     
+          \filldraw[fill=green!20,draw=green!20!](0,0) -- (0,4) -- (2,4) --
+          (4,3) -- (5,1) -- (5,0) -- (0,0); 
+     
+          
+          \draw [-,draw=gray] (11,-.5) -- (-1.5,5.75) ;
+          \draw [-,draw=gray] (-1.5,4) -- (11,4) ;
+          \draw [-,draw=gray] (5,-.5) -- (5,6) ;
+          \draw [-,draw=gray] (2.5,6) -- (5.75,-.5) ;
+                              
+          
+          
+          \draw[->] (-1.5,0) -- (11,0) node[below right] {$x_1$}; \draw[->]
+          (0,-.5) -- (0,6) node[left] {$x_2$};
+          
+          
+          \foreach \x in {1,...,10}
+          \draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\x$};
+          \foreach \y in {1,...,5}
+          \draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\y$};     
+        \end{tikzpicture} 
+
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{The linear program}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{equation*}
+  \begin{array}[]{l rcl}
+    \text{max.} & 100\cdot x_1 + 125 \cdot x_2 \\
+    \text{ s.t.:} &  3\cdot x_1 + 6 \cdot x_2 & \leq & 30 \\
+    &    8\cdot x_1 + 4 \cdot x_2 & \leq & 44 \\
+    & x_1 & \leq & 5\\
+    & x_2 & \leq & 4\\
+     & x_1 & \geq & 0\\
+    & x_2 & \geq & 0\\
+  \end{array}
+\end{equation*}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{tikzpicture}[scale=.5]       
+     
+          \filldraw[fill=green!20,draw=green!20!](0,0) -- (0,4) -- (2,4) --
+          (4,3) -- (5,1) -- (5,0) -- (0,0); 
+     
+          
+          \draw [-,draw=gray] (11,-.5) -- (-1.5,5.75) ;
+          \draw [-,draw=gray] (-1.5,4) -- (11,4) ;
+          \draw [-,draw=gray] (5,-.5) -- (5,6) ;
+          \draw [-,draw=gray] (2.5,6) -- (5.75,-.5) ;
+                              
+          
+          
+          \draw[->] (-1.5,0) -- (11,0) node[below right] {$x_1$}; \draw[->]
+          (0,-.5) -- (0,6) node[left] {$x_2$};
+          
+          {
+          \draw[draw=blue] (-1.50000000000000,
+          7.40000000000000)node[left]{\small  
+            \color{blue}{$  \beta = 775$}} --
+          (8.37500000000000, -0.500000000000000) ; }
+ 
+          {
+          \draw[draw = blue] 
+          (-1.50000000000000, 5.20000000000000)node[left]{\small 
+            \color{blue}{$  \beta = 500$}}
+          --
+          (5.62500000000000, -0.500000000000000) ; %beta = 500 
+}
+
+    
+          {      
+          \draw[draw = blue] 
+          (-1.50000000000000, 3.20000000000000)node[left]{\small 
+            \color{blue}{$  \beta = 250$}}
+          -- (3.12500000000000, -0.500000000000000); % beta = 250 
+
+        }
+         
+        {
+        \filldraw [red] (4,3) circle (3pt)node[above right] {$(4,3)$};
+}
+          
+          \foreach \x in {1,...,10}
+          \draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\x$};
+          \foreach \y in {1,...,5}
+          \draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\y$};     
+        \end{tikzpicture} 
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Proving optimality}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{eqnarray*}
+        3\cdot x_1 + 6 \cdot x_2 & \leq & 30 \\
+        8\cdot x_1 + 4 \cdot x_2 & \leq & 44.  \label{eq:1-3}
+      \end{eqnarray*}
+      multiplied by $50/3$ and $25/4$ respectively:
+
+      \bigskip
+
+      \begin{eqnarray*}
+        50\cdot x_1 + 100 \cdot x_2 & \leq & 500 \\
+        50\cdot x_1 + 25 \cdot x_2 & \leq & 275  \label{eq:1-6}
+      \end{eqnarray*}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Some notation}
+
+      $A \in ℝ^{m\times n}$: 
+      \begin{itemize}
+      \item $i$-th row of  $A$ by  $a^T_i$,  $i\in
+        \{1,\ldots,m\}$        
+      \item $j$-th column of $A$  by $a^j$, $ j \in \{ 1,\ldots,n\}$         
+      \end{itemize}
+      
+\end{frame}
+
+
+
+
+\begin{frame}{Linear programming: Flexible notation}
+Let  $A \in ℝ^{m\times n}$, $b \in ℝ^{m}$, $c \in ℝ^n$ 
+$I_\geq,I_\leq,I_= \subseteq \{1,\ldots,m\}$
+and $J_\geq,J_\leq \subseteq\{1,\ldots,n\}$
+
+
+\medskip 
+A \emph{linear program (LP)}
+consists of 
+\begin{enumerate}[i)]
+\item a linear \emph{objective function}
+  \begin{displaymath}
+    \begin{array}{c}
+      \max c^T x \\
+      \text{or } \min c^Tx
+    \end{array}
+  \end{displaymath}
+\item linear \emph{constraints} 
+  \begin{displaymath}
+    \begin{array}{c}
+      a_i^T x \geq b_i, i \in {I_\geq} \\ 
+      a_j^T x \leq b_j, j \in {I_\leq} \\ 
+      a_k^T x = b_k, k \in {I_=} 
+    \end{array}
+  \end{displaymath}
+\item and  \emph{bounds on the variables} 
+  \begin{displaymath}
+    \begin{array}{c}
+      x_j \geq0, \, j \in J_\geq \\
+      x_j \leq0, \, j \in J_\leq. 
+    \end{array}
+  \end{displaymath}
+\end{enumerate}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Inequality standard form}
+
+  \begin{displaymath}
+    \begin{array}{l}
+      \max c^T x \\
+      Ax  ≤  b 
+    \end{array}
+  \end{displaymath}
+  
+\end{frame}
+
+
+
+\begin{frame}{Example: Fitting a line}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      Given: $(x_i,y_i)\in ℝ^2 \; i=1,\ldots,n$
+
+
+      \medskip
+
+      Find line $y = ax + b$ that reflects data best
+
+
+      \medskip
+      Least squares:
+
+      \begin{equation*}        
+        \min_{a,b ∈ ℝ}  \sum_{i=1}^n (ax_i + b-y_i)^2  
+      \end{equation*}
+
+
+      \bigskip 
+      Absolute values instead:
+
+      \begin{displaymath}        
+      \min_{a,b ∈ ℝ}  \sum_{i=1}^n |ax_i + b-y_i|
+      \end{displaymath}
+      
+      
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{tikzpicture}[inner sep=0pt,thick,
+        dot/.style={fill=black,circle,minimum size=3pt}]
+        % \draw[help lines] (0,0) grid (7,4);
+        % \draw [<->,thick] (0,4) node (yaxis) [above] {$y$}
+        % |- (9,0) node (xaxis) [right] {$x$};
+        \node[dot] (a) at (1,3) (1,1) {};
+        \node[dot] (b) at (2.8,3.3) (2,2) {};
+        \node[dot] (c) at (4,2) (1,2) {};
+        \node[dot] (d) at (5.5,2.1) (1.25,0.25) {};
+        \node[dot] (e) at (6,.2) (1.75,1.5) {};
+        \node[dot] (f) at (7,1.3) {};
+        \node[dot] (g) at (7.5,1)  {};
+        \node[dot] (h) at (8.5,0.8)  {};
+        (8.5,0.8)
+        \draw[thick,blue] (1,3.5) -- (9,0.5) ;
+        % \node[draw=red, fit=(a) (b) (c) (d) (e)] {box};
+        % \node[draw,circle,fit=(a) (b) (c) (d) (e)] {};
+   \end{tikzpicture}
+
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Example: Fitting a line}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      Given: $(x_i,y_i)\in ℝ^2 \; i=1,\ldots,n$
+      
+      
+      \medskip
+      
+      Find line $y = ax + b$ that reflects data best
+
+
+      \medskip
+      Least squares:
+
+      \begin{equation*}        
+        \min_{a,b ∈ ℝ}  \sum_{i=1}^n (ax_i + b-y_i)^2  
+      \end{equation*}
+
+
+      \bigskip 
+      Absolute values instead:
+
+      \begin{displaymath}        
+      \min_{a,b ∈ ℝ}  \sum_{i=1}^n |ax_i + b-y_i|
+      \end{displaymath}
+      
+      
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+
+      \begin{equation*}
+        \begin{array}{lcr}
+          \min & \sum_{i=1}^n h_i \\
+          h_i & \geq & a x_i + b-y_i,  \, i=1,\ldots,n \\
+          h_i & \geq & -(a x_i + b-y_i ),  \, i=1,\ldots,n \\    
+        \end{array}
+      \end{equation*}
+
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{}
+  \begin{alertblock}{Goals of next lectures}
+    \begin{itemize}
+    \item Study feasible solutions of linear programs
+    \item Identify candidates for optimal solutions
+    \item Describe efficient algorithms to find optimal solution 
+    \end{itemize}
+  \end{alertblock}
+
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+  
+  
+
+
 
 
 
