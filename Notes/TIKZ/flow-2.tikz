@@ -1,0 +1,43 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+\[\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (0, 4) {$s$};
+		\node [style=new style 0] (1) at (0, -4) {$t$};
+		\node [style=new style 0] (2) at (3, 2) {$10$};
+		\node [style=new style 0] (3) at (-3, 2) {};
+		\node [style=new style 0] (4) at (0, 0) {};
+		\node [style=new style 0] (5) at (3, -2) {};
+		\node [style=new style 0] (6) at (-3, -2) {};
+		\node [style=none] (7) at (-1.75, 3.5) {$.5$};
+		\node [style=none] (8) at (2.25, 3.75) {$.75$};
+		\node [style=none] (9) at (0.75, 2.5) {};
+		\node [style=none] (10) at (1.25, 1.25) {$.25$};
+		\node [style=none] (11) at (2.25, 0.25) {};
+		\node [style=none] (12) at (-3.75, 0) {};
+		\node [style=none] (13) at (-1.75, -3.25) {};
+		\node [style=none] (14) at (0.5, -2) {$0$};
+		\node [style=none] (15) at (2.25, -1) {};
+		\node [style=none] (16) at (1.75, -3.25) {};
+		\node [style=none] (17) at (-1, 1.25) {.25};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=edge] (0) to (3);
+		\draw [style=edge] (3) to (4);
+		\draw [style=edge, bend left] (0) to (2);
+		\draw [style=edge, bend left=45] (2) to (4);
+		\draw [style=edge, bend left] (2) to (0);
+		\draw [style=edge, bend left, looseness=1.25] (4) to (2);
+		\draw [style=edge] (3) to (6);
+		\draw [style=edge] (4) to (1);
+		\draw [style=edge] (4) to (5);
+		\draw [style=edge] (6) to (1);
+		\draw [style=edge] (5) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}
+\]
+\end{document}
