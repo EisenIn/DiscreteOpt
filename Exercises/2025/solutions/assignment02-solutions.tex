@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 
-\usepackage{ppackage}
+\usepackage{../ppackage}
 \usepackage{bbm}
 \usepackage{import}
 
@@ -13,10 +13,10 @@
 \usetikzlibrary{arrows.meta,patterns}
 \usetikzlibrary{ipe} % ipe compatibility library
 
-\usepackage{../../Notes/tikzit}
-\usepackage{../../Notes/utf8math}
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
 
-\input{../../Notes/TIKZ/digraph.tikzstyles}
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
 
 
 
@@ -127,10 +127,37 @@
 
 \item  \label{item:ex-9}
   Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+  
+  \begin{solution}
+  Let $x \in \setR^n$ be such that $\|x\|_2 =1$. We show that $x$ is then an extreme point of $B$. Firstly, it is clear that $x$ is in $B$. 
+  Assume that $x$ wasn't an extreme point such that there exist some $y \neq z \neq x \in B$ with $\lambda y + (1-\lambda) z = x$ for some $\lambda \in (0,1)$. Then $$1 = \| x\|_2 = \| \lambda y + (1-\lambda) z \| \leq \lambda \|y\| + (1-\lambda)\|z\| \leq \lambda \cdot 1 + (1-\lambda) \cdot 1 = 1$$
+where the first inequality comes from the triangle inequality and the second follows from $z, y \in B$. So the inequalities must hold with equality everywhere such that 
+\begin{align}
+&\|z\| = 1 \\
+&\|y\| = 1\\
+&\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|. 
+\end{align}
+
+However, if $\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|$ then $y, z$ must be linearly dependent. But then $z \neq y$, $z = \alpha y$ for some $\alpha \notin \{0, 1\}$.  Then $x = \lambda y + (1 - \lambda )\alpha y = (\lambda + \alpha- \alpha \lambda) y$. But $ 1 = \|x\| =(\lambda + \alpha - \alpha \lambda)\|y \| = (\lambda + \alpha - \alpha \lambda)$. Thus $x = y$ a contradiction to the assumption $y, z \neq x$. Thus $x$ is an extreme point. 
+
+Next, we show there are no other extreme points of $B$. Assume, there is some $z \in \setR^n$ such that $\|z\| < 1 $ and $z$ is an extreme point of $B$. Let $\|z\| = \alpha$ for some value $\alpha <1$. Then the vector $x = \frac{1}{\alpha}z$ satisfies $x \in B, x \neq z$. Moreover, the vector $ y = \vec{0} $ satisfies $y \neq x, y \neq z, y \in B$. But then, notice that $z = \alpha x + (1-\alpha) y$ where $\alpha \in (0, 1)$ such that $z$ cannot be an extreme point. 
+
+
+
+
+  \end{solution}
+  
+  
 \item \label{item:10}
   A \emph{line} is a set $L = \{ x ⋅ d +t ： x ∈ ℝ\} ⊆ ℝ^n$ where $d,t ∈ ℝ^n$ $d ≠0$. Show the following.
 
   A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
+  
+  \begin{solution}
+  We start by showing $P$ contains a line $\implies$ $rank(A) < n$. 
+  
+  Let $d \cot x + t$ denote the line contained in $P$. As $P$ contains this line, for any $x \in \setR$, $A(d\cdot x +t) \leq b$. 
+  \end{solution}
 
 \item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
 \begin{enumerate}[i)] 
