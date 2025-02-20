@@ -140,15 +140,21 @@ The LP for our problem is given by
 s.t. \begin{pmatrix}  3 & 2 \\ 1 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} \leq \begin{pmatrix} 6 \\ 4 \end{pmatrix}.
 \end{align*}
 
-The dual of this LP is therefore 
+Consider the following linear combination of the two constraints given by $$ \lambda (3x + 2y) + \alpha(x + 4y)$$
+where $\lambda, \alpha \geq 0$. Clearly, this preserves the inequalities so that $$\lambda (3x + 2y) + \alpha(x + 4y) \leq 6 \lambda + 4 \alpha$$
+for any feasible $x, y$ for the LP. 
+
+Now, we choose $\lambda = 3/10, \alpha = 1/10$ and get that for any feasible $x, y$ for the LP, 
 \begin{align*}
-\min (6z + 4w) \\
-s.t. \begin{pmatrix}  3 & 1 \\ 2 & 4 \end{pmatrix} \begin{pmatrix} z \\ w \end{pmatrix} \leq \begin{pmatrix} 1 \\ 1 \end{pmatrix}\\
-z, w \geq 0.
+&\lambda (3x + 2y) + \alpha(x + 4y) \leq 6 \lambda + 4 \alpha \\
+\implies & 9/10 x + 6/10 y + 1/10 x + 4/10 y \leq 18/10 + 4/10 \\
+\implies & x + y \leq 22/10 \\
+\implies & x + y \leq 11/5.
 \end{align*}
 
+This shows that any feasible solution satisfies the objective $x + y \leq 11/5$ such that $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the optimal objective value $11/5$. 
 
-The solution to the dual system is given by $(z, w) = (3/10, 1/10)$ such that all constraints are satisfied. This gives objective value of the dual $6z + 4w = 11/5$. As the objective value of the dual matches that given by a solution of the primal, this is a certificate that 11/5 is optimal for the primal LP by strong duality. 
+
 
 \newpage 
 \problem
