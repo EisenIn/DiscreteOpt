@@ -999,6 +999,24 @@ polyhedron defined by the linear program.
 \section*{Exercises}
 
 \begin{enumerate}[1)]
+
+\item  \label{item:ex-9}
+  Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+\item \label{item:10}
+  A \emph{line} is a set $L = \{ x ⋅ d +t ： x ∈ ℝ\} ⊆ ℝ^n$ where $d,t ∈ ℝ^n$ $d ≠0$. Show the following.
+
+  A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
+
+\item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
+\begin{enumerate}[i)] 
+\item $A'v_1 = b'$ and $A'v_2 = b'$  and
+\item $\rank(A') = (n-1)$. 
+\end{enumerate}
+
+Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
+\begin{displaymath}
+ \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
+\end{displaymath}
 \item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
   Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
 \item Show that the set of feasible solutions  of a linear program  is
@@ -1099,6 +1117,8 @@ Write $v$ as a conic combination using only three vectors of the $x_i$.
   solutions $x^*_1$ and $x^*_2$ are feasible. Show that, if
   $x_1\neq x_2$, then   $\conv\{x_1^*,x_2^*\}$ is a $1$-dimensional face
   of $P$. \label{item:co18} 
+
+
 \end{enumerate}
 
 
