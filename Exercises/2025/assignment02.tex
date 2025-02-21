@@ -147,8 +147,12 @@ Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
 \item Show that the set of feasible solutions  of a linear program  is
   convex. \label{conv:item:1}
   
-  \item Suppose $P= \{x\in\setR^n : Ax\leq b,Cx\leq d\}$. Show that the set of vertices of
-$Q= \{x\in\setR^n : Ax\leq b,Cx= d\}$ is a subset of the set of vertices of $P$.
+  \item Let $$P= \{x: Ax≤b\}.$$ 
+  Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
+  Prove that 
+$$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
+x= b^=\}= \{x∈\setR^n : A^=
+x≤b^=\}.$$
 
 
 

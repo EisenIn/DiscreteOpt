@@ -194,17 +194,115 @@ Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
 
 
 \begin{solution}
+Let $A'$ be the rank $n-1$ submatrix such that $A'v_1 = b', A'v_2 = b'$. Let $c^T = \vec{1}^TA'$ be the vector obtained by summing the rows of $A'$ and let $\delta = \vec{1}^Tb'$ the value obtained by summing the components of $b'$. As $A'$ can be chosen as $(n-1)$ linearly independent rows, the vector $\vec{c}$ is nonzero. 
+
+Now, we claim that $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+Let $x$ be any convex combination of $v_1, v_2$ such that $x = \lambda v_1 + (1 - \lambda)v_2$. Notice that $x \in P$ as $v_1, v_2 \in P$ and $P$ is convex. Next, note that
+\begin{align*}
+c^Tx & = c^T ( \lambda v_1 + (1 - \lambda)v_2) \\
+& = (\vec{1}^TA') (\lambda v_1 + (1 - \lambda)v_2) \\
+& = \lambda (\vec{1}^T A' v_1) + (1-\lambda)(\vec{1}^TA' v_2) \\
+& = \lambda (\vec{1}^T b') + (1-\lambda)(\vec{1}^T b') \\
+& = \lambda \delta + (1-\lambda)\delta \\
+& = \delta. 
+\end{align*}
+
+This shows that $x \in (P \cap \{x \in \setR^n: c^Tx = \delta\})$ so that $ \conv\{v_1, v_2\} \subseteq (P \cap \{x \in \setR^n: c^Tx = \delta\})$. 
+
+
+Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, and we show that $x \in  \conv\{v_1, v_2\}$. 
+
+As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
+
+Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} xv_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
+
+Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
+\begin{align*}
+\lambda v_1 + (1- \lambda)v_2 & = \lambda {A^{(1)}}^{-1}\begin{pmatrix} b' \\ b^{(1)} \end{pmatrix} + (1 - \lambda) {A^{(1)}}^{-1}\begin{pmatrix} b' \\ \alpha_{v_2} \end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \lambda b^{(1)}  + (1-\lambda) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}} b^{(1)}  + \left(1-\frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}\right) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \alpha_x \end{pmatrix} \\
+& = x
+\end{align*}
+so that $x$ is indeed a convex combination of $v_1$ and $v_2$. Finally, note that if instead $\alpha_{x} \leq \alpha_{v_2}$ then $v_2$ is a convex combination of $x$ and $v_1$ which is impossible as $v_2$ is a vertex. 
+\\
+
+
+So we have shown that $(P \cap \{x \in \setR^n: c^Tx = \delta\}) \subseteq \conv\{v_1, v_2\}$ such that altogether $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+
+
+
 
 \end{solution}
 
 \item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
   Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
+  
+  
+  \begin{solution}
+  Let $x, y$ be two vectors in the set $\bigcap_{i \in I} C_i$. Then $x, y \in C_i$ for each $i \in I$. Then $\lambda x + (1-\lambda)y \in C_i$ for each $i \in I$ by convexity of $C_i$. But this shows that $\lambda x + (1-\lambda)y \in \bigcap_{i \in I}C_i$ such that the intersection is also convex.
+  
+  \end{solution}
+  
+  
 \item Show that the set of feasible solutions  of a linear program  is
   convex. \label{conv:item:1}
   
-  \item Suppose $P= \{x\in\setR^n : Ax\leq b,Cx\leq d\}$. Show that the set of vertices of
-$Q= \{x\in\setR^n : Ax\leq b,Cx= d\}$ is a subset of the set of vertices of $P$.
+  \begin{solution}
+  Let the feasible region of the LP be defined by some $\{x : Ax\leq b\}$ for a matrix $A$ and vector $b$. Let $x, y$ be any two feasible solutions of the LP. Then 
+  \begin{align*}
+  A(\lambda x + (1 - \lambda)y) & = \lambda Ax + (1- \lambda)Ay \\
+  & \leq \lambda b + (1 - \lambda)b \\
+  & = b
+  \end{align*}
+  such that the convex combination is also in the feasible region. 
+  
+  
+  \end{solution}
+  
+  \item Let $$P= \{x: Ax≤b\}.$$ 
+  Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
+  Prove that 
+$$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
+x= b^=\}= \{x∈\setR^n : A^=
+x≤b^=\}.$$
 
+
+\begin{solution}
+We prove this by proving three containments.
+\begin{enumerate}
+\item $\text{aﬃne-hull}(P) ⊆
+\{x: A^=
+x= b^=\}.$ 
+
+
+By definition we have that $P ⊆\{x: A^=
+x= b^=\}$. Let $x∈\text{aﬃne-hull}(P)$ be any vector. Then $x= λ_1x^1 +\hdots+ λ_tx^t$ for some $x^1,\hdots,x^t ∈P, λ_1,...,λ_t ∈\setR, \sum_{i=1}^t λ_i = 1$. 
+Then 
+\begin{align*}
+A^=x & = \lambda_1 A^= x^1 + \hdots \lambda_t A^= x^t \\
+& = \displaystyle\sum_{i =1}^t\lambda_i b^= \\
+& = b^=.
+\end{align*}
+Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
+
+\item $\{x : A^= x = b^=\} \subseteq \{x : A^= x \leq b^=\}$. This containment is immediate by the definition of $A^=$. 
+
+\item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
+
+
+Let  $x$ be a vector satisfying $ A^= x \leq b^=$. Let $x'\in P$ be a vector such that $A^= x' = b^=$ and the rest of the rows of $A$ are satisfied with strict inequality (such a point is guaranteed to exist by definition of $A^=$). Denote the submatrix of rows not in $A^=$ by $A^<$. 
+
+If $x \in P$ then $x$ is in $\text{affine-hull}(P)$ and we are done. Assume then that $x \notin P$.
+
+Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. Then $L$ contains another point $x'' \in P$ since all points $y$ on the line satisfy $A^= y = b^=$ and since $A^< x' < b^<$. 
+
+Then $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x.$$
+\end{enumerate}
+
+\end{solution}
 
 
 \end{enumerate}
