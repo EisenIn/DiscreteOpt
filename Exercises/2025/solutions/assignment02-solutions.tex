@@ -154,9 +154,30 @@ Next, we show there are no other extreme points of $B$. Assume, there is some $z
   A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
   
   \begin{solution}
-  We start by showing $P$ contains a line $\implies$ $rank(A) < n$. 
+  We start by showing $P$ contains a line $\implies$ $\rank(A) < n$. 
   
-  Let $d \cot x + t$ denote the line contained in $P$. As $P$ contains this line, for any $x \in \setR$, $A(d\cdot x +t) \leq b$. 
+  Let $d \cdot x + t$ denote the line contained in $P$. As $P$ contains this line, for any $x \in \setR$, $A(d\cdot x +t) \leq b$. We claim that $Ad = \vec{0}$ in this case. Assume that $Ad \neq 0$ and let $i$ be any component of $Ad$ that is nonzero. Let the value of this component be equal to $\alpha \in \setR_{>0}$ without loss of generality (an identical argument would apply for $\alpha$ negative). Then 
+  \begin{align*}
+  	[A(d\cdot x + t)]_i & = x[Ad]_i + [At]_i \\
+	& = x \alpha + [At]_i
+  \end{align*}
+  for any choice of $x \in \setR$. In particular, choose $x := \frac{b_i - [At]_i+1}{\alpha}$ which is possible since $\alpha \neq 0$. Then 
+   \begin{align*}
+  	[A(d\cdot x + t)]_i & = x[Ad]_i + [At]_i \\
+	& = x \alpha + [At]_i \\
+	& = b_i -[At]_i + 1 + [At]_i \\
+	& > b_i.
+  \end{align*}
+  
+  But this contradicts the fact that $A(d\cdot x +t) \leq b$ and in particular $[A(d\cdot x +t)]_i \leq b_i$ for any $x \in \setR$. Thus it must be that $Ad= 0$ such that $d$ is a nontrivial kernel element of $A$ and $\rank(A) < n$. 
+  
+  
+  
+  
+  
+  We then show that if $\rank(A) < n$ then $P$ contains a line. 
+  
+  As $\rank(A) <n$, there exists a non-trivial kernel element of $A$, a vector $v \neq \vec{0}$ such that $Av = 0$. Then let $\vec{x}$ be any feasible vector of the polyhedron $P$, that is $x$ is such that $Ax \leq b$. Note that for any $t \in \setR$, $A(x+ t\cdot v) = Ax + tAv = Ax + \vec\{0\} \leq b$ such that the vector $x + t \cdot v$ is contained in $P$ for any $t \in \setR$. This forms the line contained in $P$.  
   \end{solution}
 
 \item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
@@ -169,6 +190,13 @@ Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
 \begin{displaymath}
  \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
 \end{displaymath}
+
+
+
+\begin{solution}
+
+\end{solution}
+
 \item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
   Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
 \item Show that the set of feasible solutions  of a linear program  is
