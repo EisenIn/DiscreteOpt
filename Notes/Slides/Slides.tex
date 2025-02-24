@@ -36,10 +36,19 @@
 
 \newcommand{\toright}[1]{{ \hfill{\scriptgray{#1}}}}
 
-\newcommand{\cone}{\operatorname{cone}}
-\newcommand{\intcone}{\operatorname{intcone}}
+
+
+
+\DeclareMathOperator{\linhull}{\mathrm{lin.hull}}
+\DeclareMathOperator{\affhull}{\mathrm{affine.hull}}
+\DeclareMathOperator{\charcone}{\mathrm{char.cone}}
+\DeclareMathOperator{\cone}{\mathrm{cone}}
+\DeclareMathOperator{\rank}{\mathrm{rank}}
+\DeclareMathOperator{\conv}{\mathrm{conv}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+\DeclareMathOperator{\intcone}{\operatorname{intcone}}
 \newcommand{\poly}{\operatorname{poly}}
-\newcommand{\rank}{\operatorname{Rank}}
 \newcommand{\setR}{\mathbb{R}}
 \newcommand{\setZ}{\mathbb{Z}}
 \newcommand{\setQ}{\mathbb{Q}}
@@ -47,6 +56,8 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 
+
+\newcommand{\wt}[1]{\widetilde{#1}}
 
 \renewcommand\geq{\geqslant}
 \usepackage{hyperref}
@@ -138,15 +149,8 @@
 %----------------------------------------------------------------------------------------
 
 
-%\includeonly{lecture02}
+\includeonly{lecture02}
 \begin{document}
-
-\begin{frame}[plain]
-    % Print the title page as the first slide
-    \titlepage
-\end{frame}
-
-\pagestyle{empty} 
 
 \include{body}
 \include{lecture01}
