@@ -131,10 +131,64 @@
   for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.
   
   
+  \begin{solution}
+  We first show $Ax \leq b$ has a solution $\implies \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0, \lambda^Tb \geq 0$.  \\
+  
+  Assume that there actually exists some $\lambda \in \setR^m_{\geq 0}$ with $\lambda^TA = 0, \lambda^T b <0$. 
+  Then 
+  \begin{align*}
+  (\lambda^T A)x & = 0^T x & = 0\\
+  \lambda^T (Ax) & \leq \lambda^T b & < 0 
+  \end{align*}
+  which is impossible as  $\lambda^T Ax$ is distributive. Here we used in the inequality that $\lambda \geq 0$. \\
+  
+  Now we show that  $ \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0$ we have $\lambda^Tb \geq 0$ $\implies Ax \leq b$ has a solution. \\
+  
+  Assume that $Ax \leq b$ actually has no solution. Now consider the matrix $\tilde{A} = \begin{pmatrix} A & -A & I_m\end{pmatrix}$ where the 3 matrices are concatenated and $I_m$ is the $m \times m$ identity matrix. Then clearly $\tilde{A}x= b$ has no solution $x \geq 0$ as if there was such a solution where $x = (u, v, s)$ for some $u \in \setR_{\geq 0}^n, v \in \setR_{\geq 0}^n, s \in \setR_{\geq 0}^m$, then we have that $Au - Av + s = b$ where $s \geq 0$ such that $A(u-v) \leq b$. This gives $(u-v) \in \setR^n$ as a solution to $Ax \leq b$ which is assumed not to exist. \\
+  
+  Thus $\tilde{A}x = b$ has no solution $x \geq 0$ such that the standard Farkas lemma tells us that there exists some $\lambda \in \setR^m$ such that 
+  \begin{align*}
+  \lambda^Tb <0 \\
+  \lambda^T \tilde{A} \geq 0.
+  \end{align*}
+  
+  Then 
+  \begin{align*}
+  \lambda^T \tilde{A} \geq 0 \\
+  \implies \lambda^T\begin{pmatrix} A & -A & I_m \end{pmatrix} \geq 0 \\
+  \implies \lambda^TA \geq 0, -\lambda^T A \geq 0, \lambda \geq 0 \\
+  \implies \lambda^T A = 0, \lambda \geq 0.
+  \end{align*}
+  
+  Then $\lambda$ satisfies $\lambda^TA = 0, \lambda^T b < 0, \lambda \geq 0$ which is a contradiction to the assumption. So $Ax \leq b$ must have a solution. 
+  
+  
+  
+  
+  \end{solution}
+  
+  
+  
   \item Provide an example of a convex and closed  set $K\subseteq\setR^2$ and a
   linear objective function $c^Tx$ such that $\inf\{c^Tx \colon
   x\in K\}>-\infty$ but there does not exist an $x^* \in K$ with $c^Tx^* \leq
   c^Tx$ for all $x \in K$. 
+  
+  
+  \begin{solution}
+  Let the set $K$ be defined as follows:
+  $$K = \{x \in \setR^2: x_2 \geq e^{-x_1} \}.$$
+  
+  
+  Then clearly $K$ is convex and closed by convexity of the function $f(x) = e^{-x}$. Now, let the linear objective $c^Tx = x_2$. Then for any $x \in K, x_2 \geq e^{-x_1} \geq 0$ for any value $x_1 \in \setR$ so that the objective $c^Tx \geq 0 > -\infty$ for any $x \in K$. 
+  
+  
+ Assume there exists some $x^\ast = (x^\ast_1, x^\ast_2) \in K$ such that $c^Tx^\ast \leq c^Tx$ for all $x \in K$. Take the point $\tilde{x} = (x^\ast_1  + 1, e^{-(x^\ast_1 + 1)})$ which is also a point in $K$. Then $$\tilde{x}_2 = e^{-(x^\ast_1 + 1)} < e^{-x^\ast_1} \leq x^\ast_2.$$ Then $c^T \tilde{x} < c^T x^\ast$ such that there does not exist such an $x^\ast$. 
+  
+  
+  \end{solution}
+  
+  
   
   \item Consider the vectors
 $$ x_1 = \left(\begin{array}{c} 3 \\ 1 \\ 2\end{array}\right), x_2 = \left(\begin{array}{c} 1 \\ 2 \\ 5 \end{array}\right), x_3 = \left(\begin{array}{c} 2 \\ 0 \\ 1 \end{array}\right), x_4 = \left(\begin{array}{c}  2 \\ 4 \\ 3 \end{array}\right), x_5 = \left(\begin{array}{c}  1 \\ 1 \\ 1 \end{array}\right). $$
@@ -147,11 +201,37 @@ Write $v$ as a conic combination using only three vectors of the $x_i$.
 
 \emph{Hint: Recall the proof of Carath\'eodory's theorem}
 
+
+
+
+\begin{solution}
+Note that $-x_1 + x_3 + x_5 = \vec{0}$. 
+
+
+Let $A$ be the matrix $\begin{pmatrix} | &| & | & | & | \\x_1 & x_2 & x_3 &x_4 &x_5 \\ | &| & | & | & | \end{pmatrix}$. Then $$v = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} + A \begin{pmatrix} -1\\0\\1\\0\\1\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix}.$$
+
+
+Next, note that $x_3 + x_4 -4x_5 = \vec{0}$. Then, 
+
+$$v = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} + A \begin{pmatrix} 0\\0\\1\\1\\-4\end{pmatrix} = A \begin{pmatrix} 0\\3\\4\\2\\0\end{pmatrix}$$
+such that $v = 3x_2 + 4x_3 + 2x_4.$
+
+
+
+
+
+\end{solution}
+
+
+
 \item In this exercise, assume that a linear program $\max\{c^Tx \mid
   Ax\leq b \}$ can be solved in constant time $O(1)$. Suppose that $P(A,b)$
   has vertices and that the linear program is bounded. Show how to
   compute an optimal \emph{vertex} solution of the linear
   program in polynomial time in $n$ and $m$ where $A \in \mathbb{R}^{m \times n}$. 
+  
+  
+  
   
   \item Let $A \in \setR^{n\times n}$ be a non-singular matrix and let
   $a_1,\ldots,a_n\in \setR^n$ be the columns of $A$.  Show that
@@ -161,10 +241,44 @@ Write $v$ as a conic combination using only three vectors of the $x_i$.
   a_i^{-1} x\geq0, i=1,\ldots,k, \, a_i^{-1}x = 0, i=k+1,\ldots,n\}$, where
   $a_i^{-1}$ denotes the $i$-th row of $A^{-1}$. 
   
+  
+  \begin{solution}
+  Let $x \in \cone\{a_1, \hdots, a_k\}$. Then $x = \displaystyle\sum_{i =1}^k \lambda_i a_i$ such that $\lambda_i \geq 0$ for all $i$. 
+  
+  
+  Then $x = \begin{pmatrix}a_1 & a_2 & \hdots & a_k \\ |&|&\hdots &|\end{pmatrix} \begin{pmatrix}\lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k\end{pmatrix}$.
+  
+  Then $x = A \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k \\ 0 \\ \vdots \\ 0\end{pmatrix}$ where $(\lambda, \vec{0})$ has $n-k$ zeros padded at the end. Then $x$ satisfies $A^{-1}x = (\lambda,  \vec{0})$ and since $\lambda_i \geq 0$ for all $i \in [k]$, $ x \in P_k$. This shows $\cone\{a_1, \hdots, a_k\} \subseteq P_k$. 
+  
+  Next let $y \in P_k$ such that $a_i^{-1}y \geq 0$ for $i \in [k]$ and $a^{-1}_i y = 0$ for $i \in [k+1, n]$. Then $A^{-1}y = \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k \\ 0 \\ \vdots \\ 0\end{pmatrix}$ for some values $\lambda_i \geq 0, i \in [k]$ so that $y = \displaystyle\sum_{i =1}^k \lambda_i a_i + \displaystyle\sum_{i =k+1}^n 0 a_i$ so that $y \in \cone\{a_1, \hdots, a_k\}$. Thus $P_k \subseteq \cone\{a_1, \hdots, a_k\}$. 
+  
+  
+  
+  \end{solution}
+  
+  
+  
+  
 \item Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed
   and convex. \label{conv:item:2} 
   
   \emph{Hint: Use Carath\'eodory's theorem and exercise~\ref{conv:item:3}.}
+  
+  
+  
+  \begin{solution}
+  We show that $\cone(X)$ is convex. 
+  
+  
+  Let $z, y \in \cone(X)$. Then $z = \displaystyle\sum_{x \in X}\lambda_x^z x, y = \displaystyle\sum_{x \in X}\lambda_x^y x$. Then $\lambda z + (1-\lambda)y = \displaystyle\sum_{x \in X}(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) x$ where $(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) \geq 0$ for every $x$ as we are adding and multiplying non-negative values. Thus $\lambda z + (1-\lambda)y \in \cone(X)$. 
+  
+  
+  We show that $\cone(X)$ is closed. 
+  
+  By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
+  
+  
+  \end{solution}
 
 
 \end{enumerate}
