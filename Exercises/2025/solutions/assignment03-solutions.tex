@@ -230,7 +230,33 @@ such that $v = 3x_2 + 4x_3 + 2x_4.$
   compute an optimal \emph{vertex} solution of the linear
   program in polynomial time in $n$ and $m$ where $A \in \mathbb{R}^{m \times n}$. 
   
-  
+\begin{solution}
+Since $P(A,b)$ has vertices, we have $\rank(A) = n$. Recall Theorem 3.2 which shows that there is an optimal \emph{vertex} solution of the linear program $\max\{c^Tx \mid Ax\leq b \}$, if the linear program is feasible and bounded and $\rank(A)=n$.
+We will redo the proof of Theorem 3.2 in an algorithmic way.
+
+First by using the ``black box'' constant time $O(1)$ algorithm, we get a feasible optimal solution $x^*$. Let $A_{x^*} x \leq b_{x^*}$ be the subsystem of $Ax\leq b$ that is satisfied by $x^*$ with equalities. Define $\rank(x^*)$ to be the rank of $A_{x^*}$.
+
+If $x^*$ is a vertex, we are done. Otherwise, $\rank(x^*) < n$ and we will compute a feasible point $y^* \in P(A, b)$ such that 
+\begin{itemize}
+  \item $c^T y^* = c^T x^*$,
+  \item $\rank(y^*) > \rank(x^*)$.
+\end{itemize}
+The procedure of computing $y^*$ is as follows. 
+\begin{enumerate}
+  \item Compute the matrix $A_{x^*}$, which can be done in polynomial time. 
+  \item Compute a non-zero kernel $d\in \mathbb{R}^n, d \neq 0$ of $A_{x^*}$, which can also be done in polynomial time. 
+  % Make sure that $c^T d \geq 0$ by flipping sign of $d$ otherwise.
+  \item Compute the maximum distance $\lambda_{\text{max}}$ to move along the same direction of $d$ or the opposite direction of $d$, such that the updated point $y^* := x^* \pm \lambda_{\text{max}} d$ is feasible, $c^T y^* = c^T x^*$, and $\rank(y^*) > \rank(x^*)$. 
+  Note that since $x^*$ is optimal, we must have $c^T d= 0$ otherwise moving along $d$ or $-d$ will strictly increase the objective value.
+  Since $Ad \neq 0$ and $A_{x^*}d = 0$, we can compute an inequality of $Ax\leq b$, say $a_i^T x \leq b_i$, such that it's not in the subsystem $A_{x^*}x \leq b_{x^*}$ and $a_i^T d \neq 0$. 
+  Then take $\lambda_{\text{max}} = \frac{b_i - a_i^T x^*}{|a_i^T d|}$, move along $d$ if $a_i^T d > 0$ and move along $-d$ if $a_i^T d<0$.
+  % \begin{itemize}
+  %   \item If $c^T d> 0$, then we move along the same direction of $d$. Among the nonzero coordinates $I \subseteq [m]$ of $Ad$, compute
+  %   \[ \min\left\{ i \in I : \frac{b_i - (Ax^*)_i}{(Ad)_i} \right\}\]
+  % \end{itemize}
+\end{enumerate}
+The procedure described above is in polynomial time of $n,m$. We keep doing the procedure at most $n$ times until we get a feasible point whose rank is $n$, which is an optimal \textit{vertex} solution.
+\end{solution} 
   
   
   \item Let $A \in \setR^{n\times n}$ be a non-singular matrix and let
