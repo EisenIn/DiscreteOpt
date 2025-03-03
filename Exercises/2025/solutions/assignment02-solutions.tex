@@ -293,13 +293,20 @@ Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
 \item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
 
 
-Let  $x$ be a vector satisfying $ A^= x \leq b^=$. Let $x'\in P$ be a vector such that $A^= x' = b^=$ and the rest of the rows of $A$ are satisfied with strict inequality (such a point is guaranteed to exist by definition of $A^=$). Denote the submatrix of rows not in $A^=$ by $A^<$. 
+Let  $x$ be a vector satisfying $ A^= x \leq b^=$. 
+Denote the submatrix of rows not in $A^=$ by $A^<$. 
+We claim that there exists a point $x^\prime \in P$ such that $A^= x' = b^=$ and $A^< x^\prime < b^<$ (all the inequalities are strict). To prove the claim, denote all the inequalitiess of $A^< x\leq b^<$ as $a_1^T x \leq b_1, \dots, a_k^T x \leq b_k$. Then for each $i = 1, \dots, k$, there exists a point $x_i \in P$ such that $a_i^T x_i < b_i$ by definition of $A^=$. 
+Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the claim.
 
-If $x \in P$ then $x$ is in $\text{affine-hull}(P)$ and we are done. Assume then that $x \notin P$.
 
-Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. Then $L$ contains another point $x'' \in P$ since all points $y$ on the line satisfy $A^= y = b^=$ and since $A^< x' < b^<$. 
-
-Then $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x.$$
+If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
+Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
+First it's easy to check that $A^= x^{\prime\prime} = b^=$.
+% \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
+Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
+% Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 
+Consider the line $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x$$
+which completes the proof.
 \end{enumerate}
 
 \end{solution}
