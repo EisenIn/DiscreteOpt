@@ -127,7 +127,53 @@
 \item Let $K \subseteq \setR^n$ be a convex set. Show that $x^\ast$ is an extreme point $\iff \forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$. 
 
 
+\begin{solution}
+We show $x^\ast$ is an extreme point $\implies \forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$.
+\\
+
+Since $x^\ast$ is an extreme point, there exists an inequality $a^T x≤β$ valid for $K$ such that $\{x^\ast\}= K∩\{x∈
+\setR^n : a^T x= β\}$. Assume that $x^\ast$ can be written as a midpoint of two points $x_1,x_2∈K$. We obtain
+that
+$$β= a^T x^\ast= a^T (1/2x_1+ 1/2x_2) = 1/2a^T x_1+ 1/2a^T x_2 <1/2β+ 1/2 β= β$$
+which gives a contradiction. We used that $a^T x_1 < β$ since $a^T x_1 ≤β (a^T x ≤β$ is valid for $K$ and $x_1 ∈K$) and $a^T x_1\neq β$ ($x^\ast$ is the only point in $K$ satisfying $a^T x≤β$ with equality).\\
+
+
+
+We show $\forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2 \implies $ $x^\ast$ is an extreme point. \\
+
+
+Let $A_{x∗} $be the a (potentially infinite) set of valid inequalities for $K$ which
+are tight at $x^∗$. If $rank(A_{x∗} ) < n$ then there exists a vector $d$ and $\epsilon ∈\setR>0$ such that $ad = 0$ for
+any vector $a$ of $A_{x∗}$ and $x^\ast ±\epsilon d \in K$. Since $x^\ast=  1/2(x^\ast + \epsilon d) + 1/2(x^\ast
+−\epsilon d)$ we have a contradiction. As this cannot hold, here exist $n$ linearly independent vectors that form the rows of some matrix $A$ such that each row is a valid inequality $a_i^T x = b_i$ for $K$ and $Ax^\ast = b$ at $x^\ast$. Let $c= 1^T A$. Then $x^\ast$ is the unique point x such that $cx= 1^T b$ and $Ax≤b$. Thus $x^\ast$ is an extreme point.
+
+\end{solution}
+
+
 \item Suppose that the linear program $\max \{c^Tx \colon x \in \R^n, \, Ax \leq b\}$ is non-degenerate and $B$ is an optimal basis. Show that the linear program has a unique optimal solution if and only if $\lambda_B>0$. 
+
+
+\begin{solution}
+Let $x$ denote the basic feasible solution to $B$ and $λ^TA_B = c^T$ with $λ>0$. Assume there is another optimal solution $x' \neq x$. This gives
+$$0 = c^T(x−x') = \lambda^T(A_B x - A_Bx') = \lambda^T(b_B - A_Bx').$$
+Since $x'$ is feasible we have $A_B x' ≤b_B$ and since $x\neq x'$ there exists an index $i$ such that
+$A_ix' < b_i$. This means all components of $(b_B−A_B x')$ are non-negative and one is strictly
+positive. Thus, $λ^T (b_B−A_B x') >0$, a contradiction to $c^T(x-x') = 0$.
+
+
+Now, assume that $x^\ast$ is the unique optimal solution. Assume for the sake of contradiction that $λ= λ_B$ has a zero component $λ_j = 0$. Since $A_B$ is invertible, we can choose a direction $d= (−1)A^{−1}_B e_j$ where $e_j$ is the $j$th unit vector. We first show that there is a $δ >0$ such that $x^
+\ast+ δd$ is feasible. Recall that the only constraints that are active/tight
+at $x^\ast$ are in $B$. Hence, we can always choose $δ$ small enough such that all the constraints outside
+$B$ are not violated in $x^\ast+ δd$. Now, consider the constraints in B:
+$$A_B (x^\ast+ δd) = A_B x^\ast+ δA_B d ≤b_B−δe_j ≤b_B.$$
+Thus, $x^\ast+ δd$ is feasible.
+Lastly, we prove that $x^\ast+ δd$ is also an optimal solution:
+$$c^T (x^\ast+ δd) = c^T x^\ast+ c^T δd= c^T x^\ast+ δλ^T A_B d= c^T x^\ast−δλ^T e_j= c^T x^\ast$$
+where the last inequality follows because we assumed $λ_j = 0$. Hence, we have found another optimal
+and feasible solution and this contradicts the uniqueness of the optimum.
+
+
+\end{solution}
 
 
 \item For each of the following assertion, provide a proof or a counterexample. 
@@ -139,20 +185,51 @@
   \end{enumerate}
   
   
- \item Consider the auxiliary linear program to find an initial feasible basis in (4.10). The constraint matrix of this linear program is of the form
-  \begin{displaymath}
-    \begin{pmatrix}
-      A & 0 \\
-      -I_n & 0\\ 
-      0 & -I_{m_2}\\
-      0 & I_{m_2}
-    \end{pmatrix},
-  \end{displaymath}
-  where $m_2$ is the number of rows of $A_2$. This matrix has $m+n+2\cdot m_2$ rows. Describe an initial feasible basis that corresponds to the basic feasible solution $x = 0$ and $y=0$. 
-
-Suppose that the optimal value of the auxiliary linear program is $0$ and let $B'$   be an optimal basis found by the simplex algorithm. Prove that $B' \setminus \{m+n+1,\dots,m+n+m_2\}$ is a feasible \emph{basis} of the linear program (4.9). 
   
- \item Fill in the blanks to complete the code for the Simplex.py file which runs a simplex algorithm. 
+  \begin{solution}
+   \begin{enumerate}[i)]
+  \item An index that has left the basis can enter in the very next iteration. An example is a triangle
+in the plane. Maybe the simplex method does not decide to walk to the neighboring optimal
+vertex in one step but makes a detour (while improving) via the other vertex. In this case, the
+inequality that has just left re-enters again.
+  
+  
+  
+  \item We use the fact that Simplex always chooses a direction that augments the objective function. Let $B$ be a feasible basis and let Simplex move from $B$ to
+$\tilde{B}= B \setminus \{i\} \cup \{j\}$, i.e., $i$ leaves the basis and $j$ enters it. Note that $B$ and
+$\tilde{B}$ have $n−1$ common indices. Assume that $j$ leaves the basis in the next iteration. Let $d$ and
+$\tilde{d}$ be the directions that Simplex chooses to move from $B$ to $\tilde{B}$ and away from $\tilde{B}$ respectively. Then, $d\cdot a_k = 0 = \tilde{d}\cdot a_k$ for all $ k ∈B\setminus\{i\}$. Since the set of vectors $a_k : k ∈B\setminus\{i\}$ are n−1 linearly independent vectors and $d, \tilde{d} ∈\setR^n$, this means that $d$ and $\tilde{d}$ are parallel. Since $j$ entered the basis, this means that $a_j^T d>0$. Since j leaves the basis in the next step, $a^T_j \tilde{d}=−1$. Thus, $d= -w \tilde{d}$ for some $w >0$. In particular, this means that the Simplex is moving in the opposite direction. Now, due to the choice of the direction in Simplex we know that $c^Td>0$ and $c^T\tilde{d}>0$. But this is impossible as $d = -w \tilde{d}$. 
+  \end{enumerate}
+  
+  \end{solution}
+  
+  
+\item Consider the following linear program:
+\begin{align*}
+\max  \quad & 6a+ 9b+ 2c \\
+\text{subject to } & a+ 3b+ c ≤−4 \\
+&b+ c ≤−1 \\
+& 3a+ 3b−c ≤1 \\
+& a ≤0  \\
+& b ≤0 \\
+& c ≤0. 
+\end{align*}
+Solve the linear program with the Simplex method and initial vertex $(−1,−1,0)^T$ . For each iteration indicate all the parameters including the optimal value and the proof of optimality.
+
+\begin{solution}
+$$\begin{matrix}  \text{iteration} & \text{basis} & \text{vertex} & \lambda & \text{direction} & \epsilon & \text{index exchange} \\
+1 & \{1, 2, 6\} & (-1, -1, 0) & (6, -9, 5) & (3, -1, 0) & 1/3 & 2\rightarrow 4 \\
+2 & \{1, 4, 6\} & (0, -4/3, 0) & (3, 3, -1) & (0, 1/3, -1) & 5/2 & 6 \rightarrow 3 \\
+3 & \{1, 3, 4\} & (0, -1/2, -5/2) & (5/2, 1/2, 2)  \end{matrix}$$
+
+so that the last vertex is optimal with objective value $-19/2$. 
+
+\end{solution}
+
+
+
+  
+ \item Fill in the blanks to complete the code for the Simplex.py file which runs a simplex algorithm for a non-degenerate LP. 
 
 
 

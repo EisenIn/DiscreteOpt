@@ -139,18 +139,17 @@
   \end{enumerate}
   
   
- \item Consider the auxiliary linear program to find an initial feasible basis in (4.10). The constraint matrix of this linear program is of the form
-  \begin{displaymath}
-    \begin{pmatrix}
-      A & 0 \\
-      -I_n & 0\\ 
-      0 & -I_{m_2}\\
-      0 & I_{m_2}
-    \end{pmatrix},
-  \end{displaymath}
-  where $m_2$ is the number of rows of $A_2$. This matrix has $m+n+2\cdot m_2$ rows. Describe an initial feasible basis that corresponds to the basic feasible solution $x = 0$ and $y=0$. 
-
-Suppose that the optimal value of the auxiliary linear program is $0$ and let $B'$   be an optimal basis found by the simplex algorithm. Prove that $B' \setminus \{m+n+1,\dots,m+n+m_2\}$ is a feasible \emph{basis} of the linear program (4.9). 
+\item Consider the following linear program:
+\begin{align*}
+\max  \quad & 6a+ 9b+ 2c \\
+\text{subject to } & a+ 3b+ c ≤−4 \\
+&b+ c ≤−1 \\
+& 3a+ 3b−c ≤1 \\
+& a ≤0  \\
+& b ≤0 \\
+& c ≤0. 
+\end{align*}
+Solve the linear program with the Simplex method and initial vertex $(−1,−1,0)^T$ . For each iteration indicate all the parameters including the optimal value and the proof of optimality.
   
  \item Fill in the blanks to complete the code for the Simplex.py file which runs a simplex algorithm. 
 
