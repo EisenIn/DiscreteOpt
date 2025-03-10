@@ -82,7 +82,12 @@ The inequality $\mathbf{1}^T A'x \leq \mathbf{1}^T b'$ is valid for $P$ and is s
 \section{Bases, feasible bases and vertices}
 \label{sec:non-degenerate-case}
 
-We will frequently use the following notation. Let $B \subseteq \{1,\dots,m\}$ then $A_B \in \R^{|B| \times n}$ is the matrix consisting of the rows of $A$ that are indexed by   $B$ and $b_B \in \R^{|B|}$  is the vector whose components are the ones of $b$ indexed by $B$. For example, for 
+We will frequently use the following notation. Let $B \subseteq \{1,\dots,m\}$ then $A_B \in \R^{|B| \times n}$ is the matrix consisting of the rows of $A$ that are indexed by   $B$ and $b_B \in \R^{|B|}$  is the vector whose components are the ones of $b$ indexed by $B$.
+
+
+\begin{example}
+  \label{ex;pyth-1}
+For 
 $    A = 
     \begin{pmatrix}
       3 & 2  \\
@@ -92,13 +97,32 @@ $    A =
     \begin{pmatrix}
       3 \\ 2\\ 6
     \end{pmatrix}$ 
-and  $B = \{2,3\}$, one has $A_B =  \begin{pmatrix}
+    and  $B = \{2,3\}$, one has
+    \begin{displaymath}
+    A_B =  \begin{pmatrix}
           7 & 1\\
       8 & 4\\
-    \end{pmatrix}$,  $b_B = 
+    \end{pmatrix} \text{ and }  b_B = 
     \begin{pmatrix}
       2\\ 6
-    \end{pmatrix}$. 
+    \end{pmatrix}.          
+    \end{displaymath}
+
+\medskip
+\noindent     
+A \emph{python implementation} based on the {\tt sympy} package of the above is as follows. Notice that the index set represented by a list {\tt B} here is starting at $1$, since the first row of a matrix in {\tt sympy} is indexed by $0$.  
+\begin{lstlisting}[language=python]
+from sympy import *
+A = Matrix([[3,2],[7,1],[8,4]])
+b =  Matrix([3,2,6])
+
+B = [1,2]
+
+pprint(A[B,:])
+pprint(b[B,:]) 
+\end{lstlisting}
+\end{example}
+
 
     \begin{definition}
       \label{def:s1-1}
@@ -193,41 +217,130 @@ We have described one iteration of the simplex algorithm. We iterate this proced
 
 
 
-\begin{algorithm}[Simplex algorithm]
- \begin{tabbing}
-      Start with feasible basis $B$ \\[1ex]
-      {\tt while} \= $B$ is not optimal \\ [.7ex]
-      \> Let $i \in B$ be index with $\lambda_i<0$ \\
-      \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
-      and $a_i^T d = -1$ \\ 
-      \> Determine $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$\\[.7ex]  
-      \> {\tt if} \= $K = \emptyset$ \\   
-      \> \> \emph{assert LP unbounded} \\
-      \> {\tt else} \\
-      \> \> Let $k \in K$ index where 
-     $
-        \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
-      $
-      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
-
-      \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
-    \end{tabbing}
-    
-  \end{algorithm}
+\begin{example}
+  \label{example:moving}
+  Consider the linear program $\max\{ c^Tx ： A≤b, \,x∈ℝ^3 \}$ with
+  
+  \begin{displaymath}
+    A  =\begin{pmatrix}1 & 2 & 2\\2 & 1 & 2\\2 & 2 & 1\\-1 & 0 & 0\\0 & -1 & 0\\0 & 0 & -1\end{pmatrix}, \, b = 
+    \begin{pmatrix}10\\14\\11\\0\\0\\0\end{pmatrix} \text{ and } c =
+    \begin{pmatrix}
+      6\\14\\13
+    \end{pmatrix}
+  \end{displaymath}
+  with starting basis
+  \begin{displaymath}
+    B = \{1,2,3\}. 
+  \end{displaymath}
+  One has
+  \begin{displaymath}
+    A_B = \begin{pmatrix}1 & 2 & 2\\2 & 1 & 2\\2 & 2 & 1\end{pmatrix} b_B = \begin{pmatrix}10\\14\\11\end{pmatrix} \text{ and } x^*_B = \begin{pmatrix}4\\0\\3\end{pmatrix}. 
+  \end{displaymath}
+  For $λ_B$ one obtains
+  \begin{displaymath}
+    λ_B = \begin{pmatrix}\frac{36}{5}\\- \frac{4}{5}\\\frac{1}{5}\end{pmatrix}. 
+  \end{displaymath}
+  From this it follows that $2$ leaves the basis. The direction $d$ is the solution of the system
+  \begin{displaymath}
+     A_B d =
+     \begin{pmatrix}
+       0\\-1\\0
+     \end{pmatrix}. 
+   \end{displaymath}
+   One has
+   \begin{displaymath}
+     d = \begin{pmatrix}- \frac{2}{5}\\\frac{3}{5}\\- \frac{2}{5}\end{pmatrix}. 
+   \end{displaymath}
   
 
 
-  \begin{theorem}
-    \label{thr:s-5}
-    If the linear program~\eqref{eq:s-1} is non-degenerate, then the simplex algorithm terminates. 
-  \end{theorem}
+The vector $Ad$ is 
+\begin{displaymath}
+  A ⋅ d = \begin{pmatrix}0\\-1\\0\\\frac{2}{5}\\- \frac{3}{5}\\\frac{2}{5}\end{pmatrix}. 
+\end{displaymath}
+and one has
+\begin{displaymath}
+  b-Ax^* = 
+\begin{pmatrix}0\\0\\0\\4\\0\\3\end{pmatrix}.
+\end{displaymath}
+This means that $6$ enters the basis. 
 
-  \begin{proof}
-    In the non-degenerate case, $\varepsilon^*>0$ and the simplex
-    algorithm makes progress, i.e., the objective function value
-    strictly increases after each iteration. Since there is only a
-    finite number of vertices, the algorithm terminates.
-  \end{proof}
+\end{example}
+
+
+
+\begin{figure}
+  \centering
+\begin{lstlisting}[language=python]
+from sympy import *
+
+A = Matrix([[1, 2, 2],
+             [2, 1, 2],
+             [2, 2, 1],            
+             [-1, 0, 0],
+             [0, -1, 0],
+             [0, 0, -1]])
+ 
+b = Matrix([10,14,11,0,0,0])
+c = Matrix([6,14,13])
+r = Matrix([0,-1,0])
+
+B = [0,1,2]
+ 
+A_B = A[B,:] 
+b_B = b[B,:]
+ 
+x =  A_B.solve(b_B) 
+l = A_B.transpose().solve(c)
+d = A_B.transpose().solve(r)
+
+L = {"A_B =":A_B, "b_B =":b_B, "x^*=":x, "\lambda_B =":l , "d = ":d}
+
+for key, value in L.items():
+    print (key) 
+    pprint(value) 
+\end{lstlisting}
+
+  \caption{A partial python code for example~\ref{example:moving}.}
+\end{figure}\label{fig:code-2}
+
+\newpage
+\begin{algorithm}[Simplex algorithm]
+  \begin{tabbing}
+    Start with feasible basis $B$ \\[1ex]
+    {\tt while} \= $B$ is not optimal \\ [.7ex]
+    \> Let $i \in B$ be index with $\lambda_i<0$ \\
+    \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
+    and $a_i^T d = -1$ \\ 
+    \> Determine $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$\\[.7ex]  
+    \> {\tt if} \= $K = \emptyset$ \\   
+    \> \> \emph{assert LP unbounded} \\
+    \> {\tt else} \\
+    \> \> Let $k \in K$ index where 
+    $
+    \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
+    $
+    is attained \\ %(with  $x^* = A_B^{-1}b_B$)
+    
+    \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
+  \end{tabbing}
+  
+\end{algorithm}
+  
+
+
+\begin{theorem}
+  \label{thr:s-5}
+  If the linear program~\eqref{eq:s-1} is non-degenerate, then the
+  simplex algorithm terminates.
+\end{theorem}
+
+\begin{proof}
+  In the non-degenerate case, $\varepsilon^*>0$ and the simplex
+  algorithm makes progress, i.e., the objective function value
+  strictly increases after each iteration. Since there is only a
+  finite number of vertices, the algorithm terminates.
+\end{proof}
 
   
 \section{Termination in the degenerate case}
