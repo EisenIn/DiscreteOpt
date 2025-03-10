@@ -129,23 +129,34 @@
   Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
   
   \begin{solution}
-  Let $x \in \setR^n$ be such that $\|x\|_2 =1$. We show that $x$ is then an extreme point of $B$. Firstly, it is clear that $x$ is in $B$. 
-  Assume that $x$ wasn't an extreme point such that there exist some $y \neq z \neq x \in B$ with $\lambda y + (1-\lambda) z = x$ for some $\lambda \in (0,1)$. Then $$1 = \| x\|_2 = \| \lambda y + (1-\lambda) z \| \leq \lambda \|y\| + (1-\lambda)\|z\| \leq \lambda \cdot 1 + (1-\lambda) \cdot 1 = 1$$
-where the first inequality comes from the triangle inequality and the second follows from $z, y \in B$. So the inequalities must hold with equality everywhere such that 
-\begin{align}
-&\|z\| = 1 \\
-&\|y\| = 1\\
-&\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|. 
-\end{align}
+  First we prove that for any extreme point $x^*$ of $B_n$, we have $\|x^*\|_2=1$. Let $\{x^*\} = B_n \cap \{\alpha^T x= \beta\}$. Suppose that $\|x^*\|_2<1$. Take $d\neq 0$ such that $\alpha^T d = 0$. For $\varepsilon> 0$, consider the point $\bar{x} = x^* + \varepsilon d$. Obviously we have $\alpha^T \bar{x} = \beta$. Since $\|x^*\|_2<1$, by taking $\varepsilon$ to be small enough, we can make sure that $\|\bar{x}\|_2\leq 1$, so $\bar{x} \in B_n$. Therefore $\bar{x} \neq x^*$ but $\bar{x} \in B_n \cap \{\alpha^T x= \beta\}$, a contradiction.
 
-However, if $\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|$ then $y, z$ must be linearly dependent. But then $z \neq y$, $z = \alpha y$ for some $\alpha \notin \{0, 1\}$.  Then $x = \lambda y + (1 - \lambda )\alpha y = (\lambda + \alpha- \alpha \lambda) y$. But $ 1 = \|x\| =(\lambda + \alpha - \alpha \lambda)\|y \| = (\lambda + \alpha - \alpha \lambda)$. Thus $x = y$ a contradiction to the assumption $y, z \neq x$. Thus $x$ is an extreme point. 
-
-Next, we show there are no other extreme points of $B$. Assume, there is some $z \in \setR^n$ such that $\|z\| < 1 $ and $z$ is an extreme point of $B$. Let $\|z\| = \alpha$ for some value $\alpha <1$. Then the vector $x = \frac{1}{\alpha}z$ satisfies $x \in B, x \neq z$. Moreover, the vector $ y = \vec{0} $ satisfies $y \neq x, y \neq z, y \in B$. But then, notice that $z = \alpha x + (1-\alpha) y$ where $\alpha \in (0, 1)$ such that $z$ cannot be an extreme point. 
-
-
-
-
+  Next we prove that for any $x^* \in B_n$ such that $\|x^*\|_2=1$, $x^*$ is an extreme point of $B_n$. Consider the hyperplane $(x^*)^T x = 1$, which is the tangent plane of $S^{n-1}$ at $x^*$. Note that for any $x \in B_n$, we have $(x^*)^T x \leq 1$ so it is a supporting inequality of $B_n$. Also we have $\{x^*\} \subseteq B_n \cap \{(x^*)^T x = 1\}$. For any $y \in B_n \cap \{(x^*)^T x = 1\}$, let $\theta\in [0,\pi)$ be the angle between $x^*$ and $y$, we have
+  \[ 1=(x^*)^T y = \|x^*\|_2 \|y\|_2 \cos\theta \leq 1 \,\Rightarrow\, \|y\|_2 = 1, \theta = 0 \,\Rightarrow\, y = x^*. \]
+  Therefore $\{x^*\} = B_n \cap \{(x^*)^T x = 1\}$, so $x^*$ is an extreme point of $B_n$.
   \end{solution}
+
+%   \vspace{2mm}
+%   \textbf{Alternative solution:}
+
+%   % We use the following equivalent characterization of extreme point of convex set $K$:
+  
+%   % \textbf{Proposition.} A point $x \in K$ is an extreme point of $K$ if and only if 
+
+%   % The proof of this proposition is left as an exercise.
+
+%   Let $x \in \setR^n$ be such that $\|x\|_2 =1$. We show that $x$ is then an extreme point of $B$. Firstly, it is clear that $x$ is in $B$. 
+%   Assume that $x$ wasn't an extreme point such that there exist some $y \neq z \neq x \in B$ with $\lambda y + (1-\lambda) z = x$ for some $\lambda \in (0,1)$. Then $$1 = \| x\|_2 = \| \lambda y + (1-\lambda) z \| \leq \lambda \|y\| + (1-\lambda)\|z\| \leq \lambda \cdot 1 + (1-\lambda) \cdot 1 = 1$$
+% where the first inequality comes from the triangle inequality and the second follows from $z, y \in B$. So the inequalities must hold with equality everywhere such that 
+% \begin{align}
+% &\|z\| = 1 \\
+% &\|y\| = 1\\
+% &\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|. 
+% \end{align}
+
+% However, if $\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|$ then $y, z$ must be linearly dependent. But then $z \neq y$, $z = \alpha y$ for some $\alpha \notin \{0, 1\}$.  Then $x = \lambda y + (1 - \lambda )\alpha y = (\lambda + \alpha- \alpha \lambda) y$. But $ 1 = \|x\| =(\lambda + \alpha - \alpha \lambda)\|y \| = (\lambda + \alpha - \alpha \lambda)$. Thus $x = y$ a contradiction to the assumption $y, z \neq x$. Thus $x$ is an extreme point. 
+
+% Next, we show there are no other extreme points of $B$. Assume, there is some $z \in \setR^n$ such that $\|z\| < 1 $ and $z$ is an extreme point of $B$. Let $\|z\| = \alpha$ for some value $\alpha <1$. Then the vector $x = \frac{1}{\alpha}z$ satisfies $x \in B, x \neq z$. Moreover, the vector $ y = \vec{0} $ satisfies $y \neq x, y \neq z, y \in B$. But then, notice that $z = \alpha x + (1-\alpha) y$ where $\alpha \in (0, 1)$ such that $z$ cannot be an extreme point. 
   
   
 \item \label{item:10}
@@ -215,7 +226,7 @@ Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, an
 
 As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
 
-Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} xv_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
+Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} v_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
 
 Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
 \begin{align*}
@@ -293,13 +304,20 @@ Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
 \item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
 
 
-Let  $x$ be a vector satisfying $ A^= x \leq b^=$. Let $x'\in P$ be a vector such that $A^= x' = b^=$ and the rest of the rows of $A$ are satisfied with strict inequality (such a point is guaranteed to exist by definition of $A^=$). Denote the submatrix of rows not in $A^=$ by $A^<$. 
+Let  $x$ be a vector satisfying $ A^= x \leq b^=$. 
+Denote the submatrix of rows not in $A^=$ by $A^<$. 
+We claim that there exists a point $x^\prime \in P$ such that $A^= x' = b^=$ and $A^< x^\prime < b^<$ (all the inequalities are strict). To prove the claim, denote all the inequalitiess of $A^< x\leq b^<$ as $a_1^T x \leq b_1, \dots, a_k^T x \leq b_k$. Then for each $i = 1, \dots, k$, there exists a point $x_i \in P$ such that $a_i^T x_i < b_i$ by definition of $A^=$. 
+Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the claim.
 
-If $x \in P$ then $x$ is in $\text{affine-hull}(P)$ and we are done. Assume then that $x \notin P$.
 
-Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. Then $L$ contains another point $x'' \in P$ since all points $y$ on the line satisfy $A^= y = b^=$ and since $A^< x' < b^<$. 
-
-Then $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x.$$
+If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
+Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
+First it's easy to check that $A^= x^{\prime\prime} = b^=$.
+% \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
+Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
+% Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 
+Consider the line $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x$$
+which completes the proof.
 \end{enumerate}
 
 \end{solution}

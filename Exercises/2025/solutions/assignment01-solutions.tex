@@ -238,6 +238,19 @@ Given a path $t$ to $s$, set for every edge on the path the value $x_e = +1$ and
   Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$. Call A the set of nodes that are reachable from s using edges (u, v) that have $x(u, v) > 0$. Then A contains s and it does not
 contain t as we assume that $t$ is not reachable from $s$. Thus the set $A \subset V$ is a cut where $A$ contains $s$ and $V \setminus A$ contains $t$. The net value out of A is equal to $\sum_{(u,v): u \in A, v \notin A} x_{(u, v)}$. However by definition of $A$, any such edge that exits $A$ must have value $0$ in the vector $x$ as otherwise the node would be reachable from $s$ using positive valued edges. This means that for any $v \in V \setminus A$, $\sum_{a \in \delta^+(v)} x_a = 0$. In order to satisfy the first equality, this means that for every $v \in V \setminus A - t$, it must also be that $\sum_{a \in \delta^-(v)} x_a = 0$. But then $t$ receives $0$ value on incoming edges as it is only reachable by nodes in $V \setminus A$ such that the third equality of the LP is not satisfied. This is a contradiction to $\vec{x}$ being feasible. 
   
+
+  \paragraph{Alternative solution:}
+  Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$.
+ Let $S$ be the set of vertices that are reachable by a path from $s$. By our assumption $S$ contains $s$ and does not
+ contain $t$.
+ Then by summing up the equalities in (\ref{eq:1}) for $v \in S$ we get
+ \begin{align*}
+ &\quad\; \sum_{v \in S} \left( \sum_{a \in \delta^{+}(v)} x_a  - \sum_{a \in \delta^{-}(v)} x_a \right) \\
+ &= \left(\sum_{a \in \delta^{+}(s)} x_a  - \sum_{a \in \delta^{-}(s)} x_a \right) + \sum_{v \in S\setminus \{s\}} \left( \sum_{a \in \delta^{+}(v)} x_a  - \sum_{a \in \delta^{-}(v)} x_a \right) \\
+ & = -1 + 0 = -1,
+ \end{align*}
+ which implies that there must be an arc $a=(u,v), u \in S, v \not\in S$ with $x_a > 0$. Since $u$ is reachable by a path $P_u$ from $s$, $v$ is also reachable by path $P_u \cup \{a\}$, contradiction to $v \not\in S$.
+
    \end{enumerate}
   
 
