@@ -236,6 +236,34 @@ Example: For       $    A =
   \end{columns}
 \end{frame}
 
+\begin{frame}[fragile]
+ \frametitle{}
+{ \scriptsize 
+\begin{lstlisting}[language=python]
+from sympy import *
+A = Matrix([[1, 2, 2],
+             [2, 1, 2],
+             [2, 2, 1],            
+             [-1, 0, 0],
+             [0, -1, 0],
+             [0, 0, -1]])
+ 
+b = Matrix([10,14,11,0,0,0])
+c = Matrix([6,14,13])
+r = Matrix([0,-1,0])
+
+B = [0,1,2]
+ 
+A_B = A[B,:] 
+b_B = b[B,:]
+ 
+x =  A_B.solve(b_B) 
+l = A_B.transpose().solve(c)
+d = A_B.transpose().solve(r)
+\end{lstlisting}
+}
+
+\end{frame}
 
 \begin{frame}{Example} \scriptsize 
 
@@ -274,6 +302,11 @@ Example: For       $    A =
 
     \end{column}       
   \end{columns}
+\end{frame}
+
+
+\begin{frame}{}
+  
 \end{frame}
 
 
