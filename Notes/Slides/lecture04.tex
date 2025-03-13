@@ -1,0 +1,476 @@
+\pagestyle{empty}
+
+
+
+\begin{frame}{The simplex algorithm}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{displaymath}
+        \begin{array}{c}
+          \max c^T x\\
+          A x ≤ b
+        \end{array}
+      \end{displaymath}
+
+
+      $A ∈ℝ^{m × n}$
+
+      \medskip
+
+      $\rank(A) = n$ 
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Notation}
+
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      Let $B \subseteq \{1,\dots,m\}$
+
+      \bigskip 
+      $A_B \in \R^{|B| \times n}$ rows  indexed by   $B$
+      
+
+      \bigskip 
+      $b_B \in \R^{|B|}$  components  indexed by $B$ 
+    \end{column}
+    \begin{column}{.5\textwidth}
+Example: For       $    A = 
+    \begin{pmatrix}
+      3 & 2  \\
+      7 & 1\\
+      8 & 4\\
+    \end{pmatrix}$,  $b = 
+    \begin{pmatrix}
+      3 \\ 2\\ 6
+    \end{pmatrix}$
+
+    \medskip 
+    and  $B = \{2,3\}$, one has
+
+    \bigskip 
+    \begin{displaymath}
+    A_B =  \begin{pmatrix}
+          7 & 1\\
+      8 & 4\\
+    \end{pmatrix} \text{ and }  b_B = 
+    \begin{pmatrix}
+      2\\ 6
+    \end{pmatrix}.          
+    \end{displaymath}
+
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+ 
+
+
+
+\begin{frame}{Feasible basis}
+  \begin{definition}
+     An index set $B \subseteq \{1,\dots,m\}$ is a \emph{basis} if
+      $|B| = n$ and $A_B$ is non-singular. If in addition $x^* =
+      A_B^{-1} b_B$ is feasible, then $B$ is called a \emph{feasible
+        basis}.
+  \end{definition}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Feasible basis vs extreme point}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Optimal basis}
+\begin{definition}
+      \label{def:s-2}
+       A basis $B$ is called \emph{optimal} if it is feasible and the
+       unique $\lambda \in \setR^m$ 
+       with 
+       \begin{equation}
+         \label{eq:s-5}
+         \lambda^T A =  c^T \, \, \text{ and } \lambda_i = 0, \, i \notin B 
+       \end{equation}
+       satisfies $\lambda\geq0$. 
+     \end{definition}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Optimal basis vs. optimal solution}
+
+\begin{theorem}
+  \label{thr:s-4}
+  If $B$ is an optimal basis, then $x^* = A_B^{-1} b_B$ is an optimal solution of the linear program. 
+\end{theorem}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+    
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{ }
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Moving to an improving vertex}
+  
+
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      $d ∈ ℝ^n$ unique solution to 
+  \begin{displaymath}
+  a_j^T d =
+  \begin{cases}
+    0 & \text{ for } j \in B \setminus \{i\} \\
+    -1 & \text{ if } j =i.
+  \end{cases}
+\end{displaymath}
+    \end{column}
+    \begin{column}{.5\textwidth}
+        $c^T d = $ 
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{How far can we move?}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{The simplex algorithm}
+ \begin{tabbing}
+    Start with feasible basis $B$ \\[1ex]
+    {\tt while} \= $B$ is not optimal \\ [.7ex]
+    \> Let $i \in B$ be index with $\lambda_i<0$ \\
+    \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i\}$
+    and $a_i^T d = -1$ \\ 
+    \> Determine $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$\\[.7ex]  
+    \> {\tt if} \= $K = \emptyset$ \\   
+    \> \> \emph{assert LP unbounded} \\
+    \> {\tt else} \\
+    \> \> Let $k \in K$ index where 
+    $
+    \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
+    $
+    is attained \\ %(with  $x^* = A_B^{-1}b_B$)
+    
+    \> \>\emph{update} $B := B \setminus\{i\} \cup \{k\}$             
+  \end{tabbing}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{}
+{ \scriptsize 
+\begin{lstlisting}[language=python]
+from sympy import *
+A = Matrix([[1, 2, 2],
+             [2, 1, 2],
+             [2, 2, 1],            
+             [-1, 0, 0],
+             [0, -1, 0],
+             [0, 0, -1]])
+ 
+b = Matrix([10,14,11,0,0,0])
+c = Matrix([6,14,13])
+r = Matrix([0,-1,0])
+
+B = [0,1,2]
+ 
+A_B = A[B,:] 
+b_B = b[B,:]
+ 
+x =  A_B.solve(b_B) 
+l = A_B.transpose().solve(c)
+d = A_B.transpose().solve(r)
+\end{lstlisting}
+}
+
+\end{frame}
+
+\begin{frame}{Example} \scriptsize 
+
+  \begin{columns}[t]
+    \begin{column}{.5\textwidth}
+
+ 
+  \begin{displaymath}
+    A  =\begin{pmatrix}1 & 2 & 2\\2 & 1 & 2\\2 & 2 & 1\\-1 & 0 & 0\\0 & -1 & 0\\0 & 0 & -1\end{pmatrix}, \, b = 
+    \begin{pmatrix}10\\14\\11\\0\\0\\0\end{pmatrix} \text{ and } c =
+    \begin{pmatrix}
+      6\\14\\13
+    \end{pmatrix}
+  \end{displaymath}
+   starting basis
+  \begin{displaymath}
+    B = \{1,2,3\}. 
+  \end{displaymath}
+       \begin{displaymath}
+    A_B = \begin{pmatrix}1 & 2 & 2\\2 & 1 & 2\\2 & 2 & 1\end{pmatrix} b_B = \begin{pmatrix}10\\14\\11\end{pmatrix} \text{ and } x^*_B = \begin{pmatrix}4\\0\\3\end{pmatrix}. 
+  \end{displaymath} 
+    \end{column}
+    \begin{column}{.5\textwidth}
+
+  \begin{displaymath}
+    λ_B = \begin{pmatrix}\frac{36}{5}\\- \frac{4}{5}\\\frac{1}{5}\end{pmatrix}, \,  
+     d = \begin{pmatrix}- \frac{2}{5}\\\frac{3}{5}\\- \frac{2}{5}\end{pmatrix}. 
+   \end{displaymath}      
+
+
+\begin{displaymath}
+  A ⋅ d = \begin{pmatrix}0\\-1\\0\\\frac{2}{5}\\- \frac{3}{5}\\\frac{2}{5}\end{pmatrix}, \, 
+  b-Ax^* = 
+\begin{pmatrix}0\\0\\0\\4\\0\\3\end{pmatrix}.
+\end{displaymath}
+
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{}
+  
+\end{frame}
+
+
+\begin{frame}{Non-degenerate LPs}
+
+  \begin{definition}
+    The LP $\max\{c^Tx ： x ∈ ℝ^n, \, Ax≤b\}$ is \emph{non-degenerate} if number of zero-components in $Ax-b ∈ ℝ^m$ is at most  $n$ for each $x ∈ ℝ^n$. 
+  \end{definition}
+  
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Termination non-degenerate case}
+
+
+
+\begin{theorem}
+  \label{thr:s-5}
+  If the linear program  is non-degenerate, then the
+  simplex algorithm terminates.
+\end{theorem}
+  
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{Smallest index rule}
+
+ \begin{tabbing}
+      Start with feasible basis $B$ \\[1ex]
+      {\tt while} \= $B$ is not optimal \\ [.7ex]
+      \> Compute $\lambda \in \setR^n$ such that $\lambda^TA_B = c^T$ \\
+      \> Let $i^* \in B$ be the \emph{ smallest index} with $\lambda_i<0$ \\
+      \> Compute  $d \in \setR^n$ with $a_j^T d = 0, \, j \in B \setminus\{i^*\}$
+      and $a_{i^*}^T d = -1$ \\ 
+      \> Determine $K = \{ k \colon 1 \leq k \leq m, \, a_k^Td >0\}$\\[.7ex]  
+      \> {\tt if} \= $K = \emptyset$ \\   
+      \> \> \emph{assert LP unbounded} \\
+      \> {\tt else} \\
+      \> \> Let $k^* \in K$ the \emph{smallest index} where 
+     $
+        \displaystyle \min_{k \in K} (b_k - a_k^Tx^*)/a_k^Td
+      $
+      is attained \\ %(with  $x^* = A_B^{-1}b_B$)
+
+      \> \>\emph{update} $B := B \setminus\{i^*\} \cup \{k^*\}$             
+    \end{tabbing}
+    
+
+  
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{Termination}
+
+
+
+  \begin{theorem}
+    \label{thr:3}
+    The simplex algorithm with the smallest index rule terminates. 
+  \end{theorem}
+
+  
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "Slides"
+%%% End:

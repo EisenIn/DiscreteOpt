@@ -301,8 +301,17 @@ The procedure described above is in polynomial time of $n,m$. We keep doing the 
   
   We show that $\cone(X)$ is closed. 
   
-  By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
+  %By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
   
+  First, by Carath\'eodory's theorem, for each $y \in \cone(X)$, there exists a linearly independent subset $\tilde{X} \subseteq X$ of size at most $n$, such that $y \in \cone(\tilde{X})$. Therefore we have
+  \[\cone(X) = \bigcup_{\substack{\tilde{X} \subseteq X, \\ |\tilde{X}| \leq n, \\ \tilde{X}\,\text{is linearly independent}}} \cone(\tilde{X}).\]
+  Since $X$ is finite, the union above is also finite. 
+
+  Next, we show that for every such $\cone(\tilde{X})$ where $\tilde{X} \subseteq X, |\tilde{X}| \leq n$, and $\tilde{X}$ is linearly independent, $\cone(\tilde{X})$ is closed. 
+  If $|\tilde{X}|=n$, then by Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
+  If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
+
+  Since the finite union of closed sets is closed, this completes our proof.
   
   \end{solution}
 

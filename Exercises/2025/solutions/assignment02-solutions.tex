@@ -312,7 +312,7 @@ Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the c
 
 If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
 Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
-First it's easy to check that $A^= x^{\prime\prime} = b^=$.
+First it's easy to check that $A^= x^{\prime\prime} \leq b^=$.
 % \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
 Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
 % Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 

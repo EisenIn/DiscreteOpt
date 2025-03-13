@@ -18,14 +18,42 @@
 \input{./TIKZ/digraph.tikzstyles}
 
 
+
+% Listing Python code %%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
 \lstset{ 
   language = Python
 }
 
-\lstloadlanguages{Python}
+% Define colors and style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
- 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    language=Python
+}
+
+\lstset{style=mystyle}
+
+%%%%%%%%%%%%%% <- Listing python code 
 
 
 
@@ -205,7 +233,7 @@
 \subtitle{These are notes of my course Discrete Optimization. They are constantly updated. }
 
 
-%\includeonly{algorithms,convex}
+%\includeonly{simplex-15}
 
 \begin{document}
 \maketitle
@@ -219,7 +247,7 @@
 \smartqed
 
 
-\definecolor{Gray}{gray}{0.6} 
+\definecolor{Gray}{gray}{0.6}  
 \newcolumntype{A}{%
 >{\centering}X} 
 \newcolumntype{B}{%
