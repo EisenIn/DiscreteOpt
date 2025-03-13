@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+
+\usepackage{ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../Notes/tikzit}
+\usepackage{../../Notes/utf8math}
+
+\input{../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Eisenbrand}
+\term{Spring 2025}
+\publishdate{March 18, 2025}
+\duedate{ }
+\problemset{Assignment~5}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+\item Suppose you are given an oracle algorithm, which for a given polyhedron
+$$P= \{\bar{x}∈\setR^n: \bar{A}\bar{x} \leq \bar{b}\}$$
+gives you a feasible solution or asserts that there is none. Show that using a single call of this oracle
+one can obtain an optimum solution for the LP
+$$\max\{c^T x : x∈\setR^n; Ax≤b\}$$
+assuming that the LP is feasible and bounded.
+
+
+
+
+\item Determine the dual program for the following linear program:
+\begin{align*}
+\min \quad& 3x_1 + 2x_2−3x_3 + 4x_4 \\
+&2x_1−2x_2 + 3x_3 + 4x_4 ≤ 3 \\
+& x2 + 3x3 + 4x4 ≥ −5 \\
+&2x_1−3x_2−7x_3−4x_4 = 2 \\
+&x_1 ≥0 \\
+& x_4 ≤0
+\end{align*}
+
+
+
+\item Let $P= \{x ∈\setR^n : Ax ≤b\}$ be a bounded, non-empty polyhedron. Formulate a linear program that
+computes the largest ball inside P.
+
+
+
+
+\item Consider the following linear program:
+\begin{align*}
+\max \quad & x_1 + x_2 \\
+\text{subject to }&2x_1 + x_2 ≤6 \\
+&x_1 + 2x_2 ≤8 \\
+& 3x_1 + 4x_2 ≤ 22\\
+& x_1 + 5x_2 ≤ 23
+\end{align*}
+Show that $(4/3, 10/3)$ is an optimal solution by using weak duality.
+
+
+
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
