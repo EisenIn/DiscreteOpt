@@ -124,28 +124,28 @@
 \makeheader
 
 \begin{enumerate}[1)]
-\item Let $K \subseteq \setR^n$ be a convex set. Show that $x^\ast$ is an extreme point $\iff \forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$. 
+\item Let $P = \{x: A x \leq b\} \subseteq \setR^n$ be a polyhedron. Show that $x^\ast$ is an extreme point $\iff \forall x_1 \neq x_2 \in P, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$. 
 
 
 \begin{solution}
-We show $x^\ast$ is an extreme point $\implies \forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$.
+We show $x^\ast$ is an extreme point $\implies \forall x_1 \neq x_2 \in P, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$.
 \\
 
-Since $x^\ast$ is an extreme point, there exists an inequality $a^T x≤β$ valid for $K$ such that $\{x^\ast\}= K∩\{x∈
+Since $x^\ast$ is an extreme point, there exists an inequality $a^T x≤β$ valid for $K$ such that $\{x^\ast\}= P∩\{x∈
 \setR^n : a^T x= β\}$. Assume that $x^\ast$ can be written as a midpoint of two points $x_1,x_2∈K$. We obtain
 that
 $$β= a^T x^\ast= a^T (1/2x_1+ 1/2x_2) = 1/2a^T x_1+ 1/2a^T x_2 <1/2β+ 1/2 β= β$$
-which gives a contradiction. We used that $a^T x_1 < β$ since $a^T x_1 ≤β (a^T x ≤β$ is valid for $K$ and $x_1 ∈K$) and $a^T x_1\neq β$ ($x^\ast$ is the only point in $K$ satisfying $a^T x≤β$ with equality).\\
+which gives a contradiction. We used that $a^T x_1 < β$ since $a^T x_1 ≤β (a^T x ≤β$ is valid for $P$ and $x_1 ∈P$) and $a^T x_1\neq β$ ($x^\ast$ is the only point in $P$ satisfying $a^T x≤β$ with equality).\\
 
 
 
-We show $\forall x_1 \neq x_2 \in K, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2 \implies $ $x^\ast$ is an extreme point. \\
+We show $\forall x_1 \neq x_2 \in P, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2 \implies $ $x^\ast$ is an extreme point. \\
 
 
-Let $A_{x∗} $be the a (potentially infinite) set of valid inequalities for $K$ which
+Let $A_{x∗} $be the a set of valid inequalities for $P$ which
 are tight at $x^∗$. If $rank(A_{x∗} ) < n$ then there exists a vector $d$ and $\epsilon ∈\setR>0$ such that $ad = 0$ for
-any vector $a$ of $A_{x∗}$ and $x^\ast ±\epsilon d \in K$. Since $x^\ast=  1/2(x^\ast + \epsilon d) + 1/2(x^\ast
-−\epsilon d)$ we have a contradiction. As this cannot hold, here exist $n$ linearly independent vectors that form the rows of some matrix $A$ such that each row is a valid inequality $a_i^T x = b_i$ for $K$ and $Ax^\ast = b$ at $x^\ast$. Let $c= 1^T A$. Then $x^\ast$ is the unique point x such that $cx= 1^T b$ and $Ax≤b$. Thus $x^\ast$ is an extreme point.
+any vector $a$ of $A_{x∗}$ and $x^\ast ±\epsilon d \in P$. Since $x^\ast=  1/2(x^\ast + \epsilon d) + 1/2(x^\ast
+−\epsilon d)$ we have a contradiction. As this cannot hold, here exist $n$ linearly independent vectors that form the rows of some matrix $A$ such that each row is a valid inequality $a_i^T x = b_i$ for $P$ and $Ax^\ast = b$ at $x^\ast$. Let $c= 1^T A$. Then $x^\ast$ is the unique point x such that $cx= 1^T b$ and $Ax≤b$. Thus $x^\ast$ is an extreme point.
 
 \end{solution}
 
