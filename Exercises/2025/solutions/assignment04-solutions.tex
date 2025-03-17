@@ -154,23 +154,30 @@ any vector $a$ of $A_{x∗}$ and $x^\ast ±\epsilon d \in P$. Since $x^\ast=  1/
 
 
 \begin{solution}
-Let $x$ denote the basic feasible solution to $B$ and $λ^TA_B = c^T$ with $λ>0$. Assume there is another optimal solution $x' \neq x$. This gives
-$$0 = c^T(x−x') = \lambda^T(A_B x - A_Bx') = \lambda^T(b_B - A_Bx').$$
-Since $x'$ is feasible we have $A_B x' ≤b_B$ and since $x\neq x'$ there exists an index $i$ such that
-$A_ix' < b_i$. This means all components of $(b_B−A_B x')$ are non-negative and one is strictly
-positive. Thus, $λ^T (b_B−A_B x') >0$, a contradiction to $c^T(x-x') = 0$.
+Let $x^*$ be the optimal solution corresponding to $B$ and $\lambda_B^TA_B = c^T$ with $\lambda_B>0$. Suppose that there is another optimal solution $x^\prime$. This gives
+$$0 = c^T(x^*-x') = \lambda_B^T(A_B x^* - A_Bx') = \lambda_B^T(b_B - A_Bx').$$
+Since $\lambda_B> 0$ and $b_B - A_B x^\prime \geq 0$, we must have $b_B - A_B x^\prime = 0$, hence $x^\prime = A_B^{-1} b_B = x^*$.
+% since $x\neq x'$ there exists an index $i$ such that
+% $A_ix' < b_i$. This means all components of $(b_B−A_B x')$ are non-negative and one is strictly
+% positive. Thus, $λ^T (b_B−A_B x') >0$, a contradiction to $c^T(x-x') = 0$.
 
 
-Now, assume that $x^\ast$ is the unique optimal solution. Assume for the sake of contradiction that $λ= λ_B$ has a zero component $λ_j = 0$. Since $A_B$ is invertible, we can choose a direction $d= (−1)A^{−1}_B e_j$ where $e_j$ is the $j$th unit vector. We first show that there is a $δ >0$ such that $x^
-\ast+ δd$ is feasible. Recall that the only constraints that are active/tight
-at $x^\ast$ are in $B$. Hence, we can always choose $δ$ small enough such that all the constraints outside
-$B$ are not violated in $x^\ast+ δd$. Now, consider the constraints in B:
-$$A_B (x^\ast+ δd) = A_B x^\ast+ δA_B d ≤b_B−δe_j ≤b_B.$$
-Thus, $x^\ast+ δd$ is feasible.
-Lastly, we prove that $x^\ast+ δd$ is also an optimal solution:
-$$c^T (x^\ast+ δd) = c^T x^\ast+ c^T δd= c^T x^\ast+ δλ^T A_B d= c^T x^\ast−δλ^T e_j= c^T x^\ast$$
-where the last inequality follows because we assumed $λ_j = 0$. Hence, we have found another optimal
-and feasible solution and this contradicts the uniqueness of the optimum.
+Now, assume that $x^\ast$ is the unique optimal solution. Assume for the sake of contradiction that $\lambda_B$ has a zero component $λ_j = 0, j\in B$. 
+First we choose the direction $d= (−1)A^{−1}_B e_j$ where $e_j$ is the $j$th unit vector. 
+Next, we shall determine the step-size $\varepsilon >0$ such that $x^
+\ast+ \varepsilon d$ is also an optimal solution and different from $x^*$, which is a contradiction. 
+Note that for any $\varepsilon>0$ we have
+$$c^T (x^\ast+ \varepsilon d) = c^T x^\ast+ c^T \varepsilon d= c^T x^\ast+ \varepsilon λ_B^T A_B d= c^T x^\ast- \varepsilon λ_B^T e_j= c^T x^\ast - \varepsilon \lambda_j = c^T x^\ast.$$
+Thus we only need to choose $\varepsilon > 0$ so that $x^* + \varepsilon d$ is feasible. Consider $K = \{j \in \{1, 2, \dots, m\}: a_j^T d > 0\}$. If $K$ is empty, then we can take any $\varepsilon > 0$. Otherwise let $\varepsilon = \min_{j\in K}\left\{\frac{b_j - a_j^T x^*}{a_j^T d}\right\}$. Since the linear program is non-degenerate, $b_j - a_j^T x^*>0, \forall\,j \in [m]\setminus B$, hence $\varepsilon>0$. 
+% Recall that the only constraints that are active/tight
+% at $x^\ast$ are in $B$. Hence, we can always choose $δ$ small enough such that all the constraints outside
+% $B$ are not violated in $x^\ast+ δd$. Now, consider the constraints in B:
+% $$A_B (x^\ast+ δd) = A_B x^\ast+ δA_B d ≤b_B−δe_j ≤b_B.$$
+% Thus, $x^\ast+ δd$ is feasible.
+% Lastly, we prove that $x^\ast+ δd$ is also an optimal solution:
+% $$c^T (x^\ast+ δd) = c^T x^\ast+ c^T δd= c^T x^\ast+ δλ^T A_B d= c^T x^\ast−δλ^T e_j= c^T x^\ast$$
+% where the last inequality follows because we assumed $λ_j = 0$. Hence, we have found another optimal
+% and feasible solution and this contradicts the uniqueness of the optimum.
 
 
 \end{solution}
