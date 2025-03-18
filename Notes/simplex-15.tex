@@ -443,7 +443,7 @@ Any linear program has an equivalent form
     \label{eq:s-151}    
   \min\{ \mathbf{1}^Ty \colon A_1x \leq b_1, \, A_2x \leq b_2 +y, \, x,y \geq 0, y \leq -b_2\}. 
 \end{equation}
-An initial basic feasible solution is $x=0$ and $y= -b_2$ with the basis corresponding to the inequalities $x\geq 0$ and $y \leq -b_2$. The simplex algorithm applied to this linear program terminates. It finds an optimal solution with objective value $0$ if and only if the original linear program is feasible. Let $B$ be the optimal basis in this case. Then $B$ without the indices corresponding to the constraints $y\geq 0$ is a feasible basis for the linear program~\eqref{eq:s-3}. 
+An initial basic feasible solution is $x=0$ and $y= -b_2$ with the basis corresponding to the inequalities $x\geq 0$ and $y \leq -b_2$. The simplex algorithm applied to this linear program terminates. It finds an optimal solution with objective value $0$ if and only if the original linear program is feasible. Let $B$ be the optimal basis in this case. Then $B$ without the indices corresponding to the constraints $y\geq 0$ is a feasible basis for the linear program~\eqref{eq:s-3}.  This follows from the fact that the rows of $A$ indexed by $B$ must be linearly independent. If the corresponding rank was smaller than $n$, then the rank of the rows of the auxiliary linear program~\eqref{eq:s-151} indexed by $B$ would be smaller than $n+k$, where $k$ is the number of rows of $A_2$. 
 
 
 \section{Removing degeneracy by perturbation}
