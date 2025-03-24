@@ -137,6 +137,16 @@ and determine optimal strategies for both players with
 \item pure strategies and 
 \item mixed strategies.
 \end{enumerate} 
+
+
+\begin{solution}
+\begin{enumerate}
+\item Strategy for the row player is $\max_i \min_j A(i, j) = 6$ by choosing row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. The strategy for the column player is then to choose either column 1 or 2 once the row player has chosen row $1$. 
+
+\item The row player chooses $x$ such that $\sum_i x_i = 1$ and $x$ is the solution of $\max_x \min_y x^TAy$. Note that for any vector $x \geq 0$, the minimizing vector $y$ such that $y_1 + y_2 = 1$ is given by $y = (0, 1)$. Then we have that $x^TAy = 6x_1 + 4x_2$ such that the maximizing vector $x$ is $(1, 0)$. This gives the optimal mixed strategy which is actually a pure strategy.  
+\end{enumerate}
+\end{solution}
+
   
 \item This exercise is a continuation of exercise 2) from the sheet of last week.  Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
   \begin{enumerate}[i)]
@@ -154,6 +164,28 @@ and determine optimal strategies for both players with
   \item Show that there is a subsystem $A'x ≤ b'$ of $Ax≤b$ with at most $n+1$ inequalities whose corresponding polyhedron has the same Chebychev center as $P$.
   \item Write down the dual of the linear program above. 
   \end{enumerate}
+  
+  
+  \begin{solution}
+  \begin{enumerate}[i)]
+\item The distance of $x^\ast$ to $H$ is the distance of $x^\ast$ to the orthogonal projection onto $H$. This is given by $\Vert x^\ast - proj_H(x^\ast)\Vert = \frac{|\beta - \langle x^\ast, \alpha\rangle|}{\Vert \alpha\Vert}$. 
+
+\item Let $z^\ast$ be the Chebyshev center and $R^\ast$ be the corresponding radius. The ball $B(z^\ast, R^\ast) = \{x \in \setR^n: \Vert x- z^\ast \Vert \leq R^\ast \} = \{z^\ast + x : \Vert x \Vert \leq R^\ast\}.$ Then the Chebyshev center is defined by 
+\begin{align*}
+\max_{z^\ast, R^\ast} R^\ast &\\
+\text{s.t. } & B(z^\ast, R^\ast) \subseteq P.
+\end{align*}
+
+This. is equivalent to 
+\begin{align*}
+\max_{z^\ast, R^\ast} R^\ast &\\
+\text{s.t. } & A(z^\ast + x) \leq b \quad \quad \text{ for every } x \in \setR^n \text{ s.t. } \Vert x\Vert \leq R^\ast.
+\end{align*}
+
+Note that for any row $i$, 
+  
+  \end{enumerate}
+  \end{solution}
 
 \item (Complementary slackness)
 
