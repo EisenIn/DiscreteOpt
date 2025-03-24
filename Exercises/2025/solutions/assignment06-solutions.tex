@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 
-\usepackage{ppackage}
+\usepackage{../ppackage}
 \usepackage{bbm}
 \usepackage{import}
 
@@ -13,10 +13,10 @@
 \usetikzlibrary{arrows.meta,patterns}
 \usetikzlibrary{ipe} % ipe compatibility library
 
-\usepackage{../../Notes/tikzit}
-\usepackage{../../Notes/utf8math}
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
 
-\input{../../Notes/TIKZ/digraph.tikzstyles}
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
 
 
 
@@ -177,6 +177,37 @@ and determine optimal strategies for both players with
 
   Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $(y^\ast)i > 0 \implies
 A_ix^\ast = b_i$ for each $i \in [m]$.
+
+
+
+\begin{solution}
+First we show $\Leftarrow$. \\
+
+By the assumption, we have that 
+\begin{align*}
+{y^\ast}^T b &= \displaystyle\sum_{j = 1}^m y^\ast_j b_j \\
+& = \displaystyle\sum_{j = 1}^m y^\ast_j(A_j x^\ast) \\
+& =\displaystyle\sum_{j = 1}^m  y^\ast_j \left( \displaystyle\sum_{i = 1}^n A_{ji} x^\ast_i \right) \\
+&= \displaystyle\sum_{i = 1}^n  x^\ast_i \left( \displaystyle\sum_{j = 1}^m A_{ji} y^\ast_j \right) \\
+& = {x^\ast}^T c \\
+& = c^T x^\ast
+\end{align*} 
+so that $x^\ast, y^\ast$ achieve the same primal/dual objective value and are therefore optimal by strong duality. For the second equality, we have used that whenever the summand is nonzero, $A_j x^\ast = b_j$. \\
+
+We then show $\Rightarrow$. \\
+
+We have that as $x^\ast, y^\ast$ are optimal, $c^Tx^\ast = b^Ty^\ast$ by strong duality. Then 
+\begin{align*}
+c^Tx^\ast & = \displaystyle\sum_{i =1}^n x^\ast_i c_i \\
+& =  \displaystyle\sum_{i =1}^n x^\ast_i \left( \displaystyle\sum_{j =1}^m A_{ji}y^\ast_j \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j \left( \displaystyle\sum_{i =1}^n A_{ji}x^\ast_i \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j (A_j x^\ast) \\
+& \leq \displaystyle\sum_{j =1}^m y^\ast_j  b_j \\
+& = {y^\ast}^T b
+\end{align*}
+where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. Then as the above inequalities must hold with equality everywhere since $c^Tx^\ast = b^Ty^\ast$, it must be that if $y^\ast_j >0$ then $A_j x^\ast = b_j$.
+
+\end{solution}
 
 \item Consider the linear programming problems    
   \begin{displaymath}
