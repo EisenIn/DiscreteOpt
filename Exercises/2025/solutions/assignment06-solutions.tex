@@ -178,11 +178,26 @@ and determine optimal strategies for both players with
 
 This. is equivalent to 
 \begin{align*}
-\max_{z^\ast, R^\ast} R^\ast &\\
+\max_{z^\ast, R^\ast}  R^\ast &\\
 \text{s.t. } & A(z^\ast + x) \leq b \quad \quad \text{ for every } x \in \setR^n \text{ s.t. } \Vert x\Vert \leq R^\ast.
 \end{align*}
 
-Note that for any row $i$, 
+Note that for any row $i$, $a_i^T(z^\ast + x) \leq a_i^T(z^\ast + a_i / \Vert a_i \Vert R^\ast)$ since $\Vert x \Vert \leq R^\ast$ and $a_i^T x \leq \Vert x\Vert \frac{a_i^Ta_i}{\Vert a_i \Vert}$ (this is just the projection from part (i)). Then, the Chebyshev center is defined by 
+\begin{align*}
+\max_{z^\ast, R^\ast} & R^\ast \\
+\text{s.t. } &  a_i^T(z^\ast + a_i / \Vert a_i \Vert R^\ast) \leq b_i \quad i \in [m]
+\end{align*} 
+
+
+since if the above constraints hold, then the constraints over all $x$ with $\Vert x\Vert \leq R^\ast$ also hold. Then this LP is equivalent to 
+\begin{align*}
+\max_{z^\ast, R^\ast} & R^\ast \\
+\text{s.t. } & A^Tz^\ast + 1 R^\ast \leq b
+\end{align*}
+
+since $\Vert a_i \Vert = 1$ for every $i$. 
+
+\item The vector $(z^\ast, R^\ast) \in \setR^{n+1}$ is the maximizer of the LP given in part (ii). Then there exist a set of at most $n+1$ tight inequalities of the LP so that the subsystem of these inequalities uniquely define the optimizer $(z^\ast, R^\ast)$. Then the polyhedron for this subsystem also has $(z^\ast, R^\ast)$ as an optimizer such that this system defines the same Chebyshev center. 
   
   \end{enumerate}
   \end{solution}
