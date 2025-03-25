@@ -278,6 +278,49 @@ where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. 
     
     \end{enumerate}
 
+  \begin{solution}
+    \begin{enumerate}[i)]
+      \item We rewrite the maximization problem as:
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \max c^Tx \\
+          \tilde{A}x ≤ \tilde{b}\\
+        \end{array} 
+      \end{displaymath}
+      where $\tilde{A} = \begin{pmatrix}
+        A \\
+        -I
+      \end{pmatrix}$ and $\tilde{b} = \begin{pmatrix}
+        b \\
+        \mathbf{0}
+      \end{pmatrix}$. Then the dual of this maximization problem is
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \min \tilde{b}^T \tilde{y} \\
+          \tilde{y}^T \tilde{A} = c^T\\
+          \tilde{y} ≥ 0      
+        \end{array}
+      \end{displaymath}
+      Let $\tilde{y} = \begin{pmatrix}
+        y \\
+        y^\prime
+      \end{pmatrix}$ then the objective becomes $\tilde{b}^T \tilde{y} = b^Ty$ and the constraint becomes $\tilde{y}^T \tilde{A} = y^T A - (y^\prime)^T = c^T, y,y^\prime \geq 0 \Leftrightarrow y^T A = c^T, y\geq 0$. 
+      Therefore the dual problem is equivalent to
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \min b^Ty \\
+          y^T A ≥ c^T\\
+          y ≥ 0      
+        \end{array}
+      \end{displaymath}
+      which is the minimization problem on the right.
+      \item By weak duality we have 
+      \[ c^T x^* \leq (y^*)^T A x^* \leq (y^*)^T b. \]
+      Both $x^*$ and $y^*$ are optimal solutions if and only if both of inequalities above are equalities, which is equivalent to
+      \[ (y^T A - c^T) x^* = 0 \text{ and } (y^*)^T (b - Ax^*) = 0. \]
+    \end{enumerate}
+  \end{solution}
+
 \end{enumerate}
 
 \end{document}
