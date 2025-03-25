@@ -1,0 +1,324 @@
+\pagestyle{empty}
+
+
+
+\begin{frame}{Review: Duality}
+
+ 
+\end{frame}
+
+
+
+
+
+\begin{frame}{Dual of the Dual}
+
+ \begin{corollary}
+   \label{thr:5}
+   If the dual linear program has an optimal solution, then so does the
+   primal linear program and the objective values coincide.
+ \end{corollary}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Table of possibilities}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Further example}
+
+
+
+  
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{equation*}
+        \begin{array}{rcl}
+          \max &c^Tx \\
+          Bx &  =&  b\\
+          Cx & \leq & d. 
+        \end{array}
+      \end{equation*}
+      (Primal)
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{equation*}
+        \begin{array}{c}
+          \min \, b^Ty_1 + d^T y_2 \\
+          \begin{array}{rcl}
+            B^Ty_1 + C^T  y_2 & = &  c \\  y_2& \geq & 0. 
+          \end{array}
+        \end{array}
+      \end{equation*}
+      (Dual)
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Zero sum games}
+
+
+\begin{equation*}
+  \label{eq:34}
+  A =
+  \begin{pmatrix}
+    5 & 1 & 3 \\
+    3 & 2 & 4 \\
+    -3 & 0 &1 
+  \end{pmatrix} 
+\end{equation*}
+
+\medskip 
+
+Row player: Chooses row $i$
+
+\smallskip 
+Column player: Chooses column $j$
+
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Rock --  paper -- scissors}
+
+  
+\end{frame}
+
+
+\begin{frame}{Deterministic strategies}
+
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{displaymath}
+        \max_i \min_j
+      \end{displaymath}
+    \end{column}
+    \begin{column}{.5\textwidth}
+       \begin{displaymath}
+        \max_j \min_i
+      \end{displaymath}
+    \end{column}       
+  \end{columns}
+  
+\end{frame}
+
+
+\begin{frame}{Mixed strategies}
+
+\begin{definition}
+  \label{def:m1}
+  Let $A \in \setR^{m\times n}$ define a two-player matrix game. A mixed
+  strategy for the row-player is a vector $x \in \setR_{\geq0}^m$ with
+  $\sum_{i=1}^m x_i = 1$. A mixed strategy for the column player is a
+  vector $y \in  \setR_{\geq0}^n$ with $\sum_{j=1}^n y_i = 1$. 
+\end{definition}
+
+\begin{equation}
+  \label{eq:37}
+  E[\text{Payoff}]=x^TAy. 
+\end{equation}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Example: Mixed strategy rock -- paper -- scissors}
+  
+\end{frame}
+
+\begin{frame}{Weak duality}
+\begin{lemma}
+  \label{d:lem:10}
+  Let $A \in \setR^{m\times n}$, then 
+   \begin{displaymath}
+   \max_{x \in X} \min_{y\in Y} x^TA y \leq \min_{y\in Y} \max_{x\in X}
+   x^TAy,       
+  \end{displaymath}
+  where $X$ and $Y$ denote the set of mixed row and column-strategies
+  respectively. 
+\end{lemma}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Minimax-Theorem}
+
+
+
+  \begin{theorem}[von Neumann (1928)]
+  \label{d:thr:7}
+  \begin{displaymath}
+   \max_{x \in X} \min_{y\in Y} x^TA y = \min_{y\in Y} \max_{x\in X}
+   x^TAy,       
+  \end{displaymath}
+  where $X$ and $Y$ denote the set of mixed row and column-strategies
+  respectively. 
+\end{theorem}
+   \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{}
+  
+\end{frame}
+
+
+
+\begin{frame}{Duality  via Farkas' lemma}
+
+  
+\begin{theorem}[Second variant of Farkas' lemma]
+\label{dual:thr:2farkas}
+    Let $A \in \setR^{m\times n}$ and $b \in \setR^m$. The system $Ax\leq b$ has a
+    solution if and only if for all $\lambda\geq0$ with $\lambda^TA =0$ one has
+    $\lambda^Tb\geq0$. 
+\end{theorem}
+
+  
+\end{frame}
+\begin{frame}{Duality  via Farkas' lemma}
+
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Algorithms and running time analysis}
+
+  Consider the following algorithm to compute the product of two $n × n$ matrices $A,B ∈ ℚ^{n ×n}$: 
+    \begin{tabbing}            
+    {\bf for} \= $i=1,\dots,n$ \\ 
+              \> {\bf for} \= $j=1,\dots,n$ \\
+              \> \> $c_{ij} := 0$ \\
+              \> \> {\bf for} \= $k=1,\dots,n$ \\
+              \> \> \> $c_{ij} := c_{ij} + a_{ik} ⋅ a_{kj}$
+            \end{tabbing} 
+%
+\end{frame}
+
+\begin{frame}
+  \frametitle{\boldmath $O$-notation}
+  
+\begin{definition}
+
+ Let $T,f: \setN \to \setR_{\geq0}$ be functions. We say 
+  \begin{itemize}
+  \item \emph{$T(n) = O(f(n))$}, if there exist positive  constants
+    $n_o\in \setN$ and  $c\in\setR_{>0}$ 
+    with $$T(n) \leq c \cdot f(n) \text{ for all }n\geq n_0.$$  
+  \item \emph{$T(n) = \Omega(f(n))$}, if there exist constants   $n_o\in \setN$
+    and  $c\in\setR_{>0}$ 
+    with $$T(n) \geq c \cdot f(n)\text{ for all } n\geq n_0.$$
+  \item \emph{$T(n) = \Theta(f(n))$}  if $$T(n)=O(f(n))\text{ and }
+     T(n) = \Omega(f(n)).$$
+  \end{itemize}
+\end{definition}
+
+
+\end{frame}
+
+
+\begin{frame}{Example}
+
+  
+
+\begin{example}
+  The function $T(n)=2n^2 + 3n +1$ is in $O(n^2)$, since for all
+  $n\geq1$ one has $2n^2 + 3n + 1 \leq 6n^2$. Here $n_0 = 1$ and $c =
+  6$.  Similarly $T(n) = \Omega(n^2)$, since for each $n\geq1$ one has $2n^2 + 3n
+  +1\geq n^2$. Thus $T(n)$ is in $\Theta(n^2)$. 
+\end{example}
+  
+\end{frame}
+
+
+
+\begin{frame}{Efficient algorithm, first definition}
+
+  An algorithm runs in
+\emph{polynomial time}, if there exists a constant $k$ such that the
+algorithm runs in time $O(n^k)$, where $n$ is the length of the input 
+of the algorithm.
+  
+\end{frame}
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "Slides"
+%%% End:
+
+
