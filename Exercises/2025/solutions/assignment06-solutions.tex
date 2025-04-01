@@ -141,10 +141,12 @@ and determine optimal strategies for both players with
 
 \begin{solution}
 \begin{enumerate}
-\item Strategy for the row player is $\max_i \min_j A(i, j) = 6$ by choosing row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. The strategy for the column player is then to choose either column 1 or 2 once the row player has chosen row $1$. 
+\item For row player, the best pure strategy is to choose row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. 
+Similarly, the best strategy for column player is to choose column $2$.
 
 \item The row player chooses $x$ such that $\sum_i x_i = 1$ and $x$ is the solution of $\max_x \min_y x^TAy$. Note that for any vector $x \geq 0$, the minimizing vector $y$ such that $y_1 + y_2 = 1$ is given by $y = (0, 1)$. Then we have that $x^TAy = 6x_1 + 4x_2$ such that the maximizing vector $x$ is $(1, 0)$. This gives the optimal mixed strategy which is actually a pure strategy.  
 \end{enumerate}
+The value of the matrix game is thus 6.
 \end{solution}
 
   
@@ -198,7 +200,17 @@ since if the above constraints hold, then the constraints over all $x$ with $\Ve
 since $\Vert a_i \Vert = 1$ for every $i$. 
 
 \item The vector $(z^\ast, R^\ast) \in \setR^{n+1}$ is the maximizer of the LP given in part (ii). Then there exist a set of at most $n+1$ tight inequalities of the LP so that the subsystem of these inequalities uniquely define the optimizer $(z^\ast, R^\ast)$. Then the polyhedron for this subsystem also has $(z^\ast, R^\ast)$ as an optimizer such that this system defines the same Chebyshev center. 
-  
+
+\item The dual linear program is 
+\begin{displaymath}
+  \begin{array}[t]{c}
+    \min b^Ty \\
+        A^T y = \mathbf{0}\\
+        \mathbf{1}^T y = 1\\
+        y\geq 0
+  \end{array},
+\end{displaymath}
+
   \end{enumerate}
   \end{solution}
 
