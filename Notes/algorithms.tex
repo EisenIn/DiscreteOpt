@@ -537,7 +537,7 @@ We now show how to perform an efficient \emph{randomized test}. Suppose that you
 \item Describe an algorithm that multiplies two $n$-bit integers in time $O(n^2)$. You may use the algorithm to add two $n$-bit integers from exercise~\ref{cha:runn-time-analys}.\ref{item:ex:7}.  
 \item Suppose $n = 2^\ell $  and $a,b ∈ ℕ$ are two $n$-bit integers. Consider the numbers $a_h$ and $a_l$ which are represented by the first $n/2$ bits and the last $n/2$ bits of $a$ respectively. Likewise the numbers $b_h$ and $b_l$ are the numbers represented by the first half and the second half of the bit-representation of $b$. 
   \begin{enumerate}[i)]
-  \item Show $a = a_h ⋅ 2^{n/2} + a_l$ and  $b = b_h ⋅ 2^{n/2} + b_l$
+   \item Show $a = a_h ⋅ 2^{n/2} + a_l$ and  $b = b_h ⋅ 2^{n/2} + b_l$
   \item Show $a⋅b = a_h ⋅ b_h ⋅ 2^n + (a_h ⋅ b_l + a_l ⋅ b_h) ⋅2^{n/2} + a_l ⋅b_l$ 
   \item Conclude very carefully that two $n$-bit
     numbers can be multiplied by resorting to three multiplications of
@@ -547,6 +547,23 @@ We now show how to perform an efficient \emph{randomized test}. Suppose that you
     elementary bit operations.
   \end{enumerate}
 
+% \item Gaussian elimination in $Q(x)$. Suppose that $A ∈ ℤ[x]^{m ×n}$ is given, i.e. component $ij$ is a polynomial $f_{ij} (x) ∈ℤ[x]$. We will analyse the complexity of Gaussian elimination on this matrix. For simplicity, we assume that no swapping of rows and columns is necessary and stage $k$ of Gaussian elimination has resulted in a the transformation of $A$ as
+%   \begin{displaymath}
+%     \begin{pmatrix}
+%       R & C \\
+%       0 & D
+%     \end{pmatrix},
+%   \end{displaymath}
+%   where $R ∈ℚ(x)^{ k ×k}$ is upper triangular and non-singular and $D ∈ ℚ(x)^{ {(n-k) ×(m-k)}$ is the part that still needs to be further eliminated. 
+%   \begin{enumerate}
+%   \item Show that the element $d_{ij}$ can be written as
+%     \begin{displaymath}
+%       d_{ij} = \det(A_{I,J}) / \det{A_k}.
+%     \end{displaymath}
+%     Here $I = \{1,\dots,k\} +i$ and $J = \{1,\dots,k\} +k$ and $A_{I,J}$ is the submatrix of $A$ induced by the rows/columns  indexed by $I$ and $J$ respectively and $A_k$ is the $k$-th principal minor of $A$.
+
+%   \item Let $D'$ result  from $D$ by pivoting with $d_{11}$, i.e. $d'_{ij} = d_{ij} - (d_{i1}/d_{11} ) d_{1j}$ 
+%   \end{enumerate}
 
 
 
