@@ -353,40 +353,59 @@ Now that we have shown that the determinant of a rational matrix is a number of 
 
 \begin{theorem}
   \label{thr:9}
-The   Gaussian algorithm runs in polynomial time. 
+The   Gaussian algorithm runs in polynomial time on input $A ∈ ℤ^{m ×n}$.  More precisely, the rational numbers produced in the algorithm can be maintained to be  ratios of sub-determinants of $A'$ and are thus of polynomial binary encoding length. 
 \end{theorem}
 
- 
 \begin{proof}
-  Consider the matrix $A'$
-  just before the $i$-th
-  iteration of the while loop.  We need to show that each entry of the
-  part of $A'$
-  that still has to be transformed (the magenta-colored part of the
-  matrix in Figure~\ref{fig:9}) is of polynomial size in the input
-  encoding.
+For the proof of this theorem, we assume that we have performed row and column swaps on $A∈ ℤ$ beforehand such that the pivot element in iteration $i≥1$    is in row $i$ and column $i$. This means that we never have to swap rows in $A'$, after the $i$-th iteration of the wile-loop the matrix $A'$ is of the form 
+\begin{displaymath}
+  A' =
+  \begin{pmatrix}
+    U &  E \\
+    0 & D 
+  \end{pmatrix}
+\end{displaymath}
+where $U ∈ ℚ^{i ×i}$ is upper triangular and non-singular and $D ∈ ℚ^{(m-i) × (n-i)}$ is the part that still has to be eliminated. 
 
-  We assume that the row-swaps of $A$
-  have been done in advance, so that no further swaps occur during the
-  algorithm.  Consider the absolute value of the product of the pivot
-  elements (red $x$'s
-  in the Figure). This  is the absolute value of the
-  determinant of the submatrix of $A$,
-  that is obtained by choosing the first $i-1$
-  rows and the columns in which the pivot elements lie.  By
-  Corollary~\ref{co:10} this rational number is of polynomial size in
-  the input encoding of this sub-matrix and thus of $A$.
 
- Now, consider a nonzero element $z$
- in the part of $A'$
- that still needs to be transformed (the magenta part in
- Figure~\ref{fig:9}). The absolute value of the product of this
- element with the pivot elements is the absolute value of the
- submatrix that is obtained by choosing the first $i-1$
- rows and the row in which $z$
- lies and the columns in which the pivot-elements and $z$
- lie.  Therefore, the rational number $z$
- itself  is of polynomial encoding length in the input.
+
+  Consider an element $d_{k,j}$ of $D$ and  define the index sets
+  $K = \{1,\dots,i\} ∪\{i+ k\}$ and $J = \{1,\dots,i\} + ∪ \{i+ j\}$ and the matrix
+  $A_{KJ}$ as the one induced from $A$ by the rows and columns indexed
+  by $K$ and $J$ respectively. A crucial observation is that
+  \begin{displaymath}
+   \det(A_{KJ}) = \det(A'_{KJ}) 
+ \end{displaymath}
+ holds. Likewise one has $\det(A_i) = \det(U)$, where $A_i$ is the
+ matrix stemming from the first $i$ rows and columns of $A$.
+
+
+ From this it follows that
+ \begin{displaymath}
+  d_{k,j} ⋅ \det(A_i)  =   \det(A_{KJ}) 
+ \end{displaymath}
+ and thus
+ \begin{displaymath}
+   d_{k,j}  =   \det(A_{KJ})   / \det(A_i). 
+ \end{displaymath}
+ We also write
+ \begin{displaymath}
+   d_{k,j}  =   r_{ij}   / \det(A_i)
+ \end{displaymath}
+ with the suitable integer $r_{ij} = \det(A_{KJ})$. 
+ Now the  pivot element is $d_{11}$ and the new element in position $k,j$ of $D$ becomes with $r_{11} = \det(A_{i+1})$ 
+ % \begin{eqnarray*}\displaystyle
+ %   d_{kj} - d_{k1}/d_{11} ⋅  d_{1j} & = & \frac{\det(A_{KJ})} {\det(A_{i})} - \frac{ \det(A_{K1})  }{\det(A_{i+1})} ⋅ \frac{\det(A_{1j})}{\det(A_{i})}  \\
+ %   & = &  \frac{\frac{\det(A_{KJ}) \det(A_{i+1}) - \det(A_{K1}) \det(A_{1J})}{  {\det(A_i)}}} {\det(A_{i+1})}
+ % \end{eqnarray*}
+
+  \begin{eqnarray*}\displaystyle
+   d_{kj} - d_{k1}/d_{11} ⋅  d_{1j} & = & \frac{r_{kj}} {\det(A_{i})} - \frac{r_{k1}  }{r_{11}} ⋅ \frac{r_{1j}}{\det(A_{i})}  \\
+                                    & = &  \frac{(r_{kj} r_{11} - r_{k1} r_{1j}) / \det(A_{i})}
+                                          {\det(A_{i+1})}
+ \end{eqnarray*}
+ The numerator is an integer that can be computed with basic integer arithmetic operations. All integers are bounded by $n^{n/2} B^n$, where $B$ is the largest binary encoding length of an entry of $A$. This shows the claim. 
+ 
 \end{proof}
 
 
