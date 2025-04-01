@@ -116,9 +116,9 @@
 \lecture{Discrete Optimization}
 \faculty{Prof. Eisenbrand}
 \term{Spring 2025}
-\publishdate{March 25, 2025}
+\publishdate{April 1, 2025}
 \duedate{ }
-\problemset{Assignment~6}
+\problemset{Assignment~7}
 
 \begin{document}
 \makeheader
@@ -163,6 +163,53 @@ $1/ |det(M)|≥1/L$.  Applying this statement to $\begin{pmatrix} A \\ I \end{pm
 is a vertex $\bar{x}$ such that $c^T\bar{x}<c^Tx$. Then by weak duality one has $b^Ty^∗≤c^T\bar{x} <c^Tx ≤c^Tx^∗$ which further implies $|c^T\bar{x} −c^Tx|<1/L^2$ contradicting part (a).
 
 \end{enumerate}
+
+
+\end{solution}
+
+
+\item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
+$B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
+
+\textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
+polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
+
+\begin{solution}
+By using the hint, we obtain a system of inequalities with matrix $\bar{A}$ of full column rank and vector $\bar{b}$. Indeed, one can see that in the new system $\bar{A}x≤\bar{b}$, $\bar{A}$ is of the form $$\bar{A} = \begin{pmatrix} A \\ X \\ Y \end{pmatrix}$$ 
+and $\bar{b}= (b, 0)$ , where $X$ is an $|I|×n$ matrix, where the $x_{kl}$ entry is equal to $1$ if $k=l$ and $k ∈I$,
+$Y$ is a $|J|×n$ matrix where the $y_{kl}$ entry is equal to $-1$ if $k= l$ and $k ∈J$ and $0$ otherwise.
+By construction of $\bar{A}$, we can see that the matrix has full column rank.
+This implies that the corresponding polyhedron has vertices. Moreover, by a theorem from the
+course, a vertex is characterized by a subsystem $A'x≤b'$ where $rank(A') = n$ such that $x^\ast
+= A'^{−1}b'$.
+
+We know from linear algebra that $A^{−1 }= adj(A')/\det(A').$
+Hence,
+$$|x^\ast_i| = \left| \displaystyle\sum_{j =1}^n {a'}_{ij}^{-1} b_j \right| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right|.$$
+Then we just have to bound the entries of the matrix $A'^{−1}$. From the fact that $A'$ is invertible and has integer entries, we get that $|\det(A')| ≥ 1$. From Hadamard’s bound, we also have that
+$|\det(adj(A))|≤B^{n−1}(n−1)^{\frac{n−1}{2}}$. Combining these two facts, we have the desired result,
+$$|x^\ast_i| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right| \leq B \displaystyle\sum_{j =1}^n B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n \cdot B \cdot B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n\cdot B \cdot n^{n/2} \cdot B^n.$$
+
+\end{solution}
+
+
+
+\item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
+the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
+absolute value of an entry of $A$ and $b$. 
+
+
+Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
+
+
+\begin{solution}
+From the assumptions, there exists a vertex $x^*$ of $P$ such that $c^Tx^*= \max\{c^Tx: Ax≤b\}$.
+We have that there is some invertible $A'$, submatrix of $A$, and a $b'$ subvector of $b$, such that
+$x^*=  {A'}^{−1}b'$, hence $|x^\ast_i|= \sum_{j =1}^m \frac{|A'_{ij}|}{|\det(A')|}b'_j$ and using Hadamard's bound and the integrality of $A,b,c$, we get that 
+$$|c^Tx^\ast|≤ mB^{n+2}n^{n/2+1}.$$
+
+Moreover, from exercise 2, we have that for any non-optimal vertex $x$ of $P$,  $c^Tx^*−c^Tx≥1/L^2$, where
+$L= B^n n^{n/2}$. Hence we need to find an interval $[α,β]$ such that $P' := P ∩\{x∈\setR^n : c^Tx≥α\}$ is feasible and $P'' := P ∩\{x∈\setR^n : c^Tx≥β\}$ is not feasible, and $β−α <1/L^2$. This will then give the value of the maximum. Checking feasibility of these two polytopes is then done in polynomial time in $n, m \log B$ by the assumption that there exists an algorithm that decides feasibility. To find the desired $α,β$, we perform binary search on the interval $[−mB^{n+2}n^{n/2+1},mB^{n+2}n^{n/2+1}]$, halving the size of the interval iteratively until the interval has small enough length (less than $1/L^2$). Formally, denote by $S_i$ the system $Ax ≤ b$, $c^Tx ≥ α_i$ and set $α_0 =−mB^{n+2}n^{n/2+1},β_0 = mB^{n+2}n^{n/2+1}$. At the i-th iteration, we know that $S_{i−1}$ is feasible and we ask to the oracle whether $S_i$ is feasible, with $α_i = α_{i−1} + (β_i−α_i)/2$. If it is feasible, we set $β_i = β_{i−1}$, otherwise we set $β_i = α_i,α_i = α_{i−1}$, and we move to the next iteration, until $β_i−α_i <1/L^2$. At this point, if the system $Ax≤b,c^Tx≥β_i$ is not feasible, we obtained our $α,β$, otherwise notice that we must have $β_i = β_0$ which implies that $\max\{c^Tx: Ax≤b\}= β_0$. The total number of iterations is at most $\log(L^2\cdot 2mB^{n+2}n^{n/2+1})$, for a total running time that is polynomial in $n, m$ and $\log B$.
 
 
 \end{solution}
