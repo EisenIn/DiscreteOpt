@@ -158,18 +158,24 @@ $$a(k) = a^{2^{k−1}}· a^{2^{k−1}} = a^{2^k}.$$
 Thus, $a^{2^k}$ has been obtained by performing $k$ multiplications.
 \item  This has $\log(a^{2^k}) = Θ(2^k \log a)$ many bits.
 \item One has $E = E\cdot S$, $S = S\cdot S$ and return $E$.
-\item We use the same algorithm as in part c), but do operations modulo $N$, in particular we replace $E
-= E\cdot S$ with $E = E\cdot S \mod N$ and $S = S\cdot S$ with $S = S\cdot S \mod N$. Observe that the modulo can be obtained by performing division with remainder. The correctness of the algorithm follows from
-the fact that for any $a, b ∈ \setN$, $ab ≡ (a (\mod N))(b (\mod N)) (\mod N)$. The algorithm performs
+\item We use the same algorithm as in part (c), but do operations modulo $N$, in particular we replace $E
+= E\cdot S$ with $E = E\cdot S (\text{mod}\, N)$ and $S = S\cdot S$ with $S = S\cdot S (\text{mod}\, N)$. Observe that the modulo can be obtained by performing division with remainder. 
+The correctness of the algorithm follows from the fact that for any $a, b ∈ \setN$, $ab ≡ (a (\text{mod}\, N))(b (\text{mod}\, N)) (\text{mod}\, N)$. The algorithm performs
 $O(l)$ steps, where $l$ is the size of $e$, and in each step we perform division with remainder on
 $E \cdot S$ (or $S \cdot S$) and $N$: this takes time polynomial in the binary encoding length (size) of the
-input, in particular of $a, e, N$ (notice that the value of $A (\mod N)$ has size at most the size of $N$,
+input, in particular of $a, e, N$ (notice that the value of $A (\text{mod}\, N)$ has size at most the size of $N$,
 irrespectively of the size of $A$). Hence the total number of operations performed is polynomial
 in the size of $a, e, N$.
-\item  Using the hint, we have that $abc ≡ abc (\mod N−1) (\mod N)$. Hence we first apply the algorithm
-from part d) to obtain $bc (\mod N− 1)$ in polynomial time in the size of $b, c, N$. Notice that the
-size of this number, which we denote by $e$, is bounded by the size of N only. Now, we apply
-again the algorithm from part d) to obtain $ae (\mod N)$, in time polynomial in the size of $a, N$.
+\item  
+% Using the hint, we have that $abc ≡ abc (\mod N−1) (\mod N)$. Hence we first apply the algorithm
+% from part d) to obtain $bc (\mod N− 1)$ in polynomial time in the size of $b, c, N$. Notice that the
+% size of this number, which we denote by $e$, is bounded by the size of N only. Now, we apply
+% again the algorithm from part d) to obtain $ae (\mod N)$, in time polynomial in the size of $a, N$.
+
+% Corrected solution of (e):
+First, by applying (d) we can compute $e$ such that $b^c \equiv e (\text{mod}\, N-1)$ in time polynomial in the binary encoding length of $b,c,N$. 
+Note that $e$ is bounded by $N$. Then by Fermat's little theorem $a^{N-1}\equiv 1 (\text{mod}\, N)$, we have $a^{b^c} \equiv a^e (\text{mod}\, N)$.
+Finally, by applying (d) again, we can compute $a^e (\text{mod}\, N)$ in time polynomial in the binary encoding length of $a, N$.
 
 \end{enumerate}
 \end{solution}
