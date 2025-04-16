@@ -65,12 +65,19 @@
   Problem 18: Can linear programming be solved in strongly polynomial time? 
 \end{frame}
 
+
+
+\begin{frame}
+
+  
+\end{frame}
+
 \begin{frame}
   \frametitle{Integer Programming}
 
   \begin{columns}
     \begin{column}{.3\textwidth}
-      An \emph{integer program} is a problem of the form 
+    %  An \emph{integer program} is a problem of the form 
 \begin{displaymath}
   \begin{array}{c}
     \max c^Tx \\
@@ -110,22 +117,14 @@ with $A ∈ ℤ^{m ×n}$, $b ∈ ℤ^{m}$ and $c ∈ ℤ^n$.
 \begin{frame}{The LP-relaxation}
 \begin{theorem}
   \label{thr:14}
-  Suppose that   $x^*$ is an  optimal solution of the  
+  If $x^*$ is an  optimal solution of 
   \emph{linear programming 
-    relaxation} $\max\{c^Tx \colon Ax\leq b, x ∈ ℝ^n\}$
-  Then $c^T x^* ≥ c^T x_I$, for each integer feasible solution. 
+    relaxation} $\max\{c^Tx \colon Ax\leq b, x ∈ ℝ^n\}$, 
+  then $c^T x^* ≥ c^T x_I$, for each integer feasible solution $x_I$. 
 \end{theorem}
 
 
 
-\begin{theorem}
-  \label{thr:14}
-  Suppose that   $x^*$ is an integral  optimal solution of the  
-  linear programming 
-  relaxation $\max\{c^Tx \colon Ax\leq b, x ∈ ℝ^n\}$, i.e., $x^* \in
-  \setZ^n$, then $x^*$ is also an optimal solution of the integer
-  programming problem $\max\{c^Tx \colon Ax\leq b, \, x \in \setZ^n\}$
-\end{theorem}
 
 
    \begin{columns}
@@ -139,6 +138,20 @@ with $A ∈ ℤ^{m ×n}$, $b ∈ ℤ^{m}$ and $c ∈ ℤ^n$.
 \end{frame}
 
 
+
+\begin{frame}
+  \frametitle{The LP-relaxation}
+  
+
+\begin{theorem}
+  \label{thr:14}
+  If  $x^*$ is integral  optimal solution of the  
+  linear programming 
+  relaxation $\max\{c^Tx \colon Ax\leq b, x ∈ ℝ^n\}$, then $x^*$ is also an optimal solution of the integer
+  programming problem $\max\{c^Tx \colon Ax\leq b, \, x \in \setZ^n\}$
+\end{theorem}
+
+\end{frame}
 
 
 
@@ -198,7 +211,7 @@ the \emph{incident} edges to $v$.
 \end{frame}
 
 
-\begin{frame}{Modeling max-weight matching as integer program} 
+\begin{frame}{Max-weight matching as IP} 
 
 
   \begin{equation*}
@@ -255,7 +268,7 @@ the \emph{incident} edges to $v$.
 
 
 
-
+ 
 
 \begin{frame}{Simplex on polyhedra whose vertices are integral}
 
@@ -309,7 +322,34 @@ the \emph{incident} edges to $v$.
 
 
 
-\begin{frame}
+\begin{frame}{Total unimodularity}
+
+
+\begin{definition}
+  \label{def:skip1}  
+  An integral matrix $A \in \{0 , \pm 1\}^{m\times n}$ is
+  called \emph{totally
+  unimodular} if each of its square sub-matrices has
+  determinant
+  $0,\pm1$.
+\end{definition}
+   
+
+   \begin{columns}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      
+    \end{column}       
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Example: Node-edge incidence matrix of bipartite graph}
 
 
    \begin{columns}
@@ -326,24 +366,13 @@ the \emph{incident} edges to $v$.
 
 
 
-\begin{frame}
-
-
-   \begin{columns}
-    \begin{column}{.5\textwidth}
-      
-    \end{column}
-    \begin{column}{.5\textwidth}
-      
-    \end{column}       
-  \end{columns}
-\end{frame}
-
-
-
-
-
-\begin{frame}
+\begin{frame}{Hoffman-Kruskal Theorem}
+\begin{theorem}
+  \label{po:thr:16}
+  Let $A\in \setZ^{m\times n}$ be an integral matrix. The polyhedron $P = \{ x
+  \in \setR^n \mid Ax\leq b, \, x\geq0\}$ is integral for each integral $b \in
+  \setZ^m$ if and only if $A$ is totally unimodular. 
+\end{theorem}
 
 
    \begin{columns}
