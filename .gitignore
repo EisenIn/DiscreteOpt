@@ -28,6 +28,7 @@
 
 auto/ 
 auto/*.el
+*\#*
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
