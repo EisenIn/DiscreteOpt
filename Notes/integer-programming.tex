@@ -976,7 +976,71 @@ Show that $A$ is totally unimodular.
 \item Consider the complete graph $G_n$ with $3$ vertices, i.e., $G =
   (\{1,2,3\}, \binom{3}{2} )$. Is the polyhedron of the linear
   programming relaxation of the vertex-cover integer program integral?
-  \label{i:item:5} 
+  \label{i:item:5}
+
+
+\item Sudoku is the following puzzle: Given a matrix
+  \begin{displaymath}
+    A ∈ \{0,1,\dots,9,X\}^{9 ×9} 
+  \end{displaymath}
+  the task is to replace each $X$ in $A$ by a number in $\{0,\dots,9\}$ such that the following holds.
+  \begin{enumerate}[a)] 
+  \item Each line of $A$ contains all numbers in  $\{0,\dots,9\}$
+  \item Each column of $A$ contains all numbers in  $\{0,\dots,9\}$
+  \item If $A$ is written as
+    \begin{displaymath}
+      A =
+      \begin{pmatrix}
+        B_{11} & B_{12} & B_{13} \\
+        B_{21} & B_{22} & B_{23} \\
+        B_{31} & B_{32} & B_{33} 
+      \end{pmatrix}
+    \end{displaymath}
+    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{0,\dots,9\}$.
+
+    \bigskip \noindent
+
+    In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
+    \begin{displaymath}
+      x_{i,j,k} =
+      \begin{cases}
+        1 & \text{ if } s_{i,j} = k \\
+        0 & \text{ otherwise.} 
+      \end{cases}
+    \end{displaymath}
+    where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
+
+
+    The following set of constraints guarantees that each cell of the solution contains a number
+    \begin{displaymath}
+      1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
+    \end{displaymath}
+
+    Write now constraints that guarantee the following.
+    \begin{itemize}
+    \item Each row must contain each number.
+    \item Each column must contain each number.
+    \item Each $B_{ij}$ must contain each number. 
+    \end{itemize}
+
+    Describe the final integer programming problem that links some of the variables to the input Sudoku. 
+    
+  \end{enumerate}
+
+  
+ \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
+  x_3 \leq 4, \, x\geq0\}$. Show that this polyhedron is
+  integral. 
+
+\item \emph{(Clustering)} The following is a recurring problem in data science. Suppose we are given $m$ points $v_1,\dots,v_m ∈ ℝ^n$ and a number $k$. We want to identify a subset $S ⊆ \{v_1,\dots,v_m\}$ of size $k$ such that
+  \begin{displaymath}
+    ∑_{i=1}^m d(v_i, S)  \text{ is minimal.} 
+  \end{displaymath}
+  Write an integer program that models this problem.
+
+    
+
+  
 \end{enumerate}
 
 
