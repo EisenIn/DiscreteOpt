@@ -261,24 +261,36 @@ Consider the following integer program, which models the clustering problem:
 integral, if and only if each vertex is integral. \label{i:item:3}
 
 \begin{solution}
-The ``only if'' part is easy since each vertex is itself a face of $P$. To show the ``if'' part, assume that each vertex of $P$ is integral. Let $P= \{x\in \mathbb{R}^n: Ax\leq b\}$.
+The ``only if'' part is easy since each vertex is itself a face of $P$. 
+To show the ``if'' part, assume that each vertex of $P$ is integral. Let $P= \{x\in \mathbb{R}^n: Ax\leq b\}$.
 Consider any nonempty face $F$ of $P$, which is of the form $F = P\cap \{x\in\mathbb{R}^n: c^T x = \beta\}$ where $c^T x \leq \beta$ is valid for $P$.
 
-We first claim that there exists $u \in \mathbb{R}^m, u\geq 0$ such that $u^T A = c^T$ and $u^T b = \beta$. Indeed, consider the following pair of primal and dual linear programs:
-\begin{displaymath}
-  \begin{array}[t]{c}
-    \max c^Tx \\
-         Ax ≤ b
-  \end{array} \quad \text{ and }\quad
-  \begin{array}[t]{c}
-    \min b^Ty \\
-    y^T A = c^T\\
-    y ≥ 0      
-  \end{array} 
-\end{displaymath}
-Since $c^T x \leq \beta$ is valid for $P$, we know that $P$ is bounded. Also $P$ is feasible since it has vertices. The optimal value of the primal problem is $\beta$, since the face $F$ is nonempty. 
-Then by the strong duality theorem, the dual problem has an optimal solution, say $u \in \mathbb{R}^m, u\geq 0$ with $u^T A = c^T$, such that the value is also $\beta$, i.e., $u^T b=\beta$.
-Then we have $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ where $A^\prime x\leq b^\prime$ is a sub-system of $Ax\leq b$ by taking the constraint $a_i^Tx \leq b_i$ of $Ax\leq b$ if and only if $u_i > 0$.
+\begin{itemize}
+  \item A proof for $P$ being a \textbf{bounded} polyhedron: If $P = \conv(\text{Ver}(P))$ where $\text{Ver}(P)$ is the set of all vertices of $P$, then we take any $x \in F$ which can be written as $x = \sum_{i=1}^k \alpha_i v_i$ where $v_i$ is a vertex of $P$ and $\alpha_i>0, \sum_{i=1}^k \alpha_i =1$.
+  We claim that each $v_i$ in the expression above, which is integral by assumption, is in the face $F$. Indeed, we have
+  \[
+  \beta = c^T x = c^T \left( \sum_{i=1}^k \alpha_i v_i \right) = \sum_{i=1}^k \alpha_i (c^T v_i) \leq \sum_{i=1}^k \alpha_i \beta = \beta,
+  \]
+  which implies that every inequalities inside are in fact equalities. Thus for each $i$ we have $c^T v_i = \beta$, hence $v_i \in F$.
+  \item A proof for general polyhedron $P$: If $P$ has vertices, then $\rank(A)=n$. Thus for the face $F$ which is itself a polyhedron characterized by $Ax\leq b, c^T x\leq\beta, -c^T x\leq -\beta$, its constraint matrix has rank $n$, which means that $F$ also contains a vertex. 
+  We just need to show that a vertex of $F$ is also a vertex of $P$. To prove this, we first claim that there exists $u \in \mathbb{R}^m, u\geq 0$ such that $u^T A = c^T$ and $u^T b = \beta$. Indeed, consider the following pair of primal and dual linear programs:
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+           Ax ≤ b
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A = c^T\\
+      y ≥ 0      
+    \end{array} 
+  \end{displaymath}
+  Since $c^T x \leq \beta$ is valid for $P$, we know that $P$ is bounded. Also $P$ is feasible since it has vertices. The optimal value of the primal problem is $\beta$, since the face $F$ is nonempty. 
+  Then by the strong duality theorem, the dual problem has an optimal solution, say $u \in \mathbb{R}^m, u\geq 0$ with $u^T A = c^T$, such that the value is also $\beta$, i.e., $u^T b=\beta$.
+  Then we have $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ where $A^\prime x\leq b^\prime$ is a sub-system of $Ax\leq b$ by taking the constraint $a_i^Tx \leq b_i$ of $Ax\leq b$ if and only if $u_i > 0$.
+  The fact $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ implies that vertices of $F$ are also vertices of $P$.
+\end{itemize}
+
 \end{solution}
   
 \end{enumerate}
