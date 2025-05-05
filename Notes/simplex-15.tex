@@ -438,12 +438,40 @@ Any linear program has an equivalent form
   \label{eq:s-3}
   \max\{ c^Tx \colon Ax \leq b, \, x \geq 0\}. 
 \end{equation}
-  We want to find an initial feasible basis for this linear program. Suppose first that we re-write the constraints $Ax \leq b$ as $A_1x\leq b_1$ and $A_2x\leq b_2$ with $b_1 \geq 0$ and $b_2<0$. Now consider the following linear program
+  We want to find an initial feasible basis for this linear program. Suppose first that we re-write the constraints $Ax \leq b$ as $A_1x\leq b_1$ and $A_2x\leq b_2$ with $b_1 \geq 0$ and $b_2<0$.  Now consider the following linear program
   \begin{equation}
     \label{eq:s-151}    
-  \min\{ \mathbf{1}^Ty \colon A_1x \leq b_1, \, A_2x \leq b_2 +y, \, x,y \geq 0, y \leq -b_2\}. 
+  \min\{ \mathbf{1}^Ty \colon A_1x \leq b_1, \, A_2x \leq b_2 +y, \, x,y \geq 0, y \leq -b_2\} 
 \end{equation}
-An initial basic feasible solution is $x=0$ and $y= -b_2$ with the basis corresponding to the inequalities $x\geq 0$ and $y \leq -b_2$. The simplex algorithm applied to this linear program terminates. It finds an optimal solution with objective value $0$ if and only if the original linear program is feasible. Let $B$ be the optimal basis in this case. Then $B$ without the indices corresponding to the constraints $y\geq 0$ is a feasible basis for the linear program~\eqref{eq:s-3}.  This follows from the fact that the rows of $A$ indexed by $B$ must be linearly independent. If the corresponding rank was smaller than $n$, then the rank of the rows of the auxiliary linear program~\eqref{eq:s-151} indexed by $B$ would be smaller than $n+k$, where $k$ is the number of rows of $A_2$. 
+with constraints in  matrix form
+\begin{equation}
+  \label{eq:33}
+  \begin{pmatrix}
+    A_1 & \\
+    A_2 & - I_k \\
+    - I_n & \\
+    & - I_k \\
+    &  I_k    
+  \end{pmatrix}
+  \begin{pmatrix}
+    x \\y 
+  \end{pmatrix} ≤
+  \begin{pmatrix}
+    b_1 \\ b_2 \\ 0 \\ -b_2 \\ 0
+  \end{pmatrix}.
+\end{equation}
+where $k$ is the number of negative entries in $b$. 
+An initial basic feasible solution is $x=0$ and $y= -b_2$ with the basis corresponding to the inequalities $x\geq 0$ and $y \leq -b_2$, i.e., the $3$-rd and $5$-th block of rows of the matrix~\eqref{eq:33}.  The simplex algorithm applied to this linear program terminates. It finds an optimal solution with objective value $0$ if and only if the original linear program is feasible. Let $B$ be the optimal basis in this case. Then $B$ without the indices corresponding to the constraints $y\geq 0$ contains a feasible basis for the linear program~\eqref{eq:s-3}.
+This follows from the fact that the rows of 
+\begin{equation}
+  \label{eq:35}
+  \begin{pmatrix}
+    A_1 \\
+    A_2 \\
+    -I_n
+  \end{pmatrix}
+\end{equation}
+indexed by $B$ must correspond to a submatrix of rank $n$.  If the corresponding rank was smaller than $n$, then the rank of the rows of the matrix~\eqref{eq:33} indexed by $B$ would be smaller than $n+k$. Let $B'$ be any subset of $B$ of size $n$ corresponding to a basis of~\ref{eq:35}. Then $B'$ is an initial feasible basis of~\eqref{eq:s-3}. 
 
 
 \section{Removing degeneracy by perturbation}
