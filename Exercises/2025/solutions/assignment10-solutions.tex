@@ -3,7 +3,7 @@
 \usepackage{../ppackage}
 \usepackage{bbm}
 \usepackage{import}
-
+\usepackage{booktabs}
 
 
 
@@ -201,6 +201,24 @@ that this is a node-edge incidence matrix of a bipartite graph. Hence $A''$ is T
 \item Let $G$ be a graph and let $A$ be its node-edge incidence matrix. We have seen that if $G$ is
 bipartite then $A$ is totally unimodular. Prove the converse, i.e., if $A$ is totally unimodular then $G$
 is bipartite.
+
+\begin{solution}
+Let the incidence matrix of $G$ be totally unimodular and assume towards contradiction that $G$ is not bipartite. Then $G$ must contain a cycle of odd length. Let this cycle contain some vertices of $G$ $\{v_1, \hdots, v_{2k+1}\}$ for some $k \in \mathbb{N}$. Let the edges of this cycle be $\{e_1, \hdots, e_{2k+1}\}$. Now, consider the submatrix of $A$ indexed by $[v_1, \hdots, v_{2k+1}] \times [e_1, \hdots, e_{2k+1}]$.  
+Then this submatrix of the cycle (up to permutation of the columns) looks as follows: \\
+
+\begin{tabular}{l | l l l l l }
+ & $e_1$ & $e_2$ &$e_3$ & $\hdots$ & $e_{2k+1}$ \\
+ \midrule
+$v_1$ & 1 & 0 & 0 &  $\hdots$ & 0 \ 1 \\
+$v_2$ & 1 & 1 & 0 & $\hdots$ & 0 \ 0 \\
+$v_3$ & 0 & 1 & 1 & $\hdots$ &  0 \ 0  \\
+$\vdots$ & & $\ddots$ & & &  \\
+$v_{2k+1}$ & 0 & 0 & 0 & $\hdots$ & 1 \ 1
+\end{tabular}
+
+
+Then since the number of rows and columns is odd, we can do row reduction and end with one row that has a value 2 giving the whole submatrix a determinant of 2. This means $A$ is not submodular, a contradiction. 
+\end{solution}
 
 
 \item Given a graph $G=(V,E)$, the spanning tree polytope $PST(G)$ is defined as follows:
