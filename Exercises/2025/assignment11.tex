@@ -163,22 +163,22 @@ Draw $E(A,b)$ for $A = \begin{pmatrix} 1 & 3  \\ 2 & 5 \end{pmatrix}$ and $b  = 
     \node[B](b) at (4, 1){$b$};
     \node[B](d) at (4, -1){$d$};
     \node[B](t) at (6, 0){$t$};
-   \node (a2) at (2.1, 1){};
-   \node (c2) at (2.1, -1){};
-   \node (b2) at (4.1, 1){};
-   \node (d2) at (4.1, -1){};
+   \node (a2) at (2.1, 0.75){};
+   \node (c2) at (2.1, -0.75){};
+   \node (b2) at (4.1, 0.75){};
+   \node (d2) at (4.1, -0.75){};
     
-    \draw[edge] (s) to node[midway ] {$7/10$} (a);
-    \draw[edge] (s) to node[midway ] {$8/10$} (c);
-    \draw[edge] (a2) to node[above left] {$0/4$} (c2);
-    \draw[edge] (c) to node[below right] {$2/5$} (a);
-    \draw[edge] (a) to node[midway ] {$5/5$} (b);
-    \draw[edge] (b) to node[midway ] {$0/7$} (c);
-    \draw[edge] (b2) to node[above left ] {$0/10$} (d2);
-    \draw[edge] (c) to node[midway ] {$10/10$} (d);
-    \draw[edge] (d) to node[below right ] {$2/6$} (b);
-    \draw[edge] (b) to node[midway ] {$3/3$} (t);
-    \draw[edge] (d) to node[midway ] {$12/14$} (t);
+    \draw[edge] (s) to node[above left ] {$7/10$} (a);
+    \draw[edge] (s) to node[below left ] {$8/10$} (c);
+    \draw[edge] (a2) to node[right] {$0/4$} (c2);
+    \draw[edge] (c) to node[left] {$2/5$} (a);
+    \draw[edge] (a) to node[above ] {$5/5$} (b);
+    \draw[edge] (b) to node[above ] {$0/7$} (c);
+    \draw[edge] (b2) to node[ right ] {$0/10$} (d2);
+    \draw[edge] (c) to node[below ] {$10/10$} (d);
+    \draw[edge] (d) to node[ left ] {$2/6$} (b);
+    \draw[edge] (b) to node[above ] {$3/3$} (t);
+    \draw[edge] (d) to node[below ] {$12/14$} (t);
     
 
 
