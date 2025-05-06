@@ -140,28 +140,21 @@ Draw $E(A,b)$ for $A = \begin{pmatrix} 1 & 3  \\ 2 & 5 \end{pmatrix}$ and $b  = 
   \item Show that any row of $A_D$ is in the span of the other rows.
   \item Let $T ⊆ A$ be a selection of $n-1$ arcs of $A$ such that the induced undirected graph is a spanning tree of $G$. Show that the corresponding columns of $A_D$ are linearly independent.
   \end{enumerate}
-  \item Consider the following problem. We are given $B\in \N$, and a set of integer points 
-$$S=\{p\in \Z^n: \ 0\leq p_i\leq B, \ \forall i=1,\dots,n\},$$ 
-whose points are all colored blue but one, which is red. We have an oracle that, given $i \in \{1,\dots,n\}$ and $\alpha \in \{0,\dots,B\}$, tells us whether there exists a red point $x^* \in S$ with $x^*_i \leq \alpha$. 
-% given vectors $l, r\in \R^n$, tells us whether the red point in $S$ is contained in the box $S\cap\{x\in \R^n: l_i\leq x_i\leq r_i \;\forall\; i=1,\dots,n\}$ or not.
+  
+  
+  
+\item Let $D = (V ,A)$ be a \textit{directed} graph. Its node-arc incidence matrix is the matrix $M ∈
+\{−1,0,1\}^{V ×A}$ defined via
+$$M_{w ,(u,v )}= \begin{cases} -1 & \text{ if } w = u \\ 1 & \text{ if } w = v \\ 0 & \text{ otherwise }\end{cases}$$ 
+\smallskip
 
-\medskip
-\noindent 
-Give an algorithm to find the red point using $O(n\log(B))$ many oracle calls.
+Show that the node-arc incidence matrix of any digraph is totally unimodular.
 
 
-\item 
-  Let $Ax \leq b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by $B$ in absolute value. Show that $Ax \leq b$ is feasible if and only if
-  \begin{displaymath}
-    \begin{array}{lc}
-&      Ax \leq b \\
-  i \in \{1,\dots,n\} ： &      -(B n)^{n+1} \leq x_i \leq (Bn)^{n+1}  
-    \end{array}
-  \end{displaymath}
- \smallskip
- 
-Hint: Consider a feasible point $x^*$ and the index sets $I = \{i : \ x^*_i \geq 0\}$ and $J = \{j : x^*_j \leq 0\}$. The polyhedron defined by $Ax \leq b, \ x_i \geq 0, \ i \in I, \ x_j \leq 0, \ j \in J$ is feasible and has vertices. Estimate the infinity norm of a vertex with the Hadamard bound.  
 
+\item Let $D= (V,A)$ be a digraph. For every $a∈A$, let $l_a, u_a \in \mathbb{R}_{\geq 0}$ be given such that $l_a \leq u_a$. Show that
+the set of circulations $\{x∈\setR^A : A_Dx= 0, l \leq x \leq u \}$ (with $A_D$ being the node-arc incidence matrix of $D$) is nonempty if and only if
+$$ \displaystyle\sum_{a \in \delta^-(X)} l_a \leq \displaystyle\sum_{a \in \delta^+(X)} u_a \quad \text{for all }X \subseteq V. $$
 
 
 
