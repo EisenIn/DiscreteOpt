@@ -128,6 +128,13 @@
   \begin{center}
     \includegraphics[width=0.2\textwidth]{graph1}
   \end{center}
+\item 
+Let $A \in \R^{n \times n}$ be an invertible matrix and $b \in \R^{n}$ a vector. The ellipsoid $E(A,b)$ is defined as the image of the unit ball under the linear mapping $t(x) = Ax+b$. Show that
+$$E(A,b) = \{ x \in \R^n: (x-b)^\top A^{-\top} A^{-1} (x-b) \leq 1 \}.$$
+	
+\item 
+Draw $E(A,b)$ for $A = \begin{pmatrix} 1 & 3  \\ 2 & 5 \end{pmatrix}$ and $b  = \begin{pmatrix} 1   \\ 2 \end{pmatrix}$. What are the axes of $E(A,b)$?
+
 \item Let $D = (V,A)$  be a directed graph and $A_D ∈ \{0,\pm1\}^{|V| × |A|}$ be the node-edge incidence matrix of $D$. Assume that the underlying undirected graph $G = (V,E)$  with $E = \{ uv ： uv ∈A \text{ or } vu ∈ A\}$ is connected. 
   \begin{enumerate}[i)]
   \item Show that any row of $A_D$ is in the span of the other rows.
@@ -154,6 +161,8 @@ Give an algorithm to find the red point using $O(n\log(B))$ many oracle calls.
  \smallskip
  
 Hint: Consider a feasible point $x^*$ and the index sets $I = \{i : \ x^*_i \geq 0\}$ and $J = \{j : x^*_j \leq 0\}$. The polyhedron defined by $Ax \leq b, \ x_i \geq 0, \ i \in I, \ x_j \leq 0, \ j \in J$ is feasible and has vertices. Estimate the infinity norm of a vertex with the Hadamard bound.  
+
+
 
 
 \end{enumerate}
