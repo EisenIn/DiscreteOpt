@@ -215,6 +215,30 @@ For our example we have $v_1 ≈(3.17,5.38)$ and $v_2 ≈(−0.14,0.08)$ with $�
   \end{enumerate}
   
   
+  \begin{solution}
+  
+  \begin{enumerate}[i)]
+  \item 
+  
+  \item We proceed by induction on $n$:
+
+Base case: $n=2$ is true trivially. 
+
+Suppose it is true for a tree on $n$ nodes then let $T$ be a tree on $n+1$ nodes. Let the incidence matrix of $T$ have columns $c_1, \hdots, c_{n}$. I.e. for $n+1$ nodes there are $n$ edges of the spanning tree so $n$ columns of the incidence matrix. 
+Without loss of generality, we assume column $n$ represents an edge attached to a leaf. (say node $v_{n+1}$ is a leaf). Removing node $v_{n+1}$ (thus edge $e_n$) gives another tree on $n$ nodes with incidence matrix of columns $c_1, \hdots, c_{n-1}$. 
+
+By induction, this smaller incidence matrix has linearly independent columns. Adding back $v_{n+1}$ we get back our original incidence matrix. let
+$a_1c_1+...+a_{n−1}c_{n−1}+a_nc_n=0$ such that the full set of columns of $T$ are not linearly independent. \\
+Case 1: $a_n=0$ then by linear independence of $c_i$ for $i≤n−1$ we must have $a_i=0$ for $i≤n−1$.
+
+Case 2: $a_n\neq 0$ then
+$a_1c_1+...+a_{n−1}c_{n−1}=−a_nc_n⟹b_1c_1+...b_{n−1}c_{n−1}=c_n$
+where $b_k= - \frac{a_k}{a_n}$. Thus $c_n$ is linear combination of columns of the smaller spanning tree. This gives a contradiction since $c_n(v_{n+1})=1$ since the final edge is incident to node $v_{n+1}$ and as the degree of $v_{n+1}$ is $1$ in $T$, column $c_n$ is the only column with nonzero entry on row $n+1$. 
+  
+  \end{enumerate}
+  \end{solution}
+  
+  
   
 \item Let $f \in \mathbb{R}^{|A|}_{\geq 0}$ be a flow of a directed graph. Show that we can find a feasible flow $f^*$ such that $f^* = \sum_{p \in P}  \mu_p \cdot p + \sum_{c \in C}\mu_c \cdot c$ where $C$ is a set of cycles in the graph, $P$ is a set of paths in the graph, and $\mu_l, \mu_p \in \mathbb{R}_{\geq 0}$.
 
