@@ -15,6 +15,8 @@
 
 \usepackage{../../Notes/tikzit}
 \usepackage{../../Notes/utf8math}
+\usetikzlibrary{positioning, 
+                quotes}
 
 \input{../../Notes/TIKZ/digraph.tikzstyles}
 
@@ -124,6 +126,7 @@
 \makeheader
 
 \begin{enumerate}[1)]
+
 \item A \emph{simplex}  is a polytope of the form
   \begin{displaymath}
     Σ = \conv\{v_0,\dots,v_n\}, 
@@ -140,6 +143,32 @@
     $a^T x^*  = β$ holds for each $x^* ∈ ℝ^n$ satisfying $Ax ≤b$. %  \, \quad \text{ for all } x^* ∈ P. 
 
   
+
+\item Show that the unit simplex $∆ = conv\{0,e_1,\hdots,e_n\}⊂\setR^n$ has volume $\frac{1}{n!}$.
+
+
+
+\item Let $P= \{x∈\setR^n : Ax≤b\}$ be a full dimensional $0/1$ polytope and $c ∈\setZ^n$. We will show how we
+can use the ellipsoid method to solve the optimization problem $\max c^Tx: x∈P$.
+Define $z^*:= \max c^Tx: x∈P$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
+\begin{enumerate}[i)]
+\item Show that the ellipsoid method requires $O(n^3 \log(n)c_{max})$ iterations to decide whether $P ∩
+(c^⊤x≥β) = ∅$ for some integer $β$ (i.e. find a suitable initial ellipsoid and stopping value L).
+\item Show that we can use binary search to find $z^*$ with $\log(nc_{max})$ calls to the ellipsoid method.
+\item Show how you can find an optimal solution $x^*$ such that $c^Tx^*= z^*$ in polynomial time.
+\end{enumerate}
+
+
+
+\item Consider the complete graph $G_n$ with 3 vertices, i.e., $G= (\{1,2,3\}, \binom{3}
+{2} )$. Is the polyhedron of the linear programming relaxation of the vertex-cover integer program integral?
+
+
+\item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
+
+
+
+>>>>>>> f7a73aef45e9d9aac5555b69497ab4517e38b5a9
 \end{enumerate}
 
 
