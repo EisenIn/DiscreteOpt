@@ -248,7 +248,7 @@ where $b_k= - \frac{a_k}{a_n}$. Thus $c_n$ is linear combination of columns of t
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[node distance=2cm,
+    \begin{tikzpicture}[scale=1.5,node distance=2cm,
     B/.style={circle, draw, minimum size=.8cm},
     edge/.style={->,> = latex', font=\footnotesize}]
     
@@ -265,13 +265,13 @@ where $b_k= - \frac{a_k}{a_n}$. Thus $c_n$ is linear combination of columns of t
     
     \draw[edge] (s) to node[above left ] {$7/10$} (a);
     \draw[edge] (s) to node[below left ] {$8/10$} (c);
-    \draw[edge] (a2) to node[right] {$0/4$} (c2);
-    \draw[edge] (c) to node[left] {$2/5$} (a);
+    \draw[edge] (a2) to node[right] {$2/5$} (c2);
+    \draw[edge] (c) to node[left] {$0/4$} (a);
     \draw[edge] (a) to node[above ] {$5/5$} (b);
     \draw[edge] (b) to node[above ] {$0/7$} (c);
-    \draw[edge] (b2) to node[ right ] {$0/10$} (d2);
+    \draw[edge] (b2) to node[ right ] {$2/6$} (d2);
     \draw[edge] (c) to node[below ] {$10/10$} (d);
-    \draw[edge] (d) to node[ left ] {$2/6$} (b);
+    \draw[edge] (d) to node[ left ] {$0/10$} (b);
     \draw[edge] (b) to node[above ] {$3/3$} (t);
     \draw[edge] (d) to node[below ] {$12/14$} (t);
     
@@ -318,7 +318,33 @@ Step $2$ reduces flow until it completely removed flow from at least one edge of
 the set of circulations $\{x∈\setR^A : A_Dx= 0, l \leq x \leq u \}$ (with $A_D$ being the node-arc incidence matrix of $D$) is nonempty if and only if
 $$ \displaystyle\sum_{a \in \delta^-(X)} l_a \leq \displaystyle\sum_{a \in \delta^+(X)} u_a \quad \text{for all }X \subseteq V. $$
 
+\begin{solution}
+We first prove the $\Rightarrow$ direction. Assume that the set of circulations is nonempty and let $x\in \mathbb{R}^A$ be such a circulation. Then for any $X\subseteq V$ we have 
+\[
+\sum_{a \in \delta^-(X)} l_a \leq \sum_{a \in \delta^-(X)} x_a = \sum_{a \in \delta^+(X)} x_a \leq \sum_{a \in \delta^+(X)} u_a,
+\]
+where the first and last inequality follows from $l\leq x\leq u$ and the equality in the middle follows from $A_D x=0$: for each node $v \in X$ we have $\sum_{a \in \delta^-(v)} x_a = \sum_{a \in \delta^+(v)} x_a$, summing them up over all $v\in X$ and cancelling common terms on both sides.
 
+Next we prove the $\Leftarrow$ direction. For each $X\subseteq V$, define its slack $s(X):= \sum_{a \in \delta^+(X)} u_a - \sum_{a \in \delta^-(X)} l_a$.
+Assume that $ \displaystyle\sum_{a \in \delta^-(X)} l_a \leq \displaystyle\sum_{a \in \delta^+(X)} u_a$ holds for all $X\subseteq V$, i.e., $s(X) \geq 0$ for all $X\subseteq V$. We will construct a circulation $x \in \mathbb{R}^A$. 
+First if for all $a\in A$ we have $u_a=l_a$, then we claim that $x:=u=l$ is a circulation. Indeed, for any $v\in V$, we have 
+\[
+0\leq s(\{v\}) = \sum_{a \in \delta^+(v)} u_a - \sum_{a \in \delta^-(v)} l_a = \sum_{a \in \delta^+(v)} x_a - \sum_{a \in \delta^-(v)} x_a
+\]
+and
+\[
+0\leq s(V\setminus \{v\}) = \sum_{a \in \delta^+(V\setminus \{v\})} u_a - \sum_{a \in \delta^-(V\setminus \{v\})} l_a = \sum_{a \in \delta^-(v)} x_a - \sum_{a \in \delta^+(v)} x_a
+\]
+which implies that $\sum_{a \in \delta^+(v)} x_a - \sum_{a \in \delta^-(v)} x_a = 0$ for each $v\in V$, i.e., $A_Dx=0$.
+Next we deal with the case when there exists $a\in A$ such that $u_a>l_a$. We will present a procedure, which increases $l_a$ and decreases $u_a$ so that eventually $u_a=l_a$, and at the same time maintaining the non-negativity of $s(X)$ for all $X\subseteq V$. Then by doing the procedure for each $a\in A$ with $u_a>l_a$ one at a time, we can reduce the problem to the case $u=l$ which we have solved.
+
+The procedure is as follows. For any $a\in A$ with $u_a>l_a$, take $X\subseteq V$ to be the subset with the minimum slack such that $a\in \delta^{+}(X)$, and take $Y \subseteq V$ to be the subset with the minimum slack such that $a\in\delta^-(Y)$. 
+Define $A^\prime \subseteq A$ to be all the arcs between $X\setminus Y$ and $Y\setminus X$. Note that $a \in A^\prime$. Then we have
+\[
+s(X) + s(Y) = s(X\cap Y) + s(X\cup Y) + \sum_{a^\prime\in A^\prime} (u_{a^\prime}-l_{a^\prime}) \geq u_a - l_a>0.
+\]
+Pick $\alpha, \beta\geq 0$ such that $\alpha+\beta = u_a-l_a$ and $\alpha\leq s(X), \beta\leq s(Y)$. Then we increase $l_a$ to $l_a+\beta$ and decrease $u_a$ to $u_a - \alpha$. By the minimality of $s(X), s(Y)$, the slacks of all subsets of $V$ are still non-negative.
+\end{solution}
 
 \end{enumerate}
 
