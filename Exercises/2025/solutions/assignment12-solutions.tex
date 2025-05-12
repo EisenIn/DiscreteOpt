@@ -165,15 +165,17 @@ Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
 
 \begin{solution}
 \begin{enumerate}[i)]
-\item First note that all $0/1$ polytopes are contained inside the ball centered at $1/2\cdot \vec{1}$ with radius $√n/2$.
-We can upper bound the volume of this ball by $√n^n$. Then observe that $P ∩(c^Tx ≥β) = ∅$ iﬀ
-$P':= P ∩(c^Tx≥β−1/2) = ∅$, since the vertices of $P$ are integral. So we want to lower bound the
-volume of $P'$. Let $x_0$ be an integral vertex in $P'$. Since $P$ is full dimensional it contains a simplex
-$∆ = conv \{x_0,x_1,\hdots,x_n\}$ of volume $1/n!$. The idea is to scale this simplex so that it is contained in
-$P'$. We define $α=\frac{1}{2nc_{max}}$ and consider the simplex $∆'= [z_0,z_1,\hdots,z_{n−1}]$ where $z_i = x_0 +α(x_i−x_0)$.
+\item Note that all $0/1$ polytopes are contained inside the ball centered at $1/2\cdot \vec{1}$ with radius $√n/2$.
+We can upper bound the volume of this ball by $√n^n$. 
+\item Since $P$ is full dimensional it contains a simplex $∆ = conv \{x_0,x_1,\hdots,x_n\}$ of volume $1/n!$. 
+\item We define $α=\frac{1}{2nc_{max}}$ and consider the simplex $∆'= [z_0,z_1,\hdots,z_{n−1}]$ where $z_i = x_0 +α(x_i−x_0)$.
 To see that $∆'$ is contained in $P'$ we can check that each $z_i$ is in $P$ and satisfies $c^Tz_i ≥β$. Then we
 obtain that
 $$vol(P') ≥vol(∆') ≥\frac{1}{n!}\left( \frac{1}{2nc_{max}}\right).$$
+\item Observe that $P ∩(c^Tx ≥β) = ∅$ iﬀ
+$P':= P ∩(c^Tx≥β−1/2) = ∅$, since the vertices of $P$ are integral. So we want to lower bound the
+volume of $P'$. Let $x_0$ be an integral vertex in $P'$. The idea is to scale this simplex so that it is contained in
+$P'$. 
 Setting $L= vol(∆')$ and using the fact that the ellipsoid method terminates in $O(n\log(vol(I_{init})/L))$
 gives us the correct bound.
 \item We use the fact that the value of $c^Tx$ lies between $−nc_{max}$ and $nc_{max}$ for any vertex $x$ of $P$ to
