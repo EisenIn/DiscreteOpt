@@ -193,7 +193,16 @@ I.e., the ellipsoid $E(A(c),a(c))$ contains the half-ball H given in the problem
 \begin{solution}
 \begin{enumerate}[i)]
 \item Let $x, y \in X$ and let their matrix representations be $A_x, A_y$. Then for any $\lambda \in [0,1]$, take $z = \lambda x + (1-\lambda) y$. Then $A_z = \lambda A_x + (1-\lambda)A_y$ and for any indeces $i,j$, $$A_z[ij] = \lambda A_x[ij] + (1-\lambda) A_y[ij] =\lambda A_x[ji] + (1-\lambda) A_y[ji] = A_z[ji]$$ 
-where the second equality follows from symmetry of $A_x$ and $A_y$. Hence, $A_z$ is symmetric. Moreover, consider any vector $v \in \setR^n$ and 
+where the second equality follows from symmetry of $A_x$ and $A_y$. Hence, $A_z$ is symmetric. Moreover, consider any vector $v \in \setR^n$, then $$v^TA_zv = v^T(\lambda A_x + (1-\lambda) A_y)v = \lambda v^TA_x v + (1-\lambda) v^A_yv \geq 0 + 0 = 0$$
+where the inequality follows from $A_x, A_y$ being PSD. Then $A_z$ is also PSD and therefore $z$ is in $X$. Thus $X$ is convex.
+
+\item Let $a$ be the vector representation of $A$. Since $A \notin X$, $A$ is either not symmetric or not PSD. In the case where $A$ is not symmetric, there exists indeces $i, j$ such that $A[ij] > A[ji]$ without loss of generality. Notice that in $a$, $A[ij]$ corresponds to the component $a_{(i-1)\cdot n + j}$. Then letting the vector $\alpha$ be defined by $$\alpha_k = \begin{cases} 0 & \text{ if }k \notin \{(i-1)\cdot n + j, (j-1)\cdot n + i\} \\ 1 & \text{ if } k = (i-1)\cdot n + j \\ -1 & \text{ if } k = (j-1)\cdot n + i \end{cases}.$$
+
+Then $\alpha^Ta > 0$ by the assumption $A[ij]>A[ji]$, but $\alpha^Tx = 0$ for all $x \in X$ as these vectors are symmetric. Thus $\alpha^Tx = 0$ is a separating hyperplane. \\
+
+
+\medskip
+Now consider the case where $A$ is not PSD. Then there exists some vector $v \in \setR^n$ such that $v^TAv < 0$. Note that $v^TAv = \displaystyle\sum_{i = 1}^n \displaystyle\sum_{j=1}^n v_i A[ij]v_j$. Recall that $A[ij] = a_{(i-1)\cdot n + j}$. Then let $\alpha$ be the vector where $\alpha_{(i-1)\cdot n + j} = v_i v_j$ for each $i \in [n], j \in [n]$. Notice then that $\alpha \in \setR^{n^2}$ and $\alpha^T a = v^TAv < 0$. Moreover, for any $x \in X, \alpha^Tx = v^T A_x v \geq 0$ by positive semidefiniteness. Then $\alpha^Tx = 0$ is a separating hyperplane for $A$.  
 \end{enumerate}
 \end{solution}
 
