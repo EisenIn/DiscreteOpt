@@ -171,19 +171,30 @@ lemma in the lecture notes, one can verify that $e_1$ can be replaced with $c$ i
 I.e., the ellipsoid $E(A(c),a(c))$ contains the half-ball H given in the problem statement.
 
 
-\item Prove the Hyperplane Separation Theorem: if $K ⊂\setR^n$ is convex and closed and $x^\ast\notin K$, then there
-is a hyperplane $a^Tx= b$ such that $a^Tx^\ast>b$ and $a^Tx<b$ for any $x∈K$.
+\item Let $n ∈ ℕ$ and consider the space $ℝ^{n^2}$. An element $x ∈ℝ^{n^2}$  be interpreted as a matrix $A ∈ ℝ^{n ×n}$  in the obvious way as
+  \begin{displaymath}
+    A =
+    \begin{pmatrix}
+      x_1 & x_2 & \cdots & x_n \\
+      x_{n+1} & x_{n+2} & \cdots & x_{2n} \\
+      & &  \vdots \\
+      x_{n^2-n+1} & x_{n^2-n+2} & \cdots &x_{n^2} \\
+    \end{pmatrix}
+  \end{displaymath}
+
+  Let  $X ⊆ ℝ^{n^2}$ be the subset of $ℝ^{n^2}$ consisting of symmetric and positive semidefinite matrices. 
+  \begin{enumerate}[i)]
+  \item Show that $X$ is convex.
+  \item Let $A ∈ ℝ^{n ×n}$, $A ∉ X$. Describe a hyperplane $a^Tx = β$ that separates $A$ from $X$. 
+  \end{enumerate}
+
 
 
 \begin{solution}
-Consider the function $f(x) = \Vert x^\ast−x\Vert_2$ for $x ∈K$. $f$ is continuous and there is $y ∈K$ such that
-$f(y)$ is minimum: to see this, just choose a point $c ∈K$ and consider the ball $B$ centered at $c$ of
-radius $\Vert c−x^\ast\Vert_2$, then we can restrict $f$ to $K∩B$, which is bounded and closed, hence compact,
-so there is a $y$ minimizing $f(y)$ over $K∩B$. It is immediate that $y$ is a minimum for all $K$. Now
-consider the segment $x^\ast y$, and let $a^Tx= b$ the hyperplane whose normal is the direction of $x^\ast y$ and
-containing its midpoint. Clearly $a^Tx^\ast>b$. Assume by contradiction that there is any point $y'∈K$
-such that $a^Ty'≥b$. Then by convexity $yy'$ is contained in $K$ and it intersects the ball centered at
-$x^\ast$ of radius $f(y)$ in an internal point, contradicting the minimality of $f(y)$.
+\begin{enumerate}[i)]
+\item Let $x, y \in X$ and let their matrix representations be $A_x, A_y$. Then for any $\lambda \in [0,1]$, take $z = \lambda x + (1-\lambda) y$. Then $A_z = \lambda A_x + (1-\lambda)A_y$ and for any indeces $i,j$, $$A_z[ij] = \lambda A_x[ij] + (1-\lambda) A_y[ij] =\lambda A_x[ji] + (1-\lambda) A_y[ji] = A_z[ji]$$ 
+where the second equality follows from symmetry of $A_x$ and $A_y$. Hence, $A_z$ is symmetric. Moreover, consider any vector $v \in \setR^n$ and 
+\end{enumerate}
 \end{solution}
 
  
