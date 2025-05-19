@@ -191,6 +191,39 @@ $x^\ast$ of radius $f(y)$ in an internal point, contradicting the minimality of 
 
 
 
+\item Give an example for a linear program with no maximum (in other
+words, unbounded linear program) such that the corresponding integer
+program is not unbounded.
+\begin{solution}
+An example is to take the feasible region as a line through the origin that does not
+contain any integer point except for the origin (for example the line
+spanned by $(1,√2)$). Then let the objective maximize the x-coordinate of a point on
+this line. As the line is unbounded, so is the LP but the integer program only contains the point $(0,0)$ which has bounded objective value.
+\end{solution}
+
+
+\item Let $E ⊂\setR^3$ be the ellipsoid $E= \{(x,y,z) :x^2 + \frac{y^2}{4} + \frac{z^2}
+{9} ≤1\}$.
+Let $H^+$ be the half-space $H^+ = \{(x,y,z) : x+ y+ z ≥0\}$.
+Find an ellipsoid $E'$ such that $E'⊃E∩H^+$ and $Vol(E') ≤Vol(E)e^{−1/(2(3+1))}$.
+
+\begin{solution}
+The linear transformation $T(x,y,z) = (x,y/2, z/3)$ takes the ellipsoid $E$ to the unit ball $B$. Notice that $T$ takes $H^+$ to the half-space
+$G^+ = \{x+2y+3z ≥0\}$. Now we find a linear transformation $R$ that will
+rotate the space about the origin such that $B$ will remain fixed but $G^+$
+will go to the half space $\{x ≥0\}$. One way to do this is to take the vector $u=1/√14 (1,2,3)$ and complete it to an
+orthonormal basis: take also the vector $v=1/√5 (−2,1,0)$ and the vector
+$w$ perpendicular to both $u$ and $v$ (you need to find it). Then consider
+the linear transformation $R$ that takes $u,v,w$ to $(1,0,0),(0,1,0)$, and
+$(0,0,1)$. This is the inverse of the matrix whose columns are $u,v,w$.
+The linear transformation $R(T(·))$ takes $E∩H^+$ to the half ball $B∩\{x≥
+0\}$. By the half-ball theorem, then the ellipsoid
+$F= \{\frac{16}{9}(x−\frac{1}{4})^2 + \frac{8}{9} y^2 + \frac{8}{9} z^2 ≤1\}$ contains the half ball $B∩\{x≥0\}$
+and we also have $Vol(F) ≤e^{−1/(2(3+1))} Vol(B)$.
+If we now apply $T^{−1}(R^{−1}(·))$ on $F$ we get the desired ellipsoid $E'$. One
+can get from here the algebraic description of $E'$. Technichally, we need
+to replace $x,y$, and $z$ in the algebraic discription of $F$ by $R(T(x,y,z))$.
+\end{solution}
   
 
 
