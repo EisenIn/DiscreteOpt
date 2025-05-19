@@ -136,12 +136,45 @@
     
 \item Let $A ∈ ℤ^{m ×n}$ be a matrix of rank $n$ and let $b ∈ ℤ^m$. Show the following: If $P = \{ x ∈ ℝ^n ： Ax ≤ b\}$ is full-dimensional, then there exist $n+1$ vertices of $P$ that are \textit{affinely} independent. 
 
+\begin{solution}
+Note that P is a polytope and thus the convex hull of its vertices. We will consecutively choose
+vertices of P while ensuring that each newly selected vertex is aﬃnely independent to the previous
+ones. Initially, we can choose the first vertex arbitrarily, as every single point is aﬃnely independent.
+Now, assume that we have already chosen vertices $v_1,...,v_k$. Out of the remaining vertices we pick
+as $v_{k+1}$ an arbitrary vertex of $P$ such that $v_1,...,v_k,v_{k+1}$ is aﬃnely independent. We continue this
+process until $k$ is such that all the remaining vertices are aﬃnely dependent with $v_1,...,v_k$. This
+means that all the vertices and thus their convex hull P are contained in the $k−1$-dimensional aﬃne
+subspace defined by $v_1,...,v_k$. Since P is full-dimensional, this can only happen for $k= n+ 1$. At
+that point we are done.
+\end{solution}
 
-\item Given vectors $c∈\setR^n$ and $a∈\setR^n$, and a symmetric positive definite matrix $A∈\setR^{n×n}$, provide a formula for the ellipsoid containing:
-\begin{enumerate}
-\item  The half-ball $H= \{x∈\setR^n : ∥x∥_2≤1, c^Tx≥0\}$
-\item The half-ellipsoid $H(A,a) = \{x∈\setR^n :(x−a)^T A^{-1}(x−a) ≤1, c^Tx≤c^Ta\}$.
-\end{enumerate}
+
+
+\item Given vectors $c∈\setR^n$ and $a∈\setR^n$, and a symmetric positive definite matrix $A∈\setR^{n×n}$, provide a formula for the ellipsoid containing the half-ball $H= \{x∈\setR^n : ∥x∥_2≤1, c^Tx≥0\}.
+  
+  
+ \begin{solution}
+For convenience, we use a diﬀerent representation of the ellipsoid than before. Here, we define it as
+$$E(A,a) = \{x∈\setR^n :(x−a)^T A^{-1}(x−a) ≤1\}$$
+where $A∈\setR^{n×n}$ is a positive definite (PD) matrix, and $a∈\setR^n$ is the center. We remark that for every PD matrix
+$A$ there exists a unique PD matrix, denote it with $A^{1/2}$, such that $A= A^{1/2}A^{1/2}$. Thus,
+$E(A,a) = \{x∈\setR^n :(x−a)^T {(A^{1/2})}^{−1}
+{(A^{1/2})}^{−1}(x−a) ≤1\}$.
+
+Denote with $e_1 ∈\setR^n$ the unit vector with the first coordinate equal to $1$, and with $I_n$ the $n×n$
+identity matrix. When rewriting the ellipsoid, we
+obtain that the half-ball $\{x∈\setR^n :∥x∥≤1, e^T1 x≥0\}$ is contained in the ellipsoid
+$E(A(e_1),a(e_1))$, where $$A(e1) = \frac{n^2}{n^2 -1}\left(I_n - \frac{2}{n+1}e_1e_1^T\right) \quad \text{ and } a(e_1) = \frac{1}{n+1}e_1.$$
+
+Without loss of generality we could assume that $∥c∥= 1$. Similarly to the proof of the Half-ball
+lemma in the lecture notes, one can verify that $e_1$ can be replaced with $c$ in the above formulas.
+I.e., the ellipsoid $E(A(c),a(c))$ contains the half-ball H given in the problem statement.
+
+ 
+ \end{solution}
+
+
+
   
 
 
