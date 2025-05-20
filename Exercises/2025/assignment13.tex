@@ -169,6 +169,27 @@ program is not unbounded.
   $\vol(E') ≤\vol(E) ⋅e^{−1/(2(3+1))}$.
 
 
+\item (Bonus Question) Suppose we are given an oracle that tells us whether a
+   polyhedron defined by $Ax ≤b$ is full-dimensional. Based on this oracle,
+   this exercise develops a method to find an inequality $a^Tx ≤ β$ of
+   $Ax ≤b$ that is satisfied by every feasible solution with
+   \emph{equality} in the case where $P = \{ x ∈ ℝ^n ： Ax≤b\}$ is not
+   full-dimensional.
+
+
+   First we split $Ax ≤ b$ into two systems $A_1x ≤ b_1$ and
+   $A_2 x ≤ b_2$, where $A_1x ≤ b_1$ are the inequalities that are
+   satisfied with equality by every feasible $x^* ∈ ℝ^n$. The system $A_1 x ≤b_1$ is
+   called the \emph{implicit equalities} of $Ax ≤b$.
+   \begin{enumerate}[i)] 
+   \item If $Ax ≤b$ is feasible, then there exists a feasible solution $x^*$ such that $A_2x^* < b_2$ holds.
+     \item Argue that the implicit equalities of $A_1x≤ b_1$ are  $A_1x ≤b_1$. 
+   \item Suppose that $Ax ≤ b$ is not full-dimensional and that
+     $A'x ≤ b'$ is full-dimensional, where $A'x ≤ b'$ stems from
+     $Ax ≤ b$ by deleting one inequality $a^Tx ≤ β$. Show that
+     $a^Tx ≤ β$ is an implicit equality of $Ax ≤b$.
+   \item If $a^Tx ≤ β$ is an implicit equality of $Ax≤ b$, then describe a feasibility problem in $ℝ^{n-1}$ that is equivalent to the one of $Ax ≤b$. 
+   \end{enumerate}
 
 \end{enumerate}
 
