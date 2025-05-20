@@ -201,8 +201,9 @@ Draw $E(A,b)$ for $A = \begin{pmatrix} 1 & 3  \\ 2 & 5 \end{pmatrix}$ and $b  = 
 \begin{solution}
 Using the previous exercise, we have that $E(A,b) = \{x∈\setR^2 : (x−b)^TA^{-T}A^{-1}(x−b) ≤1\}$. From
 linear algebra, the matrix $A^{-T} A^{-1}$ is symmetric, in particular has real eigenvalues and is diagonalizable by an orthogonal matrix $S$, i.e. $A^{-T} A^{-1} = SDS^T$ , where D is diagonal.
-So we can rewrite $E(A,b) = \{x∈\setR^2 :(S^T(x−b))^T
-·D·S(x−b) ≤1\}= \{x∈\setR^2 :λ_1\left(\frac{x_1-b_1}{c_1}\right)^2+  λ_2\left(\frac{x_2-b_2}{c_2}\right)^2  ≤1\}$,for $λ_1,λ_2$ diagonal elements of $D$, and $b_1,b_2,c_1,c_2$ determined by $S$. Therefore, the
+So we can rewrite 
+$$E(A,b) = \{x∈\setR^2 :(S^T(x−b))^T
+·D·S(x−b) ≤1\}= \{x∈\setR^2 :λ_1 (v_1^T(x-b))^2+  λ_2(v_2^T(x-b))^2  ≤1\}$$ where $λ_1,λ_2$ are eigenvalues of $A^{-T}A^{-1}$ and $v_1, v_2$ are the corresponding eigenvectors. Therefore, the
 eigenvectors of the matrix $A^{-T}A^{-1}$ define the principal directions of the ellipsoid and the square
 root of the corresponding eigenvalues determines their length.
 For our example we have $v_1 ≈(3.17,5.38)$ and $v_2 ≈(−0.14,0.08)$ with $λ_1 = 39$ and $λ_2 = 0.026$.
