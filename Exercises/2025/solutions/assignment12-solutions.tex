@@ -150,28 +150,29 @@ have used the induction hypothesis in the third equation. Therefore, we get the 
 
 
 \item Let $P= \{x∈\setR^n : Ax≤b\}$ be a full dimensional $0/1$ polytope and $c ∈\setZ^n$. We will show how we
-can use the ellipsoid method to solve the optimization problem $\max c^Tx: x∈P$.
+can use the ellipsoid method to solve the optimization problem $\{\max c^Tx: x∈P\}$.
 Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
 \begin{enumerate}[i)]
 \item Show that $P$ is contained inside the ball centered at $1/2 \cdot \vec{1}$ with radius $\sqrt{n}/2$ and give an upper bound on the volume of this ball. 
 \item Show that $P$ contains a simplex of volume $1/n!$.
-\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
+\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta-1/2)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
 \item Show that the ellipsoid method requires $O(n^3 \log(n)c_{max})$ iterations to decide whether $P ∩
-(c^⊤x≥β) = ∅$ for some integer $β$. I.e. use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
+(c^⊤x≥β-1/2) = ∅$ for some integer $β$, i.e., use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
 \item Show that we can use binary search to find $z^*$ with $\log(nc_{max})$ calls to the ellipsoid method.
 \item Show how you can find an optimal solution $x^*$ such that $c^Tx^*= z^*$ in polynomial time.
 \end{enumerate}
-
 
 \begin{solution}
 \begin{enumerate}[i)]
 \item Note that all $0/1$ polytopes are contained inside the ball centered at $1/2\cdot \vec{1}$ with radius $√n/2$.
 We can upper bound the volume of this ball by $√n^n$. 
-\item Since $P$ is full dimensional it contains a simplex $∆ = conv \{x_0,x_1,\hdots,x_n\}$ of volume $1/n!$. 
-\item We define $α=\frac{1}{2nc_{max}}$ and consider the simplex $∆'= [z_0,z_1,\hdots,z_{n−1}]$ where $z_i = x_0 +α(x_i−x_0)$.
-To see that $∆'$ is contained in $P'$ we can check that each $z_i$ is in $P$ and satisfies $c^Tz_i ≥β$. Then we
+\item Since $P$ is full dimensional it contains a simplex $∆ = \conv \{x_0,x_1,\hdots,x_n\}$ of volume $1/n!$. 
+\item Let $P':= P ∩(c^Tx≥β−1/2)$ and suppose that $P^\prime$ is nonempty. Take $x_0 \in P^\prime \cap \{0,1\}^n$. We define $α=\frac{1}{2nc_{max}}$ and consider the simplex $∆'= \conv \{z_0,z_1,\hdots,z_{n}\}$ where $z_i = x_0 +α(x_i−x_0)$.
+To see that $∆'$ is contained in $P'$ we just need to check that each $z_i$ is in $P$ and satisfies $c^Tz_i ≥β-1/2$. Indeed, we have 
+$ c^Tz_i = c^Tx_0 + \alpha c^T(x_i-x_0) \geq \beta - 1/2 $.
+Then we
 obtain that
-$$vol(P') ≥vol(∆') ≥\frac{1}{n!}\left( \frac{1}{2nc_{max}}\right).$$
+$$vol(P') ≥vol(∆') ≥\frac{1}{n!}\left( \frac{1}{2nc_{max}}\right)^n.$$
 \item Observe that $P ∩(c^Tx ≥β) = ∅$ iﬀ
 $P':= P ∩(c^Tx≥β−1/2) = ∅$, since the vertices of $P$ are integral. So we want to lower bound the
 volume of $P'$. Let $x_0$ be an integral vertex in $P'$. The idea is to scale this simplex so that it is contained in
@@ -181,8 +182,8 @@ gives us the correct bound.
 \item We use the fact that the value of $c^Tx$ lies between $−nc_{max}$ and $nc_{max}$ for any vertex $x$ of $P$ to
 conclude that $z^*$ must also lie within these bounds. Using binary search on this interval of integer
 points takes $\log(nc_{max})$ steps.
-\item The algorithm described in (i) and (ii) gives us the optimal value $z^*$ but also a point $y ∈P$
-such that $z^*≥c^Ty≥z^*−1$. We now take this point and project it onto the hyperplane $c^Tx= z^*.$
+\item The algorithm described in (iv) and (v) gives us the optimal value $z^*$ but also a point $y ∈P$
+such that $z^*≥c^Ty≥z^*-1/2$. We now take this point and project it onto the hyperplane $c^Tx= z^*.$
 Let $y'$ be the projection. If $y'∈P$ then we are done, otherwise we find a point on the line segment
 $yy'$ that intersects a facet of $P$. We have now reduced the dimension of our problem by one and
 can proceed by once again projecting this new point onto the hyperplane $c^Tx= z^*.$ Continuing in
@@ -216,25 +217,25 @@ fractional solution has a value of at less than $3/2$ , a contradiction.
 \end{solution}
 
 
-\item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
+% \item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
 
 
-\begin{solution}
-We can write $P$ as follows:
-$P = \{x ∈ \setR^3 : Ax ≤ b\}$, where $$A = \begin{pmatrix} 1& 2&4 \\-1& 0 & 0 \\ 0 & -1& 0 \\0 & 0 & -1\end{pmatrix}$$ and $b= \begin{pmatrix}4 & 0 & 0 & 0\end{pmatrix}$ . Clearly $A$ is of full column rank, thus we know that $P$ has a vertex. It is sufficient to show
-that every vertex is integral. The vertices of P are defined as the unique solutions of the $\binom{4}{3}$ many different subsystems obtained
-by choosing three out of the four rows. Then, the unique solution of the system
-$$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & -1 & 0\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-is $x = (0, 0, 1)$. The unique solution to the system 
-$$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-is $x = (0,2,0)$. The unique solution to the system 
-$$\begin{pmatrix} 1 & 2 & 4 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-is $x = (4, 0, 0)$. The unique solution to the system 
-$$\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$$
-is $x = (0, 0, 0)$. 
-Hence, P is integral.
+% \begin{solution}
+% We can write $P$ as follows:
+% $P = \{x ∈ \setR^3 : Ax ≤ b\}$, where $$A = \begin{pmatrix} 1& 2&4 \\-1& 0 & 0 \\ 0 & -1& 0 \\0 & 0 & -1\end{pmatrix}$$ and $b= \begin{pmatrix}4 & 0 & 0 & 0\end{pmatrix}$ . Clearly $A$ is of full column rank, thus we know that $P$ has a vertex. It is sufficient to show
+% that every vertex is integral. The vertices of P are defined as the unique solutions of the $\binom{4}{3}$ many different subsystems obtained
+% by choosing three out of the four rows. Then, the unique solution of the system
+% $$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & -1 & 0\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
+% is $x = (0, 0, 1)$. The unique solution to the system 
+% $$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
+% is $x = (0,2,0)$. The unique solution to the system 
+% $$\begin{pmatrix} 1 & 2 & 4 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
+% is $x = (4, 0, 0)$. The unique solution to the system 
+% $$\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$$
+% is $x = (0, 0, 0)$. 
+% Hence, P is integral.
 
-\end{solution}
+% \end{solution}
 
 \end{enumerate}
 

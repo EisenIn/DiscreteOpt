@@ -149,14 +149,14 @@
 
 
 \item Let $P= \{x∈\setR^n : Ax≤b\}$ be a full dimensional $0/1$ polytope and $c ∈\setZ^n$. We will show how we
-can use the ellipsoid method to solve the optimization problem $\max c^Tx: x∈P$.
+can use the ellipsoid method to solve the optimization problem $\{\max c^Tx: x∈P\}$.
 Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
 \begin{enumerate}[i)]
 \item Show that $P$ is contained inside the ball centered at $1/2 \cdot \vec{1}$ with radius $\sqrt{n}/2$ and give an upper bound on the volume of this ball. 
 \item Show that $P$ contains a simplex of volume $1/n!$.
-\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
+\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta-1/2)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
 \item Show that the ellipsoid method requires $O(n^3 \log(n)c_{max})$ iterations to decide whether $P ∩
-(c^⊤x≥β) = ∅$ for some integer $β$. I.e. use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
+(c^⊤x≥β-1/2) = ∅$ for some integer $β$, i.e., use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
 \item Show that we can use binary search to find $z^*$ with $\log(nc_{max})$ calls to the ellipsoid method.
 \item Show how you can find an optimal solution $x^*$ such that $c^Tx^*= z^*$ in polynomial time.
 \end{enumerate}
@@ -167,7 +167,7 @@ Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
 {2} )$. Is the polyhedron of the linear programming relaxation of the vertex-cover integer program integral?
 
 
-\item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
+% \item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
 
 
 
