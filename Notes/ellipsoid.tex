@@ -34,7 +34,11 @@ polynomial time.
 
 Clearly, we can assume that $A$ has full column rank. Otherwise, we
 can find with Gaussian elimination an invertible matrix $U \in
-\setR^{n\times n}$ with $A \cdot U = \smat{A' & 0}$ where $A'$ has full column rank. The
+\setR^{n\times n}$ with
+\begin{displaymath}
+   A \cdot U = \mat{A' &|&   0} 
+\end{displaymath}
+ where $A'$ has full column rank. The
 system $A'x\leq b$ is then feasible if and only if $Ax\leq b$ is feasible. 
 
 \begin{exercise}
@@ -45,6 +49,8 @@ system $A'x\leq b$ is then feasible if and only if $Ax\leq b$ is feasible.
   $\tilde{x}$ is
   given. 
 \end{exercise}
+
+\section{Balls, ellipsoids and the half-ball lemma}
 
 The \emph{unit ball} is the set $B = \{ x \in \setR^n \mid \|x\|\leq1\}$ and an
 \emph{ellipsoid} $E(A,b)$ is the image of the unit ball under a linear map
@@ -181,35 +187,35 @@ We can conclude the following theorem.
 % is the image of the unit sphere under the mapping $q\circ t$. 
 
 
-Recall the following notion from linear algebra. A symmetric matrix $A
+Recall the following notion from linear algebra. A symmetric matrix $W
 \in \setR^{n\times n}$ is called positive definite if all its eigenvalues are
 positive.  Recall the following theorem. 
 \begin{theorem}
   \label{el:thr:22}
-  Let $A \in \setR^{n\times n}$ be a symmetric matrix. The following are
+  Let $W \in \setR^{n\times n}$ be a symmetric matrix. The following are
   equivalent. 
   \begin{enumerate}[i)]
-  \item $A$ is positive definite. 
-  \item $A = L^TL $, where $L\in \setR^{n\times n} $ is a uniquely determined upper
+  \item $W$ is positive definite. 
+  \item $W = L^TL $, where $L\in \setR^{n\times n} $ is a uniquely determined upper
     triangular matrix. 
-  \item $x^TAx>0$ for each $x \in \setR^n \setminus\{0\}$. 
-  \item $A = Q^T \textrm{diag}(\lambda_1,\ldots,\lambda_n) Q$, where $Q \in \setR^{n\times n}$ is an
+  \item $x^TWx>0$ for each $x \in \setR^n \setminus\{0\}$. 
+  \item $W = Q^T \textrm{diag}(\lambda_1,\ldots,\lambda_n) Q$, where $Q \in \setR^{n\times n}$ is an
     orthogonal matrix and $\lambda_i \in \setR_{>0}$ for $i=1,\ldots,n$. 
   \end{enumerate}
 \end{theorem}
 
-
+\noindent 
 It is now convenient to switch to a different representation of an
-ellipsoid. An ellipsoid $\eE(A,a)$ is the set  $\eE(A,a) = \{ x \in \setR^n \mid
-(x-a)^TA^{-1}(x-a)\leq 1\}$, where $A \in \setR^{n\times n}$ is a symmetric positive
+ellipsoid. An ellipsoid $\eE(W,a)$ is the set  $\eE(W,a) = \{ x \in \setR^n \mid
+(x-a)^TW^{-1}(x-a)\leq 1\}$, where $W \in \setR^{n\times n}$ is a symmetric positive
 definite matrix and $a\in \setR^n$ is a vector, called the 
 \emph{center} of the ellipsoid.  Consider the half-ellipsoid
-$\eE(A,a) \cap (c^Tx\leq c^Ta)$.
+$\eE(W,a) \cap (c^Tx\leq c^Ta)$.
 
 Our goal is a similar lemma as the half-ball-lemma for ellipsoids.
-Geometrically it is clear that each half-ellipsoid $\eE(A,a) \cap
-(c^Tx\leq c^Ta)$ must be contained in another ellipsoid $\eE(A',b')$
-with $\vol(\eE(A',a'))/ \vol(\eE(A,a))\leq e^{-1/(2n)}$.  More precisely
+We know  that each half-ellipsoid $\eE(W,a) \cap
+(c^Tx\leq c^Ta)$ must be contained in another ellipsoid $\eE(W',b')$
+with $\vol(\eE(W',a'))/ \vol(\eE(W,a))\leq e^{-1/(2n)}$.  More precisely
 this follows from the fact that the half-ellipsoid is the image of the
 half-ball under a linear transformation. Therefore the image of the
 ellipsoid $E$ under the same transformation contains the
@@ -217,20 +223,20 @@ half-ellipsoid.  Also, the volume-ratio of the two ellipsoids is
 invariant under a linear transformation.
 
 
-We now record the formula for the ellipsoid $\eE'(A',a')$. 
+We now record the formula for the ellipsoid $\eE'(W',a')$. 
 It is defined by 
 \begin{eqnarray}
   \label{el:eq:20}
   a' &  = & a - \frac{1}{n+1}b \\
-  A' & = & \frac{n^2}{n^2-1}\left( A - \frac{2}{n+1}b\, b^T   \right),
+  W' & = & \frac{n^2}{n^2-1}\left( W - \frac{2}{n+1}b\, b^T   \right),
 \end{eqnarray}
-where $b$ is the vector $b = A\, c/ \sqrt{c^TA\,c} $.  
+where $b$ is the vector $b = W\, c/ \sqrt{c^TW\,c} $.  
 The proof of the correctness of this formula  can be found
 in~\cite{GroetschelLovaszSchrijver88}.  
 \begin{lemma}[Half-Ellipsoid-Theorem]
   \label{el:thr:20}
-  The half-ellipsoid $\eE(A,b) \cap (c^Tx\leq c^Ta)$ is contained in the
-  ellipsoid $\eE'(A',a')$ and one has $\vol(\eE')/
+  The half-ellipsoid $\eE(W,b) \cap (c^Tx\leq c^Ta)$ is contained in the
+  ellipsoid $\eE'(W',a')$ and one has $\vol(\eE')/
   \vol(\eE)\leq e^{-1/(2n)}$. 
 \end{lemma}
 
@@ -295,20 +301,18 @@ Before talking about the method, we give a useful definition.
    A polyhedron $P$ is full-dimensional if it has positive volume.
 \end{definition}
 
-\section{The method}
+\section{The ellposloid method for convex sets} 
 \label{el:sec:method}
 
+Let $K ⊆ ℝ^n$ be a bounded convex set and suppose that this convex set contained in an initial ellipsoid an ellipsoid $\eE_{init} ⊇ K$. Furthermore, let $L ∈ ℚ_+$ be a positive number. The ellipsoid method that is described below ends with the following finding.
 
-
-Suppose  we know the following things of our polyhedron $P$. 
-\begin{enumerate}[I)]
-\item We have a number $L$ such that $\vol(P)\geq L$ if $P$ is
-  full-dimensional.
-\item We have an ellipsoid $\eE_{init}$ which contains $P$ if $P$ is
-  bounded.
+\begin{enumerate}[i)] 
+\item The method  either finds a point $x^* ∈ K$ or \label{item:e:1}
+\item or asserts that the volume of $K$ satisfies \label{item:e:2}
+  \begin{displaymath}
+    \vol(K) < L. 
+  \end{displaymath}
 \end{enumerate}
-The ellipsoid method is now easily described.
-
 
 \begin{algorithm}[Ellipsoid method exact version]
 \label{el:alg:3}
@@ -316,28 +320,34 @@ The ellipsoid method is now easily described.
 
 \begin{enumerate}[a)]
 \item (Initialize): Set $\eE(A,a) := \eE_{init}$ \label{el:item:2}
-\item If $a \in P$, then assert $P \neq \emptyset$ and stop  \label{el:item:1} 
-\item If $\vol(\eE)<L$, then assert that $P$ is unbounded or $P$ is
-  not full-dimensional \label{el:item:3}
+\item If $a \in K$, then return $x^* = a$ and stop  \label{el:item:1} 
+\item If $\vol(\eE)<L$, then stop with assertion $\vol(\eE)<L$. \label{el:item:3}
 \item Otherwise, compute an inequality $c^Tx\leq\beta$ which is valid for
-  $P$ and satisfies $c^Ta>\beta$ and replace $\eE(A,a)$ by $\eE(A',a')$
+  $K$  and satisfies $c^Ta>\beta$ and replace $\eE(A,a)$ by $\eE(A',a')$
   computed with formula~\eqref{el:eq:20} and goto
   step~\ref{el:item:1}).\label{el:item:4}  
 \end{enumerate}
 \end{algorithm}
-%
+
+\begin{remark}
+  \label{rem:1}
+  Notice that the separation theorem  (Theorem~\ref{conv:thr:10}) guarantees the existence of such an inequality  $c^Tx\leq\beta$ in step~\ref{el:item:4} of the algorithm. 
+\end{remark}
+
+
 \begin{theorem}
   \label{el:thr:21}
-  The ellipsoid method computes a point in the polyhedron $P$ or
-  asserts that $P$ is unbounded or not full-dimensional. The number of
-  iterations is bounded by  $2\cdot n \ln (\vol(\eE_{init}) / L)$.
+  The ellipsoid method computes a point $x^* ∈ K$   or
+  asserts that $\vol(K) <L$ in  
+  \begin{displaymath}
+      2\cdot n \ln (\vol(\eE_{init}) / L)
+    \end{displaymath}
+    iterations. 
 \end{theorem}
 
 
 \begin{proof}
-  Unless $P$ is unbounded, we start with an ellipsoid which contains
-  $P$. This then holds for all the subsequently computed
-  ellipsoids. After $i$ iterations one has
+  After $i$ iterations one has
   \begin{equation}
     \label{el:eq:23}
     \vol(\eE)/ \vol(\eE_{init}) \leq e^{-\frac{i}{2n}}.
@@ -348,7 +358,7 @@ The ellipsoid method is now easily described.
 
 
 
-\section{Deciding feasibility}
+\section{Linear programming: Deciding feasibility}
 \label{sec:deciding-feasibility}
 Suppose that we have to decide the feasibility of $P = \{x ∈  ℝ^n : Ax ≤ b\}$
 using the ellipsoid method described above. Here $A ∈ ℤ^{m ×n}$
@@ -474,6 +484,59 @@ Let $\max\{c^Tx : x ∈ ℝ^n, \, Ax ≤b\}$ be a linear program with $A ∈ ℤ
     \vol(\conv(0,a_1,\dots,a_n)) = |\det(a_1,\dots,a_n)| /n!. 
   \end{displaymath} \label{exercise:2}
 \end{enumerate}
+
+
+\section{The ellipsoid method for optimization}
+\label{el:sec:ellips-meth-optim}
+
+Suppose that you want to solve a linear program 
+\begin{equation}
+  \label{el:eq:43}
+  \max \{ c^Tx \mid x \in \setR^n, \, Ax\leq b\} 
+\end{equation}
+and recall that if~\eqref{el:eq:43} is bounded and feasible, then so is
+its dual and the two objective values are equal. Thus, we can use the
+ellipsoid method to find a point $(x,y)$  with $c^Tx = b^Ty$, $Ax\leq b$
+and $A^Ty=c, y\geq0$. 
+
+
+% However, we mentioned that the strength of the ellipsoid method lies
+% in the fact that we do not need to write the system $Ax\leq b$ down
+% explicitly. The only thing which has to be solvable is the
+% \emph{separation problem}. This is to be exploited in the next
+% exercise. 
+
+
+% \begin{exercise}
+%   \label{el:ex:12}
+%   Show how to solve the optimization problem $\max\{c^Tx \mid Ax\leq b\}$
+%   with a polynomial number of calls to an algorithm which solves the
+%   separation problem for $Ax\leq b$. You may assume that $A$ has full
+%   column rank and the polynomial bound on the number of calls to the
+%   algorithm to    solve the separation problem can depend on $n$ and
+%   the largest size of a component of $A,b$ and $c$. 
+% \end{exercise}
+
+
+\section{Numerical issues}
+\label{el:sec:numerical-issues}
+
+We did not discuss the numerical details on how to implement the
+ellipsoid method such that it runs in polynomial time. One issue is
+crucial. 
+
+\fancybox{We only want to compute with a precision which is  polynomial in the input encoding! }
+
+
+ In the formula~\eqref{el:eq:20} the vector $b$ is defined by
+ taking a square root. The question thus rises on how to round the
+ numbers in the intermediate ellipsoids such that they can be handled
+ on a machine.  Also one has to analyze the growth of the numbers in
+ the course of the algorithm. All these issues  can be overcome but we
+ do not discuss them in this course. I would like to refer you to the
+ book of Alexander Schrijver~\cite{Schrijver86}  for further
+ details. They are not difficult, but a little technical. 
+
 
 \section{The separation problem}
 \label{el:sec:separation-problem}
@@ -750,57 +813,6 @@ spanning tree w.r.t. the edge costs.
 %   in $n$ and $\log B$, where $B$ is the largest absolute value of a
 %   coefficient of $A$ and $b$.
 % \end{theorem}
-
-\section{The ellipsoid method for optimization}
-\label{el:sec:ellips-meth-optim}
-
-Suppose that you want to solve a linear program 
-\begin{equation}
-  \label{el:eq:43}
-  \max \{ c^Tx \mid x \in \setR^n, \, Ax\leq b\} 
-\end{equation}
-and recall that if~\eqref{el:eq:43} is bounded and feasible, then so is
-its dual and the two objective values are equal. Thus, we can use the
-ellipsoid method to find a point $(x,y)$  with $c^Tx = b^Ty$, $Ax\leq b$
-and $A^Ty=c, y\geq0$. 
-
-
-However, we mentioned that the strength of the ellipsoid method lies
-in the fact that we do not need to write the system $Ax\leq b$ down
-explicitly. The only thing which has to be solvable is the
-\emph{separation problem}. This is to be exploited in the next
-exercise. 
-
-
-\begin{exercise}
-  \label{el:ex:12}
-  Show how to solve the optimization problem $\max\{c^Tx \mid Ax\leq b\}$
-  with a polynomial number of calls to an algorithm which solves the
-  separation problem for $Ax\leq b$. You may assume that $A$ has full
-  column rank and the polynomial bound on the number of calls to the
-  algorithm to    solve the separation problem can depend on $n$ and
-  the largest size of a component of $A,b$ and $c$. 
-\end{exercise}
-
-
-\section{Numerical issues}
-\label{el:sec:numerical-issues}
-
-We did not discuss the numerical details on how to implement the
-ellipsoid method such that it runs in polynomial time. One issue is
-crucial. 
-
-\fancybox[!]{We only want to compute with a precision which is  polynomial in the input encoding! }
-
-
- In the formula~\eqref{el:eq:20} the vector $b$ is defined by
- taking a square root. The question thus rises on how to round the
- numbers in the intermediate ellipsoids such that they can be handled
- on a machine.  Also one has to analyze the growth of the numbers in
- the course of the algorithm. All these issues  can be overcome but we
- do not discuss them in this course. I would like to refer you to the
- book of Alexander Schrijver~\cite{Schrijver86}  for further
- details. They are not difficult, but a little technical. 
 
 
 
