@@ -1,0 +1,261 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{February 24, 2026}
+\duedate{ }
+\problemset{Problem Set~1 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\problem
+Provide a certificate (as in Theorem $1.1$ in the lecture notes) of the unsolvability of the linear equation 
+  \begin{displaymath}
+    \begin{pmatrix}
+      2 & 1 & 0 \\
+      5 & 4 & 1 \\
+      7 & 5 & 1
+    \end{pmatrix} \,
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ x_3 
+    \end{pmatrix} =
+    \begin{pmatrix}
+      1\\2\\4
+    \end{pmatrix}
+  \end{displaymath}
+  
+  \paragraph{Solution:}
+  
+  Consider $y = \begin{pmatrix} 1 \\ 1 \\ -1 \end{pmatrix}$ so that $y^T A = \begin{pmatrix} 7-7 \\ 5-5 \\ 1-1 \end{pmatrix} = \begin{pmatrix}0 \\ 0 \\ 0 \end{pmatrix}$ and $y^T b = 3-4 = -1$. 
+  
+  Then $y^T A = \vec{0}$ and $y^T b < 0$ such that the system must be infeasible. See that if there did exist a solution $\vec{x}$, then 
+  \begin{align*}
+  y^TA x & = y^T b \\
+  \implies \vec{0}^T x & = y^Tb \\
+  \implies 0 & = -1.
+  \end{align*}
+  
+  As this is impossible, the system must be infeasible. 
+  
+  
+ 
+
+  \problem
+
+  Let $A ∈ ℝ^{3 ×2}$ be the matrix
+  \begin{displaymath}
+    A =
+    \begin{pmatrix}
+      -1 & 1 \\
+      1 & 1 \\
+      0 & -1 
+    \end{pmatrix}
+  \end{displaymath}
+  and $b ∈ ℝ^3$ be the vector
+  \begin{displaymath}
+    b =
+    \begin{pmatrix}
+      1 \\ 1 \\ -2
+    \end{pmatrix}
+  \end{displaymath}
+defining the system of inequalities $Ax ≤b$ that does not have a feasible solution. Find a Farkas' certificate, i.e., a  $λ ∈ ℝ^3_{≥0}$ with $λ^TA = 0$ and $λ^T b = -1$. 
+
+\paragraph{Solution:}
+
+Let $\lambda = \begin{pmatrix} 1/2 \\ 1/2 \\ 1 \end{pmatrix}$. Then $\lambda^TA = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$ while $\lambda^Tb = -1$ such that this is a certificate of infeasibility. 
+
+
+  
+
+ \problem Show the ``if'' direction of the Farkas' lemma: given $A\in \R^{m\times n}, b\in \R^m$, if there exist a $\lambda \in \R^m_{\geqslant 0}$ such that $\lambda^\top A=0$ and $\lambda^\top b=-1$, then the system $Ax\leq b$ of linear inequalities does not have a solution. 
+ 
+ \paragraph{Solution:}
+
+Suppose there exists a vector $\vec{x}$ such that $Ax \leq b$. Then we have that 
+\begin{align*}
+\lambda^TAx & = \lambda^T(Ax) \\
+&\leq \lambda^T b \\
+& = -1 
+\end{align*}
+where the inequality follows from $\lambda \geq \vec{0}$.
+
+But 
+\begin{align*}
+\lambda^TAx & = (\lambda^TA)x \\
+& = \vec{0}^Tx \\
+& = 0
+\end{align*}
+so that with the two equations together, we get $0 \leq -1$ which is a contradiction. 
+
+ 
+ 
+ 
+\problem Consider the following linear program:
+\begin{center}
+\begin{tabular}{rllllll}
+$\max$ & \ & $x$ & $+$ & $y$ & \ & \\ 
+s.t. & \ & $3x$ & $+$ & $2y$ & $\leq$ & $6$ \\ 
+\ & \ & $x$ & $+$ & $4y$ & $\leq$ & $4$. \
+\end{tabular} 
+\end{center} 
+The solution $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the objective value $11/5$. Provide a certificate that this is an optimal solution.
+
+
+\paragraph{Solution:}
+The LP for our problem is given by 
+\begin{align*}
+\max (x + y) \\
+s.t. \begin{pmatrix}  3 & 2 \\ 1 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} \leq \begin{pmatrix} 6 \\ 4 \end{pmatrix}.
+\end{align*}
+
+Consider the following linear combination of the two constraints given by $$ \lambda (3x + 2y) + \alpha(x + 4y)$$
+where $\lambda, \alpha \geq 0$. Clearly, this preserves the inequalities so that $$\lambda (3x + 2y) + \alpha(x + 4y) \leq 6 \lambda + 4 \alpha$$
+for any feasible $x, y$ for the LP. 
+
+Now, we choose $\lambda = 3/10, \alpha = 1/10$ and get that for any feasible $x, y$ for the LP, 
+\begin{align*}
+&\lambda (3x + 2y) + \alpha(x + 4y) \leq 6 \lambda + 4 \alpha \\
+\implies & 9/10 x + 6/10 y + 1/10 x + 4/10 y \leq 18/10 + 4/10 \\
+\implies & x + y \leq 22/10 \\
+\implies & x + y \leq 11/5.
+\end{align*}
+
+This shows that any feasible solution satisfies the objective $x + y \leq 11/5$ such that $(x, y)=(8/5 , 3/5)$ satisfies the both constraints and has the optimal objective value $11/5$. 
+
+
+
+\newpage 
+\problem
+
+ Let $G = (V,A)$ be a directed graph and $s,t ∈ V$ be two designated vertices. For a vertex $v ∈ V$ we let
+  \begin{displaymath}
+    δ^+(v) = \{ (u,v) ： u ∈ V, \, (u,v) ∈A\} \text{ and } δ^-(v) = \{ (v,u) ： u ∈ V, \, (v,u) ∈A\}
+  \end{displaymath}
+  the \emph{arcs entering} and \emph{leaving} $v$ respectively.  Consider the following inequalities
+  \begin{equation} 
+    \begin{array}{rclc}      \displaystyle 
+    ∑_{a ∈ δ^+(v) } x_a -  ∑_{a ∈ δ^-(v) } x_a & = &  0 & \, \quad v ∈ V \setminus \{s,t\} \\ \displaystyle 
+      ∑_{a ∈ δ^+(s) } x_a -  ∑_{a ∈ δ^-(s) } x_a & = &  -1 & \\
+      \displaystyle 
+      ∑_{a ∈ δ^+(t) } x_a -  ∑_{a ∈ δ^-(t) } x_a & = &  1 & \\
+      x_a &≥& 0 & a ∈A.
+    \end{array}
+    \label{eq:1}
+  \end{equation}
+  
+  \begin{enumerate}[a)] 
+  \item Consider the following digraph with $s$ and $t$ and a partial assignment of arc variables. Can this partial assignment be completed to a feasible solution satisfying the inequalities~\eqref{eq:1}? If yes, complete the assignment.
+    \begin{center}
+          \input{../../../Notes/TIKZ/flow-1.tikz}   
+    \end{center}
+    
+    
+    \paragraph{Solution:}
+    
+    \begin{center}
+   \begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (0, 4) {$s$};
+		\node [style=new style 0] (1) at (0, -4) {$t$};
+		\node [style=new style 0] (2) at (3, 2) {};
+		\node [style=new style 0] (3) at (-3, 2) {};
+		\node [style=new style 0] (4) at (0, 0) {};
+		\node [style=new style 0] (5) at (3, -2) {};
+		\node [style=new style 0] (6) at (-3, -2) {};
+		\node [style=none] (7) at (-1.75, 3.5) {$.5$};
+		\node [style=none] (8) at (2.25, 3.75) {$.75$};
+		\node [style=none] (9) at (0.75, 2.5) {$.25$};
+		\node [style=none] (10) at (1.25, 1.25) {$.25$};
+		\node [style=none] (11) at (2.25, 0.25) {$.75$};
+		\node [style=none] (12) at (-3.75, 0) {$.25$};
+		\node [style=none] (13) at (-1.75, -3.25) {$.25$};
+		\node [style=none] (14) at (0.5, -2) {$0$};
+		\node [style=none] (15) at (2.25, -1) {$.75$};
+		\node [style=none] (16) at (1.75, -3.25) {$.75$};
+		\node [style=none] (17) at (-1, 1.25) {.25};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=edge] (0) to (3);
+		\draw [style=edge] (3) to (4);
+		\draw [style=edge, bend left] (0) to (2);
+		\draw [style=edge, bend left=45] (2) to (4);
+		\draw [style=edge, bend left] (2) to (0);
+		\draw [style=edge, bend left, looseness=1.25] (4) to (2);
+		\draw [style=edge] (3) to (6);
+		\draw [style=edge] (4) to (1);
+		\draw [style=edge] (4) to (5);
+		\draw [style=edge] (6) to (1);
+		\draw [style=edge] (5) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+
+    
+    
+\item Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If there is a path connecting $s$ and $t$ in $G$, then the system of inequalities~\eqref{eq:1} has a feasible solution
+
+
+\paragraph{Solution:}
+Given a path $t$ to $s$, set for every edge on the path the value $x_e = +1$ and for every edge not on the path the flow value $x_e = 0$. Given this choice of flow, it is not hard to see that all constraints are satisfied by this solution. 
+
+
+  \item (*)  Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If  the system of inequalities~\eqref{eq:1} has a feasible solution, then  there is a path connecting $s$ and $t$ in $G$. 
+  
+  
+  \paragraph{Solution:}
+  Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$. Call A the set of nodes that are reachable from s using edges (u, v) that have $x(u, v) > 0$. Then A contains s and it does not
+contain t as we assume that $t$ is not reachable from $s$. Thus the set $A \subset V$ is a cut where $A$ contains $s$ and $V \setminus A$ contains $t$. The net value out of A is equal to $\sum_{(u,v): u \in A, v \notin A} x_{(u, v)}$. However by definition of $A$, any such edge that exits $A$ must have value $0$ in the vector $x$ as otherwise the node would be reachable from $s$ using positive valued edges. This means that for any $v \in V \setminus A$, $\sum_{a \in \delta^+(v)} x_a = 0$. In order to satisfy the first equality, this means that for every $v \in V \setminus A - t$, it must also be that $\sum_{a \in \delta^-(v)} x_a = 0$. But then $t$ receives $0$ value on incoming edges as it is only reachable by nodes in $V \setminus A$ such that the third equality of the LP is not satisfied. This is a contradiction to $\vec{x}$ being feasible. 
+  
+
+  \paragraph{Alternative solution:}
+  Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$.
+ Let $S$ be the set of vertices that are reachable by a path from $s$. By our assumption $S$ contains $s$ and does not
+ contain $t$.
+ Then by summing up the equalities in (\ref{eq:1}) for $v \in S$ we get
+ \begin{align*}
+ &\quad\; \sum_{v \in S} \left( \sum_{a \in \delta^{+}(v)} x_a  - \sum_{a \in \delta^{-}(v)} x_a \right) \\
+ &= \left(\sum_{a \in \delta^{+}(s)} x_a  - \sum_{a \in \delta^{-}(s)} x_a \right) + \sum_{v \in S\setminus \{s\}} \left( \sum_{a \in \delta^{+}(v)} x_a  - \sum_{a \in \delta^{-}(v)} x_a \right) \\
+ & = -1 + 0 = -1,
+ \end{align*}
+ which implies that there must be an arc $a=(u,v), u \in S, v \not\in S$ with $x_a > 0$. Since $u$ is reachable by a path $P_u$ from $s$, $v$ is also reachable by path $P_u \cup \{a\}$, contradiction to $v \not\in S$.
+
+   \end{enumerate}
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

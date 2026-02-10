@@ -1,0 +1,123 @@
+
+% some useful includes
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{ifthen}
+\usepackage{multicol}
+%\usepackage[nothing]{algorithm}
+%\usepackage{algorithmic}
+\usepackage{import}
+\usepackage{enumerate}
+\usepackage{a4wide}
+\usepackage{graphics,color}
+\usepackage{geometry}
+\geometry{tmargin=2cm,bmargin=1.5cm,lmargin=2.5cm,rmargin=2.5cm}
+
+\parindent 0pt
+\pagestyle{empty}
+
+
+% problem command
+\newcounter{probnumber}
+\setcounter{probnumber}{0}
+
+\newcommand{\problems}{\bigskip\noindent\textbf{Problem}\par\nobreak\smallskip}
+\newcommand{\problem}{\stepcounter{probnumber}\bigskip\noindent\textbf{Problem \theprobnumber}\par\nobreak\smallskip}
+\newcommand{\problemm}{\stepcounter{probnumber}\bigskip\noindent
+	\textbf{Problem \theprobnumber} (mandatory)\par\nobreak\smallskip}
+\newcommand{\problemms}{\bigskip\noindent
+	\textbf{Problem} (mandatory)\par\nobreak\smallskip}
+	
+	
+\newcommand{\problemstar}{\stepcounter{probnumber}\bigskip\noindent
+	\textbf{Problem \theprobnumber} ($\star$)\par\nobreak\smallskip}
+
+% header
+\newcommand{\institute}[1]{\newcommand{\@institute}{#1}}
+\newcommand{\lecture}[1]{\newcommand{\@lecture}{#1}}
+\newcommand{\faculty}[1]{\newcommand{\@faculty}{#1}}
+\newcommand{\term}[1]{\newcommand{\@term}{#1}}
+\newcommand{\publishdate}[1]{\newcommand{\@publishdate}{#1}}
+\newcommand{\duedate}[1]{\newcommand{\@duedate}{#1}}
+\newcommand{\problemset}[1]{\newcommand{\@problemset}{#1}}
+\newcommand{\custominfo}[1]{\newcommand{\@custominfo}{#1}}
+
+
+\newcommand{\makeheader}{
+	\begin{tabular}{@{}ll}
+		\ifdefined\@institute
+			\@institute \\
+		\fi
+		\ifdefined\@faculty
+			\@faculty
+		\fi
+	\end{tabular} \hfill
+	\ifdefined\@publishdate
+		\@publishdate
+	\fi
+
+	\framebox[\textwidth]{\hspace{10pt}
+		\addtolength{\textwidth}{-20pt}
+		\begin{minipage}{\textwidth}
+			\ifdefined\@lecture\textbf{\@lecture}\fi % lecture
+			\ifdefined\@term~(\@term)\fi % term
+			\begin{center}\Large
+				\ifdefined\@problemset\@problemset\fi % problem set
+			\end{center}
+			\ifdefined\@custominfo
+				\@custominfo % custom info
+			\else % this is the standart info
+				\ifdefined\@duedate\@duedate  %\\ due date
+%				You are allowed to submit your solutions in groups of at most three students.
+				\fi
+			\fi
+			\end{minipage}\hspace{10pt}
+			}
+		\addtolength{\textwidth}{20pt}
+	\bigskip
+}
+
+
+% hint command
+\newcommand{\hint}[1]{
+	\smallskip\smallskip
+	\textit{Hint}:\hspace{10pt}#1}
+
+% shortcuts
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\st}{\textnormal{subject to}}
+\newcommand{\trans}{\textnormal{T}}
+\newcommand{\OPT}{\text{OPT}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\etal}{\textit{et. al.}}
+\newcommand{\Prob}{\text{Pr}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\multideg}{\text{multideg}}
+
+\newcommand{\alg}[1]{{\sc #1}}
+
+% theorem environments
+\newtheorem{theorem}{Theorem}
+
+
+
+\newenvironment{varentry}[1]%
+	{\begin{list}{}{\renewcommand{\makelabel}[1]{\emph{##1}\hfil} %
+	\settowidth{\labelwidth}{\emph{#1}} %
+	\setlength{\leftmargin}{\labelwidth + \labelsep}}}%
+	{\end{list}}
+
+\definecolor{algcommentcolor}{gray}{0.4}
+\newcommand{\algcomment}[1]{
+	\hfill \begin{minipage}{6.5cm}\textcolor{algcommentcolor}{// #1}\end{minipage}}
+
+\newcommand{\solutionbook}[1]{
+	\bigskip\noindent
+	\textbf{Solution to Problem #1}:\\}
+\newcommand{\Solution}[2]{
+	\bigskip\noindent
+	\textbf{Solution to Problem #1} (due to #2):\\}
