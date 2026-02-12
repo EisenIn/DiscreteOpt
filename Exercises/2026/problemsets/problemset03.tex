@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{March 10, 2026}
+\duedate{ }
+\problemset{Problem Set~3}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+\item Using Theorem 3.11, prove the following variant of Farkas' lemma:
+  Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
+  The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
+  for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.
+  
+  
+  \item Provide an example of a convex and closed  set $K\subseteq\setR^2$ and a
+  linear objective function $c^Tx$ such that $\inf\{c^Tx \colon
+  x\in K\}>-\infty$ but there does not exist an $x^* \in K$ with $c^Tx^* \leq
+  c^Tx$ for all $x \in K$. 
+  
+  \item Consider the vectors
+$$ x_1 = \left(\begin{array}{c} 3 \\ 1 \\ 2\end{array}\right), x_2 = \left(\begin{array}{c} 1 \\ 2 \\ 5 \end{array}\right), x_3 = \left(\begin{array}{c} 2 \\ 0 \\ 1 \end{array}\right), x_4 = \left(\begin{array}{c}  2 \\ 4 \\ 3 \end{array}\right), x_5 = \left(\begin{array}{c}  1 \\ 1 \\ 1 \end{array}\right). $$
+
+The vector 
+$$ v= x_1 + 3 x_2 + 2 x_3 + x_4 + 3 x_5 =  \left(\begin{array}{c}  15\\ 14 \\ 25 \end{array}\right)$$
+is a conic combination of the $x_i$.
+
+Write $v$ as a conic combination using only three vectors of the $x_i$.
+
+\emph{Hint: Recall the proof of Carath\'eodory's theorem}
+
+\item In this exercise, assume that a linear program $\max\{c^Tx \mid
+  Ax\leq b \}$ can be solved in constant time $O(1)$. Suppose that $P(A,b)$
+  has vertices and that the linear program is bounded. Show how to
+  compute an optimal \emph{vertex} solution of the linear
+  program in polynomial time in $n$ and $m$ where $A \in \mathbb{R}^{m \times n}$. 
+  
+  \item Let $A \in \setR^{n\times n}$ be a non-singular matrix and let
+  $a_1,\ldots,a_n\in \setR^n$ be the columns of $A$.  Show that
+  $\cone(\{a_1,\ldots,a_n\})$ is the polyhedron $P = \{ y \in \setR^n \colon
+  A^{-1} y\geq0\}$. \label{conv:item:3} Show that $\cone(\{a_1,\ldots,a_k\})$ for
+  $k\leq n$ is the set $P_k = \{y \in \setR^n \colon
+  a_i^{-1} x\geq0, i=1,\ldots,k, \, a_i^{-1}x = 0, i=k+1,\ldots,n\}$, where
+  $a_i^{-1}$ denotes the $i$-th row of $A^{-1}$. 
+  
+\item Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed
+  and convex. \label{conv:item:2} 
+  
+  \emph{Hint: Use Carath\'eodory's theorem and exercise~\ref{conv:item:3}.}
+
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
