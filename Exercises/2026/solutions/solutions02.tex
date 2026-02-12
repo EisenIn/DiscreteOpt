@@ -1,0 +1,337 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{March 3, 2026}
+\duedate{ }
+\problemset{Problem Set~2 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+\item  \label{item:ex-9}
+  Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+  
+  \begin{solution}
+  First we prove that for any extreme point $x^*$ of $B_n$, we have $\|x^*\|_2=1$. Let $\{x^*\} = B_n \cap \{\alpha^T x= \beta\}$. Suppose that $\|x^*\|_2<1$. Take $d\neq 0$ such that $\alpha^T d = 0$. For $\varepsilon> 0$, consider the point $\bar{x} = x^* + \varepsilon d$. Obviously we have $\alpha^T \bar{x} = \beta$. Since $\|x^*\|_2<1$, by taking $\varepsilon$ to be small enough, we can make sure that $\|\bar{x}\|_2\leq 1$, so $\bar{x} \in B_n$. Therefore $\bar{x} \neq x^*$ but $\bar{x} \in B_n \cap \{\alpha^T x= \beta\}$, a contradiction.
+
+  Next we prove that for any $x^* \in B_n$ such that $\|x^*\|_2=1$, $x^*$ is an extreme point of $B_n$. Consider the hyperplane $(x^*)^T x = 1$, which is the tangent plane of $S^{n-1}$ at $x^*$. Note that for any $x \in B_n$, we have $(x^*)^T x \leq 1$ so it is a supporting inequality of $B_n$. Also we have $\{x^*\} \subseteq B_n \cap \{(x^*)^T x = 1\}$. For any $y \in B_n \cap \{(x^*)^T x = 1\}$, let $\theta\in [0,\pi)$ be the angle between $x^*$ and $y$, we have
+  \[ 1=(x^*)^T y = \|x^*\|_2 \|y\|_2 \cos\theta \leq 1 \,\Rightarrow\, \|y\|_2 = 1, \theta = 0 \,\Rightarrow\, y = x^*. \]
+  Therefore $\{x^*\} = B_n \cap \{(x^*)^T x = 1\}$, so $x^*$ is an extreme point of $B_n$.
+  \end{solution}
+
+%   \vspace{2mm}
+%   \textbf{Alternative solution:}
+
+%   % We use the following equivalent characterization of extreme point of convex set $K$:
+  
+%   % \textbf{Proposition.} A point $x \in K$ is an extreme point of $K$ if and only if 
+
+%   % The proof of this proposition is left as an exercise.
+
+%   Let $x \in \setR^n$ be such that $\|x\|_2 =1$. We show that $x$ is then an extreme point of $B$. Firstly, it is clear that $x$ is in $B$. 
+%   Assume that $x$ wasn't an extreme point such that there exist some $y \neq z \neq x \in B$ with $\lambda y + (1-\lambda) z = x$ for some $\lambda \in (0,1)$. Then $$1 = \| x\|_2 = \| \lambda y + (1-\lambda) z \| \leq \lambda \|y\| + (1-\lambda)\|z\| \leq \lambda \cdot 1 + (1-\lambda) \cdot 1 = 1$$
+% where the first inequality comes from the triangle inequality and the second follows from $z, y \in B$. So the inequalities must hold with equality everywhere such that 
+% \begin{align}
+% &\|z\| = 1 \\
+% &\|y\| = 1\\
+% &\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|. 
+% \end{align}
+
+% However, if $\|\lambda y + (1 - \lambda )z \| =  \lambda \|y\| + (1-\lambda)\|z\|$ then $y, z$ must be linearly dependent. But then $z \neq y$, $z = \alpha y$ for some $\alpha \notin \{0, 1\}$.  Then $x = \lambda y + (1 - \lambda )\alpha y = (\lambda + \alpha- \alpha \lambda) y$. But $ 1 = \|x\| =(\lambda + \alpha - \alpha \lambda)\|y \| = (\lambda + \alpha - \alpha \lambda)$. Thus $x = y$ a contradiction to the assumption $y, z \neq x$. Thus $x$ is an extreme point. 
+
+% Next, we show there are no other extreme points of $B$. Assume, there is some $z \in \setR^n$ such that $\|z\| < 1 $ and $z$ is an extreme point of $B$. Let $\|z\| = \alpha$ for some value $\alpha <1$. Then the vector $x = \frac{1}{\alpha}z$ satisfies $x \in B, x \neq z$. Moreover, the vector $ y = \vec{0} $ satisfies $y \neq x, y \neq z, y \in B$. But then, notice that $z = \alpha x + (1-\alpha) y$ where $\alpha \in (0, 1)$ such that $z$ cannot be an extreme point. 
+  
+  
+\item \label{item:10}
+  A \emph{line} is a set $L = \{ x ⋅ d +t ： x ∈ ℝ\} ⊆ ℝ^n$ where $d,t ∈ ℝ^n$ $d ≠0$. Show the following.
+
+  A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
+  
+  \begin{solution}
+  We start by showing $P$ contains a line $\implies$ $\rank(A) < n$. 
+  
+  Let $d \cdot x + t$ denote the line contained in $P$. As $P$ contains this line, for any $x \in \setR$, $A(d\cdot x +t) \leq b$. We claim that $Ad = \vec{0}$ in this case. Assume that $Ad \neq 0$ and let $i$ be any component of $Ad$ that is nonzero. Let the value of this component be equal to $\alpha \in \setR_{>0}$ without loss of generality (an identical argument would apply for $\alpha$ negative). Then 
+  \begin{align*}
+  	[A(d\cdot x + t)]_i & = x[Ad]_i + [At]_i \\
+	& = x \alpha + [At]_i
+  \end{align*}
+  for any choice of $x \in \setR$. In particular, choose $x := \frac{b_i - [At]_i+1}{\alpha}$ which is possible since $\alpha \neq 0$. Then 
+   \begin{align*}
+  	[A(d\cdot x + t)]_i & = x[Ad]_i + [At]_i \\
+	& = x \alpha + [At]_i \\
+	& = b_i -[At]_i + 1 + [At]_i \\
+	& > b_i.
+  \end{align*}
+  
+  But this contradicts the fact that $A(d\cdot x +t) \leq b$ and in particular $[A(d\cdot x +t)]_i \leq b_i$ for any $x \in \setR$. Thus it must be that $Ad= 0$ such that $d$ is a nontrivial kernel element of $A$ and $\rank(A) < n$. 
+  
+  
+  
+  
+  
+  We then show that if $\rank(A) < n$ then $P$ contains a line. 
+  
+  As $\rank(A) <n$, there exists a non-trivial kernel element of $A$, a vector $v \neq \vec{0}$ such that $Av = 0$. Then let $\vec{x}$ be any feasible vector of the polyhedron $P$, that is $x$ is such that $Ax \leq b$. Note that for any $t \in \setR$, $A(x+ t\cdot v) = Ax + tAv = Ax + \vec\{0\} \leq b$ such that the vector $x + t \cdot v$ is contained in $P$ for any $t \in \setR$. This forms the line contained in $P$.  
+  \end{solution}
+
+\item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
+\begin{enumerate}[i)] 
+\item $A'v_1 = b'$ and $A'v_2 = b'$  and
+\item $\rank(A') = (n-1)$. 
+\end{enumerate}
+
+Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
+\begin{displaymath}
+ \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
+\end{displaymath}
+
+
+
+\begin{solution}
+Let $A'$ be the rank $n-1$ submatrix such that $A'v_1 = b', A'v_2 = b'$. Let $c^T = \vec{1}^TA'$ be the vector obtained by summing the rows of $A'$ and let $\delta = \vec{1}^Tb'$ the value obtained by summing the components of $b'$. As $A'$ can be chosen as $(n-1)$ linearly independent rows, the vector $\vec{c}$ is nonzero. 
+
+Now, we claim that $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+Let $x$ be any convex combination of $v_1, v_2$ such that $x = \lambda v_1 + (1 - \lambda)v_2$. Notice that $x \in P$ as $v_1, v_2 \in P$ and $P$ is convex. Next, note that
+\begin{align*}
+c^Tx & = c^T ( \lambda v_1 + (1 - \lambda)v_2) \\
+& = (\vec{1}^TA') (\lambda v_1 + (1 - \lambda)v_2) \\
+& = \lambda (\vec{1}^T A' v_1) + (1-\lambda)(\vec{1}^TA' v_2) \\
+& = \lambda (\vec{1}^T b') + (1-\lambda)(\vec{1}^T b') \\
+& = \lambda \delta + (1-\lambda)\delta \\
+& = \delta. 
+\end{align*}
+
+This shows that $x \in (P \cap \{x \in \setR^n: c^Tx = \delta\})$ so that $ \conv\{v_1, v_2\} \subseteq (P \cap \{x \in \setR^n: c^Tx = \delta\})$. 
+
+
+Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, and we show that $x \in  \conv\{v_1, v_2\}$. 
+
+As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
+
+Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} v_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
+
+Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
+\begin{align*}
+\lambda v_1 + (1- \lambda)v_2 & = \lambda {A^{(1)}}^{-1}\begin{pmatrix} b' \\ b^{(1)} \end{pmatrix} + (1 - \lambda) {A^{(1)}}^{-1}\begin{pmatrix} b' \\ \alpha_{v_2} \end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \lambda b^{(1)}  + (1-\lambda) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}} b^{(1)}  + \left(1-\frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}\right) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \alpha_x \end{pmatrix} \\
+& = x
+\end{align*}
+so that $x$ is indeed a convex combination of $v_1$ and $v_2$. Finally, note that if instead $\alpha_{x} \leq \alpha_{v_2}$ then $v_2$ is a convex combination of $x$ and $v_1$ which is impossible as $v_2$ is a vertex. 
+\\
+
+
+So we have shown that $(P \cap \{x \in \setR^n: c^Tx = \delta\}) \subseteq \conv\{v_1, v_2\}$ such that altogether $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+
+
+
+
+\end{solution}
+
+\item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
+  Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
+  
+  
+  \begin{solution}
+  Let $x, y$ be two vectors in the set $\bigcap_{i \in I} C_i$. Then $x, y \in C_i$ for each $i \in I$. Then $\lambda x + (1-\lambda)y \in C_i$ for each $i \in I$ by convexity of $C_i$. But this shows that $\lambda x + (1-\lambda)y \in \bigcap_{i \in I}C_i$ such that the intersection is also convex.
+  
+  \end{solution}
+  
+  
+\item Show that the set of feasible solutions  of a linear program  is
+  convex. \label{conv:item:1}
+  
+  \begin{solution}
+  Let the feasible region of the LP be defined by some $\{x : Ax\leq b\}$ for a matrix $A$ and vector $b$. Let $x, y$ be any two feasible solutions of the LP. Then 
+  \begin{align*}
+  A(\lambda x + (1 - \lambda)y) & = \lambda Ax + (1- \lambda)Ay \\
+  & \leq \lambda b + (1 - \lambda)b \\
+  & = b
+  \end{align*}
+  such that the convex combination is also in the feasible region. 
+  
+  
+  \end{solution}
+  
+  \item Let $$P= \{x: Ax≤b\}.$$ 
+  Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
+  Prove that 
+$$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
+x= b^=\}= \{x∈\setR^n : A^=
+x≤b^=\}.$$
+
+
+\begin{solution}
+We prove this by proving three containments.
+\begin{enumerate}
+\item $\text{aﬃne-hull}(P) ⊆
+\{x: A^=
+x= b^=\}.$ 
+
+
+By definition we have that $P ⊆\{x: A^=
+x= b^=\}$. Let $x∈\text{aﬃne-hull}(P)$ be any vector. Then $x= λ_1x^1 +\hdots+ λ_tx^t$ for some $x^1,\hdots,x^t ∈P, λ_1,...,λ_t ∈\setR, \sum_{i=1}^t λ_i = 1$. 
+Then 
+\begin{align*}
+A^=x & = \lambda_1 A^= x^1 + \hdots \lambda_t A^= x^t \\
+& = \displaystyle\sum_{i =1}^t\lambda_i b^= \\
+& = b^=.
+\end{align*}
+Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
+
+\item $\{x : A^= x = b^=\} \subseteq \{x : A^= x \leq b^=\}$. This containment is immediate by the definition of $A^=$. 
+
+\item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
+
+
+Let  $x$ be a vector satisfying $ A^= x \leq b^=$. 
+Denote the submatrix of rows not in $A^=$ by $A^<$. 
+We claim that there exists a point $x^\prime \in P$ such that $A^= x' = b^=$ and $A^< x^\prime < b^<$ (all the inequalities are strict). To prove the claim, denote all the inequalitiess of $A^< x\leq b^<$ as $a_1^T x \leq b_1, \dots, a_k^T x \leq b_k$. Then for each $i = 1, \dots, k$, there exists a point $x_i \in P$ such that $a_i^T x_i < b_i$ by definition of $A^=$. 
+Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the claim.
+
+
+If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
+Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
+First it's easy to check that $A^= x^{\prime\prime} \leq b^=$.
+% \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
+Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
+% Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 
+Consider the line $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x$$
+which completes the proof.
+\end{enumerate}
+
+\end{solution}
+
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

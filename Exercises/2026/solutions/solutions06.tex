@@ -1,0 +1,343 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{March 31, 2026}
+\duedate{ }
+\problemset{Problem Set~6 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+\item Determine the value of the matrix game defined by 
+  \begin{displaymath}
+    A =
+    \begin{pmatrix}
+      6 & 6 \\
+      7 & 4
+    \end{pmatrix}
+  \end{displaymath}
+and determine optimal strategies for both players with
+\begin{enumerate}
+\item pure strategies and 
+\item mixed strategies.
+\end{enumerate} 
+
+
+\begin{solution}
+\begin{enumerate}
+\item For row player, the best pure strategy is to choose row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. 
+Similarly, the best strategy for column player is to choose column $2$.
+
+\item The row player chooses $x$ such that $\sum_i x_i = 1$ and $x$ is the solution of $\max_x \min_y x^TAy$. Note that for any vector $x \geq 0$, the minimizing vector $y$ such that $y_1 + y_2 = 1$ is given by $y = (0, 1)$. Then we have that $x^TAy = 6x_1 + 4x_2$ such that the maximizing vector $x$ is $(1, 0)$. This gives the optimal mixed strategy which is actually a pure strategy.  
+\end{enumerate}
+The value of the matrix game is thus 6.
+\end{solution}
+
+  
+\item This exercise is a continuation of exercise 2) from the sheet of last week.  Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
+  \begin{enumerate}[i)]
+  \item Let $H = (a^T x = β) ⊆  ℝ^n$ be a hyperplane and $x^*∈ ℝ^n$. What is the \emph{euclidean distance} of $x^*$ from $H$?
+  \item
+    Assume now that every row of $A$ has euclidean norm $\|⋅\|_2$ equal to one.  
+    Prove that the following linear program finds the Chebychev center $z$ and the radius $R ∈ ℝ_{≥0}$  of the largest ball $B(z,R) ⊆ P$:
+    \begin{displaymath}
+      \begin{array}[t]{c}
+        \max R \\
+        A z +  \mathbf{1} R ≤ b
+      \end{array},
+    \end{displaymath}
+   and $\mathbf{1}∈ ℝ^m$ is the vector of all ones.
+  \item Show that there is a subsystem $A'x ≤ b'$ of $Ax≤b$ with at most $n+1$ inequalities whose corresponding polyhedron has the same Chebychev center as $P$.
+  \item Write down the dual of the linear program above. 
+  \end{enumerate}
+  
+  
+  \begin{solution}
+  \begin{enumerate}[i)]
+\item The distance of $x^\ast$ to $H$ is the distance of $x^\ast$ to the orthogonal projection onto $H$. This is given by $\Vert x^\ast - proj_H(x^\ast)\Vert = \frac{|\beta - \langle x^\ast, \alpha\rangle|}{\Vert \alpha\Vert}$. 
+
+\item Let $z^\ast$ be the Chebyshev center and $R^\ast$ be the corresponding radius. The ball $B(z^\ast, R^\ast) = \{x \in \setR^n: \Vert x- z^\ast \Vert \leq R^\ast \} = \{z^\ast + x : \Vert x \Vert \leq R^\ast\}.$ Then the Chebyshev center is defined by 
+\begin{align*}
+\max_{z^\ast, R^\ast} R^\ast &\\
+\text{s.t. } & B(z^\ast, R^\ast) \subseteq P.
+\end{align*}
+
+This. is equivalent to 
+\begin{align*}
+\max_{z^\ast, R^\ast}  R^\ast &\\
+\text{s.t. } & A(z^\ast + x) \leq b \quad \quad \text{ for every } x \in \setR^n \text{ s.t. } \Vert x\Vert \leq R^\ast.
+\end{align*}
+
+Note that for any row $i$, $a_i^T(z^\ast + x) \leq a_i^T(z^\ast + a_i / \Vert a_i \Vert R^\ast)$ since $\Vert x \Vert \leq R^\ast$ and $a_i^T x \leq \Vert x\Vert \frac{a_i^Ta_i}{\Vert a_i \Vert}$ (this is just the projection from part (i)). Then, the Chebyshev center is defined by 
+\begin{align*}
+\max_{z^\ast, R^\ast} & R^\ast \\
+\text{s.t. } &  a_i^T(z^\ast + a_i / \Vert a_i \Vert R^\ast) \leq b_i \quad i \in [m]
+\end{align*} 
+
+
+since if the above constraints hold, then the constraints over all $x$ with $\Vert x\Vert \leq R^\ast$ also hold. Then this LP is equivalent to 
+\begin{align*}
+\max_{z^\ast, R^\ast} & R^\ast \\
+\text{s.t. } & A^Tz^\ast + 1 R^\ast \leq b
+\end{align*}
+
+since $\Vert a_i \Vert = 1$ for every $i$. 
+
+\item The vector $(z^\ast, R^\ast) \in \setR^{n+1}$ is the maximizer of the LP given in part (ii). Then there exist a set of at most $n+1$ tight inequalities of the LP so that the subsystem of these inequalities uniquely define the optimizer $(z^\ast, R^\ast)$. Then the polyhedron for this subsystem also has $(z^\ast, R^\ast)$ as an optimizer such that this system defines the same Chebyshev center. 
+
+\item The dual linear program is 
+\begin{displaymath}
+  \begin{array}[t]{c}
+    \min b^Ty \\
+        A^T y = \mathbf{0}\\
+        \mathbf{1}^T y = 1\\
+        y\geq 0
+  \end{array},
+\end{displaymath}
+
+  \end{enumerate}
+  \end{solution}
+
+\item (Complementary slackness)
+
+  Consider the primal/dual pair
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+           Ax ≤ b
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A = c^T\\
+      y ≥ 0      
+    \end{array} 
+  \end{displaymath}
+  defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
+  Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
+
+  \medskip
+  \noindent
+
+  Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $(y^\ast)i > 0 \implies
+A_ix^\ast = b_i$ for each $i \in [m]$.
+
+
+
+\begin{solution}
+First we show $\Leftarrow$. \\
+
+By the assumption, we have that 
+\begin{align*}
+{y^\ast}^T b &= \displaystyle\sum_{j = 1}^m y^\ast_j b_j \\
+& = \displaystyle\sum_{j = 1}^m y^\ast_j(A_j x^\ast) \\
+& =\displaystyle\sum_{j = 1}^m  y^\ast_j \left( \displaystyle\sum_{i = 1}^n A_{ji} x^\ast_i \right) \\
+&= \displaystyle\sum_{i = 1}^n  x^\ast_i \left( \displaystyle\sum_{j = 1}^m A_{ji} y^\ast_j \right) \\
+& = {x^\ast}^T c \\
+& = c^T x^\ast
+\end{align*} 
+so that $x^\ast, y^\ast$ achieve the same primal/dual objective value and are therefore optimal by strong duality. For the second equality, we have used that whenever the summand is nonzero, $A_j x^\ast = b_j$. \\
+
+We then show $\Rightarrow$. \\
+
+We have that as $x^\ast, y^\ast$ are optimal, $c^Tx^\ast = b^Ty^\ast$ by strong duality. Then 
+\begin{align*}
+c^Tx^\ast & = \displaystyle\sum_{i =1}^n x^\ast_i c_i \\
+& =  \displaystyle\sum_{i =1}^n x^\ast_i \left( \displaystyle\sum_{j =1}^m A_{ji}y^\ast_j \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j \left( \displaystyle\sum_{i =1}^n A_{ji}x^\ast_i \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j (A_j x^\ast) \\
+& \leq \displaystyle\sum_{j =1}^m y^\ast_j  b_j \\
+& = {y^\ast}^T b
+\end{align*}
+where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. Then as the above inequalities must hold with equality everywhere since $c^Tx^\ast = b^Ty^\ast$, it must be that if $y^\ast_j >0$ then $A_j x^\ast = b_j$.
+
+\end{solution}
+
+\item Consider the linear programming problems    
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+      Ax ≤ b \\
+      x≥ 0
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A ≥ c^T\\
+      y ≥ 0      
+    \end{array}
+  \end{displaymath}
+  \begin{enumerate}[i)]
+  \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
+  \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
+    \begin{displaymath}
+      (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
+    \end{displaymath}
+    
+    \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}[i)]
+      \item We rewrite the maximization problem as:
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \max c^Tx \\
+          \tilde{A}x ≤ \tilde{b}\\
+        \end{array} 
+      \end{displaymath}
+      where $\tilde{A} = \begin{pmatrix}
+        A \\
+        -I
+      \end{pmatrix}$ and $\tilde{b} = \begin{pmatrix}
+        b \\
+        \mathbf{0}
+      \end{pmatrix}$. Then the dual of this maximization problem is
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \min \tilde{b}^T \tilde{y} \\
+          \tilde{y}^T \tilde{A} = c^T\\
+          \tilde{y} ≥ 0      
+        \end{array}
+      \end{displaymath}
+      Let $\tilde{y} = \begin{pmatrix}
+        y \\
+        y^\prime
+      \end{pmatrix}$ then the objective becomes $\tilde{b}^T \tilde{y} = b^Ty$ and the constraint becomes $\tilde{y}^T \tilde{A} = y^T A - (y^\prime)^T = c^T, y,y^\prime \geq 0 \Leftrightarrow y^T A = c^T, y\geq 0$. 
+      Therefore the dual problem is equivalent to
+      \begin{displaymath}
+        \begin{array}[t]{c}
+          \min b^Ty \\
+          y^T A ≥ c^T\\
+          y ≥ 0      
+        \end{array}
+      \end{displaymath}
+      which is the minimization problem on the right.
+      \item By weak duality we have 
+      \[ c^T x^* \leq (y^*)^T A x^* \leq (y^*)^T b. \]
+      Both $x^*$ and $y^*$ are optimal solutions if and only if both of inequalities above are equalities, which is equivalent to
+      \[ (y^T A - c^T) x^* = 0 \text{ and } (y^*)^T (b - Ax^*) = 0. \]
+    \end{enumerate}
+  \end{solution}
+
+\end{enumerate}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

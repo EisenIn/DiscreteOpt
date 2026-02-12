@@ -1,0 +1,295 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{April 21, 2026}
+\duedate{ }
+\problemset{Problem Set~8 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+
+
+\item Let $a, e, k ∈ \setN$ be three given natural numbers.
+\begin{enumerate}
+\item Argue that $a^{2^k}$ can be computed using $Θ(k)$ multiplications.
+\item How many bits ($Θ$-notation) does $a^{2^k}$ have?
+\item Let $(e_0, \hdots, e_l)$ be the bit representation of $e$, that is, $e = \displaystyle\sum_{i= 0}^l e_i2^i$ with $e_i ∈ \{0, 1\}$ for $i= 0, \hdots, l$.
+Complete the following algorithm by replacing each occurrence of three question marks (???) so
+that it computes $a^e$ using $O(l)$ many arithmetic operations.
+\begin{align*}
+& E = 1\\
+& S = a\\
+&\text{For }(i=0 \text{ to }l) \\
+& \quad \text{if  }(e_i == 1)\\
+& \quad \quad E = E\cdot ??? \\
+&\quad S = ??? \\
+&\text{return }???
+\end{align*}
+\item Show that for given $a, e, N ∈ \setN$ one can compute $a^e (\mod N)$ in time polynomial in the binary
+encoding length of $a, e$ and $N$.
+\item Let $a, b, c, N ∈ \setN$ be given and suppose that $N$ is a prime number. Show that $a^{b^c} (\mod N)$ can
+be computed in polynomial time in the binary encoding length of $a, b, c$ and $N$. You may use
+Fermat’s little theorem: $a^N ≡ a (\mod N)$.
+\end{enumerate}
+
+
+\begin{solution}
+\begin{enumerate}
+\item Start with $a(0) = a$, and compute $a(i) = a(i− 1)· a(i− 1)$ for $i ∈ [k]$. By induction
+$$a(k) = a^{2^{k−1}}· a^{2^{k−1}} = a^{2^k}.$$
+Thus, $a^{2^k}$ has been obtained by performing $k$ multiplications.
+\item  This has $\log(a^{2^k}) = Θ(2^k \log a)$ many bits.
+\item One has $E = E\cdot S$, $S = S\cdot S$ and return $E$.
+\item We use the same algorithm as in part (c), but do operations modulo $N$, in particular we replace $E
+= E\cdot S$ with $E = E\cdot S (\text{mod}\, N)$ and $S = S\cdot S$ with $S = S\cdot S (\text{mod}\, N)$. Observe that the modulo can be obtained by performing division with remainder. 
+The correctness of the algorithm follows from the fact that for any $a, b ∈ \setN$, $ab ≡ (a (\text{mod}\, N))(b (\text{mod}\, N)) (\text{mod}\, N)$. The algorithm performs
+$O(l)$ steps, where $l$ is the size of $e$, and in each step we perform division with remainder on
+$E \cdot S$ (or $S \cdot S$) and $N$: this takes time polynomial in the binary encoding length (size) of the
+input, in particular of $a, e, N$ (notice that the value of $A (\text{mod}\, N)$ has size at most the size of $N$,
+irrespectively of the size of $A$). Hence the total number of operations performed is polynomial
+in the size of $a, e, N$.
+\item  
+% Using the hint, we have that $abc ≡ abc (\mod N−1) (\mod N)$. Hence we first apply the algorithm
+% from part d) to obtain $bc (\mod N− 1)$ in polynomial time in the size of $b, c, N$. Notice that the
+% size of this number, which we denote by $e$, is bounded by the size of N only. Now, we apply
+% again the algorithm from part d) to obtain $ae (\mod N)$, in time polynomial in the size of $a, N$.
+
+% Corrected solution of (e):
+First, by applying (d) we can compute $e$ such that $b^c \equiv e (\text{mod}\, N-1)$ in time polynomial in the binary encoding length of $b,c,N$. 
+Note that $e$ is bounded by $N$. Then by Fermat's little theorem $a^{N-1}\equiv 1 (\text{mod}\, N)$, we have $a^{b^c} \equiv a^e (\text{mod}\, N)$.
+Finally, by applying (d) again, we can compute $a^e (\text{mod}\, N)$ in time polynomial in the binary encoding length of $a, N$.
+
+\end{enumerate}
+\end{solution}
+
+
+\item There are n types of animals, and you want to assign them to two stables. Unfortunately,
+some animals would eat other animals when left unattended. Therefore you need to assign
+the animals carefully. There are m relations of the form “u eats v“, where u and v are animals.
+Find an $O(n + m)$ algorithm that decides whether there is an assignment of animals to the
+two stables such that no animal eats another one of the same stable, and outputs a feasible
+assignment.\\
+\textit{Hint: Breadth-first-search might be useful.}
+
+\begin{solution}
+Consider the following directed graph $D = (V, A)$, where each node in $V$ corresponds to an
+animal, and we have an arc $(u, v)$ for each relation ”u eats v“. Observe an assignment of the
+animals to the two stables is feasible if and only if the corresponding partition of the nodes
+into sets $V_1$ and $V_2$ we have that $(u, v) ∉ A$ for all $u, v ∈ V_1$ and $(u, v) ∉ A$ for all $u, v ∈ V_2$.
+In other words, there is a feasible assignment if and only if the underlying undirected
+graph $G= (V,E )$, where $E := \{\{u, v\} : (u, v) ∈ A\}$ is bipartite.
+Consider the following algorithm:
+\begin{align*}
+&FULLBFS(G= (V,E )) \\
+& \quad D[v] \leftarrow \infty \ \ ∀v ∈ V \\
+& \quad \text{for all }v ∈ V \\
+& \quad \quad \text{if } D[v]= \infty \\
+&\quad \quad \quad D[v]\leftarrow 0 \\
+& \quad \quad \quad BFS(G, v, D) \\
+& \quad \text{return } D
+\end{align*}
+We run this algorithm on the graph $G$. Let $D$ be the output. We define
+$V_1 := \{v ∈ V : D[v]\text{ is odd}\}$
+and
+$V_2 := \{v ∈ V : D[v]\text{ is even}\}$.
+We claim that the assignment given by $V_1$ and $V_2$ is a feasible solution for our problem if and
+only if there exists a feasible solution. With the observation from above, it is sufficient to
+show that $V_1$ and $V_2$ are feasible if and only if $G$ is bipartite.
+Trivially if $V_1$ and $V_2$ are feasible, then $G$ is bipartite, since $V_1$ and $V_2$ give a bipartite partition of the nodes.
+Now assume that $V_1$ and $V_2$ are infeasible, i.e. there is an edge $e ∈ E$ such that $e ⊆ V_1$ (or
+$e ⊆ V_2$. In the latter case we swap the roles of V1 and V2). We need to show that G is not
+bipartite. As seen in the lecture, it is sufficient to show that G contains an odd cycle.
+Let $e = (u, w )$. Hence w is reachable from u and vice versa. Hence, u and w got their D-
+label assigned in the same run of BFS in Line 6. Thus there is a node v such that there is a
+v,u-path P of length $D[u]$ and a v, w -path P' of length $D[w ]$. Since u and w both belong to
+V1, we have $D[u] ≡ D[w ] \mod 2$, and therefore $D[u] + D[v]$ is even. Let $P ∆P'$ be the set of
+edges that are contained in either P or P' (but not in both of them). Note that since $D[u] +
+D[v]$ is even, the number of arcs in this set even as well. Moreover $e$ is contained in neither
+of the paths (otherwise the algorithm would not have assigned u and w to the same Vi ).
+We conclude that $(P ∆P') ∪ \{e\}$ is an odd cycle in G.
+
+\end{solution}
+
+
+\item Let $M_{2^k}$ be a matrix of order $n:= 2^k$, where $k∈\setN_{>0}$ such that it is recursively defined as follows:
+$$M_{2^k} = \begin{pmatrix} M_{2^{k−1}} &  M_{2^{k−1}} \\ M_{2^{k−1}} & −M_{2^{k−1}} \end{pmatrix} $$
+
+and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. that the Hadamard bound is tight.
+
+\begin{solution}
+We prove the statement by induction on $k∈\setN_0$ that $M^2_{2^k} = 2^kI_{2^k}$. For $k= 0$ one has $M^2_0 = M_1 =[1] = 2^0I_{2^0}$. Assume that the statement holds for $k$ and prove it for $k+ 1$. Then 
+
+
+$$M^2_{2^{k+1}} = \begin{pmatrix} M_{2^{k}} &  M_{2^{k}} \\ M_{2^{k}} & −M_{2^{k}} \end{pmatrix} \begin{pmatrix} M_{2^{k}} &  M_{2^{k}} \\ M_{2^{k}} & −M_{2^{k}} \end{pmatrix} = \begin{pmatrix} 2M^2_{2^k} & 0  \\ 0 & 2M^2_{2^k} \end{pmatrix} = \begin{pmatrix} 2\cdot 2^k I_{2^k} & 0  \\ 0 & 2\cdot 2^k I_{2^k} \end{pmatrix} = 2^{k+1}I_{2^{k+1}}$$
+where we have used the induction hypothesis in the second to last equality.
+By using the statement above we have that $\det(M^2_n) = \det(n I_n) = n^n$ so $|\det(M_n)|= n^{n/2}.$
+\end{solution}
+
+
+\item The determinant of a matrix $A∈\setR^{n×n}$ can be computed by the recursive formula
+$$\det(A) = \displaystyle\sum_{j=1}^n (-1)^{1+j} a_{1j}\det(A_{1j}), $$
+where $A_{1j}$ is the $(n−1)\times(n−1)$ matrix that is obtained from $A$ by deleting its first row and j-th
+column. This yields the following recursive algorithm.\\
+Input: $A∈\setR^{n×n}$ \\
+Output: $\det(A)$\\
+\begin{align*}
+& \text{if } (n= 1) \\
+&\text{return }a_{11}\\
+&\text{else} \\
+& \quad d:= 0\\
+& \quad\text{for }j = 1,...,n\\
+& \quad \quad d:= (−1)^{1+j} \det(A_{1j} ) + d \\
+&\quad \text{return }d
+\end{align*}
+Let $A∈\setR^{n×n}$ and suppose that the $n^2$ components of $A$ are pairwise diﬀerent.
+\begin{enumerate}
+\item Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first k rows and k of
+the columns of A. How many (recursive) calls of the form $\det(B)$ does the algorithm create?
+\item How many diﬀerent submatrices can be obtained from $A$ by deleting the first k rows and some
+set of k columns? Conclude that the algorithm remains exponential, even if it does not expand
+repeated subcalls.
+\end{enumerate}
+
+\begin{solution}
+a) Let $i_1,...,i_k$ be the indices of the columns of $A$ that were removed to obtain $B$. We have to
+count the number of nodes of the form $\det(B)$ in the recursion tree of the algorithm. Each node
+of the tree can be identified by its level (nodes of the form $\det(A_{ij})$ are at level i) and a sequence
+of column indices representing the columns of $A$ that are not columns of the submatrix called
+by the node. Hence the nodes of the form $\det(B)$ are at level $k$ of the tree, and their sequences
+are permutations of $i_1,...,i_k$ (note that there is only one submatrix of $A$ equal to $B$ since all
+the entries are pairwise diﬀerent). Hence there are $k!$ such nodes. \\
+b) The number of such submatrices is clearly $\binom{n}{k}$, which is exponential for instance for $k= n/2$, we have that:
+$$\binom{n}{n/2} = \frac{n \cdot \hdots (n/2 + 1)}{n/2 \cdot \hdots \cdot 1} \geq 2^{n/2}$$
+such that even if the algorithm calls $\det(B)$ only once for any submatrix $B$, the algorithm remains exponential.
+\end{solution}
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

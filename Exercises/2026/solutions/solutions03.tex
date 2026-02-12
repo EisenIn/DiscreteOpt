@@ -1,0 +1,330 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{March 10, 2026}
+\duedate{ }
+\problemset{Problem Set~3 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+\item Using Theorem 3.11, prove the following variant of Farkas' lemma:
+  Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
+  The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
+  for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.
+  
+  
+  \begin{solution}
+  We first show $Ax \leq b$ has a solution $\implies \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0, \lambda^Tb \geq 0$.  \\
+  
+  Assume that there actually exists some $\lambda \in \setR^m_{\geq 0}$ with $\lambda^TA = 0, \lambda^T b <0$. 
+  Then 
+  \begin{align*}
+  (\lambda^T A)x & = 0^T x & = 0\\
+  \lambda^T (Ax) & \leq \lambda^T b & < 0 
+  \end{align*}
+  which is impossible as  $\lambda^T Ax$ is distributive. Here we used in the inequality that $\lambda \geq 0$. \\
+  
+  Now we show that  $ \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0$ we have $\lambda^Tb \geq 0$ $\implies Ax \leq b$ has a solution. \\
+  
+  Assume that $Ax \leq b$ actually has no solution. Now consider the matrix $\tilde{A} = \begin{pmatrix} A & -A & I_m\end{pmatrix}$ where the 3 matrices are concatenated and $I_m$ is the $m \times m$ identity matrix. Then clearly $\tilde{A}x= b$ has no solution $x \geq 0$ as if there was such a solution where $x = (u, v, s)$ for some $u \in \setR_{\geq 0}^n, v \in \setR_{\geq 0}^n, s \in \setR_{\geq 0}^m$, then we have that $Au - Av + s = b$ where $s \geq 0$ such that $A(u-v) \leq b$. This gives $(u-v) \in \setR^n$ as a solution to $Ax \leq b$ which is assumed not to exist. \\
+  
+  Thus $\tilde{A}x = b$ has no solution $x \geq 0$ such that the standard Farkas lemma tells us that there exists some $\lambda \in \setR^m$ such that 
+  \begin{align*}
+  \lambda^Tb <0 \\
+  \lambda^T \tilde{A} \geq 0.
+  \end{align*}
+  
+  Then 
+  \begin{align*}
+  \lambda^T \tilde{A} \geq 0 \\
+  \implies \lambda^T\begin{pmatrix} A & -A & I_m \end{pmatrix} \geq 0 \\
+  \implies \lambda^TA \geq 0, -\lambda^T A \geq 0, \lambda \geq 0 \\
+  \implies \lambda^T A = 0, \lambda \geq 0.
+  \end{align*}
+  
+  Then $\lambda$ satisfies $\lambda^TA = 0, \lambda^T b < 0, \lambda \geq 0$ which is a contradiction to the assumption. So $Ax \leq b$ must have a solution. 
+  
+  
+  
+  
+  \end{solution}
+  
+  
+  
+  \item Provide an example of a convex and closed  set $K\subseteq\setR^2$ and a
+  linear objective function $c^Tx$ such that $\inf\{c^Tx \colon
+  x\in K\}>-\infty$ but there does not exist an $x^* \in K$ with $c^Tx^* \leq
+  c^Tx$ for all $x \in K$. 
+  
+  
+  \begin{solution}
+  Let the set $K$ be defined as follows:
+  $$K = \{x \in \setR^2: x_2 \geq e^{-x_1} \}.$$
+  
+  
+  Then clearly $K$ is convex and closed by convexity of the function $f(x) = e^{-x}$. Now, let the linear objective $c^Tx = x_2$. Then for any $x \in K, x_2 \geq e^{-x_1} \geq 0$ for any value $x_1 \in \setR$ so that the objective $c^Tx \geq 0 > -\infty$ for any $x \in K$. 
+  
+  
+ Assume there exists some $x^\ast = (x^\ast_1, x^\ast_2) \in K$ such that $c^Tx^\ast \leq c^Tx$ for all $x \in K$. Take the point $\tilde{x} = (x^\ast_1  + 1, e^{-(x^\ast_1 + 1)})$ which is also a point in $K$. Then $$\tilde{x}_2 = e^{-(x^\ast_1 + 1)} < e^{-x^\ast_1} \leq x^\ast_2.$$ Then $c^T \tilde{x} < c^T x^\ast$ such that there does not exist such an $x^\ast$. 
+  
+  
+  \end{solution}
+  
+  
+  
+  \item Consider the vectors
+$$ x_1 = \left(\begin{array}{c} 3 \\ 1 \\ 2\end{array}\right), x_2 = \left(\begin{array}{c} 1 \\ 2 \\ 5 \end{array}\right), x_3 = \left(\begin{array}{c} 2 \\ 0 \\ 1 \end{array}\right), x_4 = \left(\begin{array}{c}  2 \\ 4 \\ 3 \end{array}\right), x_5 = \left(\begin{array}{c}  1 \\ 1 \\ 1 \end{array}\right). $$
+
+The vector 
+$$ v= x_1 + 3 x_2 + 2 x_3 + x_4 + 3 x_5 =  \left(\begin{array}{c}  15\\ 14 \\ 25 \end{array}\right)$$
+is a conic combination of the $x_i$.
+
+Write $v$ as a conic combination using only three vectors of the $x_i$.
+
+\emph{Hint: Recall the proof of Carath\'eodory's theorem}
+
+
+
+
+\begin{solution}
+Note that $-x_1 + x_3 + x_5 = \vec{0}$. 
+
+
+Let $A$ be the matrix $\begin{pmatrix} | &| & | & | & | \\x_1 & x_2 & x_3 &x_4 &x_5 \\ | &| & | & | & | \end{pmatrix}$. Then $$v = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} + A \begin{pmatrix} -1\\0\\1\\0\\1\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix}.$$
+
+
+Next, note that $x_3 + x_4 -4x_5 = \vec{0}$. Then, 
+
+$$v = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} + A \begin{pmatrix} 0\\0\\1\\1\\-4\end{pmatrix} = A \begin{pmatrix} 0\\3\\4\\2\\0\end{pmatrix}$$
+such that $v = 3x_2 + 4x_3 + 2x_4.$
+
+
+
+
+
+\end{solution}
+
+
+
+\item In this exercise, assume that a linear program $\max\{c^Tx \mid
+  Ax\leq b \}$ can be solved in constant time $O(1)$. Suppose that $P(A,b)$
+  has vertices and that the linear program is bounded. Show how to
+  compute an optimal \emph{vertex} solution of the linear
+  program in polynomial time in $n$ and $m$ where $A \in \mathbb{R}^{m \times n}$. 
+  
+\begin{solution}
+Since $P(A,b)$ has vertices, we have $\rank(A) = n$. Recall Theorem 3.2 which shows that there is an optimal \emph{vertex} solution of the linear program $\max\{c^Tx \mid Ax\leq b \}$, if the linear program is feasible and bounded and $\rank(A)=n$.
+We will redo the proof of Theorem 3.2 in an algorithmic way.
+
+First by using the ``black box'' constant time $O(1)$ algorithm, we get a feasible optimal solution $x^*$. Let $A_{x^*} x \leq b_{x^*}$ be the subsystem of $Ax\leq b$ that is satisfied by $x^*$ with equalities. Define $\rank(x^*)$ to be the rank of $A_{x^*}$.
+
+If $x^*$ is a vertex, we are done. Otherwise, $\rank(x^*) < n$ and we will compute a feasible point $y^* \in P(A, b)$ such that 
+\begin{itemize}
+  \item $c^T y^* = c^T x^*$,
+  \item $\rank(y^*) > \rank(x^*)$.
+\end{itemize}
+The procedure of computing $y^*$ is as follows. 
+\begin{enumerate}
+  \item Compute the matrix $A_{x^*}$, which can be done in polynomial time. 
+  \item Compute a non-zero kernel $d\in \mathbb{R}^n, d \neq 0$ of $A_{x^*}$, which can also be done in polynomial time. 
+  % Make sure that $c^T d \geq 0$ by flipping sign of $d$ otherwise.
+  \item Compute the maximum distance $\lambda_{\text{max}}$ to move along the same direction of $d$ or the opposite direction of $d$, such that the updated point $y^* := x^* \pm \lambda_{\text{max}} d$ is feasible, $c^T y^* = c^T x^*$, and $\rank(y^*) > \rank(x^*)$. 
+  Note that since $x^*$ is optimal, we must have $c^T d= 0$ otherwise moving along $d$ or $-d$ will strictly increase the objective value.
+  Since $Ad \neq 0$ and $A_{x^*}d = 0$, we can compute an inequality of $Ax\leq b$, say $a_i^T x \leq b_i$, such that it's not in the subsystem $A_{x^*}x \leq b_{x^*}$ and $a_i^T d \neq 0$. 
+  Then take $\lambda_{\text{max}} = \frac{b_i - a_i^T x^*}{|a_i^T d|}$, move along $d$ if $a_i^T d > 0$ and move along $-d$ if $a_i^T d<0$.
+  % \begin{itemize}
+  %   \item If $c^T d> 0$, then we move along the same direction of $d$. Among the nonzero coordinates $I \subseteq [m]$ of $Ad$, compute
+  %   \[ \min\left\{ i \in I : \frac{b_i - (Ax^*)_i}{(Ad)_i} \right\}\]
+  % \end{itemize}
+\end{enumerate}
+The procedure described above is in polynomial time of $n,m$. We keep doing the procedure at most $n$ times until we get a feasible point whose rank is $n$, which is an optimal \textit{vertex} solution.
+\end{solution} 
+  
+  
+  \item Let $A \in \setR^{n\times n}$ be a non-singular matrix and let
+  $a_1,\ldots,a_n\in \setR^n$ be the columns of $A$.  Show that
+  $\cone(\{a_1,\ldots,a_n\})$ is the polyhedron $P = \{ y \in \setR^n \colon
+  A^{-1} y\geq0\}$. \label{conv:item:3} Show that $\cone(\{a_1,\ldots,a_k\})$ for
+  $k\leq n$ is the set $P_k = \{y \in \setR^n \colon
+  a_i^{-1} x\geq0, i=1,\ldots,k, \, a_i^{-1}x = 0, i=k+1,\ldots,n\}$, where
+  $a_i^{-1}$ denotes the $i$-th row of $A^{-1}$. 
+  
+  
+  \begin{solution}
+  Let $x \in \cone\{a_1, \hdots, a_k\}$. Then $x = \displaystyle\sum_{i =1}^k \lambda_i a_i$ such that $\lambda_i \geq 0$ for all $i$. 
+  
+  
+  Then $x = \begin{pmatrix}a_1 & a_2 & \hdots & a_k \\ |&|&\hdots &|\end{pmatrix} \begin{pmatrix}\lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k\end{pmatrix}$.
+  
+  Then $x = A \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k \\ 0 \\ \vdots \\ 0\end{pmatrix}$ where $(\lambda, \vec{0})$ has $n-k$ zeros padded at the end. Then $x$ satisfies $A^{-1}x = (\lambda,  \vec{0})$ and since $\lambda_i \geq 0$ for all $i \in [k]$, $ x \in P_k$. This shows $\cone\{a_1, \hdots, a_k\} \subseteq P_k$. 
+  
+  Next let $y \in P_k$ such that $a_i^{-1}y \geq 0$ for $i \in [k]$ and $a^{-1}_i y = 0$ for $i \in [k+1, n]$. Then $A^{-1}y = \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k \\ 0 \\ \vdots \\ 0\end{pmatrix}$ for some values $\lambda_i \geq 0, i \in [k]$ so that $y = \displaystyle\sum_{i =1}^k \lambda_i a_i + \displaystyle\sum_{i =k+1}^n 0 a_i$ so that $y \in \cone\{a_1, \hdots, a_k\}$. Thus $P_k \subseteq \cone\{a_1, \hdots, a_k\}$. 
+  
+  
+  
+  \end{solution}
+  
+  
+  
+  
+\item Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed
+  and convex. \label{conv:item:2} 
+  
+  \emph{Hint: Use Carath\'eodory's theorem and exercise~\ref{conv:item:3}.}
+  
+  
+  
+  \begin{solution}
+  We show that $\cone(X)$ is convex. 
+  
+  
+  Let $z, y \in \cone(X)$. Then $z = \displaystyle\sum_{x \in X}\lambda_x^z x, y = \displaystyle\sum_{x \in X}\lambda_x^y x$. Then $\lambda z + (1-\lambda)y = \displaystyle\sum_{x \in X}(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) x$ where $(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) \geq 0$ for every $x$ as we are adding and multiplying non-negative values. Thus $\lambda z + (1-\lambda)y \in \cone(X)$. 
+  
+  
+  We show that $\cone(X)$ is closed. 
+  
+  %By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
+  
+  First, by Carath\'eodory's theorem, for each $y \in \cone(X)$, there exists a linearly independent subset $\tilde{X} \subseteq X$ of size at most $n$, such that $y \in \cone(\tilde{X})$. Therefore we have
+  \[\cone(X) = \bigcup_{\substack{\tilde{X} \subseteq X, \\ |\tilde{X}| \leq n, \\ \tilde{X}\,\text{is linearly independent}}} \cone(\tilde{X}).\]
+  Since $X$ is finite, the union above is also finite. 
+
+  Next, we show that for every such $\cone(\tilde{X})$ where $\tilde{X} \subseteq X, |\tilde{X}| \leq n$, and $\tilde{X}$ is linearly independent, $\cone(\tilde{X})$ is closed. 
+  If $|\tilde{X}|=n$, then by Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
+  If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
+
+  Since the finite union of closed sets is closed, this completes our proof.
+  
+  \end{solution}
+
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

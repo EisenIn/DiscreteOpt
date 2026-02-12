@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+
+\usepackage{../ppackage}
+\usepackage{bbm}
+\usepackage{import}
+
+
+
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns}
+\usetikzlibrary{ipe} % ipe compatibility library
+
+\usepackage{../../../Notes/tikzit}
+\usepackage{../../../Notes/utf8math}
+
+\input{../../../Notes/TIKZ/digraph.tikzstyles}
+
+
+
+\usepackage{url}
+
+
+\newcommand{\solution}{
+\bigskip\noindent
+	\textbf{Solution: \\}}
+	
+
+
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\conv}{conv}
+\newcommand{\SV}{\mathrm{SV}}
+\newcommand{\bigO}{O}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\LLL}{\mathrm{LLL}}
+\newcommand{\setR}{\mathbb{R}}
+\newcommand{\setZ}{\mathbb{Z}}
+\newcommand{\setQ}{\mathbb{Q}}
+\newcommand{\setC}{\mathbb{C}}
+\newcommand{\setN}{\mathbb{N}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\opt}{{\sc 0/1-opt}\xspace}
+\newcommand{\aug}{{\sc 0/1-aug}\xspace}
+\newcommand{\psep}{{\sc 0/1-psep}\xspace}
+\newcommand{\sep}{{\sc 0/1-sep}\xspace}
+\newcommand{\fopt}{{\sc 0/1-testopt\xspace} }
+
+\newcommand{\hpp}{\mathrm{HPP}}
+\newcommand{\nodes}{\mathcal{V}}
+\newcommand{\vol}{\mathrm{vol}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\arcs}{\mathcal{A}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\paths}{\mathscr{P}}
+\newcommand{\cycles}{\mathcal{C}}
+
+
+
+
+\newcommand{\K}{{\mathcal K}}
+\newcommand{\A}{{A}}
+\newcommand{\B}{{B}}
+\newcommand{\T}{\mathscr{T}}
+\newcommand{\eE}{\mathscr{E}}
+\newcommand{\eS}{\mathscr{S}}
+\newcommand{\eP}{\mathscr{P}}
+\newcommand{\eM}{\mathscr{M}}
+
+
+
+\newcommand{\transp}{^{\mathrm{T}}}
+
+\newcommand{\smallmat}[1]{\left( \begin{smallmatrix} #1 \end{smallmatrix}\right)}
+
+\newcommand{\mat}[1]{ \begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\smat}[1]{ \big(\begin{smallmatrix} #1 \end{smallmatrix}\big)}
+
+\newcommand{\pc}{\mathscr{P}}
+\newcommand{\ob}{\mathscr{O}}
+\newcommand{\odds}{\mathscr{W}}
+\newcommand{\up}{\mathscr{U}}
+\newcommand{\ef}{\mathscr{F}}
+\newcommand{\eh}{\mathscr{H}}
+\newcommand{\ev}{\mathscr{V}}
+\newcommand{\ec}{\mathscr{C}}
+\newcommand{\eu}{\mathscr{U}}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+
+
+
+
+
+
+
+
+\newcommand{\linhull}{\mathrm{lin.hull}}
+\newcommand{\affhull}{\mathrm{affine.hull}}
+\newcommand{\charcone}{\mathrm{char.cone}}
+\newcommand{\cone}{\mathrm{cone}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+
+
+\usepackage{enumerate}
+
+      
+\institute{\'Ecole Polytechnique F\'ed\'erale de Lausanne}
+\lecture{Discrete Optimization}
+\faculty{Prof. Friedrich Eisenbrand}
+\term{Spring 2026}
+\publishdate{April 14, 2026}
+\duedate{ }
+\problemset{Problem Set~7 (Solutions)}
+
+\begin{document}
+\makeheader
+
+\begin{enumerate}[1)]
+
+\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+$O(n \log(B))$ many oracle calls.
+
+
+\begin{solution}
+We split the problem in $n$ subproblems: for $i∈\{1,...,n\}$, we want to obtain the i-th component
+of the red point. This is a simple binary search problem, and we illustrate how to solve it for $i= 1$:
+we first call the oracle with $l = (0,...,0),r = (B/2,B,...,B)$. Then we call the oracle with $l=
+(0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/2,B,...,B)$
+(if the answer is negative), and so on. In this way, we are guaranteed to find each component of the
+red point with $O(\log(B))$ oracle calls, for a total of $O(n\log(B))$ many oracle calls.
+\end{solution}
+
+
+\item Let $P := \{x ∈\setR^n : Ax= b, x ≥0\}$ be a polyhedron and $\min\{c^Tx : x ∈P\}$ be the corresponding
+primal linear program. Assume that all the coeﬃcients of $A, b$ and $c$ are integral and bounded in
+absolute value by given $B ∈\setN$, and furthermore let $L:= B^n n^{n/2}$.
+\begin{enumerate}
+\item Show the following: If $x_1,x_2$ are vertices of $P$ and $c^Tx_1\neq c^Tx_2$, then $|c^Tx_1−c^Tx_2|≥1/L^2$.
+\item  Let $x^∗$and $y^∗$ be feasible solutions of the primal and dual linear program respectively. Conclude
+the following from the above: If $|c^Tx^∗ −b^Ty^∗|<1/L^2$, then each vertex $x$ of $P$ with $c^Tx≤c^Tx^∗$ is
+an optimal solution of the primal.
+\end{enumerate}
+
+
+\begin{solution}
+\begin{enumerate}
+\item  Let $B_1$ and $B_2$ be the sets of row indices corresponding to basic feasible solutions $x_1,x_2$, then
+$x_1 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_1}$ and $x_2 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_2}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_2}$.  A basic result from linear algebra states that given an $n×n$ invertible matrix $M$ one has that $M^{−1} =\frac{1}{\det(M)}adj(M)$. If one has that the entries of $M$ are integral and bounded in absolute value by $B$ then Hadamard’s bound gives that $\det(M) ≤ B^n n^{n/2} = L$. Combining the two statements gives that the entries of $M^{−1}$ are integer multiples of
+$1/ |det(M)|≥1/L$.  Applying this statement to $\begin{pmatrix} A \\ I \end{pmatrix}_{B_1}$ and since $b$ is integral we obtain that each entry of $x_1$ is an integer multiple of $1/\left|\det\left( \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}\right)\right|≥1/L$. Analogously obtain the same bound for $x_2$. Thus we obtain that $|c^Tx_1−c^Tx_2|= |c^T(x_1−x_2)|$ is a positive integer multiple of some $\delta  ≥1/L^2$ since $c∈\setZ^n$.
+
+\item  We prove the statement by contradiction. Assume that $x$ is not an optimal solution, then there
+is a vertex $\bar{x}$ such that $c^T\bar{x}<c^Tx$. Then by weak duality one has $b^Ty^∗≤c^T\bar{x} <c^Tx ≤c^Tx^∗$ which further implies $|c^T\bar{x} −c^Tx|<1/L^2$ contradicting part (a).
+
+\end{enumerate}
+
+
+\end{solution}
+
+
+\item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
+$B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
+
+\textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
+polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
+
+\begin{solution}
+By using the hint, we obtain a system of inequalities with matrix $\bar{A}$ of full column rank and vector $\bar{b}$. Indeed, one can see that in the new system $\bar{A}x≤\bar{b}$, $\bar{A}$ is of the form $$\bar{A} = \begin{pmatrix} A \\ X \\ Y \end{pmatrix}$$ 
+and $\bar{b}= (b, 0)$ , where $X$ is an $|I|×n$ matrix, where the $x_{kl}$ entry is equal to $1$ if $k=l$ and $k ∈I$,
+$Y$ is a $|J|×n$ matrix where the $y_{kl}$ entry is equal to $-1$ if $k= l$ and $k ∈J$ and $0$ otherwise.
+By construction of $\bar{A}$, we can see that the matrix has full column rank.
+This implies that the corresponding polyhedron has vertices. Moreover, by a theorem from the
+course, a vertex is characterized by a subsystem $A'x≤b'$ where $rank(A') = n$ such that $x^\ast
+= A'^{−1}b'$.
+
+We know from linear algebra that $A^{−1 }= adj(A')/\det(A').$
+Hence,
+$$|x^\ast_i| = \left| \displaystyle\sum_{j =1}^n {a'}_{ij}^{-1} b_j \right| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right|.$$
+Then we just have to bound the entries of the matrix $A'^{−1}$. From the fact that $A'$ is invertible and has integer entries, we get that $|\det(A')| ≥ 1$. From Hadamard’s bound, we also have that
+$|\det(adj(A))|≤B^{n−1}(n−1)^{\frac{n−1}{2}}$. Combining these two facts, we have the desired result,
+$$|x^\ast_i| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right| \leq B \displaystyle\sum_{j =1}^n B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n \cdot B \cdot B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n\cdot B \cdot n^{n/2} \cdot B^n.$$
+
+\end{solution}
+
+
+
+\item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
+the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
+absolute value of an entry of $A$ and $b$. 
+
+
+Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
+
+
+\begin{solution}
+From the assumptions, there exists a vertex $x^*$ of $P$ such that $c^Tx^*= \max\{c^Tx: Ax≤b\}$.
+We have that there is some invertible $A'$, submatrix of $A$, and a $b'$ subvector of $b$, such that
+$x^*=  {A'}^{−1}b'$, hence $|x^\ast_i|= \sum_{j =1}^m \frac{|A'_{ij}|}{|\det(A')|}b'_j$ and using Hadamard's bound and the integrality of $A,b,c$, we get that 
+$$|c^Tx^\ast|≤ mB^{n+2}n^{n/2+1}.$$
+
+Moreover, from exercise 2, we have that for any non-optimal vertex $x$ of $P$,  $c^Tx^*−c^Tx≥1/L^2$, where
+$L= B^n n^{n/2}$. Hence we need to find an interval $[α,β]$ such that $P' := P ∩\{x∈\setR^n : c^Tx≥α\}$ is feasible and $P'' := P ∩\{x∈\setR^n : c^Tx≥β\}$ is not feasible, and $β−α <1/L^2$. This will then give the value of the maximum. Checking feasibility of these two polytopes is then done in polynomial time in $n, m \log B$ by the assumption that there exists an algorithm that decides feasibility. To find the desired $α,β$, we perform binary search on the interval $[−mB^{n+2}n^{n/2+1},mB^{n+2}n^{n/2+1}]$, halving the size of the interval iteratively until the interval has small enough length (less than $1/L^2$). Formally, denote by $S_i$ the system $Ax ≤ b$, $c^Tx ≥ α_i$ and set $α_0 =−mB^{n+2}n^{n/2+1},β_0 = mB^{n+2}n^{n/2+1}$. At the i-th iteration, we know that $S_{i−1}$ is feasible and we ask to the oracle whether $S_i$ is feasible, with $α_i = α_{i−1} + (β_i−α_i)/2$. If it is feasible, we set $β_i = β_{i−1}$, otherwise we set $β_i = α_i,α_i = α_{i−1}$, and we move to the next iteration, until $β_i−α_i <1/L^2$. At this point, if the system $Ax≤b,c^Tx≥β_i$ is not feasible, we obtained our $α,β$, otherwise notice that we must have $β_i = β_0$ which implies that $\max\{c^Tx: Ax≤b\}= β_0$. The total number of iterations is at most $\log(L^2\cdot 2mB^{n+2}n^{n/2+1})$, for a total running time that is polynomial in $n, m$ and $\log B$.
+
+
+\end{solution}
+
+
+
+\end{enumerate}
+
+
+
+  
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
