@@ -17,7 +17,7 @@
     -- (0,4.2)
     -- cycle;
 
-\node[green] at (3,1.2) {$O$'s only};
+\node[green] at (3,1.2) {$0$'s only};
 
 % Black stepped region (Nonzero)
 \draw[thick]
