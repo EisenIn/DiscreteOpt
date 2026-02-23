@@ -125,16 +125,99 @@
 
 \begin{enumerate}[1)]
 
-\item  \label{item:ex-9}
-  Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
-  
-  \begin{solution}
-  First we prove that for any extreme point $x^*$ of $B_n$, we have $\|x^*\|_2=1$. Let $\{x^*\} = B_n \cap \{\alpha^T x= \beta\}$. Suppose that $\|x^*\|_2<1$. Take $d\neq 0$ such that $\alpha^T d = 0$. For $\varepsilon> 0$, consider the point $\bar{x} = x^* + \varepsilon d$. Obviously we have $\alpha^T \bar{x} = \beta$. Since $\|x^*\|_2<1$, by taking $\varepsilon$ to be small enough, we can make sure that $\|\bar{x}\|_2\leq 1$, so $\bar{x} \in B_n$. Therefore $\bar{x} \neq x^*$ but $\bar{x} \in B_n \cap \{\alpha^T x= \beta\}$, a contradiction.
+\item \label{absolute-value-modeling} 
+Consider the problem
+\begin{align*}
+    \min &\quad 2x_1 + 3|x_2-10| \\
+    \text{subject to} &\quad |x_1+2| + |x_2| \leq 5,
+\end{align*}
+and formulate it as a linear programming problem.
 
-  Next we prove that for any $x^* \in B_n$ such that $\|x^*\|_2=1$, $x^*$ is an extreme point of $B_n$. Consider the hyperplane $(x^*)^T x = 1$, which is the tangent plane of $S^{n-1}$ at $x^*$. Note that for any $x \in B_n$, we have $(x^*)^T x \leq 1$ so it is a supporting inequality of $B_n$. Also we have $\{x^*\} \subseteq B_n \cap \{(x^*)^T x = 1\}$. For any $y \in B_n \cap \{(x^*)^T x = 1\}$, let $\theta\in [0,\pi)$ be the angle between $x^*$ and $y$, we have
-  \[ 1=(x^*)^T y = \|x^*\|_2 \|y\|_2 \cos\theta \leq 1 \,\Rightarrow\, \|y\|_2 = 1, \theta = 0 \,\Rightarrow\, y = x^*. \]
-  Therefore $\{x^*\} = B_n \cap \{(x^*)^T x = 1\}$, so $x^*$ is an extreme point of $B_n$.
-  \end{solution}
+\begin{solution}
+We introduce the following auxiliary variables:
+\begin{align*}
+    y_1 & = |x_2 - 10| \\  
+    y_2 & = |x_1 + 2| \\
+    y_3 & = |x_2|.
+\end{align*}
+Then the problem can be reformulated as
+\begin{align*}
+    \min &\quad 2x_1 + 3y_1 \\
+    \text{subject to} &\quad y_1 \geq x_2 - 10 \\
+    &\quad y_1 \geq -(x_2 - 10) \\
+    &\quad y_2 \geq x_1 + 2 \\
+    &\quad y_2 \geq -(x_1 + 2) \\
+    &\quad y_3 \geq x_2 \\
+    &\quad y_3 \geq -x_2 \\
+    &\quad y_2 + y_3 \leq 5.
+\end{align*}
+\end{solution}  
+
+\item \label{meat-packing-modeling} 
+A meat packing plant produces 480 hams, 400 pork bellies, and 230 picnic hams every day; each of these products can be sold fresh or smoked. 
+The total number of hams, pork bellies, and picnic hams that can be smoked during a normal working day is 420; in addition, up to 250 products can be smoked on overtime at a higher cost.
+The \emph{net} profits are as follows:
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+& Fresh & \shortstack{Smoked on \\ regular time} & \shortstack{Smoked on \\ overtime} \\
+\cline{2-4}
+Hams & \$8 & \$14 & \$11 \\
+Pork bellies & \$4 & \$12 & \$7 \\
+Picnic hams & \$4 & \$13 & \$9 \\
+\hline
+\end{tabular}
+\end{center}
+
+For example, the following schedule yields a total net profit of \$9,965:
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+& Fresh & \shortstack{Smoked on \\ regular time} & \shortstack{Smoked on \\ overtime} \\
+\cline{2-4}
+Hams & 165 & 280 & 35 \\
+Pork bellies & 295 & 70 & 35 \\
+Picnic hams & 55 & 70 & 105 \\
+\hline
+\end{tabular}
+\end{center}
+The objective is to find the schedule that maximizes the total net profit. Formulate this problem as a linear programming problem in the standard form.
+
+\begin{solution}
+We introduce the following variables:
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+& Fresh & \shortstack{Smoked on \\ regular time} & \shortstack{Smoked on \\ overtime} \\
+\cline{2-4}
+Hams & $x_{11}$ & $x_{12}$ & $x_{13}$ \\
+Pork bellies & $x_{21}$ & $x_{22}$ & $x_{23}$ \\
+Picnic hams & $x_{31}$ & $x_{32}$ & $x_{33}$ \\
+\hline
+\end{tabular}  
+\end{center}
+Then the problem can be reformulated as
+\begin{align*}
+    \max &\quad 8x_{11} + 14x_{12} + 11x_{13} + 4x_{21} + 12x_{22} + 7x_{23} + 4x_{31} + 13x_{32} + 9x_{33} \\
+    \text{subject to} &\quad x_{11} + x_{12} + x_{13} = 480 \\  
+    &\quad x_{21} + x_{22} + x_{23} = 400 \\
+    &\quad x_{31} + x_{32} + x_{33} = 230 \\
+    &\quad x_{12} + x_{22} + x_{32} \leq 420 \\
+    &\quad x_{13} + x_{23} + x_{33} \leq 250 \\
+    &\quad x_{ij} \geq 0 \quad \forall \; i, j = 1,2,3.
+\end{align*}       
+\end{solution}
+
+\item \label{unit-ball-extreme-points}
+Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+
+\begin{solution}
+First we prove that for any extreme point $x^*$ of $B_n$, we have $\|x^*\|_2=1$. Let $\{x^*\} = B_n \cap \{\alpha^T x= \beta\}$. Suppose that $\|x^*\|_2<1$. Take $d\neq 0$ such that $\alpha^T d = 0$. For $\varepsilon> 0$, consider the point $\bar{x} = x^* + \varepsilon d$. Obviously we have $\alpha^T \bar{x} = \beta$. Since $\|x^*\|_2<1$, by taking $\varepsilon$ to be small enough, we can make sure that $\|\bar{x}\|_2\leq 1$, so $\bar{x} \in B_n$. Therefore $\bar{x} \neq x^*$ but $\bar{x} \in B_n \cap \{\alpha^T x= \beta\}$, a contradiction.
+
+Next we prove that for any $x^* \in B_n$ such that $\|x^*\|_2=1$, $x^*$ is an extreme point of $B_n$. Consider the hyperplane $(x^*)^T x = 1$, which is the tangent plane of $S^{n-1}$ at $x^*$. Note that for any $x \in B_n$, we have $(x^*)^T x \leq 1$ so it is a supporting inequality of $B_n$. Also we have $\{x^*\} \subseteq B_n \cap \{(x^*)^T x = 1\}$. For any $y \in B_n \cap \{(x^*)^T x = 1\}$, let $\theta\in [0,\pi)$ be the angle between $x^*$ and $y$, we have
+\[ 1=(x^*)^T y = \|x^*\|_2 \|y\|_2 \cos\theta \leq 1 \,\Rightarrow\, \|y\|_2 = 1, \theta = 0 \,\Rightarrow\, y = x^*. \]
+Therefore $\{x^*\} = B_n \cap \{(x^*)^T x = 1\}$, so $x^*$ is an extreme point of $B_n$.
+\end{solution}
 
 %   \vspace{2mm}
 %   \textbf{Alternative solution:}
@@ -159,7 +242,7 @@
 % Next, we show there are no other extreme points of $B$. Assume, there is some $z \in \setR^n$ such that $\|z\| < 1 $ and $z$ is an extreme point of $B$. Let $\|z\| = \alpha$ for some value $\alpha <1$. Then the vector $x = \frac{1}{\alpha}z$ satisfies $x \in B, x \neq z$. Moreover, the vector $ y = \vec{0} $ satisfies $y \neq x, y \neq z, y \in B$. But then, notice that $z = \alpha x + (1-\alpha) y$ where $\alpha \in (0, 1)$ such that $z$ cannot be an extreme point. 
   
   
-\item \label{item:10}
+\item \label{line-in-polyhedron}
   A \emph{line} is a set $L = \{ x ⋅ d +t ： x ∈ ℝ\} ⊆ ℝ^n$ where $d,t ∈ ℝ^n$ $d ≠0$. Show the following.
 
   A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
@@ -191,136 +274,136 @@
   As $\rank(A) <n$, there exists a non-trivial kernel element of $A$, a vector $v \neq \vec{0}$ such that $Av = 0$. Then let $\vec{x}$ be any feasible vector of the polyhedron $P$, that is $x$ is such that $Ax \leq b$. Note that for any $t \in \setR$, $A(x+ t\cdot v) = Ax + tAv = Ax + \vec\{0\} \leq b$ such that the vector $x + t \cdot v$ is contained in $P$ for any $t \in \setR$. This forms the line contained in $P$.  
   \end{solution}
 
-\item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
-\begin{enumerate}[i)] 
-\item $A'v_1 = b'$ and $A'v_2 = b'$  and
-\item $\rank(A') = (n-1)$. 
-\end{enumerate}
+% \item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
+%   \begin{enumerate}[i)] 
+%   \item $A'v_1 = b'$ and $A'v_2 = b'$  and
+%   \item $\rank(A') = (n-1)$. 
+%   \end{enumerate}
 
-Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
-\begin{displaymath}
- \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
-\end{displaymath}
+% Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
+% \begin{displaymath}
+%  \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
+% \end{displaymath}
 
 
+
+% \begin{solution}
+% Let $A'$ be the rank $n-1$ submatrix such that $A'v_1 = b', A'v_2 = b'$. Let $c^T = \vec{1}^TA'$ be the vector obtained by summing the rows of $A'$ and let $\delta = \vec{1}^Tb'$ the value obtained by summing the components of $b'$. As $A'$ can be chosen as $(n-1)$ linearly independent rows, the vector $\vec{c}$ is nonzero. 
+
+% Now, we claim that $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+% Let $x$ be any convex combination of $v_1, v_2$ such that $x = \lambda v_1 + (1 - \lambda)v_2$. Notice that $x \in P$ as $v_1, v_2 \in P$ and $P$ is convex. Next, note that
+% \begin{align*}
+% c^Tx & = c^T ( \lambda v_1 + (1 - \lambda)v_2) \\
+% & = (\vec{1}^TA') (\lambda v_1 + (1 - \lambda)v_2) \\
+% & = \lambda (\vec{1}^T A' v_1) + (1-\lambda)(\vec{1}^TA' v_2) \\
+% & = \lambda (\vec{1}^T b') + (1-\lambda)(\vec{1}^T b') \\
+% & = \lambda \delta + (1-\lambda)\delta \\
+% & = \delta. 
+% \end{align*}
+
+% This shows that $x \in (P \cap \{x \in \setR^n: c^Tx = \delta\})$ so that $ \conv\{v_1, v_2\} \subseteq (P \cap \{x \in \setR^n: c^Tx = \delta\})$. 
+
+
+% Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, and we show that $x \in  \conv\{v_1, v_2\}$. 
+
+% As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
+
+% Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} v_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
+
+% Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
+% \begin{align*}
+% \lambda v_1 + (1- \lambda)v_2 & = \lambda {A^{(1)}}^{-1}\begin{pmatrix} b' \\ b^{(1)} \end{pmatrix} + (1 - \lambda) {A^{(1)}}^{-1}\begin{pmatrix} b' \\ \alpha_{v_2} \end{pmatrix} \\
+% & = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \lambda b^{(1)}  + (1-\lambda) \alpha_{v_2}\end{pmatrix} \\
+% & = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}} b^{(1)}  + \left(1-\frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}\right) \alpha_{v_2}\end{pmatrix} \\
+% & = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \alpha_x \end{pmatrix} \\
+% & = x
+% \end{align*}
+% so that $x$ is indeed a convex combination of $v_1$ and $v_2$. Finally, note that if instead $\alpha_{x} \leq \alpha_{v_2}$ then $v_2$ is a convex combination of $x$ and $v_1$ which is impossible as $v_2$ is a vertex. 
+% \\
+
+
+% So we have shown that $(P \cap \{x \in \setR^n: c^Tx = \delta\}) \subseteq \conv\{v_1, v_2\}$ such that altogether $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+
+
+
+
+% \end{solution}
+
+\item \label{intersection-of-convex-sets}
+Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
+Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
 
 \begin{solution}
-Let $A'$ be the rank $n-1$ submatrix such that $A'v_1 = b', A'v_2 = b'$. Let $c^T = \vec{1}^TA'$ be the vector obtained by summing the rows of $A'$ and let $\delta = \vec{1}^Tb'$ the value obtained by summing the components of $b'$. As $A'$ can be chosen as $(n-1)$ linearly independent rows, the vector $\vec{c}$ is nonzero. 
+Let $x, y$ be two vectors in the set $\bigcap_{i \in I} C_i$. Then $x, y \in C_i$ for each $i \in I$. Then $\lambda x + (1-\lambda)y \in C_i$ for each $i \in I$ by convexity of $C_i$. But this shows that $\lambda x + (1-\lambda)y \in \bigcap_{i \in I}C_i$ such that the intersection is also convex.
+\end{solution}
 
-Now, we claim that $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+  
+\item \label{lp-feasible-region-convex}
+Show that the set of feasible solutions  of a linear program  is
+convex. 
 
-Let $x$ be any convex combination of $v_1, v_2$ such that $x = \lambda v_1 + (1 - \lambda)v_2$. Notice that $x \in P$ as $v_1, v_2 \in P$ and $P$ is convex. Next, note that
+\begin{solution}
+Let the feasible region of the LP be defined by some $\{x : Ax\leq b\}$ for a matrix $A$ and vector $b$. Let $x, y$ be any two feasible solutions of the LP. Then 
 \begin{align*}
-c^Tx & = c^T ( \lambda v_1 + (1 - \lambda)v_2) \\
-& = (\vec{1}^TA') (\lambda v_1 + (1 - \lambda)v_2) \\
-& = \lambda (\vec{1}^T A' v_1) + (1-\lambda)(\vec{1}^TA' v_2) \\
-& = \lambda (\vec{1}^T b') + (1-\lambda)(\vec{1}^T b') \\
-& = \lambda \delta + (1-\lambda)\delta \\
-& = \delta. 
+A(\lambda x + (1 - \lambda)y) & = \lambda Ax + (1- \lambda)Ay \\
+& \leq \lambda b + (1 - \lambda)b \\
+& = b
 \end{align*}
-
-This shows that $x \in (P \cap \{x \in \setR^n: c^Tx = \delta\})$ so that $ \conv\{v_1, v_2\} \subseteq (P \cap \{x \in \setR^n: c^Tx = \delta\})$. 
-
-
-Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, and we show that $x \in  \conv\{v_1, v_2\}$. 
-
-As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
-
-Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} v_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
-
-Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
-\begin{align*}
-\lambda v_1 + (1- \lambda)v_2 & = \lambda {A^{(1)}}^{-1}\begin{pmatrix} b' \\ b^{(1)} \end{pmatrix} + (1 - \lambda) {A^{(1)}}^{-1}\begin{pmatrix} b' \\ \alpha_{v_2} \end{pmatrix} \\
-& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \lambda b^{(1)}  + (1-\lambda) \alpha_{v_2}\end{pmatrix} \\
-& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}} b^{(1)}  + \left(1-\frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}\right) \alpha_{v_2}\end{pmatrix} \\
-& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \alpha_x \end{pmatrix} \\
-& = x
-\end{align*}
-so that $x$ is indeed a convex combination of $v_1$ and $v_2$. Finally, note that if instead $\alpha_{x} \leq \alpha_{v_2}$ then $v_2$ is a convex combination of $x$ and $v_1$ which is impossible as $v_2$ is a vertex. 
-\\
-
-
-So we have shown that $(P \cap \{x \in \setR^n: c^Tx = \delta\}) \subseteq \conv\{v_1, v_2\}$ such that altogether $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
-
-
-
+such that the convex combination is also in the feasible region. 
 
 
 \end{solution}
-
-\item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
-  Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
   
-  
-  \begin{solution}
-  Let $x, y$ be two vectors in the set $\bigcap_{i \in I} C_i$. Then $x, y \in C_i$ for each $i \in I$. Then $\lambda x + (1-\lambda)y \in C_i$ for each $i \in I$ by convexity of $C_i$. But this shows that $\lambda x + (1-\lambda)y \in \bigcap_{i \in I}C_i$ such that the intersection is also convex.
-  
-  \end{solution}
-  
-  
-\item Show that the set of feasible solutions  of a linear program  is
-  convex. \label{conv:item:1}
-  
-  \begin{solution}
-  Let the feasible region of the LP be defined by some $\{x : Ax\leq b\}$ for a matrix $A$ and vector $b$. Let $x, y$ be any two feasible solutions of the LP. Then 
-  \begin{align*}
-  A(\lambda x + (1 - \lambda)y) & = \lambda Ax + (1- \lambda)Ay \\
-  & \leq \lambda b + (1 - \lambda)b \\
-  & = b
-  \end{align*}
-  such that the convex combination is also in the feasible region. 
-  
-  
-  \end{solution}
-  
-  \item Let $$P= \{x: Ax≤b\}.$$ 
-  Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
-  Prove that 
-$$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
-x= b^=\}= \{x∈\setR^n : A^=
-x≤b^=\}.$$
+% \item Let $$P= \{x: Ax≤b\}.$$ 
+%   Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
+%   Prove that 
+% $$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
+% x= b^=\}= \{x∈\setR^n : A^=
+% x≤b^=\}.$$
 
 
-\begin{solution}
-We prove this by proving three containments.
-\begin{enumerate}
-\item $\text{aﬃne-hull}(P) ⊆
-\{x: A^=
-x= b^=\}.$ 
+% \begin{solution}
+% We prove this by proving three containments.
+% \begin{enumerate}
+% \item $\text{aﬃne-hull}(P) ⊆
+% \{x: A^=
+% x= b^=\}.$ 
 
 
-By definition we have that $P ⊆\{x: A^=
-x= b^=\}$. Let $x∈\text{aﬃne-hull}(P)$ be any vector. Then $x= λ_1x^1 +\hdots+ λ_tx^t$ for some $x^1,\hdots,x^t ∈P, λ_1,...,λ_t ∈\setR, \sum_{i=1}^t λ_i = 1$. 
-Then 
-\begin{align*}
-A^=x & = \lambda_1 A^= x^1 + \hdots \lambda_t A^= x^t \\
-& = \displaystyle\sum_{i =1}^t\lambda_i b^= \\
-& = b^=.
-\end{align*}
-Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
+% By definition we have that $P ⊆\{x: A^=
+% x= b^=\}$. Let $x∈\text{aﬃne-hull}(P)$ be any vector. Then $x= λ_1x^1 +\hdots+ λ_tx^t$ for some $x^1,\hdots,x^t ∈P, λ_1,...,λ_t ∈\setR, \sum_{i=1}^t λ_i = 1$. 
+% Then 
+% \begin{align*}
+% A^=x & = \lambda_1 A^= x^1 + \hdots \lambda_t A^= x^t \\
+% & = \displaystyle\sum_{i =1}^t\lambda_i b^= \\
+% & = b^=.
+% \end{align*}
+% Thus $x \in \{x : A^= x = b^=\}$ and the containment follows.
 
-\item $\{x : A^= x = b^=\} \subseteq \{x : A^= x \leq b^=\}$. This containment is immediate by the definition of $A^=$. 
+% \item $\{x : A^= x = b^=\} \subseteq \{x : A^= x \leq b^=\}$. This containment is immediate by the definition of $A^=$. 
 
-\item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
-
-
-Let  $x$ be a vector satisfying $ A^= x \leq b^=$. 
-Denote the submatrix of rows not in $A^=$ by $A^<$. 
-We claim that there exists a point $x^\prime \in P$ such that $A^= x' = b^=$ and $A^< x^\prime < b^<$ (all the inequalities are strict). To prove the claim, denote all the inequalitiess of $A^< x\leq b^<$ as $a_1^T x \leq b_1, \dots, a_k^T x \leq b_k$. Then for each $i = 1, \dots, k$, there exists a point $x_i \in P$ such that $a_i^T x_i < b_i$ by definition of $A^=$. 
-Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the claim.
+% \item $\{x : A^= x \leq b^=\} \subseteq \text{affine-hull}(P)$. 
 
 
-If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
-Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
-First it's easy to check that $A^= x^{\prime\prime} \leq b^=$.
-% \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
-Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
-% Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 
-Consider the line $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x$$
-which completes the proof.
-\end{enumerate}
+% Let  $x$ be a vector satisfying $ A^= x \leq b^=$. 
+% Denote the submatrix of rows not in $A^=$ by $A^<$. 
+% We claim that there exists a point $x^\prime \in P$ such that $A^= x' = b^=$ and $A^< x^\prime < b^<$ (all the inequalities are strict). To prove the claim, denote all the inequalitiess of $A^< x\leq b^<$ as $a_1^T x \leq b_1, \dots, a_k^T x \leq b_k$. Then for each $i = 1, \dots, k$, there exists a point $x_i \in P$ such that $a_i^T x_i < b_i$ by definition of $A^=$. 
+% Take $x^\prime = \frac{1}{k} \sum_{i=1}^k x_i$. This finishes the proof of the claim.
 
-\end{solution}
+
+% If $x \in P$ then $x \in \text{affine-hull}(P)$, we are done. 
+% Otherwise if $x \notin P$, consider $x^{\prime\prime} = x^\prime + \varepsilon(x-x^\prime)$ where $\varepsilon\geq 0$. 
+% First it's easy to check that $A^= x^{\prime\prime} \leq b^=$.
+% % \[ A^= x^{\prime\prime} = A^=(x^\prime + \varepsilon(x-x^\prime)) = (1-\varepsilon) A^= x^\prime + \varepsilon A^= x = (1-\varepsilon)b^= + \varepsilon A^= x \leq b^= .\]
+% Also by taking $\varepsilon$ to be small enough, we can make sure that $A^< x^{\prime\prime} \leq b^<$. Therefore $x^{\prime\prime} \in P$.
+% % Consider $L$ the line through $x$ and $x'$ where $L = \{\lambda_1 x + \lambda_2 x': \lambda_1 + \lambda_2 = 1\}$. 
+% Consider the line $L = \text{affine-hull}(\{x', x''\})$ such that $$\text{affine-hull}(P) \supseteq \text{affine-hull}(\{x', x''\}) \ni x$$
+% which completes the proof.
+% \end{enumerate}
+
+% \end{solution}
 
 
 \end{enumerate}
