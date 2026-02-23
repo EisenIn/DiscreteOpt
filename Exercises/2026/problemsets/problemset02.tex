@@ -124,34 +124,72 @@
 
 \begin{enumerate}[1)]
 
+\item Consider the problem
+\begin{align*}
+    \min &\quad 2x_1 + 3|x_2-10| \\
+    \text{subject to} &\quad |x_1+2| + |x_2| \leq 5,
+\end{align*}
+and formulate it as a linear programming problem.
+
+\item A meat packing plant produces 480 hams, 400 pork bellies, and 230 picnic hams every day; each of these products can be sold fresh or smoked. 
+The total number of hams, pork bellies, and picnic hams that can be smoked during a normal working day is 420; in addition, up to 250 products can be smoked on overtime at a higher cost.
+The \emph{net} profits are as follows:
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+& Fresh & \shortstack{Smoked on \\ regular time} & \shortstack{Smoked on \\ overtime} \\
+\cline{2-4}
+Hams & \$8 & \$14 & \$11 \\
+Pork bellies & \$4 & \$12 & \$7 \\
+Picnic hams & \$4 & \$13 & \$9 \\
+\hline
+\end{tabular}
+\end{center}
+
+For example, the following schedule yields a total net profit of \$9,965:
+\begin{center}
+\begin{tabular}{cccc}
+\hline \\
+& Fresh & \shortstack{Smoked on \\ regular time} & \shortstack{Smoked on \\ overtime} \\
+\cline{2-4}
+Hams & 165 & 280 & 35 \\
+Pork bellies & 295 & 70 & 35 \\
+Picnic hams & 55 & 70 & 105 \\
+\hline
+\end{tabular}
+\end{center}
+The objective is to find the schedule that maximizes the total net profit. Formulate this problem as a linear programming problem in the standard form.
+
 \item  \label{item:ex-9}
-  Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+Consider the unit ball $B_n = \{ x ∈ ℝ^n ： \|x\|_2≤1\}$. Show that the set of extreme points of $B$ is the sphere $S^{(n-1)} = \{ x ∈ ℝ^n ： \|x\|_2 =1\}$.
+
 \item \label{item:10}
   A \emph{line} is a set $L = \{ x ⋅ d +t ： x ∈ ℝ\} ⊆ ℝ^n$ where $d,t ∈ ℝ^n$ $d ≠0$. Show the following.
 
   A non-empty polyhedron $P = \{ x ∈ ℝ^n ： Ax ≤ b\} ⊆ ℝ^n$ contains a line if  and only if $\rank(A) <n$.
 
-\item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
-\begin{enumerate}[i)] 
-\item $A'v_1 = b'$ and $A'v_2 = b'$  and
-\item $\rank(A') = (n-1)$. 
-\end{enumerate}
+% \item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
+% \begin{enumerate}[i)] 
+% \item $A'v_1 = b'$ and $A'v_2 = b'$  and
+% \item $\rank(A') = (n-1)$. 
+% \end{enumerate}
 
-Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
-\begin{displaymath}
- \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
-\end{displaymath}
+% Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
+% \begin{displaymath}
+%  \left( P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} \right) = \conv\{v_1,v_2\}. 
+% \end{displaymath}
+
 \item Let $\{C_i\}_{i\in I}$ be a family of convex subsets of $\setR^n$.
   Show that the intersection $\bigcap_{i\in I} C_i$ is convex.
 \item Show that the set of feasible solutions  of a linear program  is
   convex. \label{conv:item:1}
   
-  \item Let $$P= \{x: Ax≤b\}.$$ 
-  Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
-  Prove that 
-$$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
-x= b^=\}= \{x∈\setR^n : A^=
-x≤b^=\}.$$
+%   \item Let $$P= \{x: Ax≤b\}.$$ 
+%   Let $A^=$ denote the set of rows of $A$ such that for all $x \in P$, $A^= x = b^=$ such that the rows indexed by $A^=$ are satisfied with equality in $P$. 
+%   Prove that 
+% $$\text{aﬃne-hull}(P) = \{x∈\setR^n : A^=
+% x= b^=\}= \{x∈\setR^n : A^=
+% x≤b^=\}.$$
 
 
 
