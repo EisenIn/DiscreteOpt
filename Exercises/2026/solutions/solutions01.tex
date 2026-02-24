@@ -233,12 +233,12 @@ Given a path $t$ to $s$, set for every edge on the path the value $x_e = +1$ and
   \item (*)  Show the following for a digraph $G = (V,A)$ with $s,t ∈ V$: If  the system of inequalities~\eqref{eq:1} has a feasible solution, then  there is a path connecting $s$ and $t$ in $G$. 
   
   
-  \paragraph{Solution:}
-  Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$. Call A the set of nodes that are reachable from s using edges (u, v) that have $x(u, v) > 0$. Then A contains s and it does not
-contain t as we assume that $t$ is not reachable from $s$. Thus the set $A \subset V$ is a cut where $A$ contains $s$ and $V \setminus A$ contains $t$. The net value out of A is equal to $\sum_{(u,v): u \in A, v \notin A} x_{(u, v)}$. However by definition of $A$, any such edge that exits $A$ must have value $0$ in the vector $x$ as otherwise the node would be reachable from $s$ using positive valued edges. This means that for any $v \in V \setminus A$, $\sum_{a \in \delta^+(v)} x_a = 0$. In order to satisfy the first equality, this means that for every $v \in V \setminus A - t$, it must also be that $\sum_{a \in \delta^-(v)} x_a = 0$. But then $t$ receives $0$ value on incoming edges as it is only reachable by nodes in $V \setminus A$ such that the third equality of the LP is not satisfied. This is a contradiction to $\vec{x}$ being feasible. 
+%   \paragraph{Solution:}
+%   Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$. Call A the set of nodes that are reachable from s using edges (u, v) that have $x(u, v) > 0$. Then A contains s and it does not
+% contain t as we assume that $t$ is not reachable from $s$. Thus the set $A \subset V$ is a cut where $A$ contains $s$ and $V \setminus A$ contains $t$. The net value out of A is equal to $\sum_{(u,v): u \in A, v \notin A} x_{(u, v)}$. However by definition of $A$, any such edge that exits $A$ must have value $0$ in the vector $x$ as otherwise the node would be reachable from $s$ using positive valued edges. This means that for any $v \in V \setminus A$, $\sum_{a \in \delta^+(v)} x_a = 0$. In order to satisfy the first equality, this means that for every $v \in V \setminus A - t$, it must also be that $\sum_{a \in \delta^-(v)} x_a = 0$. But then $t$ receives $0$ value on incoming edges as it is only reachable by nodes in $V \setminus A$ such that the third equality of the LP is not satisfied. This is a contradiction to $\vec{x}$ being feasible. 
   
 
-  \paragraph{Alternative solution:}
+  \paragraph{Solution:}
   Suppose that the system of inequalities has a feasible solution $\vec{x}$ but that there is no path from $s$ to $t$.
  Let $S$ be the set of vertices that are reachable by a path from $s$. By our assumption $S$ contains $s$ and does not
  contain $t$.
