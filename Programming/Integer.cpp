@@ -113,7 +113,7 @@ int main()
   vector<bool> g1(20,0), g2(20,0);
 
   int N = 1000;
-  bool flag;
+  bool flag = 0;
 
   cout <<"\n Performing " << N <<" tests: " ;
 
