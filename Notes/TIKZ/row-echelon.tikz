@@ -1,0 +1,60 @@
+\begin{tikzpicture}[scale=0.8]
+
+% Colors
+\definecolor{green}{RGB}{0,140,0}
+
+% Green region (A tilde)
+\draw[thick, green]
+    (0,0) -- (7.5,0) -- (7.5 ,1)
+    -- (6.3,1)
+    -- (6.3,1.8)
+    -- (4.8,1.8)
+    -- (4.8,2.6)
+    -- (3.3,2.6)
+    -- (3.3,3.4)
+    -- (1.8,3.4)
+    -- (1.8,4.2)
+    -- (0,4.2)
+    -- cycle;
+
+\node[green] at (3,1.2) {$0$'s only};
+
+% Black stepped region (Nonzero)
+\draw[thick]
+    (2,4.2)
+    -- (7.5 ,4.2)
+    -- (7.5,1.2)
+    -- (6.5,1.2)
+    -- (6.5,2)
+    -- (5,2)
+    -- (5,2.8)
+    -- (3.5,2.8)
+    -- (3.5,3.6)
+    -- (2,3.6)
+    -- (2,4.2);
+
+% Red X marks
+\foreach \x/\y in {
+    2.3/3.9,
+    3.8/3.1,
+    5.3/2.3,
+    6.8/1.5
+}{
+    \draw[red, thick] (\x-0.15,\y-0.15) -- (\x+0.15,\y+0.15);
+    \draw[red, thick] (\x-0.15,\y+0.15) -- (\x+0.15,\y-0.15);
+}
+
+% "Nonzero" label
+\node[red] at (5.8,5) {Nonzero};
+
+% Red arrows
+\draw[red, ->, thick] (5.1,4.8) to[out=-150,in=90] (2.3,4.25);
+\draw[red, ->, thick] (5.6,4.8) to[out=-90,in=90] (3.8,3.3);
+\draw[red, ->, thick] (6.1,4.8) to[out=-90,in=90] (5.3,2.5);
+\draw[red, ->, thick] (6.4,4.8) to[out=-30,in=90] (6.8,1.7);
+
+% A tilde label on the left
+\node at (-0.8,2.2) {$\tilde{A}=$};
+
+\end{tikzpicture}
+
