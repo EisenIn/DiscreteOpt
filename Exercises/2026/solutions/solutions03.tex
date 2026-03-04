@@ -125,48 +125,116 @@
 
 \begin{enumerate}[1)]
 
-\item Using Theorem 3.11, prove the following variant of Farkas' lemma:
-  Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
-  The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
-  for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.
+\item \label{convex-hull}
+Given a set of vectors $X \subseteq \setR^n$, show that the convex hull of $X$ is convex. 
+
+\begin{solution}
+Let $x, y \in \conv(X)$. Then we can write $x = \displaystyle\sum_{i=1}^k \lambda_i x_i$ and $y = \displaystyle\sum_{j=1}^\ell \mu_j y_j$ where $x_i, y_j \in X$, $\lambda_i, \mu_j \geq 0$ for all $i,j$, and $\displaystyle\sum_{i=1}^k \lambda_i = 1, \displaystyle\sum_{j=1}^\ell \mu_j = 1$. Then for any $\alpha \in [0,1]$, we have
+\[
+\alpha x + (1-\alpha) y = \alpha \sum_{i=1}^k \lambda_i x_i + (1-\alpha) \sum_{j=1}^\ell \mu_j y_j = \sum_{i=1}^k (\alpha \lambda_i) x_i + \sum_{j=1}^\ell ((1-\alpha) \mu_j) y_j.
+\]
+Since $\alpha \lambda_i\geq 0, (1-\alpha) \mu_j \geq 0$ for all $i,j$ and $\displaystyle\sum_{i=1}^k (\alpha \lambda_i) + \displaystyle\sum_{j=1}^\ell ((1-\alpha) \mu_j) = 1$, we have $\alpha x + (1-\alpha) y \in \conv(X)$, which shows that $\conv(X)$ is convex.
+\end{solution}
+
+% \item Using Theorem 3.11, prove the following variant of Farkas' lemma:
+%   Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
+%   The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
+%   for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.
   
   
-  \begin{solution}
-  We first show $Ax \leq b$ has a solution $\implies \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0, \lambda^Tb \geq 0$.  \\
+%   \begin{solution}
+%   We first show $Ax \leq b$ has a solution $\implies \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0, \lambda^Tb \geq 0$.  \\
   
-  Assume that there actually exists some $\lambda \in \setR^m_{\geq 0}$ with $\lambda^TA = 0, \lambda^T b <0$. 
-  Then 
-  \begin{align*}
-  (\lambda^T A)x & = 0^T x & = 0\\
-  \lambda^T (Ax) & \leq \lambda^T b & < 0 
-  \end{align*}
-  which is impossible as  $\lambda^T Ax$ is distributive. Here we used in the inequality that $\lambda \geq 0$. \\
+%   Assume that there actually exists some $\lambda \in \setR^m_{\geq 0}$ with $\lambda^TA = 0, \lambda^T b <0$. 
+%   Then 
+%   \begin{align*}
+%   (\lambda^T A)x & = 0^T x & = 0\\
+%   \lambda^T (Ax) & \leq \lambda^T b & < 0 
+%   \end{align*}
+%   which is impossible as  $\lambda^T Ax$ is distributive. Here we used in the inequality that $\lambda \geq 0$. \\
   
-  Now we show that  $ \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0$ we have $\lambda^Tb \geq 0$ $\implies Ax \leq b$ has a solution. \\
+%   Now we show that  $ \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0$ we have $\lambda^Tb \geq 0$ $\implies Ax \leq b$ has a solution. \\
   
-  Assume that $Ax \leq b$ actually has no solution. Now consider the matrix $\tilde{A} = \begin{pmatrix} A & -A & I_m\end{pmatrix}$ where the 3 matrices are concatenated and $I_m$ is the $m \times m$ identity matrix. Then clearly $\tilde{A}x= b$ has no solution $x \geq 0$ as if there was such a solution where $x = (u, v, s)$ for some $u \in \setR_{\geq 0}^n, v \in \setR_{\geq 0}^n, s \in \setR_{\geq 0}^m$, then we have that $Au - Av + s = b$ where $s \geq 0$ such that $A(u-v) \leq b$. This gives $(u-v) \in \setR^n$ as a solution to $Ax \leq b$ which is assumed not to exist. \\
+%   Assume that $Ax \leq b$ actually has no solution. Now consider the matrix $\tilde{A} = \begin{pmatrix} A & -A & I_m\end{pmatrix}$ where the 3 matrices are concatenated and $I_m$ is the $m \times m$ identity matrix. Then clearly $\tilde{A}x= b$ has no solution $x \geq 0$ as if there was such a solution where $x = (u, v, s)$ for some $u \in \setR_{\geq 0}^n, v \in \setR_{\geq 0}^n, s \in \setR_{\geq 0}^m$, then we have that $Au - Av + s = b$ where $s \geq 0$ such that $A(u-v) \leq b$. This gives $(u-v) \in \setR^n$ as a solution to $Ax \leq b$ which is assumed not to exist. \\
   
-  Thus $\tilde{A}x = b$ has no solution $x \geq 0$ such that the standard Farkas lemma tells us that there exists some $\lambda \in \setR^m$ such that 
-  \begin{align*}
-  \lambda^Tb <0 \\
-  \lambda^T \tilde{A} \geq 0.
-  \end{align*}
+%   Thus $\tilde{A}x = b$ has no solution $x \geq 0$ such that the standard Farkas lemma tells us that there exists some $\lambda \in \setR^m$ such that 
+%   \begin{align*}
+%   \lambda^Tb <0 \\
+%   \lambda^T \tilde{A} \geq 0.
+%   \end{align*}
   
-  Then 
-  \begin{align*}
-  \lambda^T \tilde{A} \geq 0 \\
-  \implies \lambda^T\begin{pmatrix} A & -A & I_m \end{pmatrix} \geq 0 \\
-  \implies \lambda^TA \geq 0, -\lambda^T A \geq 0, \lambda \geq 0 \\
-  \implies \lambda^T A = 0, \lambda \geq 0.
-  \end{align*}
+%   Then 
+%   \begin{align*}
+%   \lambda^T \tilde{A} \geq 0 \\
+%   \implies \lambda^T\begin{pmatrix} A & -A & I_m \end{pmatrix} \geq 0 \\
+%   \implies \lambda^TA \geq 0, -\lambda^T A \geq 0, \lambda \geq 0 \\
+%   \implies \lambda^T A = 0, \lambda \geq 0.
+%   \end{align*}
   
-  Then $\lambda$ satisfies $\lambda^TA = 0, \lambda^T b < 0, \lambda \geq 0$ which is a contradiction to the assumption. So $Ax \leq b$ must have a solution. 
-  
-  
+%   Then $\lambda$ satisfies $\lambda^TA = 0, \lambda^T b < 0, \lambda \geq 0$ which is a contradiction to the assumption. So $Ax \leq b$ must have a solution. 
   
   
-  \end{solution}
   
+  
+%   \end{solution}
+
+
+\item \label{item:11} Two different vertices $v_1 ≠ v_2$ of a polyhedron $P = \{ x ∈ ℝ^n ： Ax≤b\}$ are called \emph{adjacent}, if there exists a subsystem $A'x ≤ b'$ of $Ax≤b$ with
+  \begin{enumerate}[i)] 
+  \item $A'v_1 = b'$ and $A'v_2 = b'$, and
+  \item $\rank(A') = (n-1)$. 
+  \end{enumerate}
+
+Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
+\begin{displaymath}
+P ∩ \{ x ∈ ℝ^n ： c^Tx = δ \} = \conv\{v_1,v_2\}. 
+\end{displaymath}
+
+
+
+\begin{solution}
+Let $A'$ be the rank $n-1$ submatrix such that $A'v_1 = b', A'v_2 = b'$. Let $c^T = \vec{1}^TA'$ be the vector obtained by summing the rows of $A'$ and let $\delta = \vec{1}^Tb'$ the value obtained by summing the components of $b'$. As $A'$ can be chosen as $(n-1)$ linearly independent rows, the vector $\vec{c}$ is nonzero. 
+
+Now, we claim that $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+Let $x$ be any convex combination of $v_1, v_2$ such that $x = \lambda v_1 + (1 - \lambda)v_2$. Notice that $x \in P$ as $v_1, v_2 \in P$ and $P$ is convex. Next, note that
+\begin{align*}
+c^Tx & = c^T ( \lambda v_1 + (1 - \lambda)v_2) \\
+& = (\vec{1}^TA') (\lambda v_1 + (1 - \lambda)v_2) \\
+& = \lambda (\vec{1}^T A' v_1) + (1-\lambda)(\vec{1}^TA' v_2) \\
+& = \lambda (\vec{1}^T b') + (1-\lambda)(\vec{1}^T b') \\
+& = \lambda \delta + (1-\lambda)\delta \\
+& = \delta. 
+\end{align*}
+
+This shows that $x \in (P \cap \{x \in \setR^n: c^Tx = \delta\})$ so that $ \conv\{v_1, v_2\} \subseteq (P \cap \{x \in \setR^n: c^Tx = \delta\})$. 
+
+
+Next, let $x \in  (P \cap \{x \in \setR^n: c^Tx = \delta\})$ any such vector, and we show that $x \in  \conv\{v_1, v_2\}$. 
+
+As $x$ satisfies $c^Tx = \delta$, we claim that $A'x = b'$. Assume this were not the case such that there is a row $i$ with $A'_i x < b'_i$. Then $c^Tx = \vec{1}^T A' x < \vec{1}^T b' = \delta$. But this is impossible as $c^Tx = \delta$. Thus $A'x = b'$. As $v_1, v_2$ are vertices, there exists some row $a^{(1)}$ of $A$ such that $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix} v_1 = \begin{pmatrix} b' \\ b^{(1)} \end{pmatrix}$ and $\rank \begin{pmatrix} A' \\ a^{(1)}\end{pmatrix} = n$. Let the matrix $\begin{pmatrix} A' \\ a^{(1)} \end{pmatrix}$ be denoted as $A^{(1)}$. 
+
+Then note that $ A^{(1)} x =  \begin{pmatrix} b' \\ \alpha_x\end{pmatrix}$ for some $\alpha_x \leq b^{(1)}$. Likewise,  $ A^{(1)} v_2=  \begin{pmatrix} b' \\ \alpha_{v_2}\end{pmatrix}$ for $\alpha_{v_2} \leq b^{(1)}$. 
+
+Assume that $\alpha_{v_2} \leq \alpha_x$. Then letting $\lambda = \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}$ where $\lambda \in [0,1]$ as $\alpha_{v_2} \leq \alpha_x \leq b^{(1)}$. Then 
+\begin{align*}
+\lambda v_1 + (1- \lambda)v_2 & = \lambda {A^{(1)}}^{-1}\begin{pmatrix} b' \\ b^{(1)} \end{pmatrix} + (1 - \lambda) {A^{(1)}}^{-1}\begin{pmatrix} b' \\ \alpha_{v_2} \end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \lambda b^{(1)}  + (1-\lambda) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}} b^{(1)}  + \left(1-\frac{\alpha_x - \alpha_{v_2}}{b^{(1)}- \alpha_{v_2}}\right) \alpha_{v_2}\end{pmatrix} \\
+& = {A^{(1)}}^{-1} \cdot \begin{pmatrix} b' \\ \alpha_x \end{pmatrix} \\
+& = x
+\end{align*}
+so that $x$ is indeed a convex combination of $v_1$ and $v_2$. Finally, note that if instead $\alpha_{x} \leq \alpha_{v_2}$ then $v_2$ is a convex combination of $x$ and $v_1$ which is impossible as $v_2$ is a vertex. 
+\\
+
+
+So we have shown that $(P \cap \{x \in \setR^n: c^Tx = \delta\}) \subseteq \conv\{v_1, v_2\}$ such that altogether $$(P \cap \{x \in \setR^n: c^Tx = \delta\}) = \conv\{v_1, v_2\}.$$
+
+
+
+
+
+\end{solution}
   
   
   \item Provide an example of a convex and closed  set $K\subseteq\setR^2$ and a
@@ -190,37 +258,37 @@
   
   
   
-  \item Consider the vectors
-$$ x_1 = \left(\begin{array}{c} 3 \\ 1 \\ 2\end{array}\right), x_2 = \left(\begin{array}{c} 1 \\ 2 \\ 5 \end{array}\right), x_3 = \left(\begin{array}{c} 2 \\ 0 \\ 1 \end{array}\right), x_4 = \left(\begin{array}{c}  2 \\ 4 \\ 3 \end{array}\right), x_5 = \left(\begin{array}{c}  1 \\ 1 \\ 1 \end{array}\right). $$
+%   \item Consider the vectors
+% $$ x_1 = \left(\begin{array}{c} 3 \\ 1 \\ 2\end{array}\right), x_2 = \left(\begin{array}{c} 1 \\ 2 \\ 5 \end{array}\right), x_3 = \left(\begin{array}{c} 2 \\ 0 \\ 1 \end{array}\right), x_4 = \left(\begin{array}{c}  2 \\ 4 \\ 3 \end{array}\right), x_5 = \left(\begin{array}{c}  1 \\ 1 \\ 1 \end{array}\right). $$
 
-The vector 
-$$ v= x_1 + 3 x_2 + 2 x_3 + x_4 + 3 x_5 =  \left(\begin{array}{c}  15\\ 14 \\ 25 \end{array}\right)$$
-is a conic combination of the $x_i$.
+% The vector 
+% $$ v= x_1 + 3 x_2 + 2 x_3 + x_4 + 3 x_5 =  \left(\begin{array}{c}  15\\ 14 \\ 25 \end{array}\right)$$
+% is a conic combination of the $x_i$.
 
-Write $v$ as a conic combination using only three vectors of the $x_i$.
+% Write $v$ as a conic combination using only three vectors of the $x_i$.
 
-\emph{Hint: Recall the proof of Carath\'eodory's theorem}
-
-
-
-
-\begin{solution}
-Note that $-x_1 + x_3 + x_5 = \vec{0}$. 
-
-
-Let $A$ be the matrix $\begin{pmatrix} | &| & | & | & | \\x_1 & x_2 & x_3 &x_4 &x_5 \\ | &| & | & | & | \end{pmatrix}$. Then $$v = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} + A \begin{pmatrix} -1\\0\\1\\0\\1\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix}.$$
-
-
-Next, note that $x_3 + x_4 -4x_5 = \vec{0}$. Then, 
-
-$$v = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} + A \begin{pmatrix} 0\\0\\1\\1\\-4\end{pmatrix} = A \begin{pmatrix} 0\\3\\4\\2\\0\end{pmatrix}$$
-such that $v = 3x_2 + 4x_3 + 2x_4.$
+% \emph{Hint: Recall the proof of Carath\'eodory's theorem}
 
 
 
 
+% \begin{solution}
+% Note that $-x_1 + x_3 + x_5 = \vec{0}$. 
 
-\end{solution}
+
+% Let $A$ be the matrix $\begin{pmatrix} | &| & | & | & | \\x_1 & x_2 & x_3 &x_4 &x_5 \\ | &| & | & | & | \end{pmatrix}$. Then $$v = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} = A \begin{pmatrix} 1\\3\\2\\1\\3\end{pmatrix} + A \begin{pmatrix} -1\\0\\1\\0\\1\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix}.$$
+
+
+% Next, note that $x_3 + x_4 -4x_5 = \vec{0}$. Then, 
+
+% $$v = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} = A \begin{pmatrix} 0\\3\\3\\1\\4\end{pmatrix} + A \begin{pmatrix} 0\\0\\1\\1\\-4\end{pmatrix} = A \begin{pmatrix} 0\\3\\4\\2\\0\end{pmatrix}$$
+% such that $v = 3x_2 + 4x_3 + 2x_4.$
+
+
+
+
+
+% \end{solution}
 
 
 
@@ -272,7 +340,7 @@ The procedure described above is in polynomial time of $n,m$. We keep doing the 
   Let $x \in \cone\{a_1, \hdots, a_k\}$. Then $x = \displaystyle\sum_{i =1}^k \lambda_i a_i$ such that $\lambda_i \geq 0$ for all $i$. 
   
   
-  Then $x = \begin{pmatrix}a_1 & a_2 & \hdots & a_k \\ |&|&\hdots &|\end{pmatrix} \begin{pmatrix}\lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k\end{pmatrix}$.
+  Then $x = \begin{pmatrix}|&|&\hdots &|\\a_1 & a_2 & \hdots & a_k \\ |&|&\hdots &|\end{pmatrix} \begin{pmatrix}\lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k\end{pmatrix}$.
   
   Then $x = A \begin{pmatrix} \lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_k \\ 0 \\ \vdots \\ 0\end{pmatrix}$ where $(\lambda, \vec{0})$ has $n-k$ zeros padded at the end. Then $x$ satisfies $A^{-1}x = (\lambda,  \vec{0})$ and since $\lambda_i \geq 0$ for all $i \in [k]$, $ x \in P_k$. This shows $\cone\{a_1, \hdots, a_k\} \subseteq P_k$. 
   
@@ -285,35 +353,35 @@ The procedure described above is in polynomial time of $n,m$. We keep doing the 
   
   
   
-\item Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed
-  and convex. \label{conv:item:2} 
+% \item Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed
+%   and convex. \label{conv:item:2} 
   
-  \emph{Hint: Use Carath\'eodory's theorem and exercise~\ref{conv:item:3}.}
-  
-  
-  
-  \begin{solution}
-  We show that $\cone(X)$ is convex. 
+%   \emph{Hint: Use Carath\'eodory's theorem and exercise~\ref{conv:item:3}.}
   
   
-  Let $z, y \in \cone(X)$. Then $z = \displaystyle\sum_{x \in X}\lambda_x^z x, y = \displaystyle\sum_{x \in X}\lambda_x^y x$. Then $\lambda z + (1-\lambda)y = \displaystyle\sum_{x \in X}(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) x$ where $(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) \geq 0$ for every $x$ as we are adding and multiplying non-negative values. Thus $\lambda z + (1-\lambda)y \in \cone(X)$. 
+  
+%   \begin{solution}
+%   We show that $\cone(X)$ is convex. 
   
   
-  We show that $\cone(X)$ is closed. 
+%   Let $z, y \in \cone(X)$. Then $z = \displaystyle\sum_{x \in X}\lambda_x^z x, y = \displaystyle\sum_{x \in X}\lambda_x^y x$. Then $\lambda z + (1-\lambda)y = \displaystyle\sum_{x \in X}(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) x$ where $(\lambda \lambda_x^z + (1-\lambda) \lambda_x^y) \geq 0$ for every $x$ as we are adding and multiplying non-negative values. Thus $\lambda z + (1-\lambda)y \in \cone(X)$. 
   
-  %By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
   
-  First, by Carath\'eodory's theorem, for each $y \in \cone(X)$, there exists a linearly independent subset $\tilde{X} \subseteq X$ of size at most $n$, such that $y \in \cone(\tilde{X})$. Therefore we have
-  \[\cone(X) = \bigcup_{\substack{\tilde{X} \subseteq X, \\ |\tilde{X}| \leq n, \\ \tilde{X}\,\text{is linearly independent}}} \cone(\tilde{X}).\]
-  Since $X$ is finite, the union above is also finite. 
+%   We show that $\cone(X)$ is closed. 
+  
+%   %By caratheodory, if $|X| >n$, we can find $n$ columns $x_{i_1}, \hdots, x_{i_n}$ such that $\cone(X) = \cone\{x_{i_1}, \hdots, x_{i_n}\}$. Thus we can assume $\cone(X) = \cone\{x_{1}, \hdots, x_{k}\}$ for some $k \leq n$. Let $A$ be the matrix $\begin{pmatrix} x_1 & x_2 & \hdots &x_n \\|&|&\hdots&|\end{pmatrix}$ where $x_{k+1}, \hdots, x_n$ are arbitrary columns that make $A$ nonsingular. Then by the prior exercise $\cone(X) = P_k$ for the given matrix $A$. As $A^{-1}$ is a continuous map, the map preserves closedness of the set $\{ y \in \setR^n: y_i \geq 0 \forall i \in [k], y_i = 0 \forall i \in [k+1, n]\}$ so that $P_k$ is closed. 
+  
+%   First, by Carath\'eodory's theorem, for each $y \in \cone(X)$, there exists a linearly independent subset $\tilde{X} \subseteq X$ of size at most $n$, such that $y \in \cone(\tilde{X})$. Therefore we have
+%   \[\cone(X) = \bigcup_{\substack{\tilde{X} \subseteq X, \\ |\tilde{X}| \leq n, \\ \tilde{X}\,\text{is linearly independent}}} \cone(\tilde{X}).\]
+%   Since $X$ is finite, the union above is also finite. 
 
-  Next, we show that for every such $\cone(\tilde{X})$ where $\tilde{X} \subseteq X, |\tilde{X}| \leq n$, and $\tilde{X}$ is linearly independent, $\cone(\tilde{X})$ is closed. 
-  If $|\tilde{X}|=n$, then by Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
-  If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
+%   Next, we show that for every such $\cone(\tilde{X})$ where $\tilde{X} \subseteq X, |\tilde{X}| \leq n$, and $\tilde{X}$ is linearly independent, $\cone(\tilde{X})$ is closed. 
+%   If $|\tilde{X}|=n$, then by Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
+%   If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
 
-  Since the finite union of closed sets is closed, this completes our proof.
+%   Since the finite union of closed sets is closed, this completes our proof.
   
-  \end{solution}
+%   \end{solution}
 
 
 \end{enumerate}
