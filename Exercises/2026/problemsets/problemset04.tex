@@ -123,6 +123,21 @@
 \makeheader
 
 \begin{enumerate}[1)]
+
+\item Consider the vectors
+$$ x_1 = \begin{pmatrix} 3 \\ 1 \\ 2\end{pmatrix},\; x_2 = \begin{pmatrix} 1 \\ 2 \\ 5 \end{pmatrix},\; x_3 = \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix},\; x_4 = \begin{pmatrix}  2 \\ 4 \\ 3 \end{pmatrix},\; x_5 = \begin{pmatrix}  1 \\ 1 \\ 1 \end{pmatrix}. $$
+
+The vector 
+$$ v= x_1 + 3 x_2 + 2 x_3 + x_4 + 3 x_5 =  \begin{pmatrix}  15\\ 14 \\ 25 \end{pmatrix} $$
+is a conic combination of the $x_i$.
+
+Write $v$ as a conic combination using only three vectors of the $x_i$.
+
+\emph{Hint: Recall the proof of Carath\'eodory's theorem}
+
+\item For any vector $x \in \setR^n$, define $\tilde{x} := \begin{pmatrix} x \\ 1 \end{pmatrix} \in \mathbb{R}^{n+1}$. 
+Given a set of vectors $X \subseteq \setR^n$ and a vector $y \in \mathbb{R}^{n}$, show that $y \in \mathrm{conv}(X)$ if and only if $\tilde{y} \in \mathrm{cone}(\{\tilde{x}: x\in X\})$.
+
 \item Let $P = \{x: Ax \leq  b\} \subseteq \setR^n$ be a polyhedron. Show that $x^\ast$ is an extreme point $\iff \forall x_1 \neq x_2 \in P, x^\ast \neq \frac{1}{2}x_1 + \frac{1}{2}x_2$. 
 
 
@@ -150,7 +165,7 @@
 \end{align*}
 Solve the linear program with the Simplex method and initial vertex $(−1,−1,0)^T$ . For each iteration indicate all the parameters including the optimal value and the proof of optimality.
   
- \item Fill in the blanks to complete the code for the Simplex.py file which runs a simplex algorithm. 
+%  \item Fill in the blanks to complete the code for the Simplex.py file which runs a simplex algorithm. 
 
 
 
