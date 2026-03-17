@@ -125,6 +125,9 @@
 
 \begin{enumerate}[1)]
 
+\item Let $P= \{x ∈\setR^n : Ax ≤b\}$ be a bounded, non-empty polyhedron. Formulate a linear program that
+computes the largest Euclidean ball inside P.
+
 \item Suppose you are given an oracle algorithm, which for a given polyhedron
 $$P= \{\bar{x}∈\setR^n: \bar{A}\bar{x} \leq \bar{b}\}$$
 gives you a feasible solution or asserts that there is none. Show that using a single call of this oracle
@@ -135,22 +138,28 @@ assuming that the LP is feasible and bounded.
 
 
 
-\item Determine the dual program for the following linear program:
-\begin{align*}
-\min \quad& 3x_1 + 2x_2−3x_3 + 4x_4 \\
-&2x_1−2x_2 + 3x_3 + 4x_4 ≤ 3 \\
-& x2 + 3x3 + 4x4 ≥ −5 \\
-&2x_1−3x_2−7x_3−4x_4 = 2 \\
-&x_1 ≥0 \\
-& x_4 ≤0
-\end{align*}
+% \item Determine the dual program for the following linear program:
+% \begin{align*}
+% \min \quad& 3x_1 + 2x_2−3x_3 + 4x_4 \\
+% &2x_1−2x_2 + 3x_3 + 4x_4 ≤ 3 \\
+% & x2 + 3x3 + 4x4 ≥ −5 \\
+% &2x_1−3x_2−7x_3−4x_4 = 2 \\
+% &x_1 ≥0 \\
+% & x_4 ≤0
+% \end{align*}
 
 
 
-\item Let $P= \{x ∈\setR^n : Ax ≤b\}$ be a bounded, non-empty polyhedron. Formulate a linear program that
-computes the largest ball inside P.
+\item Consider a linear program $\max\{c^Tx: x\in \R^n, Ax\leq b\}$ where $A\in \R^{m\times n}$ is not full column rank. 
+\begin{enumerate}[i)]
+\item Convert this LP to an equivalent LP with a full column rank constraint matrix. 
 
+\emph{Hint: Write $x$ as difference of two non-negative vectors.}
 
+\item Write down the dual of the converted LP in i).
+\item Construct a feasible solution to dual of the original LP, based on a given feasible solution to the dual of the converted LP in ii).
+\end{enumerate}
+One can conclude from the above that the strong duality theorem holds when the constraint matrix of LP does not have full column rank (assuming it holds for full column rank constraint matrices).
 
 
 \item Consider the following linear program:
@@ -164,6 +173,15 @@ computes the largest ball inside P.
 Show that $(4/3, 10/3)$ is an optimal solution by using weak duality.
 
 
+\item In this exercise, we will use LP duality to prove Farkas' lemma: for any $A\in \R^{m\times n}$ and $b\in \R^m$, $Ax \leq b$ is feasible if and only if for any $\lambda \in \R^m_{\geq 0}$, $\lambda^T A = 0$ implies that $\lambda^T b \geq 0$.
+For the if direction, do the following steps. 
+
+Let $\{Ax\leq b\}$ be feasible and $\{Ax\leq b, \alpha^T x\leq \beta\}$ be infeasible.
+\begin{enumerate}[i)]
+	\item Show that the LP $\max\{(-\alpha)^Tx: Ax\leq b\}$ is bounded. Write down its dual.
+	\item Using the strong duality theorem, show that there exists $\lambda \in \R^m_{\geq 0}$ such that $(\lambda \;\, 1)^T \begin{pmatrix} A \\ \alpha^T \end{pmatrix} = 0$ and $(\lambda \;\, 1)^T \begin{pmatrix} b \\ \beta \end{pmatrix} < 0$.
+	\item Using i) and ii), conclude the proof of Farkas' lemma by induction on $m$.
+\end{enumerate}
 
 
 \end{enumerate}
