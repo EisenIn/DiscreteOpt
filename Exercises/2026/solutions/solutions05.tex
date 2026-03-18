@@ -214,9 +214,9 @@ y_1 \\ y_2 \\ y_3
 \end{pmatrix} \\
 \text{subject to }& y_1^T A - y_2^T = c^T \\
 & -y_1^T A - y_3^T = -c^T \\
-& y_1, y_2, y_3 ≥ 0
+& y_1 \in \R^m, y_2, y_3\in \R^n, y_1, y_2, y_3 ≥ 0
 \end{align*}
-\item Let $(y_1, y_2, y_3)^T$ be a feasible solution to the dual of the converted LP. By adding up the two constraints we get $y_2+y_3=0$. Since $y_2, y_3 ≥ 0$, we have $y_2 = y_3 = 0$. Thus $y_1^T A = c^T$ is a feasible solution to the dual of the original LP.
+\item Let $(y_1, y_2, y_3)^T$ be a feasible solution to the dual of the converted LP. By adding up the two constraints we get $y_2+y_3=0$. Since $y_2, y_3 ≥ 0$, we have $y_2 = y_3 = 0$. Thus $y_1^T A = c^T$ and $y_1$ is a feasible solution to the dual of the original LP.
 \end{enumerate}
 \end{solution}
 
