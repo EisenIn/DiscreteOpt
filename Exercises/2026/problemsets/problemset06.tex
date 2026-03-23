@@ -123,6 +123,29 @@
 \makeheader
 
 \begin{enumerate}[1)]
+
+\item This exercise is a continuation of Exercise 1 from Problem Set 5.  
+
+Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
+  \begin{enumerate}[i)]
+  \item Let $H = (a^T x = β) ⊆  ℝ^n$ be a hyperplane and $x^*∈ ℝ^n$. What is the \emph{euclidean distance} of $x^*$ from $H$?
+  \item
+    Assume now that every row of $A$ has euclidean norm $\|⋅\|_2$ equal to one.  
+    Prove that the following linear program finds the Chebychev center $z$ and the radius $R ∈ ℝ_{≥0}$  of the largest ball $B(z,R) ⊆ P$:
+      \begin{align*}
+        \max & \quad R \\
+        \text{s.t.} & \quad A z +  \mathbf{1} R ≤ b
+      \end{align*}
+   and $\mathbf{1}∈ ℝ^m$ is the vector of all ones.
+  \item Show that there is a subsystem $A'x ≤ b'$ of $Ax≤b$ with at most $n+1$ inequalities whose corresponding polyhedron has the same Chebychev center as $P$.
+  \item Write down the dual of the linear program above. 
+  \end{enumerate}
+
+\item Show that for any matrix $A \in \R^{m\times n}$, one has
+  \begin{displaymath}
+    \max_{i}\min_{j} A_{ij} \leq \min_{j}\max_{i} A_{ij}.
+  \end{displaymath}
+
 \item Determine the value of the matrix game defined by 
   \begin{displaymath}
     A =
@@ -136,68 +159,67 @@ and determine optimal strategies for both players with
 \item pure strategies and 
 \item mixed strategies.
 \end{enumerate} 
-  
-\item This exercise is a continuation of exercise 2) from the sheet of last week.  Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
-  \begin{enumerate}[i)]
-  \item Let $H = (a^T x = β) ⊆  ℝ^n$ be a hyperplane and $x^*∈ ℝ^n$. What is the \emph{euclidean distance} of $x^*$ from $H$?
-  \item
-    Assume now that every row of $A$ has euclidean norm $\|⋅\|_2$ equal to one.  
-    Prove that the following linear program finds the Chebychev center $z$ and the radius $R ∈ ℝ_{≥0}$  of the largest ball $B(z,R) ⊆ P$:
-    \begin{displaymath}
-      \begin{array}[t]{c}
-        \max R \\
-        A z +  \mathbf{1} R ≤ b
-      \end{array},
-    \end{displaymath}
-   and $\mathbf{1}∈ ℝ^m$ is the vector of all ones.
-  \item Show that there is a subsystem $A'x ≤ b'$ of $Ax≤b$ with at most $n+1$ inequalities whose corresponding polyhedron has the same Chebychev center as $P$.
-  \item Write down the dual of the linear program above. 
-  \end{enumerate}
 
-\item (Complementary slackness)
+\item (Problem 15.5 from the book \emph{Linear Programming} by  Vašek Chvátal)
+A row $r$ of the payoff matrix $A\in \R^{m\times n}$ is said to \emph{dominate} a row $s$ if $A_{rj} ≥ A_{sj}$ for all $j=1,\ldots,n$.
+Similarly, a column $r$ of the payoff matrix is said to \emph{dominate} a column $s$ if $A_{ir} ≤ A_{is}$ for all $i=1,\ldots,m$. 
+Prove the following:
+\begin{enumerate}[(i)]
+  \item If a row $r$ is dominated by another row, then the row player has at least one optimal strategy $x^*$ in which $x^*_r = 0$. In particular, if row $r$ is deleted from the payoff matrix, then the value of the game does not change.
+  \item If a column $s$ is dominated by another column, then the column player has at least one optimal strategy $y^*$ in which $y^*_s = 0$. In particular, if column $s$ is deleted from the payoff matrix, then the value of the game does not change.
+\end{enumerate}
+Use these facts to reduce the following payoff matrix to size $2\times 2$:
+$$\begin{pmatrix}
+  -2 & 3 & 0 & -6 & -3 \\
+  0 & -4 & 9 & 2 & 1 \\
+  6 & -2 & 7 & 4 & 5 \\
+  7 & -3 & 8 & 3 & 2 
+\end{pmatrix}.
+$$
+% \item (Complementary slackness)
 
-  Consider the primal/dual pair
-  \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-           Ax ≤ b
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A = c^T\\
-      y ≥ 0      
-    \end{array} 
-  \end{displaymath}
-  defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
-  Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
+%   Consider the primal/dual pair
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%            Ax ≤ b
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A = c^T\\
+%       y ≥ 0      
+%     \end{array} 
+%   \end{displaymath}
+%   defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
+%   Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
 
-  \medskip
-  \noindent
+%   \medskip
+%   \noindent
 
-  Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $y^\ast_i > 0 \implies
-A_ix^\ast = b_i$ for each $i \in [m]$.
+%   Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $y^\ast_i > 0 \implies
+% A_ix^\ast = b_i$ for each $i \in [m]$.
 
-\item Consider the linear programming problems    
-  \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-      Ax ≤ b \\
-      x≥ 0
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A ≥ c^T\\
-      y ≥ 0      
-    \end{array}
-  \end{displaymath}
-  \begin{enumerate}[i)]
-  \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
-  \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
-    \begin{displaymath}
-      (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
-    \end{displaymath}
+% \item Consider the linear programming problems    
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%       Ax ≤ b \\
+%       x≥ 0
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A ≥ c^T\\
+%       y ≥ 0      
+%     \end{array}
+%   \end{displaymath}
+%   \begin{enumerate}[i)]
+%   \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
+%   \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
+%     \begin{displaymath}
+%       (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
+%     \end{displaymath}
     
-    \end{enumerate}
+%     \end{enumerate}
 
 \end{enumerate}
 
