@@ -160,6 +160,16 @@ and determine optimal strategies for both players with
 \item mixed strategies.
 \end{enumerate} 
 
+\item Show that for any matrix $A \in \mathbb{R}^{m \times n}$ and for any $x \in \mathbb{R}^m$,
+\begin{displaymath}  
+\min_{y\in Y} x^TA y = \min_{1≤j≤n } 
+x^TAe_j,
+\end{displaymath}
+where $Y$ denotes the set of mixed column-strategies.
+In other words, there is a \emph{best response} of the column player to a strategy $x$ of the row-player that is a \emph{pure strategy}. This is a strategy that consists of always choosing the same column.
+
+Formulate the similar statement for the row player.  \label{ex:br} 
+
 \item (Problem 15.5 from the book \emph{Linear Programming} by  Vašek Chvátal)
 A row $r$ of the payoff matrix $A\in \R^{m\times n}$ is said to \emph{dominate} a row $s$ if $A_{rj} ≥ A_{sj}$ for all $j=1,\ldots,n$.
 Similarly, a column $r$ of the payoff matrix is said to \emph{dominate} a column $s$ if $A_{ir} ≤ A_{is}$ for all $i=1,\ldots,m$. 
