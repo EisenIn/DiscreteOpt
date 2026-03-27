@@ -124,52 +124,26 @@
 \makeheader
 
 \begin{enumerate}[1)]
-\item Determine the value of the matrix game defined by 
-  \begin{displaymath}
-    A =
-    \begin{pmatrix}
-      6 & 6 \\
-      7 & 4
-    \end{pmatrix}
-  \end{displaymath}
-and determine optimal strategies for both players with
-\begin{enumerate}
-\item pure strategies and 
-\item mixed strategies.
-\end{enumerate} 
 
+\item This exercise is a continuation of Exercise 1 from Problem Set 5.  
 
-\begin{solution}
-\begin{enumerate}
-\item For row player, the best pure strategy is to choose row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. 
-Similarly, the best strategy for column player is to choose column $2$.
-
-\item The row player chooses $x$ such that $\sum_i x_i = 1$ and $x$ is the solution of $\max_x \min_y x^TAy$. Note that for any vector $x \geq 0$, the minimizing vector $y$ such that $y_1 + y_2 = 1$ is given by $y = (0, 1)$. Then we have that $x^TAy = 6x_1 + 4x_2$ such that the maximizing vector $x$ is $(1, 0)$. This gives the optimal mixed strategy which is actually a pure strategy.  
-\end{enumerate}
-The value of the matrix game is thus 6.
-\end{solution}
-
-  
-\item This exercise is a continuation of exercise 2) from the sheet of last week.  Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
+Here we find  the \emph{Chebychev center} of a polyhedron $P = \{x ∈ ℝ^n ：Ax ≤ b\}$ with $A ∈ ℝ^{m ×n}$ and $b ∈ ℝ^m$. This is the center $z ∈ ℝ^n$  of the largest euclidean ball $B(z,R) = \{ x ∈ ℝ^n ： \| x - z \|_2 ≤ R\}$ that satisfies $B(z,R) ⊆ P$.
   \begin{enumerate}[i)]
   \item Let $H = (a^T x = β) ⊆  ℝ^n$ be a hyperplane and $x^*∈ ℝ^n$. What is the \emph{euclidean distance} of $x^*$ from $H$?
   \item
     Assume now that every row of $A$ has euclidean norm $\|⋅\|_2$ equal to one.  
     Prove that the following linear program finds the Chebychev center $z$ and the radius $R ∈ ℝ_{≥0}$  of the largest ball $B(z,R) ⊆ P$:
-    \begin{displaymath}
-      \begin{array}[t]{c}
-        \max R \\
-        A z +  \mathbf{1} R ≤ b
-      \end{array},
-    \end{displaymath}
+      \begin{align*}
+        \max & \quad R \\
+        \text{s.t.} & \quad A z +  \mathbf{1} R ≤ b
+      \end{align*}
    and $\mathbf{1}∈ ℝ^m$ is the vector of all ones.
   \item Show that there is a subsystem $A'x ≤ b'$ of $Ax≤b$ with at most $n+1$ inequalities whose corresponding polyhedron has the same Chebychev center as $P$.
   \item Write down the dual of the linear program above. 
   \end{enumerate}
-  
-  
-  \begin{solution}
-  \begin{enumerate}[i)]
+
+\begin{solution}
+\begin{enumerate}[i)]
 \item The distance of $x^\ast$ to $H$ is the distance of $x^\ast$ to the orthogonal projection onto $H$. This is given by $\Vert x^\ast - proj_H(x^\ast)\Vert = \frac{|\beta - \langle x^\ast, \alpha\rangle|}{\Vert \alpha\Vert}$. 
 
 \item Let $z^\ast$ be the Chebyshev center and $R^\ast$ be the corresponding radius. The ball $B(z^\ast, R^\ast) = \{x \in \setR^n: \Vert x- z^\ast \Vert \leq R^\ast \} = \{z^\ast + x : \Vert x \Vert \leq R^\ast\}.$ Then the Chebyshev center is defined by 
@@ -214,124 +188,295 @@ since $\Vert a_i \Vert = 1$ for every $i$.
   \end{enumerate}
   \end{solution}
 
-\item (Complementary slackness)
 
-  Consider the primal/dual pair
+\item Show that for any matrix $A \in \R^{m\times n}$, one has
+\begin{displaymath}
+  \max_{i}\min_{j} A_{ij} \leq \min_{j}\max_{i} A_{ij}.
+\end{displaymath}
+
+\begin{solution}
+For any $i=1,\dots, m$, we have for any $j=1,\dots, n$, $A_{ij} \geq \min_j A_{ij}$, which implies that $A_{ij} \geq \max_i \min_j A_{ij}$ for any $i,j$.
+Similarly, for any $j=1,\dots, n$, we have for any $i=1,\dots, m$, $A_{ij} \leq \max_i A_{ij}$, which implies that $A_{ij} \leq \min_j \max_i A_{ij}$ for any $i,j$.
+Together they finishes the proof.
+\end{solution}
+
+\item Determine the value of the matrix game defined by 
   \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-           Ax ≤ b
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A = c^T\\
-      y ≥ 0      
-    \end{array} 
+    A =
+    \begin{pmatrix}
+      6 & 6 \\
+      7 & 4
+    \end{pmatrix}
   \end{displaymath}
-  defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
-  Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
-
-  \medskip
-  \noindent
-
-  Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $(y^\ast)i > 0 \implies
-A_ix^\ast = b_i$ for each $i \in [m]$.
-
+and determine optimal strategies for both players with
+\begin{enumerate}
+\item pure strategies and 
+\item mixed strategies.
+\end{enumerate} 
 
 
 \begin{solution}
-First we show $\Leftarrow$. \\
+\begin{enumerate}
+\item For row player, the best pure strategy is to choose row $1$ since the minimum value for row $1$ is $6$ which is higher than the minimum value for row $2$. 
+Similarly, the best strategy for column player is to choose column $2$.
 
-By the assumption, we have that 
-\begin{align*}
-{y^\ast}^T b &= \displaystyle\sum_{j = 1}^m y^\ast_j b_j \\
-& = \displaystyle\sum_{j = 1}^m y^\ast_j(A_j x^\ast) \\
-& =\displaystyle\sum_{j = 1}^m  y^\ast_j \left( \displaystyle\sum_{i = 1}^n A_{ji} x^\ast_i \right) \\
-&= \displaystyle\sum_{i = 1}^n  x^\ast_i \left( \displaystyle\sum_{j = 1}^m A_{ji} y^\ast_j \right) \\
-& = {x^\ast}^T c \\
-& = c^T x^\ast
-\end{align*} 
-so that $x^\ast, y^\ast$ achieve the same primal/dual objective value and are therefore optimal by strong duality. For the second equality, we have used that whenever the summand is nonzero, $A_j x^\ast = b_j$. \\
-
-We then show $\Rightarrow$. \\
-
-We have that as $x^\ast, y^\ast$ are optimal, $c^Tx^\ast = b^Ty^\ast$ by strong duality. Then 
-\begin{align*}
-c^Tx^\ast & = \displaystyle\sum_{i =1}^n x^\ast_i c_i \\
-& =  \displaystyle\sum_{i =1}^n x^\ast_i \left( \displaystyle\sum_{j =1}^m A_{ji}y^\ast_j \right) \\
-& = \displaystyle\sum_{j =1}^m y^\ast_j \left( \displaystyle\sum_{i =1}^n A_{ji}x^\ast_i \right) \\
-& = \displaystyle\sum_{j =1}^m y^\ast_j (A_j x^\ast) \\
-& \leq \displaystyle\sum_{j =1}^m y^\ast_j  b_j \\
-& = {y^\ast}^T b
-\end{align*}
-where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. Then as the above inequalities must hold with equality everywhere since $c^Tx^\ast = b^Ty^\ast$, it must be that if $y^\ast_j >0$ then $A_j x^\ast = b_j$.
-
+\item The row player chooses $x$ such that $\sum_i x_i = 1$ and $x$ is the solution of $\max_x \min_y x^TAy$. Note that for any vector $x \geq 0$, the minimizing vector $y$ such that $y_1 + y_2 = 1$ is given by $y = (0, 1)$. Then we have that $x^TAy = 6x_1 + 4x_2$ such that the maximizing vector $x$ is $(1, 0)$. This gives the optimal mixed strategy which is actually a pure strategy.  
+\end{enumerate}
+The value of the matrix game is thus 6.
 \end{solution}
 
-\item Consider the linear programming problems    
-  \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-      Ax ≤ b \\
-      x≥ 0
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A ≥ c^T\\
-      y ≥ 0      
-    \end{array}
-  \end{displaymath}
-  \begin{enumerate}[i)]
-  \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
-  \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
-    \begin{displaymath}
-      (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
-    \end{displaymath}
-    
-    \end{enumerate}
+\item Show that for any matrix $A \in \mathbb{R}^{m \times n}$ and for any $x \in \mathbb{R}^m$,
+\begin{displaymath}  
+\min_{y\in Y} x^TA y = \min_{1≤j≤n } 
+x^TAe_j,
+\end{displaymath}
+where $Y$ denotes the set of mixed column-strategies.
+In other words, there is a \emph{best response} of the column player to a strategy $x$ of the row-player that is a \emph{pure strategy}. This is a strategy that consists of always choosing the same column.
 
-  \begin{solution}
-    \begin{enumerate}[i)]
-      \item We rewrite the maximization problem as:
-      \begin{displaymath}
-        \begin{array}[t]{c}
-          \max c^Tx \\
-          \tilde{A}x ≤ \tilde{b}\\
-        \end{array} 
-      \end{displaymath}
-      where $\tilde{A} = \begin{pmatrix}
-        A \\
-        -I
-      \end{pmatrix}$ and $\tilde{b} = \begin{pmatrix}
-        b \\
-        \mathbf{0}
-      \end{pmatrix}$. Then the dual of this maximization problem is
-      \begin{displaymath}
-        \begin{array}[t]{c}
-          \min \tilde{b}^T \tilde{y} \\
-          \tilde{y}^T \tilde{A} = c^T\\
-          \tilde{y} ≥ 0      
-        \end{array}
-      \end{displaymath}
-      Let $\tilde{y} = \begin{pmatrix}
-        y \\
-        y^\prime
-      \end{pmatrix}$ then the objective becomes $\tilde{b}^T \tilde{y} = b^Ty$ and the constraint becomes $\tilde{y}^T \tilde{A} = y^T A - (y^\prime)^T = c^T, y,y^\prime \geq 0 \Leftrightarrow y^T A = c^T, y\geq 0$. 
-      Therefore the dual problem is equivalent to
-      \begin{displaymath}
-        \begin{array}[t]{c}
-          \min b^Ty \\
-          y^T A ≥ c^T\\
-          y ≥ 0      
-        \end{array}
-      \end{displaymath}
-      which is the minimization problem on the right.
-      \item By weak duality we have 
-      \[ c^T x^* \leq (y^*)^T A x^* \leq (y^*)^T b. \]
-      Both $x^*$ and $y^*$ are optimal solutions if and only if both of inequalities above are equalities, which is equivalent to
-      \[ (y^T A - c^T) x^* = 0 \text{ and } (y^*)^T (b - Ax^*) = 0. \]
-    \end{enumerate}
-  \end{solution}
+Formulate the similar statement for the row player.  \label{ex:br} 
+
+\begin{solution}
+Since for any $j=1,\ldots,n$ we have $e_j \in Y$, one has
+$\min_{y\in Y} x^TA y \leq \min_{1\leq j\leq n} x^TAe_j$.
+On the other hand, there exists $j=1,\ldots,n$ such that the corresponding component $(x^TA)_j$ is the smallest, so $(x^TA)_j = \min_{1\leq j\leq n} x^TAe_j$. Then for any $y\in Y$, we have
+$$x^TA y = \sum_{i=1}^n y_i (x^TA)_{i} \geq \sum_{i=1}^n y_i (x^TA)_{j} = (x^TA)_{j} = x^TAe_j = \min_{1\leq j\leq n} x^TAe_j.$$
+Then we have $\min_{y\in Y} x^TA y \geq \min_{1\leq j\leq n} x^TAe_j$, which completes the proof.
+
+The similar statement for the row player is that, for any $A \in \mathbb{R}^{m \times n}$ and for any $y \in \mathbb{R}^n$, one has 
+$$\max_{x\in X} x^TA y = \max_{1\leq i \leq m} e_i^TA y$$ 
+where $X$ is the set of mixed row-strategies.
+\end{solution}
+
+
+\item (Problem 15.5 from the book \emph{Linear Programming} by  Vašek Chvátal)
+A row $r$ of the payoff matrix $A\in \R^{m\times n}$ is said to \emph{dominate} a row $s$ if $A_{rj} ≥ A_{sj}$ for all $j=1,\ldots,n$.
+Similarly, a column $r$ of the payoff matrix is said to \emph{dominate} a column $s$ if $A_{ir} ≤ A_{is}$ for all $i=1,\ldots,m$. 
+Prove the following:
+\begin{enumerate}[(i)]
+  \item If a row $r$ is dominated by another row, then the row player has at least one optimal strategy $x^*$ in which $x^*_r = 0$. In particular, if row $r$ is deleted from the payoff matrix, then the value of the game does not change.
+  \item If a column $s$ is dominated by another column, then the column player has at least one optimal strategy $y^*$ in which $y^*_s = 0$. In particular, if column $s$ is deleted from the payoff matrix, then the value of the game does not change.
+\end{enumerate}
+Use these facts to reduce the following payoff matrix to size $2\times 2$:
+$$\begin{pmatrix}
+  -2 & 3 & 0 & -6 & -3 \\
+  0 & -4 & 9 & 2 & 1 \\
+  6 & -2 & 7 & 4 & 5 \\
+  7 & -3 & 8 & 3 & 2 
+\end{pmatrix}.
+$$
+
+
+\begin{solution}
+\begin{enumerate}[(i)]
+\item Let $r$ be a row that is dominated by another row $s$. Let $x\in \R^{m}_{\geq 0}$ be an optimal strategy of the row player. 
+We construct a strategy $x^\ast$ such that $x^\ast_r = 0$ and $x^\ast_s = x_s + x_r$ and $x^\ast_i = x_i$ for every $i \neq r, s$. Then we have that for any strategy $y\in \R^{n}_{\geq 0}$ of the column player,
+\begin{align*}
+(x^\ast)^T A y & = \sum_{i \neq r, s} x_i (Ay)_i + (x_s + x_r) (Ay)_s \\
+& \geq \sum_{i \neq r, s} x_i (Ay)_i + x_s (Ay)_s + x_r (Ay)_r \\
+& = x^T A y
+\end{align*}
+where $(Ay)_s = \sum_{j=1}^n (A_{sj} y_j) \geq \sum_{j=1}^n (A_{rj} y_j) = (Ay)_r$ since row $s$ dominates row $r$. 
+Then $x^\ast$ is also an optimal strategy of the row player such that $x^\ast_r = 0$. 
+
+\item The proof is almost the same as (i). Let $s$ be a column that is dominated by another column $r$. Let $y\in \R^{n}_{\geq 0}$ be an optimal strategy of the column player. 
+We construct a strategy $y^\ast$ such that $y^\ast_s = 0$ and $y^\ast_r = y_r + y_s$ and $y^\ast_j = y_j$ for every $j \neq r, s$. Then we have that for any strategy $x\in \R^{m}_{\geq 0}$ of the row player,
+\begin{align*}
+x^T A y^\ast & = \sum_{j \neq r, s} (x^T A)_j y_j + (x^T A)_r (y_r + y_s) \\
+& \leq \sum_{j \neq r, s} (x^T A)_j y_j + (x^T A)_r y_r + (x^T A)_s y_s \\
+& = x^T A y
+\end{align*}
+where $(x^T A)_r = \sum_{i=1}^m (x_i A_{ir}) \leq \sum_{i=1}^m (x_i A_{is}) = (x^T A)_s$ since column $r$ dominates column $s$. 
+Then $y^\ast$ is also an optimal strategy of the column player such that $y^\ast_s = 0$.
+\end{enumerate}
+For the given $4\times 5$ payoff matrix, one can reduce its size to $2\times 2$ by the following steps (note that the index of the rows and columns are with respect to each current step):
+\begin{enumerate}[1.]
+  \item Delete column 3 since it is dominated by column 4:
+  \begin{equation*}
+  \begin{pmatrix}
+    -2 & 3 & 0 & -6 & -3 \\
+    0 & -4 & 9 & 2 & 1 \\
+    6 & -2 & 7 & 4 & 5 \\
+    7 & -3 & 8 & 3 & 2 
+  \end{pmatrix} \xrightarrow{\text{delete column 3}}
+  \begin{pmatrix}
+    -2 & 3 & -6 & -3 \\
+    0 & -4 & 2 & 1 \\
+    6 & -2 & 4 & 5 \\
+    7 & -3 & 3 & 2 
+  \end{pmatrix}
+  \end{equation*}
+  \item Delete row 2 since it is dominated by row 3:
+  \begin{equation*}
+  \begin{pmatrix}
+    -2 & 3 & -6 & -3 \\
+    0 & -4 & 2 & 1 \\
+    6 & -2 & 4 & 5 \\   
+    7 & -3 & 3 & 2 
+  \end{pmatrix} \xrightarrow{\text{delete row 2}}
+  \begin{pmatrix}
+    -2 & 3 & -6 & -3 \\
+    6 & -2 & 4 & 5 \\
+    7 & -3 & 3 & 2 
+  \end{pmatrix}
+  \end{equation*}
+  \item Delete column 1 since it is dominated by column 4:
+  \begin{equation*}
+  \begin{pmatrix}
+    -2 & 3 & -6 & -3 \\
+    6 & -2 & 4 & 5 \\
+    7 & -3 & 3 & 2 
+  \end{pmatrix} \xrightarrow{\text{delete column 1}}
+  \begin{pmatrix}
+    3 & -6 & -3 \\
+    -2 & 4 & 5 \\
+    -3 & 3 & 2 
+  \end{pmatrix}
+  \end{equation*}
+  \item Delete row 3 since it is dominated by row 2:
+  \begin{equation*}
+  \begin{pmatrix}
+    3 & -6 & -3 \\
+    -2 & 4 & 5 \\
+    -3 & 3 & 2 
+  \end{pmatrix} \xrightarrow{\text{delete row 3}}
+  \begin{pmatrix}
+    3 & -6 & -3 \\
+    -2 & 4 & 5 
+  \end{pmatrix}
+  \end{equation*}
+  \item Delete column 3 since it is dominated by column 2:
+  \begin{equation*}
+  \begin{pmatrix}
+    3 & -6 & -3 \\
+    -2 & 4 & 5 
+  \end{pmatrix} \xrightarrow{\text{delete column 3}}
+  \begin{pmatrix}
+    3 & -6 \\
+    -2 & 4 
+  \end{pmatrix}
+  \end{equation*}
+\end{enumerate}
+\end{solution}
+
+
+% \item (Complementary slackness)
+
+%   Consider the primal/dual pair
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%            Ax ≤ b
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A = c^T\\
+%       y ≥ 0      
+%     \end{array} 
+%   \end{displaymath}
+%   defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
+%   Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
+
+%   \medskip
+%   \noindent
+
+%   Show the following: $x^*$ and $y^*$ are both optimal solutions respectively if and only if $(y^\ast)i > 0 \implies
+% A_ix^\ast = b_i$ for each $i \in [m]$.
+
+
+
+% \begin{solution}
+% First we show $\Leftarrow$. \\
+
+% By the assumption, we have that 
+% \begin{align*}
+% {y^\ast}^T b &= \displaystyle\sum_{j = 1}^m y^\ast_j b_j \\
+% & = \displaystyle\sum_{j = 1}^m y^\ast_j(A_j x^\ast) \\
+% & =\displaystyle\sum_{j = 1}^m  y^\ast_j \left( \displaystyle\sum_{i = 1}^n A_{ji} x^\ast_i \right) \\
+% &= \displaystyle\sum_{i = 1}^n  x^\ast_i \left( \displaystyle\sum_{j = 1}^m A_{ji} y^\ast_j \right) \\
+% & = {x^\ast}^T c \\
+% & = c^T x^\ast
+% \end{align*} 
+% so that $x^\ast, y^\ast$ achieve the same primal/dual objective value and are therefore optimal by strong duality. For the second equality, we have used that whenever the summand is nonzero, $A_j x^\ast = b_j$. \\
+
+% We then show $\Rightarrow$. \\
+
+% We have that as $x^\ast, y^\ast$ are optimal, $c^Tx^\ast = b^Ty^\ast$ by strong duality. Then 
+% \begin{align*}
+% c^Tx^\ast & = \displaystyle\sum_{i =1}^n x^\ast_i c_i \\
+% & =  \displaystyle\sum_{i =1}^n x^\ast_i \left( \displaystyle\sum_{j =1}^m A_{ji}y^\ast_j \right) \\
+% & = \displaystyle\sum_{j =1}^m y^\ast_j \left( \displaystyle\sum_{i =1}^n A_{ji}x^\ast_i \right) \\
+% & = \displaystyle\sum_{j =1}^m y^\ast_j (A_j x^\ast) \\
+% & \leq \displaystyle\sum_{j =1}^m y^\ast_j  b_j \\
+% & = {y^\ast}^T b
+% \end{align*}
+% where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. Then as the above inequalities must hold with equality everywhere since $c^Tx^\ast = b^Ty^\ast$, it must be that if $y^\ast_j >0$ then $A_j x^\ast = b_j$.
+
+% \end{solution}
+
+% \item Consider the linear programming problems    
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%       Ax ≤ b \\
+%       x≥ 0
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A ≥ c^T\\
+%       y ≥ 0      
+%     \end{array}
+%   \end{displaymath}
+%   \begin{enumerate}[i)]
+%   \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
+%   \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
+%     \begin{displaymath}
+%       (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
+%     \end{displaymath}
+    
+%     \end{enumerate}
+
+%   \begin{solution}
+%     \begin{enumerate}[i)]
+%       \item We rewrite the maximization problem as:
+%       \begin{displaymath}
+%         \begin{array}[t]{c}
+%           \max c^Tx \\
+%           \tilde{A}x ≤ \tilde{b}\\
+%         \end{array} 
+%       \end{displaymath}
+%       where $\tilde{A} = \begin{pmatrix}
+%         A \\
+%         -I
+%       \end{pmatrix}$ and $\tilde{b} = \begin{pmatrix}
+%         b \\
+%         \mathbf{0}
+%       \end{pmatrix}$. Then the dual of this maximization problem is
+%       \begin{displaymath}
+%         \begin{array}[t]{c}
+%           \min \tilde{b}^T \tilde{y} \\
+%           \tilde{y}^T \tilde{A} = c^T\\
+%           \tilde{y} ≥ 0      
+%         \end{array}
+%       \end{displaymath}
+%       Let $\tilde{y} = \begin{pmatrix}
+%         y \\
+%         y^\prime
+%       \end{pmatrix}$ then the objective becomes $\tilde{b}^T \tilde{y} = b^Ty$ and the constraint becomes $\tilde{y}^T \tilde{A} = y^T A - (y^\prime)^T = c^T, y,y^\prime \geq 0 \Leftrightarrow y^T A = c^T, y\geq 0$. 
+%       Therefore the dual problem is equivalent to
+%       \begin{displaymath}
+%         \begin{array}[t]{c}
+%           \min b^Ty \\
+%           y^T A ≥ c^T\\
+%           y ≥ 0      
+%         \end{array}
+%       \end{displaymath}
+%       which is the minimization problem on the right.
+%       \item By weak duality we have 
+%       \[ c^T x^* \leq (y^*)^T A x^* \leq (y^*)^T b. \]
+%       Both $x^*$ and $y^*$ are optimal solutions if and only if both of inequalities above are equalities, which is equivalent to
+%       \[ (y^T A - c^T) x^* = 0 \text{ and } (y^*)^T (b - Ax^*) = 0. \]
+%     \end{enumerate}
+%   \end{solution}
 
 \end{enumerate}
 
