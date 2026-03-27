@@ -124,41 +124,98 @@
 
 \begin{enumerate}[1)]
 
-\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
-0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
-oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
-$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
-$O(n \log(B))$ many oracle calls.
+\item (Complementary slackness)
+
+  Consider the primal/dual pair
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+           Ax ≤ b
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A = c^T\\
+      y ≥ 0      
+    \end{array} 
+  \end{displaymath}
+  defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
+  Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
+
+  Show that $x^*$ and $y^*$ are both optimal solutions respectively if and only if $y^\ast_i > 0 \implies A_ix^\ast = b_i$ for each $i \in [m]$.
+
+\item Consider the linear programming problems    
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+      Ax ≤ b \\
+      x≥ 0
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A ≥ c^T\\
+      y ≥ 0      
+    \end{array}
+  \end{displaymath}
+  \begin{enumerate}[i)]
+  \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
+  \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
+    \begin{displaymath}
+      (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
+    \end{displaymath}
+    
+    \end{enumerate}
+
+\item Using Theorem 3.11 from the lecture notes, prove the following variant of Farkas' lemma:
+  Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
+  The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
+  for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.    
+
+  
+\item Consider a binary classification problem with a labeled training dataset 
+\[
+\mathcal{D} = \{(v_i, y_i)\}_{i=1}^m \subseteq \mathbb{R}^n \times \{+1,-1\},
+\]
+where each $v_i \in \mathbb{R}^n$ represents a data point and $y_i \in \{+1,-1\}$ its label.
+
+We would like to learn a \emph{linear classifier}, i.e., a hyperplane $\{x \in \mathbb{R}^n : a^T x = b\}$ which separates the data and maximizes the \emph{margin}. Additionally, assume that $a$ lies in the $\ell_1$-unit ball, i.e., $\|a\|_1 \leq 1$.
+
+Formulate this learning problem as a linear program.
+
+% \item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+% 0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+% oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+% $S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+% $O(n \log(B))$ many oracle calls.
 
 
 
-\item Let $P := \{x ∈\setR^n : Ax= b, x ≥0\}$ be a polyhedron and $\min\{c^Tx : x ∈P\}$ be the corresponding
-primal linear program. Assume that all the coeﬃcients of $A, b$ and $c$ are integral and bounded in
-absolute value by given $B ∈\setN$, and furthermore let $L:= B^n n^{n/2}$.
-\begin{enumerate}
-\item Show the following: If $x_1,x_2$ are vertices of $P$ and $c^Tx_1\neq c^Tx_2$, then $|c^Tx_1−c^Tx_2|≥1/L^2$.
-\item  Let $x^∗$and $y^∗$ be feasible solutions of the primal and dual linear program respectively. Conclude
-the following from the above: If $|c^Tx^∗ −b^Ty^∗|<1/L^2$, then each vertex $x$ of $P$ with $c^Tx≤c^Tx^∗$ is
-an optimal solution of the primal.
-\end{enumerate}
+% \item Let $P := \{x ∈\setR^n : Ax= b, x ≥0\}$ be a polyhedron and $\min\{c^Tx : x ∈P\}$ be the corresponding
+% primal linear program. Assume that all the coeﬃcients of $A, b$ and $c$ are integral and bounded in
+% absolute value by given $B ∈\setN$, and furthermore let $L:= B^n n^{n/2}$.
+% \begin{enumerate}
+% \item Show the following: If $x_1,x_2$ are vertices of $P$ and $c^Tx_1\neq c^Tx_2$, then $|c^Tx_1−c^Tx_2|≥1/L^2$.
+% \item  Let $x^∗$and $y^∗$ be feasible solutions of the primal and dual linear program respectively. Conclude
+% the following from the above: If $|c^Tx^∗ −b^Ty^∗|<1/L^2$, then each vertex $x$ of $P$ with $c^Tx≤c^Tx^∗$ is
+% an optimal solution of the primal.
+% \end{enumerate}
 
 
 
 
-\item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
-$B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
+% \item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
+% $B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
 
-\textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
-polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
-
-
-
-\item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
-the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
-absolute value of an entry of $A$ and $b$. 
+% \textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
+% polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
 
 
-Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
+
+% \item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
+% the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
+% absolute value of an entry of $A$ and $b$. 
+
+
+% Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
 
 
 
