@@ -143,27 +143,27 @@
 
   Show that $x^*$ and $y^*$ are both optimal solutions respectively if and only if $y^\ast_i > 0 \implies A_ix^\ast = b_i$ for each $i \in [m]$.
 
-\item Consider the linear programming problems    
-  \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-      Ax ≤ b \\
-      x≥ 0
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A ≥ c^T\\
-      y ≥ 0      
-    \end{array}
-  \end{displaymath}
-  \begin{enumerate}[i)]
-  \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
-  \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
-    \begin{displaymath}
-      (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
-    \end{displaymath}
+% \item Consider the linear programming problems    
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%       Ax ≤ b \\
+%       x≥ 0
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A ≥ c^T\\
+%       y ≥ 0      
+%     \end{array}
+%   \end{displaymath}
+%   \begin{enumerate}[i)]
+%   \item Show that the minimization problem on the right is equivalent to the dual of the maximization problem.
+%   \item Let $x^*$ and $y^*$ be feasible solutions of the maximization and minimization problem respectively. Show that they are both optimal solutions respectively if and only if the following condition holds:% , where $a_i$ and $a^j$ denote the $i$-th row and $j$-th column of $A$ respectively:
+%     \begin{displaymath}
+%       (y^*)^T (b - Ax^*) = 0 \text{ and } (y^T A - c^T) x^* = 0. 
+%     \end{displaymath}
     
-    \end{enumerate}
+%     \end{enumerate}
 
 \item Using Theorem 3.11 from the lecture notes, prove the following variant of Farkas' lemma:
   Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
@@ -181,6 +181,15 @@ We would like to learn a \emph{linear classifier}, i.e., a hyperplane $\{x \in \
 
 Formulate this learning problem as a linear program.
 
+\item (Separation of disjoint polyhedra) 
+
+This problem is taken from \emph{Introduction to Linear Optimization} by Bertsimas and Tsitsiklis.
+
+Consider two non-empty disjoint polyhedra $P=\{x \in \mathbb{R}^n : Ax \leq b\}$ and $Q=\{x \in \mathbb{R}^n : Cx \leq d\}$. We are interested in finding out whether the two polyhedra have a point in common.
+\begin{enumerate}[i)]
+\item Devise a linear program such that: if $P\cap Q$ is nonempty, then it returns a point in $P\cap Q$; if $P\cap Q$ is empty, the linear program is infeasible.
+\item Suppose that $P\cap Q$ is empty. Use the dual of the problem you have constructed in i) to show that there exists a vector $c$ such that $c^Tx < c^Ty$ for all $x \in P$ and $y \in Q$.
+\end{enumerate}
 % \item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
 % 0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
 % oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
