@@ -519,16 +519,7 @@ $d_B := - A_B^{-1} A_j$ is called the \emph{$j$-th basic direction}.
 Assume that the solution $x$ associated to $B$ is feasible. Moreover assume that $x_B>0$.
 
 
-\item
-Show the  following for each  fixed $x ∈ ℝ^m$ 
-\begin{displaymath}  
-\min_{y\in Y} x^TA y = \min_{1≤j≤n } 
-x^TAe_j,
-\end{displaymath}
-where   $Y$ denotes the set of mixed  column-strategies.
-   In other words, there is a  \emph{best response} of the column player to a strategy $x$ of the row-player that is a \emph{pure strategy}. This is a strategy that consists of always choosing the same column.
 
- Formulate the similar statement for the row player.  \label{ex:br} 
    
 \begin{enumerate}
  \item Show that there is a $\theta >0$ such that $x+ \theta d$ is a feasible solution. Give a formula to compute the largest $\theta$ such that $x+ \theta d$ is feasible.
@@ -550,6 +541,18 @@ To get an intuition why this is true, show the following:
 Show that for any $j\in \{1, \ldots, n\}$ we have $\bar c_j < 0$ if and
 only if  $A_j^T y > c_j$.
 \end{enumerate}
+
+
+\item
+Show the  following for each  fixed $x ∈ ℝ^m$ 
+\begin{displaymath}  
+\min_{y\in Y} x^TA y = \min_{1≤j≤n } 
+x^TAe_j,
+\end{displaymath}
+where   $Y$ denotes the set of mixed  column-strategies.
+   In other words, there is a  \emph{best response} of the column player to a strategy $x$ of the row-player that is a \emph{pure strategy}. This is a strategy that consists of always choosing the same column.
+
+ Formulate the similar statement for the row player.  \label{ex:br} 
 \end{enumerate}
 
 
