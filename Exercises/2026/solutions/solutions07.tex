@@ -125,94 +125,236 @@
 
 \begin{enumerate}[1)]
 
-\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
-0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
-oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
-$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
-$O(n \log(B))$ many oracle calls.
+\item (Complementary slackness)
 
+  Consider the primal/dual pair
+  \begin{displaymath}
+    \begin{array}[t]{c}
+      \max c^Tx \\
+           Ax ≤ b
+    \end{array} \quad \text{ and }\quad
+    \begin{array}[t]{c}
+      \min b^Ty \\
+      y^T A = c^T\\
+      y ≥ 0      
+    \end{array} 
+  \end{displaymath}
+  defined by $A ∈ ℝ^{m ×n}$, $b ∈ ℝ^m$ and $c ∈ ℝ^n$. 
+  Let $x^* ∈ ℝ^n$ and $y^*∈ ℝ^m$ be feasible primal and dual solutions respectively.
+
+  Show that $x^*$ and $y^*$ are both optimal solutions respectively if and only if $y^\ast_i > 0 \implies A_ix^\ast = b_i$ for each $i \in [m]$.
 
 \begin{solution}
-We split the problem in $n$ subproblems: for $i∈\{1,...,n\}$, we want to obtain the i-th component
-of the red point. This is a simple binary search problem, and we illustrate how to solve it for $i= 1$:
-we first call the oracle with $l = (0,...,0),r = (B/2,B,...,B)$. Then we call the oracle with $l=
-(0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/2,B,...,B)$
-(if the answer is negative), and so on. In this way, we are guaranteed to find each component of the
-red point with $O(\log(B))$ oracle calls, for a total of $O(n\log(B))$ many oracle calls.
+First we show $\Leftarrow$. \\
+
+By the assumption, we have that 
+\begin{align*}
+{y^\ast}^T b &= \displaystyle\sum_{j = 1}^m y^\ast_j b_j \\
+& = \displaystyle\sum_{j = 1}^m y^\ast_j(A_j x^\ast) \\
+& =\displaystyle\sum_{j = 1}^m  y^\ast_j \left( \displaystyle\sum_{i = 1}^n A_{ji} x^\ast_i \right) \\
+&= \displaystyle\sum_{i = 1}^n  x^\ast_i \left( \displaystyle\sum_{j = 1}^m A_{ji} y^\ast_j \right) \\
+& = {x^\ast}^T c \\
+& = c^T x^\ast
+\end{align*} 
+so that $x^\ast, y^\ast$ achieve the same primal/dual objective value and are therefore optimal by strong duality. For the second equality, we have used that whenever the summand is nonzero, $A_j x^\ast = b_j$. \\
+
+We then show $\Rightarrow$. \\
+
+We have that as $x^\ast, y^\ast$ are optimal, $c^Tx^\ast = b^Ty^\ast$ by strong duality. Then 
+\begin{align*}
+c^Tx^\ast & = \displaystyle\sum_{i =1}^n x^\ast_i c_i \\
+& =  \displaystyle\sum_{i =1}^n x^\ast_i \left( \displaystyle\sum_{j =1}^m A_{ji}y^\ast_j \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j \left( \displaystyle\sum_{i =1}^n A_{ji}x^\ast_i \right) \\
+& = \displaystyle\sum_{j =1}^m y^\ast_j (A_j x^\ast) \\
+& \leq \displaystyle\sum_{j =1}^m y^\ast_j  b_j \\
+& = {y^\ast}^T b
+\end{align*}
+where we have used that $y^\ast_j \geq 0$ for every $j$ in the last inequality. Then as the above inequalities must hold with equality everywhere since $c^Tx^\ast = b^Ty^\ast$, it must be that if $y^\ast_j >0$ then $A_j x^\ast = b_j$.
+
 \end{solution}
 
+\item Using Theorem 3.11 from the lecture notes, prove the following variant of Farkas' lemma:
+  Let $A\in\setR^{m\times n}$ be a matrix and $b\in\setR^m$ be a vector.
+  The system $Ax \leq b$, $x\in\setR^n$ has a solution if and only if
+  for all $\lambda\in\setR^m_{\geq0}$ with $\lambda^T A = 0$ one has $\lambda^T b \geq 0$.    
 
-\item Let $P := \{x ∈\setR^n : Ax= b, x ≥0\}$ be a polyhedron and $\min\{c^Tx : x ∈P\}$ be the corresponding
-primal linear program. Assume that all the coeﬃcients of $A, b$ and $c$ are integral and bounded in
-absolute value by given $B ∈\setN$, and furthermore let $L:= B^n n^{n/2}$.
-\begin{enumerate}
-\item Show the following: If $x_1,x_2$ are vertices of $P$ and $c^Tx_1\neq c^Tx_2$, then $|c^Tx_1−c^Tx_2|≥1/L^2$.
-\item  Let $x^∗$and $y^∗$ be feasible solutions of the primal and dual linear program respectively. Conclude
-the following from the above: If $|c^Tx^∗ −b^Ty^∗|<1/L^2$, then each vertex $x$ of $P$ with $c^Tx≤c^Tx^∗$ is
-an optimal solution of the primal.
+\begin{solution}
+We first show $Ax \leq b$ has a solution $\implies \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0, \lambda^Tb \geq 0$.  \\
+
+Assume that there actually exists some $\lambda \in \setR^m_{\geq 0}$ with $\lambda^TA = 0, \lambda^T b <0$. 
+Then 
+\begin{align*}
+(\lambda^T A)x & = 0^T x = 0\\
+\lambda^T (Ax) & \leq \lambda^T b < 0 
+\end{align*}
+which is impossible as  $\lambda^T Ax$ is distributive. Here we used in the inequality that $\lambda \geq 0$. \\
+
+Now we show that  $ \forall \lambda \in \mathbb{R}^m_{\geq 0}$ with $\lambda^T A = 0$ we have $\lambda^Tb \geq 0$ $\implies Ax \leq b$ has a solution. \\
+
+Assume that $Ax \leq b$ actually has no solution. Now consider the matrix $\tilde{A} = \begin{pmatrix} A & -A & I_m\end{pmatrix}$ where the 3 matrices are concatenated and $I_m$ is the $m \times m$ identity matrix. Then clearly $\tilde{A}x= b$ has no solution $x \geq 0$ as if there was such a solution where $x = (u, v, s)$ for some $u \in \setR_{\geq 0}^n, v \in \setR_{\geq 0}^n, s \in \setR_{\geq 0}^m$, then we have that $Au - Av + s = b$ where $s \geq 0$ such that $A(u-v) \leq b$. This gives $(u-v) \in \setR^n$ as a solution to $Ax \leq b$ which is assumed not to exist. \\
+
+Thus $\tilde{A}x = b$ has no solution $x \geq 0$ such that the standard Farkas lemma tells us that there exists some $\lambda \in \setR^m$ such that 
+\begin{align*}
+\lambda^Tb <0 \\
+\lambda^T \tilde{A} \geq 0.
+\end{align*}
+
+Then 
+\begin{align*}
+\lambda^T \tilde{A} \geq 0 \\
+\implies \lambda^T\begin{pmatrix} A & -A & I_m \end{pmatrix} \geq 0 \\
+\implies \lambda^TA \geq 0, -\lambda^T A \geq 0, \lambda \geq 0 \\
+\implies \lambda^T A = 0, \lambda \geq 0.
+\end{align*}
+
+Then $\lambda$ satisfies $\lambda^TA = 0, \lambda^T b < 0, \lambda \geq 0$ which is a contradiction to the assumption. So $Ax \leq b$ must have a solution. 
+
+\end{solution}
+  
+
+\item Consider a binary classification problem with a labeled training dataset 
+\[
+\mathcal{D} = \{(v_i, y_i)\}_{i=1}^m \subseteq \mathbb{R}^n \times \{+1,-1\},
+\]
+where each $v_i \in \mathbb{R}^n$ represents a data point and $y_i \in \{+1,-1\}$ its label.
+
+We would like to learn a \emph{linear classifier}, i.e., a hyperplane $\{x \in \mathbb{R}^n : a^T x = b\}$ which separates the data into two classes and maximizes the \emph{margin}, which is defined as $\min_{i=1,\ldots,m} |a^T v_i - b|$.
+Additionally, assume that $a$ lies in the $\ell_1$-unit ball, i.e., $\|a\|_1 \leq 1$.
+
+Formulate this learning problem as a linear program.
+
+\begin{solution}
+	\begin{align*}
+      \max & \quad \lambda \\
+      \text{s.t.} 
+      & \quad y_i(a^T v_i - b) \geq \lambda, \quad i = 1, \ldots, m, \\
+      & \quad a_j \leq c_j, \quad j = 1, \ldots, n, \\
+      & \quad a_j \geq -c_j, \quad j = 1, \ldots, n, \\
+      & \quad \sum_{j=1}^n c_j = 1. \\
+    \end{align*}
+\end{solution}
+
+\item (Separation of disjoint polyhedra) 
+
+This problem is taken from \emph{Introduction to Linear Optimization} by Bertsimas and Tsitsiklis.
+
+Consider two non-empty disjoint polyhedra $P=\{x \in \mathbb{R}^n : Ax \leq b\}$ and $Q=\{x \in \mathbb{R}^n : Cx \leq d\}$. We are interested in finding out whether the two polyhedra have a point in common.
+\begin{enumerate}[i)]
+\item Devise a linear program such that: if $P\cap Q$ is nonempty, then it returns a point in $P\cap Q$; if $P\cap Q$ is empty, the linear program is infeasible.
+\item Suppose that $P\cap Q$ is empty. Use the dual of the problem you have constructed in i) to show that there exists a vector $c$ such that $c^Tx < c^Ty$ for all $x \in P$ and $y \in Q$.
 \end{enumerate}
 
-
 \begin{solution}
-\begin{enumerate}
-\item  Let $B_1$ and $B_2$ be the sets of row indices corresponding to basic feasible solutions $x_1,x_2$, then
-$x_1 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_1}$ and $x_2 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_2}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_2}$.  A basic result from linear algebra states that given an $n×n$ invertible matrix $M$ one has that $M^{−1} =\frac{1}{\det(M)}adj(M)$. If one has that the entries of $M$ are integral and bounded in absolute value by $B$ then Hadamard’s bound gives that $\det(M) ≤ B^n n^{n/2} = L$. Combining the two statements gives that the entries of $M^{−1}$ are integer multiples of
-$1/ |det(M)|≥1/L$.  Applying this statement to $\begin{pmatrix} A \\ I \end{pmatrix}_{B_1}$ and since $b$ is integral we obtain that each entry of $x_1$ is an integer multiple of $1/\left|\det\left( \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}\right)\right|≥1/L$. Analogously obtain the same bound for $x_2$. Thus we obtain that $|c^Tx_1−c^Tx_2|= |c^T(x_1−x_2)|$ is a positive integer multiple of some $\delta  ≥1/L^2$ since $c∈\setZ^n$.
+  \begin{enumerate}[i)]
+    \item We formulate the following linear program:
+    \begin{align*}
+      \max & \quad 0 \\
+      \text{s.t.}
+      & \quad Ax \leq b, \\
+      & \quad Cx \leq d.
+    \end{align*}
 
-\item  We prove the statement by contradiction. Assume that $x$ is not an optimal solution, then there
-is a vertex $\bar{x}$ such that $c^T\bar{x}<c^Tx$. Then by weak duality one has $b^Ty^∗≤c^T\bar{x} <c^Tx ≤c^Tx^∗$ which further implies $|c^T\bar{x} −c^Tx|<1/L^2$ contradicting part (a).
-
-\end{enumerate}
-
-
+    \item The dual of this LP is given by
+    \begin{align*}
+      \min & \quad b^T u + d^T v \\
+      \text{s.t.}
+      & \quad u^T A + v^T C = 0, \\
+      & \quad u \geq 0, v \geq 0.
+    \end{align*}
+    Since the LP from i) is infeasible, there exists some $u \geq 0, v \geq 0$ such that $u^T A + v^T C = 0$ and $b^T u + d^T v < 0$. 
+    Let $c = A^T u = -C^T v$. Then for any $x \in P$ and $y \in Q$, we have $c^T x = u^T A x \leq u^T b$ and $c^T y = -v^T C y \geq -v^T d$. 
+    Hence $c^T x - c^T y \leq b^T u + d^T v < 0$.
+  \end{enumerate}
 \end{solution}
 
-
-\item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
-$B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
-
-\textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
-polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
-
-\begin{solution}
-By using the hint, we obtain a system of inequalities with matrix $\bar{A}$ of full column rank and vector $\bar{b}$. Indeed, one can see that in the new system $\bar{A}x≤\bar{b}$, $\bar{A}$ is of the form $$\bar{A} = \begin{pmatrix} A \\ X \\ Y \end{pmatrix}$$ 
-and $\bar{b}= (b, 0)$ , where $X$ is an $|I|×n$ matrix, where the $x_{kl}$ entry is equal to $1$ if $k=l$ and $k ∈I$,
-$Y$ is a $|J|×n$ matrix where the $y_{kl}$ entry is equal to $-1$ if $k= l$ and $k ∈J$ and $0$ otherwise.
-By construction of $\bar{A}$, we can see that the matrix has full column rank.
-This implies that the corresponding polyhedron has vertices. Moreover, by a theorem from the
-course, a vertex is characterized by a subsystem $A'x≤b'$ where $rank(A') = n$ such that $x^\ast
-= A'^{−1}b'$.
-
-We know from linear algebra that $A^{−1 }= adj(A')/\det(A').$
-Hence,
-$$|x^\ast_i| = \left| \displaystyle\sum_{j =1}^n {a'}_{ij}^{-1} b_j \right| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right|.$$
-Then we just have to bound the entries of the matrix $A'^{−1}$. From the fact that $A'$ is invertible and has integer entries, we get that $|\det(A')| ≥ 1$. From Hadamard’s bound, we also have that
-$|\det(adj(A))|≤B^{n−1}(n−1)^{\frac{n−1}{2}}$. Combining these two facts, we have the desired result,
-$$|x^\ast_i| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right| \leq B \displaystyle\sum_{j =1}^n B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n \cdot B \cdot B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n\cdot B \cdot n^{n/2} \cdot B^n.$$
-
-\end{solution}
+% \item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+% 0 ≤p_i ≤B ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+% oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+% $S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+% $O(n \log(B))$ many oracle calls.
 
 
-
-\item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
-the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
-absolute value of an entry of $A$ and $b$. 
-
-
-Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
-
-
-\begin{solution}
-From the assumptions, there exists a vertex $x^*$ of $P$ such that $c^Tx^*= \max\{c^Tx: Ax≤b\}$.
-We have that there is some invertible $A'$, submatrix of $A$, and a $b'$ subvector of $b$, such that
-$x^*=  {A'}^{−1}b'$, hence $|x^\ast_i|= \sum_{j =1}^m \frac{|A'_{ij}|}{|\det(A')|}b'_j$ and using Hadamard's bound and the integrality of $A,b,c$, we get that 
-$$|c^Tx^\ast|≤ mB^{n+2}n^{n/2+1}.$$
-
-Moreover, from exercise 2, we have that for any non-optimal vertex $x$ of $P$,  $c^Tx^*−c^Tx≥1/L^2$, where
-$L= B^n n^{n/2}$. Hence we need to find an interval $[α,β]$ such that $P' := P ∩\{x∈\setR^n : c^Tx≥α\}$ is feasible and $P'' := P ∩\{x∈\setR^n : c^Tx≥β\}$ is not feasible, and $β−α <1/L^2$. This will then give the value of the maximum. Checking feasibility of these two polytopes is then done in polynomial time in $n, m \log B$ by the assumption that there exists an algorithm that decides feasibility. To find the desired $α,β$, we perform binary search on the interval $[−mB^{n+2}n^{n/2+1},mB^{n+2}n^{n/2+1}]$, halving the size of the interval iteratively until the interval has small enough length (less than $1/L^2$). Formally, denote by $S_i$ the system $Ax ≤ b$, $c^Tx ≥ α_i$ and set $α_0 =−mB^{n+2}n^{n/2+1},β_0 = mB^{n+2}n^{n/2+1}$. At the i-th iteration, we know that $S_{i−1}$ is feasible and we ask to the oracle whether $S_i$ is feasible, with $α_i = α_{i−1} + (β_i−α_i)/2$. If it is feasible, we set $β_i = β_{i−1}$, otherwise we set $β_i = α_i,α_i = α_{i−1}$, and we move to the next iteration, until $β_i−α_i <1/L^2$. At this point, if the system $Ax≤b,c^Tx≥β_i$ is not feasible, we obtained our $α,β$, otherwise notice that we must have $β_i = β_0$ which implies that $\max\{c^Tx: Ax≤b\}= β_0$. The total number of iterations is at most $\log(L^2\cdot 2mB^{n+2}n^{n/2+1})$, for a total running time that is polynomial in $n, m$ and $\log B$.
+% \begin{solution}
+% We split the problem in $n$ subproblems: for $i∈\{1,...,n\}$, we want to obtain the i-th component
+% of the red point. This is a simple binary search problem, and we illustrate how to solve it for $i= 1$:
+% we first call the oracle with $l = (0,...,0),r = (B/2,B,...,B)$. Then we call the oracle with $l=
+% (0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/2,B,...,B)$
+% (if the answer is negative), and so on. In this way, we are guaranteed to find each component of the
+% red point with $O(\log(B))$ oracle calls, for a total of $O(n\log(B))$ many oracle calls.
+% \end{solution}
 
 
-\end{solution}
+% \item Let $P := \{x ∈\setR^n : Ax= b, x ≥0\}$ be a polyhedron and $\min\{c^Tx : x ∈P\}$ be the corresponding
+% primal linear program. Assume that all the coeﬃcients of $A, b$ and $c$ are integral and bounded in
+% absolute value by given $B ∈\setN$, and furthermore let $L:= B^n n^{n/2}$.
+% \begin{enumerate}
+% \item Show the following: If $x_1,x_2$ are vertices of $P$ and $c^Tx_1\neq c^Tx_2$, then $|c^Tx_1−c^Tx_2|≥1/L^2$.
+% \item  Let $x^∗$and $y^∗$ be feasible solutions of the primal and dual linear program respectively. Conclude
+% the following from the above: If $|c^Tx^∗ −b^Ty^∗|<1/L^2$, then each vertex $x$ of $P$ with $c^Tx≤c^Tx^∗$ is
+% an optimal solution of the primal.
+% \end{enumerate}
+
+
+% \begin{solution}
+% \begin{enumerate}
+% \item  Let $B_1$ and $B_2$ be the sets of row indices corresponding to basic feasible solutions $x_1,x_2$, then
+% $x_1 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_1}$ and $x_2 = \begin{pmatrix} A \\ I \end{pmatrix}_{B_2}^{-1} \begin{pmatrix} b \\ 0 \end{pmatrix}_{B_2}$.  A basic result from linear algebra states that given an $n×n$ invertible matrix $M$ one has that $M^{−1} =\frac{1}{\det(M)}adj(M)$. If one has that the entries of $M$ are integral and bounded in absolute value by $B$ then Hadamard’s bound gives that $\det(M) ≤ B^n n^{n/2} = L$. Combining the two statements gives that the entries of $M^{−1}$ are integer multiples of
+% $1/ |det(M)|≥1/L$.  Applying this statement to $\begin{pmatrix} A \\ I \end{pmatrix}_{B_1}$ and since $b$ is integral we obtain that each entry of $x_1$ is an integer multiple of $1/\left|\det\left( \begin{pmatrix} A \\ I \end{pmatrix}_{B_1}\right)\right|≥1/L$. Analogously obtain the same bound for $x_2$. Thus we obtain that $|c^Tx_1−c^Tx_2|= |c^T(x_1−x_2)|$ is a positive integer multiple of some $\delta  ≥1/L^2$ since $c∈\setZ^n$.
+
+% \item  We prove the statement by contradiction. Assume that $x$ is not an optimal solution, then there
+% is a vertex $\bar{x}$ such that $c^T\bar{x}<c^Tx$. Then by weak duality one has $b^Ty^∗≤c^T\bar{x} <c^Tx ≤c^Tx^∗$ which further implies $|c^T\bar{x} −c^Tx|<1/L^2$ contradicting part (a).
+
+% \end{enumerate}
+
+
+% \end{solution}
+
+
+% \item Let $Ax≤b$ be a system of inequalities where each component of $A$ and $b$ is an integer bounded by
+% $B$ in absolute value. Show that $Ax≤b$ is feasible if and only if $Ax≤b ,−B^n \cdot n^{n/2}\cdot n\cdot B ≤x_i ≤ B^n\cdot n^{n/2}\cdot n\cdot B$, $∀i∈[n]$ is feasible. \\
+
+% \textit{Hint: Consider a feasible point $x^∗$ and the index sets $I= \{i: x^∗_i ≥0\}$ and $J= \{j : x^∗_j ≤0\}$. The
+% polyhedron defined by $Ax≤b, x_i ≥0, i∈I, x_j ≤0, j ∈J$ is feasible and has vertices. Estimate the infinity norm of a vertex.}
+
+% \begin{solution}
+% By using the hint, we obtain a system of inequalities with matrix $\bar{A}$ of full column rank and vector $\bar{b}$. Indeed, one can see that in the new system $\bar{A}x≤\bar{b}$, $\bar{A}$ is of the form $$\bar{A} = \begin{pmatrix} A \\ X \\ Y \end{pmatrix}$$ 
+% and $\bar{b}= (b, 0)$ , where $X$ is an $|I|×n$ matrix, where the $x_{kl}$ entry is equal to $1$ if $k=l$ and $k ∈I$,
+% $Y$ is a $|J|×n$ matrix where the $y_{kl}$ entry is equal to $-1$ if $k= l$ and $k ∈J$ and $0$ otherwise.
+% By construction of $\bar{A}$, we can see that the matrix has full column rank.
+% This implies that the corresponding polyhedron has vertices. Moreover, by a theorem from the
+% course, a vertex is characterized by a subsystem $A'x≤b'$ where $rank(A') = n$ such that $x^\ast
+% = A'^{−1}b'$.
+
+% We know from linear algebra that $A^{−1 }= adj(A')/\det(A').$
+% Hence,
+% $$|x^\ast_i| = \left| \displaystyle\sum_{j =1}^n {a'}_{ij}^{-1} b_j \right| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right|.$$
+% Then we just have to bound the entries of the matrix $A'^{−1}$. From the fact that $A'$ is invertible and has integer entries, we get that $|\det(A')| ≥ 1$. From Hadamard’s bound, we also have that
+% $|\det(adj(A))|≤B^{n−1}(n−1)^{\frac{n−1}{2}}$. Combining these two facts, we have the desired result,
+% $$|x^\ast_i| \leq B \displaystyle\sum_{j =1}^n \left|  {a'}_{ij}^{-1} \right| \leq B \displaystyle\sum_{j =1}^n B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n \cdot B \cdot B^{n-1} (n-1)^{\frac{n-1}{2}} \leq n\cdot B \cdot n^{n/2} \cdot B^n.$$
+
+% \end{solution}
+
+
+
+% \item Suppose that there exists an algorithm that on input $A ∈\setZ^{m×n}$ and $b ∈\setZ^m$ decides
+% the feasibility of the system $Ax≤b$, in time $poly(n,m,\log B)$, where $B$ is an upper bound on each
+% absolute value of an entry of $A$ and $b$. 
+
+
+% Let the system $P = \{Ax ≤b\}$ be feasible where $P$ contains vertices. Let $c ∈\setZ^n$ such that $\max\{c^Tx : Ax ≤b\}< \infty$ and $\Vert c \Vert_\infty \leq B$. Using binary search, show that there exists a polynomial time (in $n,m$ and $\log B$) algorithm that on input $A,b,c$ determines the value of $\max\{c^Tx: Ax≤b\}$.
+
+
+% \begin{solution}
+% From the assumptions, there exists a vertex $x^*$ of $P$ such that $c^Tx^*= \max\{c^Tx: Ax≤b\}$.
+% We have that there is some invertible $A'$, submatrix of $A$, and a $b'$ subvector of $b$, such that
+% $x^*=  {A'}^{−1}b'$, hence $|x^\ast_i|= \sum_{j =1}^m \frac{|A'_{ij}|}{|\det(A')|}b'_j$ and using Hadamard's bound and the integrality of $A,b,c$, we get that 
+% $$|c^Tx^\ast|≤ mB^{n+2}n^{n/2+1}.$$
+
+% Moreover, from exercise 2, we have that for any non-optimal vertex $x$ of $P$,  $c^Tx^*−c^Tx≥1/L^2$, where
+% $L= B^n n^{n/2}$. Hence we need to find an interval $[α,β]$ such that $P' := P ∩\{x∈\setR^n : c^Tx≥α\}$ is feasible and $P'' := P ∩\{x∈\setR^n : c^Tx≥β\}$ is not feasible, and $β−α <1/L^2$. This will then give the value of the maximum. Checking feasibility of these two polytopes is then done in polynomial time in $n, m \log B$ by the assumption that there exists an algorithm that decides feasibility. To find the desired $α,β$, we perform binary search on the interval $[−mB^{n+2}n^{n/2+1},mB^{n+2}n^{n/2+1}]$, halving the size of the interval iteratively until the interval has small enough length (less than $1/L^2$). Formally, denote by $S_i$ the system $Ax ≤ b$, $c^Tx ≥ α_i$ and set $α_0 =−mB^{n+2}n^{n/2+1},β_0 = mB^{n+2}n^{n/2+1}$. At the i-th iteration, we know that $S_{i−1}$ is feasible and we ask to the oracle whether $S_i$ is feasible, with $α_i = α_{i−1} + (β_i−α_i)/2$. If it is feasible, we set $β_i = β_{i−1}$, otherwise we set $β_i = α_i,α_i = α_{i−1}$, and we move to the next iteration, until $β_i−α_i <1/L^2$. At this point, if the system $Ax≤b,c^Tx≥β_i$ is not feasible, we obtained our $α,β$, otherwise notice that we must have $β_i = β_0$ which implies that $\max\{c^Tx: Ax≤b\}= β_0$. The total number of iterations is at most $\log(L^2\cdot 2mB^{n+2}n^{n/2+1})$, for a total running time that is polynomial in $n, m$ and $\log B$.
+
+
+% \end{solution}
 
 
 
