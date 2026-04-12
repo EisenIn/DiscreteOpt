@@ -177,7 +177,8 @@
 \]
 where each $v_i \in \mathbb{R}^n$ represents a data point and $y_i \in \{+1,-1\}$ its label.
 
-We would like to learn a \emph{linear classifier}, i.e., a hyperplane $\{x \in \mathbb{R}^n : a^T x = b\}$ which separates the data and maximizes the \emph{margin}. Additionally, assume that $a$ lies in the $\ell_1$-unit ball, i.e., $\|a\|_1 \leq 1$.
+We would like to learn a \emph{linear classifier}, i.e., a hyperplane $\{x \in \mathbb{R}^n : a^T x = b\}$ which separates the data into two classes and maximizes the \emph{margin}, which is defined as $\min_{i=1,\ldots,m} |a^T v_i - b|$.
+Additionally, assume that $a$ lies in the $\ell_1$-unit ball, i.e., $\|a\|_1 \leq 1$.
 
 Formulate this learning problem as a linear program.
 
