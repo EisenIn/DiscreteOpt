@@ -581,6 +581,16 @@ e.g.~\cite[Theorem~4.4.1]{MarsdenHoffman93}.
 \end{theorem}
 
 
+
+\begin{figure}[htbp]
+  \begin{center}
+    %\resizebox{4cm}{4cm}{%
+    \includegraphics[width=7cm]{Ipe/separation.pdf}
+  %}
+  \end{center}
+  \caption{An illustration of the proof of Theorem~\ref{conv:thr:10}.}
+\end{figure}
+
 \begin{theorem}[Separation Theorem]
   \label{conv:thr:10}
   Let $K\subseteq\setR^n$ be a closed  convex set and $x^* \in \setR^n \setminus K$, then there
@@ -591,22 +601,33 @@ e.g.~\cite[Theorem~4.4.1]{MarsdenHoffman93}.
 \begin{proof}
   Since the mapping $f(x) = \|x^*-x\|$ is continuous and since for any
   $k \in K$, $K \cap \{ x \in K \colon \|x^* - x\|\leq \|x^* - k\|\}$ is
-  compact, there exists a point $k^* \in K$ with minimal distance to
-  $x^*$. Consider the midpoint $m = 1/2(k^*+x^*)$ on the line-segment
-  $\overline{k^*x^*}$   and the hyperplane $a^Tx = \beta$ with $\beta = a^Tm$ and $a =
-  (x^* - k^*)$.%  Clearly, $a^T x^* = \beta - 1/2 \|k^*-x^*\|^2$ and $a^T k^*
-  % = \beta +  1/2 \|k^*-x^*\|^2$.
+  compact, there exists a point $y^* \in K$ with minimal distance to
+  $x^*$. By Exercise~\ref{conv:it:9} we can translate $K$ to $K-y^*$ and $x^*$ to $x^* - y^*$ which justifies that we can assume without loss of generality that $y^*=0$ holds. 
 
-  Clearly $a^T x^* > β$ and $a^T k^* < β$. Suppose now that there exists a point $k' ∈ K$ with $a^T k' ≥ β$. Since the line segment spanned by $k^*$ and $k'$ is contained in $K$, we can assume that $a^T k' = β$ holds. This means that $k' = k^* + a/2 + x'$, where $x'$ is orthogonal to $a$. Again, by convexity $ k^* + λ(a/2 + x') ∈ K$ for $0≤λ≤1$. But the square of the distance of such a point to $x^*$ is 
+
+  Consider the hyperplane $a^Tx = \beta$ with $a = x^*$ and $\beta = 1/2 ⋅ \|x^*\|^2$.%  Clearly, $a^T x^* = \beta - 1/2 \|k^*-x^*\|^2$ and $a^T k^*
+  % = \beta +  1/2 \|k^*-x^*\|^2$.
+  Clearly $a^T x^* > β$. Suppose now that there exists a point $k ∈ K$ with $a^T k ≥ β$. By convexity of $K$,  the line segment spanned by $0$ and $k$ is contained in $K$, i.e.,   $λ k ∈ K $ for each $λ ∈ [0,1]$. The distance squared between $x^*$ and a point $λ ⋅ k$ is 
   \begin{eqnarray*}
-    \|x^* - k^* - λ(a/2 + x')\|^2 & = & \|(1-λ/2) a - λ x'\|^2 \\
-    & = & (1-λ/2)^2 \| a\|^2  + λ^2  \|x'\|^2 \\ 
+    g(λ) & = &  \| x^* - λ k \|^2  \\
+         & = &  \| x^*\|^2 - 2λ ⋅ k^T {x^*}  +   λ^2\| k \|^2
   \end{eqnarray*}
-  
-  As a function of $\lambda$, this is decreasing 
-  at $\lambda=0$. Thus there exists a point on the line segment between $k^*$ and $k'$ which is closer to $x^*$ than $k^*$ and this is a contradiction. 
+The derivative of this function is 
+   \begin{eqnarray*}
+    g'(λ)         & = &  - 2  k^T x^* +  2 λ \| k \|^2. 
+   \end{eqnarray*}
+   One has $g'(0) = - 2 k^T {x^*}  ≤ -2 β <0$. 
+  As a function of $\lambda$, $g(λ)$ is decreasing 
+  at $\lambda=0$. Thus there exists a point on the line segment between $0$ and $k$ which is closer to $x^*$ than $0$ and this is a contradiction. 
   \qed 
 \end{proof}
+
+
+
+\begin{definition}
+  \label{def:4}
+  A hyperplane $a^T x = β$ as in Theorem~\ref{conv:thr:10} is called a \emph{separating hyperplane} for $x^*$ and $K$. 
+\end{definition}
 
 
 \begin{theorem}[Farkas' lemma]
@@ -1043,6 +1064,9 @@ Show that there exists a valid inequality $c^Tx ≤ δ$ of $P$ with
 %    linearly independent. Use now exercise~\ref{conv:item:3}.}
 \item Find a countably infinite set $X\subset\setR^2$ such that $\cone(X)$ is not closed.
   Are there any cones that are open?
+
+\item Let $K ⊆ ℝ^n$ be a convex set and $x^*, y^* ∈ ℝ^n$. The hyperplane $a^Tx = β$ is a separating hyperplane for $x^*$ and $K$ if and only of the hyperplane
+  $a^Tx = β - a^T y^*$ is a separating hyperplane for the convex set $K - y^*$ and $x^* - y^*$. \label{conv:it:9} 
 \item Prove Theorem~\ref{conv:thr:8}. 
 \item Prove Theorem~\ref{conv:thr:9}. 
 \item Let $f: \setR^n \to \setR^d$ be a linear map. 
