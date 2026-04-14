@@ -125,9 +125,21 @@
 \begin{enumerate}[1)]
 
 
+\item Recall the following exercise from Problem Set~3:
+
+	Let $A \in \setR^{n\times n}$ be a non-singular matrix and let
+	$a_1,\ldots,a_n\in \setR^n$ be the columns of $A$.  Show that
+	$\cone(\{a_1,\ldots,a_n\})$ is the polyhedron $P = \{ y \in \setR^n \colon
+	A^{-1} y\geq0\}$. \label{conv:item:3} Show that $\cone(\{a_1,\ldots,a_k\})$ for
+	$k\leq n$ is the set $P_k = \{y \in \setR^n \colon
+	a_i^{-1} y\geq0, i=1,\ldots,k, \, a_i^{-1}y = 0, i=k+1,\ldots,n\}$, where
+	$a_i^{-1}$ denotes the $i$-th row of $A^{-1}$. 
+
+Prove that for a finite set $X\subseteq\setR^n$ the conic hull $\cone(X)$ is closed and convex, by using Carath\'eodory's theorem and the exercise above.
+
 
 \item Let $a, e, k ∈ \setN$ be three given natural numbers.
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Argue that $a^{2^k}$ can be computed using $Θ(k)$ multiplications.
 \item How many bits ($Θ$-notation) does $a^{2^k}$ have?
 \item Let $(e_0, \hdots, e_l)$ be the bit representation of $e$, that is, $e = \displaystyle\sum_{i= 0}^l e_i2^i$ with $e_i ∈ \{0, 1\}$ for $i= 0, \hdots, l$.
@@ -153,21 +165,34 @@ Fermat’s little theorem: $a^N ≡ a (\mod N)$.
 
 
 
-\item There are n types of animals, and you want to assign them to two stables. Unfortunately,
-some animals would eat other animals when left unattended. Therefore you need to assign
-the animals carefully. There are m relations of the form “u eats v“, where u and v are animals.
-Find an $O(n + m)$ algorithm that decides whether there is an assignment of animals to the
-two stables such that no animal eats another one of the same stable, and outputs a feasible
-assignment.\\
-\textit{Hint: Breadth-first-search might be useful.}
+% \item There are n types of animals, and you want to assign them to two stables. Unfortunately,
+% some animals would eat other animals when left unattended. Therefore you need to assign
+% the animals carefully. There are m relations of the form “u eats v“, where u and v are animals.
+% Find an $O(n + m)$ algorithm that decides whether there is an assignment of animals to the
+% two stables such that no animal eats another one of the same stable, and outputs a feasible
+% assignment.\\
+% \textit{Hint: Breadth-first-search might be useful.}
+
+\item (Euclidean algorithm) Let $a, b ∈ \setN$ be two natural numbers (not both zero). The greatest common divisor of $a$ and $b$, denoted by $\gcd(a, b)$, is the largest natural number that divides both $a$ and $b$. The Euclidean algorithm computes $\gcd(a, b)$ as follows.\\
+Input: $a, b ∈ \setN$ not both equal to zero \\
+Output: $\gcd(a, b)$\\
+\begin{align*}
+&\text{if}\;(b = 0):\\
+&\quad\text{return }a\\
+&\text{else}:\\
+& \quad \text{Find}\;q,r\in \N, \;\text{such that}\; a=qb + r\;\text{and}\;b>r\geq 0\\
+& \quad \text{return }\gcd(b, r)
+\end{align*}
+\begin{enumerate}[i)]
+\item Show that $r\leq a/2$ for each iteration.
+\item Show that the number of bit operations is at most $2\log_2(a)$.
+\end{enumerate}
 
 
+% \item Let $M_{2^k}$ be a matrix of order $n:= 2^k$, where $k∈\setN_{>0}$ such that it is recursively defined as follows:
+% $$M_{2^k} = \begin{pmatrix} M_{2^{k−1}} &  M_{2^{k−1}} \\ M_{2^{k−1}} & −M_{2^{k−1}} \end{pmatrix} $$
 
-\item Let $M_{2^k}$ be a matrix of order $n:= 2^k$, where $k∈\setN_{>0}$ such that it is recursively defined as follows:
-$$M_{2^k} = \begin{pmatrix} M_{2^{k−1}} &  M_{2^{k−1}} \\ M_{2^{k−1}} & −M_{2^{k−1}} \end{pmatrix} $$
-
-and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. that the Hadamard bound is tight.
-
+% and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. that the Hadamard bound is tight.
 
 
 
@@ -187,7 +212,7 @@ Output: $\det(A)$\\
 &\quad \text{return }d
 \end{align*}
 Let $A∈\setR^{n×n}$ and suppose that the $n^2$ components of $A$ are pairwise diﬀerent.
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first k rows and k of
 the columns of A. How many (recursive) calls of the form $\det(B)$ does the algorithm create?
 \item How many diﬀerent submatrices can be obtained from $A$ by deleting the first k rows and some
