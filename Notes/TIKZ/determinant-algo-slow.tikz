@@ -1,0 +1,27 @@
+
+\begin{tikzpicture}[
+  level distance=2cm,
+  level 1/.style={->, sibling distance=4cm},
+  level 2/.style={->, sibling distance=2cm},
+  every node/.style={align=center}
+]
+
+\node {$\left[\begin{array}{ccc} 3 & 7 & 5 \\ 2 & 9 & 8 \\ 1 & 3 & 3 \end{array}\right]$}
+child {
+  node {$\left[\begin{array}{cc} 3 & 8 \\ 3 & 3 \end{array}\right]$}
+  child { node {$[3]$} }
+  child { node {$[3]$} }
+}
+child {
+  node {$\left[\begin{array}{cc} 2 & 8 \\ 1 & 3 \end{array}\right]$}
+  child { node {$[3]$} }
+  child { node {$[4]$} }
+}
+child {
+  node {$\left[\begin{array}{cc} 2 & 9 \\ 1 & 3 \end{array}\right]$}
+  child { node {$[3]$} }
+  child { node {$[4]$} }
+};
+
+\end{tikzpicture}
+
