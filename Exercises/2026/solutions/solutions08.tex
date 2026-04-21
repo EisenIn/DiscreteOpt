@@ -154,8 +154,8 @@ First, by Carath\'eodory's theorem, for each $y \in \cone(X)$, there exists a li
 Since $X$ is finite, the union above is also finite. 
 
 Next, we show that for every such $\cone(\tilde{X})$ where $\tilde{X} \subseteq X, |\tilde{X}| \leq n$, and $\tilde{X}$ is linearly independent, $\cone(\tilde{X})$ is closed. 
-If $|\tilde{X}|=n$, then by Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
-If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By Exercise 5, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
+If $|\tilde{X}|=n$, then by the exercise, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: A^{-1}y\geq 0\}$ where the columns of $A$ are elements of $\tilde{X}$. Then for any convergent sequence $(y_n)$ in $\cone(\tilde{X})$ where $A^{-1}y_n \geq 0$ for each $n$. Let $y \in \mathbb{R}^n$ be the limit of $(y_n)$. Since $A^{-1}$ is continuous, $A^{-1}y_n \rightarrow A^{-1}y$, hence $A^{-1}y \geq 0$, i.e., $y \in \cone(\tilde{X})$.
+If $|\tilde{X}|=k\leq n$, then we first extend (in whatever way) $\tilde{X}$ to get $X^\prime$ which is of size $n$ and is linearly independent. Consider the matrix $A$ where the columns of $A$ are the elements of $X^\prime$. Note that the first $k$ columns of $A$ are elements of $\tilde{X}$. By the exercise, $\cone(\tilde{X}) = \{y\in \mathbb{R}^n: a_i^{-1}x \geq 0, i=1, \dots, k \;\text{and}\;a_i^{-1}x=0, i=k+1, \dots, n \}$. For any convergent sequence $(y_n)$ in $\cone(\tilde{X})$, by a similar argument as before, one can show that the limit $y$ of $(y_n)$ satisfies $a_i^{-1} y \geq 0$ for $i=1, \dots, k$ and $a_i^{-1} y = 0$ for $i=k+1, \dots, n$, i.e., $y \in \cone(\tilde{X})$. 
 
 Since the finite union of closed sets is closed, this completes our proof.
 
@@ -163,7 +163,7 @@ Since the finite union of closed sets is closed, this completes our proof.
 
 
 \item Let $a, e, k ∈ \setN$ be three given natural numbers.
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Argue that $a^{2^k}$ can be computed using $Θ(k)$ multiplications.
 \item How many bits ($Θ$-notation) does $a^{2^k}$ have?
 \item Let $(e_0, \hdots, e_l)$ be the bit representation of $e$, that is, $e = \displaystyle\sum_{i= 0}^l e_i2^i$ with $e_i ∈ \{0, 1\}$ for $i= 0, \hdots, l$.
@@ -187,7 +187,7 @@ Fermat’s little theorem: $a^N ≡ a (\mod N)$.
 
 
 \begin{solution}
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Start with $a(0) = a$, and compute $a(i) = a(i− 1)· a(i− 1)$ for $i ∈ [k]$. By induction
 $$a(k) = a^{2^{k−1}}· a^{2^{k−1}} = a^{2^k}.$$
 Thus, $a^{2^k}$ has been obtained by performing $k$ multiplications.
@@ -295,9 +295,9 @@ Output: $\gcd(a, b)$\\
 \end{enumerate}
 
 \begin{solution}
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Assume that $r > a/2$. Then we have $a = qb + r > qb + a/2$. Hence $qb < a/2$, and therefore $b < a/2$. This contradicts the fact that $b > r > a/2$.
-\item We show that the number of iterations is at most $2\log_2(a)$. Let $a_0 = a, b_0 = b$ and for each $i \in \mathbb{N}$, let $a_i = b_{i-1}$ and $b_i = r_{i-1}$ where $r_{i-1}$ is the remainder obtained in the $i$-th iteration. We have that $a_i = q_i b_i + r_i$ for some $q_i, r_i \in \mathbb{N}$ such that $b_i > r_i \geq 0$. By part (i), we have $r_i \leq a_i/2$. Hence $a_{i+1} = b_i \leq a_i/2$. We conclude that $a_i \leq a/2^i$. Hence if $i > 2\log_2(a)$, then $a_i < 1$, which is a contradiction since $a_i$ is a natural number. Therefore the number of iterations is at most $2\log_2(a)$, and the number of bit operations is at most $2\log_2(a)$ as well.
+\item For every two recursive calls, by i) the bit length of $a$ decrease by at least 1. Hence the number of recursive calls is at most $2\log_2(a)$. 
 \end{enumerate}
 \end{solution}
 
@@ -317,7 +317,7 @@ Output: $\det(A)$\\
 &\quad \text{return }d
 \end{align*}
 Let $A∈\setR^{n×n}$ and suppose that the $n^2$ components of $A$ are pairwise diﬀerent.
-\begin{enumerate}
+\begin{enumerate}[i)]
 \item Suppose that $B$ is a matrix that can be obtained from $A$ by deleting the first k rows and k of
 the columns of A. How many (recursive) calls of the form $\det(B)$ does the algorithm create?
 \item How many diﬀerent submatrices can be obtained from $A$ by deleting the first k rows and some
@@ -326,16 +326,18 @@ repeated subcalls.
 \end{enumerate}
 
 \begin{solution}
-a) Let $i_1,...,i_k$ be the indices of the columns of $A$ that were removed to obtain $B$. We have to
-count the number of nodes of the form $\det(B)$ in the recursion tree of the algorithm. Each node
-of the tree can be identified by its level (nodes of the form $\det(A_{ij})$ are at level i) and a sequence
-of column indices representing the columns of $A$ that are not columns of the submatrix called
-by the node. Hence the nodes of the form $\det(B)$ are at level $k$ of the tree, and their sequences
-are permutations of $i_1,...,i_k$ (note that there is only one submatrix of $A$ equal to $B$ since all
-the entries are pairwise diﬀerent). Hence there are $k!$ such nodes. \\
-b) The number of such submatrices is clearly $\binom{n}{k}$, which is exponential for instance for $k= n/2$, we have that:
-$$\binom{n}{n/2} = \frac{n \cdot \hdots (n/2 + 1)}{n/2 \cdot \hdots \cdot 1} \geq 2^{n/2}$$
-such that even if the algorithm calls $\det(B)$ only once for any submatrix $B$, the algorithm remains exponential.
+	\begin{enumerate}[i)]
+		\item Let $i_1,...,i_k$ be the indices of the columns of $A$ that were removed to obtain $B$. We have to
+		count the number of nodes of the form $\det(B)$ in the recursion tree of the algorithm. Each node
+		of the tree can be identified by its level (nodes of the form $\det(A_{ij})$ are at level i) and a sequence
+		of column indices representing the columns of $A$ that are not columns of the submatrix called
+		by the node. Hence the nodes of the form $\det(B)$ are at level $k$ of the tree, and their sequences
+		are permutations of $i_1,...,i_k$ (note that there is only one submatrix of $A$ equal to $B$ since all
+		the entries are pairwise diﬀerent). Hence there are $k!$ such nodes. 
+		\item The number of such submatrices is clearly $\binom{n}{k}$, which is exponential for instance for $k= n/2$, we have that:
+		$$\binom{n}{n/2} = \frac{n \cdot \hdots (n/2 + 1)}{n/2 \cdot \hdots \cdot 1} \geq 2^{n/2}$$
+		such that even if the algorithm calls $\det(B)$ only once for any submatrix $B$, the algorithm remains exponential.
+	\end{enumerate}
 \end{solution}
 
 \end{enumerate}
