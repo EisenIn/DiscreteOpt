@@ -134,59 +134,55 @@ and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. 
 
 
 
-\item In this exercise, a number  $a ∈ ℕ$ is represented as a string $s_k,s_{k-1},\dots,s_0$, $s_i ∈ \{0,1\}$. Access to the $i$-th bit $s_i$ takes one unit of time. 
+\item In this exercise, a number  $a ∈ ℕ$ is represented as a string $s_k,s_{k-1},\dots,s_0$ where $s_i ∈ \{0,1\}$. Access to the $i$-th bit $s_i$ takes one unit of time. 
 
-  Describe an algorithm that multiplies two $n$-bit natural numbers in time $O(n^2)$. You may assume that two $n$-bit integers can be added in time $O(n)$.  
+Describe an algorithm that multiplies two $n$-bit natural numbers in time $O(n^2)$. You may assume that two $n$-bit integers can be added in time $O(n)$.  
 
-\item Recall the \emph{sieve of Erathostenes}. This algorithms starts with listing the natural numbers from $2$ to $k$, 
+\item In this exercise we study the \emph{sieve of Erathostenes} which finds all prime numbers bounded by a given number $k$. This algorithm starts by listing the natural numbers from $2$ to $k$: 
   \begin{displaymath}
     L = 2,3,4, \cdots, k. 
   \end{displaymath}
   In the beginning, all numbers are colored green.
-
-  The algorithm now iterates the following step until there is no green number left.
+  Then iterates the following step until there is no green number left:
   \begin{quote}    
     While the list contains green numbers, color the smallest green number red and color all multiplies of this red number blue.
   \end{quote}
   At the end, the red numbers are exactly the prime numbers less than or equal to $k$.
 
-  \begin{enumerate}[a)] 
+  \begin{enumerate}[i)] 
   \item  Assuming that arithmetic operations on $n$-bit numbers can be performed in time $O(n)$, show that the sieve of Erathostenes runs in time $O(k^2 \log k)$.
-  \item Using the \emph{prime number theorem}, explain that the first $n$ prime numbers can be generated in time
-    \begin{displaymath}
-      O(n \log^2 n).  
-    \end{displaymath}
+  \item Using the \emph{prime number theorem}, explain that the first $n$ prime numbers can be generated in time $O(n \log^2 n)$.
   \end{enumerate}
- 
-\item { Testing ${\rank(A) = n}$}
 
-  \smallskip
-  \noindent 
-  Let $A ∈ ℤ^{n ×n}$ with $|a_{ij}| ≤ B$ where here, we assume $B ≥n$. In the lecture we have seen that Gaussian elimination operates on rational numbers or bitlength bounded by $O(n \log B)$. Assuming that arithmetic operations can be carried out in linear time, this amounts to a total running time of
-  \begin{displaymath}
-    O(n ^3 ⋅n  \log B) =  O(n ^4  \log B). 
-  \end{displaymath}
-We can therefore decide in this running time, whether $A$ is non-singular. 
+\item {Testing ${\rank(A) = n}$}
+
+\smallskip
+\noindent 
+Let $A ∈ ℤ^{n ×n}$ with $|a_{ij}| ≤ B$ where we assume $B ≥n$. In the lecture we have seen that Gaussian elimination operates on rational numbers of bit length bounded by $O(n \log B)$. Assuming that arithmetic operations can be carried out in linear time, this amounts to a total running time of
+\begin{displaymath}
+  O(n ^3 ⋅n  \log B) =  O(n ^4  \log B). 
+\end{displaymath}
+We can therefore decide in this running time, whether $A$ has full rank. 
 
 The goal of this exercise is to design a faster randomized algorithm that tests whether $\rank(A) =n$ holds. The running time of the algorithm is
- \begin{displaymath}
-     O(n ^3  \log B). 
-  \end{displaymath}
-  If $\rank(A) <n$, then the algorithm will detect this in any case.
-  If $\rank(A) =n$, the algorithm will err (assert $\rank(A) = n$) with probability at most $1/2$.  
-  
-  \begin{enumerate}
-  \item Assuming $B ≥n$, show that $|\det(A)| ≤ B^{2n}$.
-  \item If $\det(A) ≠0$, then at least half of the first $2 ⋅ (\log B) ⋅ 2n$ prime numbers do not divide $\det(A)$.
-  \item Assuming that choosing a random prime from the $2 ⋅ (\log B) ⋅ 2n$ prime numbers can be done in time $1$, describe a randomized test for $\det(A) =0$ that runs in the desired time. You can also assume that arithmetic operations in $ℤ_p$ can be done in time $\log p$. 
-  \end{enumerate}
+\begin{displaymath}
+    O(n ^3  \log B). 
+\end{displaymath}
+If $\rank(A) <n$, then the algorithm will detect this in any case.
+If $\rank(A) =n$, the algorithm will assert $\rank(A) = n$ with error probability at most $1/2$.  
 
+\begin{enumerate}[i)]
+\item Show that $|\det(A)| ≤ B^{2n}$.
+\item Show that if $\det(A) ≠0$ then at least half of the first $4n\log B$ prime numbers do not divide $\det(A)$.
+\item Assuming that choosing a random prime from the $4n\log B$ prime numbers can be done in time $1$.
+Describe a randomized test for $\det(A) =0$ that runs in the desired time. You can also assume that arithmetic operations in $ℤ_p$ can be done in time $\log p$. 
+\end{enumerate}
   
-\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
-0 ≤p_i ≤B, ∀\,i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
-oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
-$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
-$O(n \log(B))$ many oracle calls.
+% \item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+% 0 ≤p_i ≤B, ∀\,i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+% oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+% $S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+% $O(n \log(B))$ many oracle calls.
 
 % \item Sudoku is the following puzzle: Given a matrix
 %   \begin{displaymath}
