@@ -124,72 +124,88 @@
 
 \begin{enumerate}[1)]
 
-\item Sudoku is the following puzzle: Given a matrix
-  \begin{displaymath}
-    A ∈ \{1,\dots,9,X\}^{9 ×9} 
-  \end{displaymath}
-  the task is to replace each $X$ in $A$ by a number in $\{1,\dots,9\}$ such that the following holds.
-  \begin{enumerate}[a)] 
-  \item Each line of $A$ contains all numbers in  $\{1,\dots,9\}$
-  \item Each column of $A$ contains all numbers in  $\{1,\dots,9\}$
-  \item If $A$ is written as
-    \begin{displaymath}
-      A =
-      \begin{pmatrix}
-        B_{11} & B_{12} & B_{13} \\
-        B_{21} & B_{22} & B_{23} \\
-        B_{31} & B_{32} & B_{33} 
-      \end{pmatrix}
-    \end{displaymath}
-    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{1,\dots,9\}$.
+\item Show that the matrix $Q\in\setQ^{m\times m}$ that transforms $A\in\setQ^{m\times n}$ into $A'$ in the Gaussian algorithm via $Q \cdot A = A'$ has entries that are of polynomial size in the binary encoding length of $A$.
 
-    \bigskip \noindent
+\item Let $M_{2^k}$ be a matrix of order $n:= 2^k$, where $k∈\setN_{>0}$ such that it is recursively defined as follows:
+$$M_{2^k} = \begin{pmatrix} M_{2^{k−1}} &  M_{2^{k−1}} \\ M_{2^{k−1}} & −M_{2^{k−1}} \end{pmatrix} $$
 
-    In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
-    \begin{displaymath}
-      x_{i,j,k} =
-      \begin{cases}
-        1 & \text{ if } s_{i,j} = k \\
-        0 & \text{ otherwise.} 
-      \end{cases}
-    \end{displaymath}
-    where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
+and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. that the Hadamard bound is tight.
+
+\item Describe an algorithm that multiplies two $n$-bit integers in time $O(n^2)$. 
+You may use the algorithm to add two $n$-bit integers.
+
+\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+0 ≤p_i ≤B, ∀\,i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i ∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+$O(n \log(B))$ many oracle calls.
+
+% \item Sudoku is the following puzzle: Given a matrix
+%   \begin{displaymath}
+%     A ∈ \{1,\dots,9,X\}^{9 ×9} 
+%   \end{displaymath}
+%   the task is to replace each $X$ in $A$ by a number in $\{1,\dots,9\}$ such that the following holds.
+%   \begin{enumerate}[a)] 
+%   \item Each line of $A$ contains all numbers in  $\{1,\dots,9\}$
+%   \item Each column of $A$ contains all numbers in  $\{1,\dots,9\}$
+%   \item If $A$ is written as
+%     \begin{displaymath}
+%       A =
+%       \begin{pmatrix}
+%         B_{11} & B_{12} & B_{13} \\
+%         B_{21} & B_{22} & B_{23} \\
+%         B_{31} & B_{32} & B_{33} 
+%       \end{pmatrix}
+%     \end{displaymath}
+%     where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{1,\dots,9\}$.
+
+%     \bigskip \noindent
+
+%     In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
+%     \begin{displaymath}
+%       x_{i,j,k} =
+%       \begin{cases}
+%         1 & \text{ if } s_{i,j} = k \\
+%         0 & \text{ otherwise.} 
+%       \end{cases}
+%     \end{displaymath}
+%     where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
 
 
-    The following set of constraints guarantees that each cell of the solution contains a number
-    \begin{displaymath}
-      1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
-    \end{displaymath}
+%     The following set of constraints guarantees that each cell of the solution contains a number
+%     \begin{displaymath}
+%       1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
+%     \end{displaymath}
 
-    Write now constraints that guarantee the following.
-    \begin{itemize}
-    \item Each row must contain each number.
-    \item Each column must contain each number.
-    \item Each $B_{ij}$ must contain each number. 
-    \end{itemize}
+%     Write now constraints that guarantee the following.
+%     \begin{itemize}
+%     \item Each row must contain each number.
+%     \item Each column must contain each number.
+%     \item Each $B_{ij}$ must contain each number. 
+%     \end{itemize}
 
-    Describe the final integer programming problem that links some of the variables to the input Sudoku. 
+%     Describe the final integer programming problem that links some of the variables to the input Sudoku. 
     
-  \end{enumerate}
+%   \end{enumerate}
 
-\item Let $a, b ∈ℤ$ not both equal to zero. Describe an integer program with variables $x,y ∈ℤ$ whose optimal value is the greatest common divisor of $a$ and $b$ and with optimal solution $x,y ∈ℤ$ being the corresponding  Bézout-coefficients
-  \begin{displaymath}
-    \gcd(a,b) = x⋅a + y⋅b. 
-  \end{displaymath}
+% \item Let $a, b ∈ℤ$ not both equal to zero. Describe an integer program with variables $x,y ∈ℤ$ whose optimal value is the greatest common divisor of $a$ and $b$ and with optimal solution $x,y ∈ℤ$ being the corresponding  Bézout-coefficients
+%   \begin{displaymath}
+%     \gcd(a,b) = x⋅a + y⋅b. 
+%   \end{displaymath}
   
- \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
-  x_3 \leq 4, \, x\geq0\}$. Show that this polyhedron is
-  integral. 
+%  \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
+%   x_3 \leq 4, \, x\geq0\}$. Show that this polyhedron is
+%   integral. 
 
-\item \emph{(Clustering)} The following is a recurring problem in data science. Suppose we are given $m$ points $v_1,\dots,v_m ∈ ℝ^n$ and a number $k$. We want to identify a subset $S ⊆ \{v_1,\dots,v_m\}$ of size $k$ such that
-  \begin{displaymath}
-    ∑_{i=1}^m d(v_i, S)  \text{ is minimal.} 
-  \end{displaymath}
-  Here $d (v,S)$ is the euclidean distance of $v$ to $S$. 
-  Write an integer program that models this problem.
+% \item \emph{(Clustering)} The following is a recurring problem in data science. Suppose we are given $m$ points $v_1,\dots,v_m ∈ ℝ^n$ and a number $k$. We want to identify a subset $S ⊆ \{v_1,\dots,v_m\}$ of size $k$ such that
+%   \begin{displaymath}
+%     ∑_{i=1}^m d(v_i, S)  \text{ is minimal.} 
+%   \end{displaymath}
+%   Here $d (v,S)$ is the euclidean distance of $v$ to $S$. 
+%   Write an integer program that models this problem.
 
-  \item Show the following: A polyhedron $P \subseteq\setR^n$ with vertices is
-  integral, if and only if each vertex is integral. \label{i:item:3}
+%   \item Show the following: A polyhedron $P \subseteq\setR^n$ with vertices is
+%   integral, if and only if each vertex is integral. \label{i:item:3}
   
   
 \end{enumerate}
