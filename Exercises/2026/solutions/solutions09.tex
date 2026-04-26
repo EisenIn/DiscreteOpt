@@ -125,173 +125,341 @@
 
 \begin{enumerate}[1)]
 
+\item Show that the matrix $Q\in\setQ^{m\times m}$ that transforms $A\in\setQ^{m\times n}$ into $A'$ in the Gaussian algorithm via $Q \cdot A = A'$ has entries that are of polynomial size in the binary encoding length of $A$.
 
-\item Sudoku is the following puzzle: Given a matrix
+\begin{solution}
+The Gaussian elimination transforms $A \in \mathbb{Q}^{m \times n}$ into a row-echelon form $A'$ by a sequence of $k$ elementary row operations:
+\[
+Q = E_k E_{k-1} \cdots E_1,
+\]
+where each $E_i \in \mathbb{Q}^{m \times m}$ is an elementary matrix which represents one row operation.
+We prove by induction on $k$. The case $k=0$ is trivial.
+Assume that the statement holds for $k-1$ and prove it for $k$. Consider the $k$-th row operation represented by $E_k$. By the induction hypothesis, the entries of $Q^\prime=E_{k-1} \cdots E_1$ are of polynomial size in the binary encoding length of $A$. 
+The matrix $E_k$ is one of the three elementary row operations:
+\begin{enumerate}
+    \item Swapping two rows,
+    \item Multiplying a row by a nonzero scalar $\lambda \in \mathbb{Q}$,
+    \item Adding a scalar multiple $\lambda \in \mathbb{Q}$ of one row to another,
+\end{enumerate}
+so its entries are either $0$, $1$, or some $\lambda$ (for the second and third operations). 
+Since each $\lambda$ is derived from the entries of $Q^\prime$ as a ratio of two entries of $Q^\prime$, it is polynomial in the binary encoding length of $Q^\prime$, which is also polynomial in the binary encoding length of $A$ by the induction hypothesis.
+Therefore, the entries of each $Q=E_k Q^\prime$ are of polynomial size in the binary encoding length of $A$.
+\end{solution}
+
+\item Let $M_{2^k}$ be a matrix of order $n:= 2^k$, where $k∈\setN_{>0}$ such that it is recursively defined as follows:
+$$M_{2^k} = \begin{pmatrix} M_{2^{k−1}} &  M_{2^{k−1}} \\ M_{2^{k−1}} & −M_{2^{k−1}} \end{pmatrix} $$
+
+and $M_1 = [1]$, a $1 \times 1$ matrix. Prove that $|\det(M_n)|= n^{n/2}$, i.e. that the Hadamard bound is tight.
+
+\begin{solution}
+We prove the statement by induction on $k∈\setN_0$ that $M^2_{2^k} = 2^kI_{2^k}$. For $k= 0$ one has $M^2_0 = M_1 =[1] = 2^0I_{2^0}$. Assume that the statement holds for $k$ and prove it for $k+ 1$. Then 
+
+
+$$M^2_{2^{k+1}} = \begin{pmatrix} M_{2^{k}} &  M_{2^{k}} \\ M_{2^{k}} & −M_{2^{k}} \end{pmatrix} \begin{pmatrix} M_{2^{k}} &  M_{2^{k}} \\ M_{2^{k}} & −M_{2^{k}} \end{pmatrix} = \begin{pmatrix} 2M^2_{2^k} & 0  \\ 0 & 2M^2_{2^k} \end{pmatrix} = \begin{pmatrix} 2\cdot 2^k I_{2^k} & 0  \\ 0 & 2\cdot 2^k I_{2^k} \end{pmatrix} = 2^{k+1}I_{2^{k+1}}$$
+where we have used the induction hypothesis in the second to last equality.
+By using the statement above we have that $\det(M^2_n) = \det(n I_n) = n^n$ so $|\det(M_n)|= n^{n/2}.$
+\end{solution}
+
+
+\item In this exercise, a number $a ∈ ℕ$ is represented as a string $s_k,s_{k-1},\dots,s_0$ where $s_i ∈ \{0,1\}$. Access to the $i$-th bit $s_i$ takes one unit of time. 
+
+Describe an algorithm that multiplies two $n$-bit natural numbers in time $O(n^2)$. You may assume that two $n$-bit integers can be added in time $O(n)$.  
+
+\begin{solution}
+Consider any two natural numbers be $a$ and $b$ with string representation $s_{n-1},\dots,s_0$ and $t_{n-1},\dots,t_0$ respectively, where $s_i, t_i \in \{0,1\}$. 
+Compute their product $ab$ as follows:
+\begin{align*}
+ab = \left( \sum_{i=0}^{n-1} s_i 2^i \right) b = \sum_{i=0}^{n-1} s_i (2^i b).
+\end{align*}
+Note that $2^i b$ can be computed by left-shifting the binary representation of $b$ by $i$ positions.
+
+We then propose the following algorithm: initialize $R = 0$. For $i=0$ to $n-1$, if $s_i = 1$, add $2^i b$ to $R$. Finally return $R$.
+The running time is $O(n^2)$ since we have $n$ iterations and each iteration takes $O(n)$ time for the addition.
+\end{solution}
+
+\item In this exercise we study the \emph{sieve of Erathostenes} which finds all prime numbers bounded by a given number $k$. This algorithm starts by listing the natural numbers from $2$ to $k$: 
   \begin{displaymath}
-    A ∈ \{1,\dots,9,X\}^{9 ×9} 
+    L = 2,3,4, \cdots, k. 
   \end{displaymath}
-  the task is to replace each $X$ in $A$ by a number in $\{1,\dots,9\}$ such that the following holds.
-  \begin{enumerate}[a)] 
-  \item Each line of $A$ contains all numbers in  $\{1,\dots,9\}$
-  \item Each column of $A$ contains all numbers in  $\{1,\dots,9\}$
-  \item If $A$ is written as
-    \begin{displaymath}
-      A =
-      \begin{pmatrix}
-        B_{11} & B_{12} & B_{13} \\
-        B_{21} & B_{22} & B_{23} \\
-        B_{31} & B_{32} & B_{33} 
-      \end{pmatrix}
-    \end{displaymath}
-    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{1,\dots,9\}$.
+  In the beginning, all numbers are colored green.
+  Then iterates the following step until there is no green number left:
+  \begin{quote}    
+    While the list contains green numbers, color the smallest green number red and color all multiplies of this red number blue.
+  \end{quote}
+  At the end, the red numbers are exactly the prime numbers less than or equal to $k$.
 
-    \bigskip \noindent
-
-    In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
-    \begin{displaymath}
-      x_{i,j,k} =
-      \begin{cases}
-        1 & \text{ if } s_{i,j} = k \\
-        0 & \text{ otherwise.} 
-      \end{cases}
-    \end{displaymath}
-    where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
-
-
-    The following set of constraints guarantees that each cell of the solution contains a number
-    \begin{displaymath}
-      1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
-    \end{displaymath}
-
-    Write now constraints that guarantee the following.
-    \begin{itemize}
-    \item Each row must contain each number.
-    \item Each column must contain each number.
-    \item Each $B_{ij}$ must contain each number. 
-    \end{itemize}
-
-    Describe the final integer programming problem that links some of the variables to the input Sudoku. 
-    
+  \begin{enumerate}[i)] 
+  \item Assuming that arithmetic operations on $n$-bit numbers can be performed in time $O(n)$, show that the sieve of Erathostenes runs in time $O(k \log^2 k)$.
+  \item Using i) and the \emph{prime number theorem} which states that the $n$-th prime number is asymptotically equal to $n \log n$, show that the first $n$ prime numbers can be generated in time $O(n \log^3 n)$.
   \end{enumerate}
 
 \begin{solution}
-The condition that each row must contain each number, corresponds to the set of constraints
-\[
-\sum_{j=1}^9 x_{i,j,k} = 1,\quad \forall\, 1 \leq i,k \leq 9.
-\]
-The condition that each column must contain each number, corresponds to the set of constraints
-\[
-\sum_{i=1}^9 x_{i,j,k} = 1,\quad \forall\, 1 \leq j,k \leq 9.
-\]
-The condition that each $B_{ij}$ must contain each number, corresponds to the set of constraints
-\[
-\sum_{\alpha=0}^2 \sum_{\beta=0}^2 x_{i+\alpha,j+\beta,k} = 1,\quad \forall\, i,j=1,4,7,\; 1\leq k\leq 9.
-\]
-To get the final integer program, we only need the set of constraints which guarantees that the solution is compatible with the input, i.e., 
-\[
-x_{i,j,k} = 1,\quad \text{if in the input of Sudoku, the cell}\; (i,j) \;\text{is assigned the number} \; k
-\]
-and the integrality constraints
-\[
-x_{i,j,k} \in \{0,1\},\quad \forall\, 1 \leq i,j,k \leq 9.
-\]
-\end{solution}
+\begin{enumerate}[i)] 
+\item  For the $i$-th iteration, the number of operations is at most $\lfloor k/i \rfloor$. Each operation costs $O(\log k)$ by assumption.
+Hence, the total runtime of each iteration is $O\!\left(\frac{k}{i} \cdot \log k\right)$.
+Sum up over all iterations, we get
+\[\sum_{i=2}^k O\!\left(\frac{k}{i} \cdot \log k\right) = O\!\left(k \log k \sum_{i=2}^k \frac{1}{i}\right) = O(k \log^2 k).\]
+where we use the bound $\sum_{i=2}^k \frac{1}{i} = O(\log k)$.
 
-\item Let $a, b ∈ℤ$ not both equal to zero. Describe an integer program with variables $x,y ∈ℤ$ whose optimal value is the greatest common divisor of $a$ and $b$ and with optimal solution $x,y ∈ℤ$ being the corresponding  Bézout-coefficients
-  \begin{displaymath}
-    \gcd(a,b) = x⋅a + y⋅b. 
-  \end{displaymath}
-
-\begin{solution}
-Consider the following integer program:
+\item  
+Let $p_n$ denote the $n$-th prime number. By the \emph{prime number theorem}, we know that $p_n = \Theta(n \log n)$.
+To generate the first $n$ primes, it suffices to run the sieve of Erathostenes up to $k = p_n = \Theta(n \log n)$.
+Using the bound from i), the runtime is
 \begin{align*}
-  \min \quad & ax + by & \\
-  s.t. \quad
-  & x, y \in \mathbb{Z} \\
-  & ax + by \geq 1
+O\bigl(k \log^2 k\bigr) 
+&= O\bigl((n \log n) \log^2 (n \log n)\bigr) \\
+&= O\bigl(n \log n \cdot (\log n + \log \log n)^2\bigr) \\
+&= O\bigl(n \log n \cdot (\log^2 n + 2 \log n \log \log n + \log^2 \log n)\bigr) \\
+&= O\bigl(n \log^3 n + 2 n \log^2 n \log \log n + n \log n \log^2 \log n\bigr) \\
+&= O\bigl(n \log^3 n\bigr).
 \end{align*}
-We claim that the optimal solution to the integer program above is the greatest common divisor of $a$ and $b$. 
-Notice that the integer program is feasible since $a,b$ are not both equal to zero. Let $d$ be the optimal solution of the integer program, with optimal solution $x,y$. 
-It is easy to see that $\gcd(a,b) \mid d$. To show $d \mid \gcd(a,b)$, it suffices to show that $d\mid a$ and $d\mid b$. Suppose that $d\nmid a$. Then there exists $q,r \in \mathbb{Z}, 1\leq r < d$ such that $a=qd + r$. Therefore we have $r = a-qd = a-q(ax+by) = (1-qx)a+(-qy)b$, which contradicts the optimality of $d$. Similarly one can prove that $d\mid b$.
+\end{enumerate}
 \end{solution}
- 
+  
+\item {Testing ${\rank(A) = n}$}
 
- \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
-  x_3 \leq 4, \, x\geq0\}$. Show that this polyhedron is
-  integral. 
-
-\begin{solution}
-By the result of Exercise 5, it suffices to show that each vertex of $P$ is integral. 
-The system of constraints are
-\begin{align*}
-  x_1 + 2x_2 + 4x_3 &\leq 4, \\
-  x_1 &\geq 0, \\
-  x_2 &\geq 0, \\
-  x_3 &\geq 0. 
-\end{align*}
-Hence the 4 vertices of $P$ are $(0,0,0), (4,0,0), (0,2,0), (0,0,1)$.
-\end{solution}
-
-
-\item \emph{(Clustering)} 
-The following is a recurring problem in data science. Suppose we are given $m$ points $v_1,\dots,v_m ∈ ℝ^n$ and a number $k$. We want to identify a subset $S ⊆ \{v_1,\dots,v_m\}$ of size $k$ such that
+\smallskip
+\noindent 
+Let $A ∈ ℤ^{n ×n}$ with $|a_{ij}| ≤ B$ where we assume $B ≥n$. In the lecture we have seen that Gaussian elimination operates on rational numbers of bit length bounded by $O(n \log B)$. Assuming that arithmetic operations can be carried out in linear time, this amounts to a total running time of
 \begin{displaymath}
-  ∑_{i=1}^m d(v_i, S)  \text{ is minimal.} 
+  O(n ^3 ⋅n  \log B) =  O(n ^4  \log B). 
 \end{displaymath}
-Here $d (v,S)$ is the euclidean distance of $v$ to $S$. 
-Write an integer program that models this problem.
+We can therefore decide in this running time, whether $A$ has full rank. 
+
+The goal of this exercise is to design a faster randomized algorithm that tests whether $\rank(A) =n$ holds. The running time of the algorithm is
+\begin{displaymath}
+    O(n ^3  \log B). 
+\end{displaymath}
+If $\rank(A) <n$, then the algorithm will detect this in any case.
+If $\rank(A) =n$, the algorithm will assert $\rank(A) = n$ with error probability at most $1/2$.  
+
+\begin{enumerate}[i)]
+\item Show that $|\det(A)| ≤ B^{2n}$.
+\item Show that if $\det(A) ≠0$ then at least half of the first $4n\log B$ prime numbers do not divide $\det(A)$.
+\item Assuming that choosing a random prime from the $4n\log B$ prime numbers can be done in time $1$.
+Describe a randomized test for $\det(A) =0$ that runs in the desired time. You can also assume that arithmetic operations in $ℤ_p$ can be done in time $\log p$. 
+\end{enumerate}
 
 \begin{solution}
-We assume that all the pairwise Euclidean distance $d_{i,j}$ between any points $v_i, v_j, 1\leq i,j\leq m$ have been pre-computed.
-Let $y_j$ be the decision variable indicating whether the point $v_j$ is chosen to be in $S$. 
-Let $x_{i,j}$ to be the variable indicating whether the point $v_j$ is the closest point to $v_i$ in $S$. 
-Consider the following integer program, which models the clustering problem:
-\begin{align*}
-  \min \quad & \sum_{i=1}^m \sum_{j=1}^m d_{i,j} x_{i,j} & \\
-  s.t. \quad
-  & \sum_{j=1}^m x_{i,j} = 1, \quad \forall\, 1\leq i\leq m \\
-  & x_{i,j} \leq y_j, \quad \forall\, 1\leq i,j\leq m \\
-  & \sum_{j=1}^m y_j = k, \\
-  & x_{i,j}, y_j \in \{0,1\}, \quad \forall\, 1\leq i,j\leq m 
-\end{align*}
-\end{solution}
+\begin{enumerate}[i)]
 
+\item 
+By the Leibniz formula for the determinant, we have
+\[
+\det(A) = \sum_{\pi \in S_n} \mathrm{sgn}(\pi)\prod_{i=1}^n a_{i,\pi(i)},
+\]
+where each term satisfies
+\[
+\left|\prod_{i=1}^n a_{i,\pi(i)}\right| \le B^n.
+\]
+Since there are $n!$ permutations, we obtain $|\det(A)| \le n! \cdot B^n$.
+Note that $n! \le n^n \le B^n$ (since $B \ge n$), we finally get
+\[
+|\det(A)| \le B^n \cdot B^n = B^{2n}.
+\]
 
-\item Show the following: A polyhedron $P \subseteq\setR^n$ with vertices is
-integral, if and only if each vertex is integral. \label{i:item:3}
+\item 
+Assume that $\det(A) \neq 0$. Then $\det(A)$ has at most $\log (|\det(A)|)$ distinct prime divisors. Using i), we have
+\[
+\log(|\det(A)|) \le \log (B^{2n}) = 2n \log B.
+\]
 
-\begin{solution}
-The ``only if'' part is easy since each vertex is itself a face of $P$. 
-To show the ``if'' part, assume that each vertex of $P$ is integral. Let $P= \{x\in \mathbb{R}^n: Ax\leq b\}$.
-Consider any nonempty face $F$ of $P$, which is of the form $F = P\cap \{x\in\mathbb{R}^n: c^T x = \beta\}$ where $c^T x \leq \beta$ is valid for $P$.
+For the first $4n \log B$ prime numbers, since at most $2n \log B$ of them divide $\det(A)$, at least half of them do not divide $\det(A)$.
 
+\item 
+Consider the following algorithm:
+\begin{enumerate}[(1)]
+\item Choose uniformly at random a prime $p$ among the first $4n \log B$ prime numbers.
+\item Compute $\det(A) \bmod p$ by performing Gaussian elimination over $\mathbb{Z}_p$.
+\item If $\det(A) \equiv 0 \pmod p$, output ``$\det(A)=0$''; otherwise output ``$\det(A)\neq 0$''.
+\end{enumerate}
+
+\textbf{Correctness:}
 \begin{itemize}
-  \item A proof for $P$ being a \textbf{bounded} polyhedron: If $P = \conv(\text{Ver}(P))$ where $\text{Ver}(P)$ is the set of all vertices of $P$, then we take any $x \in F$ which can be written as $x = \sum_{i=1}^k \alpha_i v_i$ where $v_i$ is a vertex of $P$ and $\alpha_i>0, \sum_{i=1}^k \alpha_i =1$.
-  We claim that each $v_i$ in the expression above, which is integral by assumption, is in the face $F$. Indeed, we have
-  \[
-  \beta = c^T x = c^T \left( \sum_{i=1}^k \alpha_i v_i \right) = \sum_{i=1}^k \alpha_i (c^T v_i) \leq \sum_{i=1}^k \alpha_i \beta = \beta,
-  \]
-  which implies that every inequalities inside are in fact equalities. Thus for each $i$ we have $c^T v_i = \beta$, hence $v_i \in F$.
-  \item A proof for general polyhedron $P$: If $P$ has vertices, then $\rank(A)=n$. Thus for the face $F$ which is itself a polyhedron characterized by $Ax\leq b, c^T x\leq\beta, -c^T x\leq -\beta$, its constraint matrix has rank $n$, which means that $F$ also contains a vertex. 
-  We just need to show that a vertex of $F$ is also a vertex of $P$. To prove this, we first claim that there exists $u \in \mathbb{R}^m, u\geq 0$ such that $u^T A = c^T$ and $u^T b = \beta$. Indeed, consider the following pair of primal and dual linear programs:
-  \begin{displaymath}
-    \begin{array}[t]{c}
-      \max c^Tx \\
-           Ax ≤ b
-    \end{array} \quad \text{ and }\quad
-    \begin{array}[t]{c}
-      \min b^Ty \\
-      y^T A = c^T\\
-      y ≥ 0      
-    \end{array} 
-  \end{displaymath}
-  Since $c^T x \leq \beta$ is valid for $P$, we know that $P$ is bounded. Also $P$ is feasible since it has vertices. The optimal value of the primal problem is $\beta$, since the face $F$ is nonempty. 
-  Then by the strong duality theorem, the dual problem has an optimal solution, say $u \in \mathbb{R}^m, u\geq 0$ with $u^T A = c^T$, such that the value is also $\beta$, i.e., $u^T b=\beta$.
-  Then we have $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ where $A^\prime x\leq b^\prime$ is a sub-system of $Ax\leq b$ by taking the constraint $a_i^Tx \leq b_i$ of $Ax\leq b$ if and only if $u_i > 0$.
-  The fact $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ implies that vertices of $F$ are also vertices of $P$.
+\item If $\det(A)=0$, then $\det(A) \equiv 0 \pmod p$ for all primes $p$, so the algorithm always correctly reports rank $< n$.
+\item If $\det(A)\neq 0$, then at least half of the chosen primes do not divide $\det(A)$. For such primes, $\det(A) \not\equiv 0 \pmod p$, so the algorithm correctly reports full rank. Thus, the error probability is at most $1/2$.
 \end{itemize}
 
+\textbf{Runtime:}
+
+Gaussian elimination over $\mathbb{Z}_p$ requires $O(n^3)$ arithmetic operations. Each operation in $\mathbb{Z}_p$ takes $O(\log p)$ time, and since $p$ is among the first $O(n \log B)$ primes, we have 
+\[
+\log p = O(\log (n \log B)) = O(\log n + \log \log B).
+\]
+Therefore, the total runtime is
+\[
+O(n^3 (\log n + \log \log B)) = O(n^3 \log B).
+\]
+
+\end{enumerate}
 \end{solution}
+
+% \item Sudoku is the following puzzle: Given a matrix
+%   \begin{displaymath}
+%     A ∈ \{1,\dots,9,X\}^{9 ×9} 
+%   \end{displaymath}
+%   the task is to replace each $X$ in $A$ by a number in $\{1,\dots,9\}$ such that the following holds.
+%   \begin{enumerate}[a)] 
+%   \item Each line of $A$ contains all numbers in  $\{1,\dots,9\}$
+%   \item Each column of $A$ contains all numbers in  $\{1,\dots,9\}$
+%   \item If $A$ is written as
+%     \begin{displaymath}
+%       A =
+%       \begin{pmatrix}
+%         B_{11} & B_{12} & B_{13} \\
+%         B_{21} & B_{22} & B_{23} \\
+%         B_{31} & B_{32} & B_{33} 
+%       \end{pmatrix}
+%     \end{displaymath}
+%     where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{1,\dots,9\}$.
+
+%     \bigskip \noindent
+
+%     In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
+%     \begin{displaymath}
+%       x_{i,j,k} =
+%       \begin{cases}
+%         1 & \text{ if } s_{i,j} = k \\
+%         0 & \text{ otherwise.} 
+%       \end{cases}
+%     \end{displaymath}
+%     where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
+
+
+%     The following set of constraints guarantees that each cell of the solution contains a number
+%     \begin{displaymath}
+%       1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
+%     \end{displaymath}
+
+%     Write now constraints that guarantee the following.
+%     \begin{itemize}
+%     \item Each row must contain each number.
+%     \item Each column must contain each number.
+%     \item Each $B_{ij}$ must contain each number. 
+%     \end{itemize}
+
+%     Describe the final integer programming problem that links some of the variables to the input Sudoku. 
+    
+%   \end{enumerate}
+
+% \begin{solution}
+% The condition that each row must contain each number, corresponds to the set of constraints
+% \[
+% \sum_{j=1}^9 x_{i,j,k} = 1,\quad \forall\, 1 \leq i,k \leq 9.
+% \]
+% The condition that each column must contain each number, corresponds to the set of constraints
+% \[
+% \sum_{i=1}^9 x_{i,j,k} = 1,\quad \forall\, 1 \leq j,k \leq 9.
+% \]
+% The condition that each $B_{ij}$ must contain each number, corresponds to the set of constraints
+% \[
+% \sum_{\alpha=0}^2 \sum_{\beta=0}^2 x_{i+\alpha,j+\beta,k} = 1,\quad \forall\, i,j=1,4,7,\; 1\leq k\leq 9.
+% \]
+% To get the final integer program, we only need the set of constraints which guarantees that the solution is compatible with the input, i.e., 
+% \[
+% x_{i,j,k} = 1,\quad \text{if in the input of Sudoku, the cell}\; (i,j) \;\text{is assigned the number} \; k
+% \]
+% and the integrality constraints
+% \[
+% x_{i,j,k} \in \{0,1\},\quad \forall\, 1 \leq i,j,k \leq 9.
+% \]
+% \end{solution}
+
+% \item Let $a, b ∈ℤ$ not both equal to zero. Describe an integer program with variables $x,y ∈ℤ$ whose optimal value is the greatest common divisor of $a$ and $b$ and with optimal solution $x,y ∈ℤ$ being the corresponding  Bézout-coefficients
+%   \begin{displaymath}
+%     \gcd(a,b) = x⋅a + y⋅b. 
+%   \end{displaymath}
+
+% \begin{solution}
+% Consider the following integer program:
+% \begin{align*}
+%   \min \quad & ax + by & \\
+%   s.t. \quad
+%   & x, y \in \mathbb{Z} \\
+%   & ax + by \geq 1
+% \end{align*}
+% We claim that the optimal solution to the integer program above is the greatest common divisor of $a$ and $b$. 
+% Notice that the integer program is feasible since $a,b$ are not both equal to zero. Let $d$ be the optimal solution of the integer program, with optimal solution $x,y$. 
+% It is easy to see that $\gcd(a,b) \mid d$. To show $d \mid \gcd(a,b)$, it suffices to show that $d\mid a$ and $d\mid b$. Suppose that $d\nmid a$. Then there exists $q,r \in \mathbb{Z}, 1\leq r < d$ such that $a=qd + r$. Therefore we have $r = a-qd = a-q(ax+by) = (1-qx)a+(-qy)b$, which contradicts the optimality of $d$. Similarly one can prove that $d\mid b$.
+% \end{solution}
+ 
+
+%  \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
+%   x_3 \leq 4, \, x\geq0\}$. Show that this polyhedron is
+%   integral. 
+
+% \begin{solution}
+% By the result of Exercise 5, it suffices to show that each vertex of $P$ is integral. 
+% The system of constraints are
+% \begin{align*}
+%   x_1 + 2x_2 + 4x_3 &\leq 4, \\
+%   x_1 &\geq 0, \\
+%   x_2 &\geq 0, \\
+%   x_3 &\geq 0. 
+% \end{align*}
+% Hence the 4 vertices of $P$ are $(0,0,0), (4,0,0), (0,2,0), (0,0,1)$.
+% \end{solution}
+
+
+% \item \emph{(Clustering)} 
+% The following is a recurring problem in data science. Suppose we are given $m$ points $v_1,\dots,v_m ∈ ℝ^n$ and a number $k$. We want to identify a subset $S ⊆ \{v_1,\dots,v_m\}$ of size $k$ such that
+% \begin{displaymath}
+%   ∑_{i=1}^m d(v_i, S)  \text{ is minimal.} 
+% \end{displaymath}
+% Here $d (v,S)$ is the euclidean distance of $v$ to $S$. 
+% Write an integer program that models this problem.
+
+% \begin{solution}
+% We assume that all the pairwise Euclidean distance $d_{i,j}$ between any points $v_i, v_j, 1\leq i,j\leq m$ have been pre-computed.
+% Let $y_j$ be the decision variable indicating whether the point $v_j$ is chosen to be in $S$. 
+% Let $x_{i,j}$ to be the variable indicating whether the point $v_j$ is the closest point to $v_i$ in $S$. 
+% Consider the following integer program, which models the clustering problem:
+% \begin{align*}
+%   \min \quad & \sum_{i=1}^m \sum_{j=1}^m d_{i,j} x_{i,j} & \\
+%   s.t. \quad
+%   & \sum_{j=1}^m x_{i,j} = 1, \quad \forall\, 1\leq i\leq m \\
+%   & x_{i,j} \leq y_j, \quad \forall\, 1\leq i,j\leq m \\
+%   & \sum_{j=1}^m y_j = k, \\
+%   & x_{i,j}, y_j \in \{0,1\}, \quad \forall\, 1\leq i,j\leq m 
+% \end{align*}
+% \end{solution}
+
+
+% \item Show the following: A polyhedron $P \subseteq\setR^n$ with vertices is
+% integral, if and only if each vertex is integral. \label{i:item:3}
+
+% \begin{solution}
+% The ``only if'' part is easy since each vertex is itself a face of $P$. 
+% To show the ``if'' part, assume that each vertex of $P$ is integral. Let $P= \{x\in \mathbb{R}^n: Ax\leq b\}$.
+% Consider any nonempty face $F$ of $P$, which is of the form $F = P\cap \{x\in\mathbb{R}^n: c^T x = \beta\}$ where $c^T x \leq \beta$ is valid for $P$.
+
+% \begin{itemize}
+%   \item A proof for $P$ being a \textbf{bounded} polyhedron: If $P = \conv(\text{Ver}(P))$ where $\text{Ver}(P)$ is the set of all vertices of $P$, then we take any $x \in F$ which can be written as $x = \sum_{i=1}^k \alpha_i v_i$ where $v_i$ is a vertex of $P$ and $\alpha_i>0, \sum_{i=1}^k \alpha_i =1$.
+%   We claim that each $v_i$ in the expression above, which is integral by assumption, is in the face $F$. Indeed, we have
+%   \[
+%   \beta = c^T x = c^T \left( \sum_{i=1}^k \alpha_i v_i \right) = \sum_{i=1}^k \alpha_i (c^T v_i) \leq \sum_{i=1}^k \alpha_i \beta = \beta,
+%   \]
+%   which implies that every inequalities inside are in fact equalities. Thus for each $i$ we have $c^T v_i = \beta$, hence $v_i \in F$.
+%   \item A proof for general polyhedron $P$: If $P$ has vertices, then $\rank(A)=n$. Thus for the face $F$ which is itself a polyhedron characterized by $Ax\leq b, c^T x\leq\beta, -c^T x\leq -\beta$, its constraint matrix has rank $n$, which means that $F$ also contains a vertex. 
+%   We just need to show that a vertex of $F$ is also a vertex of $P$. To prove this, we first claim that there exists $u \in \mathbb{R}^m, u\geq 0$ such that $u^T A = c^T$ and $u^T b = \beta$. Indeed, consider the following pair of primal and dual linear programs:
+%   \begin{displaymath}
+%     \begin{array}[t]{c}
+%       \max c^Tx \\
+%            Ax ≤ b
+%     \end{array} \quad \text{ and }\quad
+%     \begin{array}[t]{c}
+%       \min b^Ty \\
+%       y^T A = c^T\\
+%       y ≥ 0      
+%     \end{array} 
+%   \end{displaymath}
+%   Since $c^T x \leq \beta$ is valid for $P$, we know that $P$ is bounded. Also $P$ is feasible since it has vertices. The optimal value of the primal problem is $\beta$, since the face $F$ is nonempty. 
+%   Then by the strong duality theorem, the dual problem has an optimal solution, say $u \in \mathbb{R}^m, u\geq 0$ with $u^T A = c^T$, such that the value is also $\beta$, i.e., $u^T b=\beta$.
+%   Then we have $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ where $A^\prime x\leq b^\prime$ is a sub-system of $Ax\leq b$ by taking the constraint $a_i^Tx \leq b_i$ of $Ax\leq b$ if and only if $u_i > 0$.
+%   The fact $F = P \cap \{x\in \mathbb{R}^n: A^\prime x = b^\prime\}$ implies that vertices of $F$ are also vertices of $P$.
+% \end{itemize}
+
+% \end{solution}
   
 \end{enumerate}
 
