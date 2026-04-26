@@ -115,7 +115,7 @@ The input of this algorithm is a list of characters. Let us say that the list ha
 \begin{definition}
   \label{def:2}
   The \emph{size} of an integer $x$
-  is $\size(x) = \lceil\log( |x| +1)\rceil$
+  is $\size(x) = \max\{1, \lceil\log( |x| +1)\rceil\}$
   and for $x \in \setQ$,
   $\size(x) = \size(p)+\size(q)$,
   where $x = p/q$ with $p,q \in \setZ$, $q\geq1$ and $\gcd(p,q)=1$.   
@@ -370,7 +370,7 @@ where $U ∈ ℚ^{i ×i}$ is upper triangular and non-singular and $D ∈ ℚ^{(
 
 
   Consider an element $d_{k,j}$ of $D$ and  define the index sets
-  $K = \{1,\dots,i\} ∪\{i+ k\}$ and $J = \{1,\dots,i\} + ∪ \{i+ j\}$ and the matrix
+  $K = \{1,\dots,i\} ∪\{i+ k\}$ and $J = \{1,\dots,i\}  ∪ \{i+ j\}$ and the matrix
   $A_{KJ}$ as the one induced from $A$ by the rows and columns indexed
   by $K$ and $J$ respectively. A crucial observation is that
   \begin{displaymath}
