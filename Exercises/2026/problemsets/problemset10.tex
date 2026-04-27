@@ -154,6 +154,29 @@ Show that this recursion has the solution $T(n) = Θ(n^3)$.
 	\item Conclude that two $n$-bit numbers can be computed in time $O(n\log_2 3)$.
 \end{enumerate}
 
+\item Matrix multiplication can be reduced to matrix inversion. Let $K$ be a field and $A,B ∈ K^{n × n}$.
+  \begin{enumerate}[i)]
+  \item 
+  Let $D ∈ K^{3n ×3n}$ be the invertible  matrix
+  \begin{displaymath}
+    D =
+    \begin{pmatrix}
+      I & A & 0 \\
+      0 & I & B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+  Show that
+  \begin{displaymath}
+    D^{-1}  =
+    \begin{pmatrix}
+      I & -A & AB \\
+      0 & I & -B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+\item If one can invert an $n×n$ matrix with $T(n)$ field operations, where $T(n) ≥ n^2$, then one can multiply two $n×n$ matrices with  $O(T(n))$ field operations. 
+\end{enumerate}
 
 \end{enumerate}
   
