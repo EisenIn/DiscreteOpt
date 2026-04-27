@@ -548,8 +548,8 @@ again with $O(n^2)$ arithmetic operations.
 We now show how to perform an efficient \emph{randomized test}. Suppose that you can draw a vector $v ∈ \{0,1\}^n$  i.i.d. at random in time $O(n)$. The idea is then to compute the product $B ⋅v$ and then the product $A ⋅ (B ⋅v)$ and afterwards $C ⋅ v$, all in time $O(n^2)$. Show the following. 
 
 \begin{enumerate}
-\item If $A⋅B \neq C$, then $P(A ⋅ (B ⋅v) = C⋅v) ≤1/2$. 
-\item Let $v_1,\dots,v_k∈ \{0,1\}^n$ be i.i.d. at random and suppose that  $A⋅B \neq C$. The probability of the event: $A ⋅ (B ⋅v_i) = C⋅v_i$ for each $i=1,\dots,k$ is bounded by $1/2^k$. 
+\item If $A⋅B \neq C$, then $P(A ⋅ B ⋅v = C⋅v) ≤1/2$. 
+\item Let $v_1,\dots,v_k∈ \{0,1\}^n$ be i.i.d. at random and suppose that  $A⋅B \neq C$. The probability of the event: $A ⋅ B ⋅v_i = C⋅v_i$ for each $i=1,\dots,k$ is bounded by $1/2^k$. 
 \item Conclude that there is an algorithm that runs in time $O(k⋅n^2)$ which tests whether $A⋅B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$. 
 \end{enumerate}
 \item Show that the recursion \eqref{eq:stra:4} has the solution $T(n) = Θ (n^3)$.  \label{item:str:4}
@@ -566,26 +566,47 @@ We now show how to perform an efficient \emph{randomized test}. Suppose that you
     elementary bit operations.
   \end{enumerate}
 
-% \item Gaussian elimination in $Q(x)$. Suppose that $A ∈ ℤ[x]^{m ×n}$ is given, i.e. component $ij$ is a polynomial $f_{ij} (x) ∈ℤ[x]$. We will analyse the complexity of Gaussian elimination on this matrix. For simplicity, we assume that no swapping of rows and columns is necessary and stage $k$ of Gaussian elimination has resulted in a the transformation of $A$ as
-%   \begin{displaymath}
-%     \begin{pmatrix}
-%       R & C \\
-%       0 & D
-%     \end{pmatrix},
-%   \end{displaymath}
-%   where $R ∈ℚ(x)^{ k ×k}$ is upper triangular and non-singular and $D ∈ ℚ(x)^{ {(n-k) ×(m-k)}$ is the part that still needs to be further eliminated. 
-%   \begin{enumerate}
-%   \item Show that the element $d_{ij}$ can be written as
-%     \begin{displaymath}
-%       d_{ij} = \det(A_{I,J}) / \det{A_k}.
-%     \end{displaymath}
-%     Here $I = \{1,\dots,k\} +i$ and $J = \{1,\dots,k\} +k$ and $A_{I,J}$ is the submatrix of $A$ induced by the rows/columns  indexed by $I$ and $J$ respectively and $A_k$ is the $k$-th principal minor of $A$.
+ % \item Gaussian elimination in $Q(x)$. Suppose that $A ∈ ℤ[x]^{m ×n}$ is given, i.e. component $ij$ is a polynomial $f_{ij} (x) ∈ℤ[x]$. We will analyse the complexity of Gaussian elimination on this matrix. For simplicity, we assume that no swapping of rows and columns is necessary and stage $k$ of Gaussian elimination has resulted in a the transformation of $A$ as
+ %  \begin{displaymath}
+ %    \begin{pmatrix}
+ %      R & C \\
+ %      0 & D
+ %    \end{pmatrix},
+ %  \end{displaymath}
+ %  where $R ∈ℚ(x)^{ k ×k}$ is upper triangular and non-singular and $D ∈ ℚ(x)^ {(n-k) ×(m-k)}$ is the part that still needs to be further eliminated. 
+ %  \begin{enumerate}
+ %  \item Show that the element $d_{ij}$ can be written as
+ %    \begin{displaymath}
+ %      d_{ij} = \det(A_{I,J}) / \det{A_k}.
+ %    \end{displaymath}
+ %    Here $I = \{1,\dots,k\} +i$ and $J = \{1,\dots,k\} +k$ and $A_{I,J}$ is the submatrix of $A$ induced by the rows/columns  indexed by $I$ and $J$ respectively and $A_k$ is the $k$-th principal minor of $A$.
 
-%   \item Let $D'$ result  from $D$ by pivoting with $d_{11}$, i.e. $d'_{ij} = d_{ij} - (d_{i1}/d_{11} ) d_{1j}$ 
-%   \end{enumerate}
+ %  \item Let $D'$ result  from $D$ by pivoting with $d_{11}$, i.e. $d'_{ij} = d_{ij} - (d_{i1}/d_{11} ) d_{1j}$ 
+ %  \end{enumerate}
 
-
-
+\item Matrix multiplication can be reduced to matrix inversion. Let $K$ be a field and $A,B ∈ K^{n × n}$.
+  \begin{enumerate}[a)]
+  \item 
+  Let $D ∈ K^{3n ×3n}$ be the invertible  matrix
+  \begin{displaymath}
+    D =
+    \begin{pmatrix}
+      I & A & 0 \\
+      0 & I & B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+  Show that
+  \begin{displaymath}
+    D^{-1}  =
+    \begin{pmatrix}
+      I & -A & AB \\
+      0 & I & -B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+\item If one can invert an $n×n$ matrix with $T(n)$ field operations, where $T(n) ≥ n^2$, then one can multiply two $n×n$ matrices with  $O(T(n))$ field operations. 
+\end{enumerate}
 \end{enumerate}
 
 %%% Local Variables:
