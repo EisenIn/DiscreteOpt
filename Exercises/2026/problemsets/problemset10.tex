@@ -127,14 +127,15 @@
 \item Suppose we are given three $n \times n$ matrices $A, B, C ∈ Z n\times n$ and we want to test whether $A \cdot B = C$ holds. 
 We could multiply $A$ and $B$ and then compare the result with $C$. This would amount to running time (number of arithmetic operations) of $O(n^3)$ with the standard matrix-multiplication algorithm. We now show how to perform an efficient randomized test. Suppose that you can draw a vector $v \in \{0, 1\}^n$ i.i.d. at random in time $O(n)$. The idea is then to compute the product $B \cdot v$ and then the product $A \cdot (B \cdot v)$ and afterwards $C \cdot v$, all in time $O(n^2)$. Show the following:
 \begin{enumerate}[i)]
-\item If $A \cdot B \neq C$, then $\Pr(A \cdot (B \cdot v) = C \cdot v) \leq 1/2$.
+	\item If $A \cdot B \neq C$, then $\Pr(A \cdot (B \cdot v) = C \cdot v) \leq 1/2$.
 
-\item Let $v_1, \ldots, v_k \in \{0, 1\}^n$ be i.i.d. at random and suppose that $A \cdot B = C$.
+	\item Let $v_1, \ldots, v_k \in \{0, 1\}^n$ be i.i.d. at random and suppose that $A \cdot B = C$.
 
-The probability $k$ of the event: $A \cdot (B \cdot v_i) = C \cdot v_i$ for each $i = 1, \ldots, k$ is bounded by $1/2$.
+	The probability $k$ of the event: $A \cdot (B \cdot v_i) = C \cdot v_i$ for each $i = 1, \ldots, k$ is bounded by $1/2$.
 
-\item Conclude that there is an algorithm that runs in time $O(k \cdot n^2)$ which tests whether $A \cdot B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$.
+	\item Conclude that there is an algorithm that runs in time $O(k \cdot n^2)$ which tests whether $A \cdot B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$.
 \end{enumerate}
+
 \item Recall that in the runtime analysis of the faster matrix multiplication, we have the following recursion: 
 \[
 T(n) = 8 \cdot T(n/2) + \Theta(n^2).
@@ -142,15 +143,19 @@ T(n) = 8 \cdot T(n/2) + \Theta(n^2).
 Show that this recursion has the solution $T(n) = Θ(n^3)$.
 
 
+\item Suppose that $n=2^\ell$ and $a, b \in \mathbb{N}$ are two n-bit integers. Consider the numbers $a_h$ and $a_l$ which are represented by the first $n/2$ bits and the last $n/2$ bits of a respectively. Likewise the numbers $b_h$ and $b_l$ are the numbers represented by the first half and the second half of the bit-representation of $b$.
+\begin{enumerate}[i)]
+	\item Show that $a = a_h \cdot 2^{n/2} + a_l$ and $b = b_h \cdot 2^{n/2} + b_l$.
 
+	\item Show that $a \cdot b = a_h \cdot b_h \cdot 2^n + (a_h \cdot b_l + a_l \cdot b_h) \cdot 2^{n/2} + a_l \cdot b_l$.		
 
+	\item Conclude very carefully that two $n$-bit numbers can be multiplied by resorting to three multiplications of $n/2$-bit numbers and $O(n)$ basic operations. 
 
-
-
+	\item Conclude that two $n$-bit numbers can be computed in time $O(n\log_2 3)$.
 \end{enumerate}
 
 
-
+\end{enumerate}
   
 
 \end{document}
