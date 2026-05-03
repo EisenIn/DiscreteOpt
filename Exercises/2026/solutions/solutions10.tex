@@ -126,159 +126,126 @@
 
 \begin{enumerate}[1)]
 
-\item Let $M ∈ \setZ^{n×m}$ be totally unimodular. Prove that the following matrices are totally unimodular as well. 
-\begin{enumerate}
-\item $M^T$
-\item $\begin{pmatrix} M & I_n \end{pmatrix}$
-\item $\begin{pmatrix} M & -M \end{pmatrix}$
-\item $M\cdot \begin{pmatrix} I_n− 2e_j e_j^T\end{pmatrix}$ for any $j \in [n]$. 
+\item Suppose we are given three $n \times n$ matrices $A, B, C \in \mathbb{Z}^{n \times n}$ and we want to test whether $A \cdot B = C$ holds. 
+We could multiply $A$ and $B$ and then compare the result with $C$. This would amount to running time (number of arithmetic operations) of $O(n^3)$ with the standard matrix-multiplication algorithm. We now show how to perform an efficient \emph{randomized test}. Suppose that you can draw a vector $v \in \{0, 1\}^n$ i.i.d. at random in time $O(n)$. The idea is then to compute the product $B \cdot v$ and then the product $A \cdot (B \cdot v)$ and afterwards $C \cdot v$, all in time $O(n^2)$. Show the following:
+\begin{enumerate}[i)]
+	\item If $A \cdot B \neq C$, then $\Pr(A \cdot (B \cdot v) = C \cdot v) \leq 1/2$.
+
+	\item Let $v_1, \ldots, v_k \in \{0, 1\}^n$ be i.i.d. at random and suppose that $A \cdot B \neq C$.
+	The probability of the event: $A \cdot (B \cdot v_i) = C \cdot v_i$ for each $i = 1, \ldots, k$ is bounded by $1/2^k$.
+
+	\item Conclude that there is an algorithm that runs in time $O(k \cdot n^2)$ which tests whether $A \cdot B = C$ holds. The probability that the algorithm gives the wrong result is bounded by $1/2^k$.
 \end{enumerate}
 
-
 \begin{solution}
-\begin{enumerate}
-\item Let $A$ be a square submatrix of $M^T$ . Then
-$\det(A)= \det(A^T ) ∈ \{−1,0,1\}$
-as $A^T$ is a square submatrix of $M$ and $M$ is totally unimodular.
+\begin{enumerate}[i)]
+	\item Since $A \cdot B \neq C$, there exists an index $i \in \{1, \ldots, n\}$ such that the $i$-th row of $A \cdot B$ is different from the $i$-th row of $C$. Let $w^T$ be the vector obtained by subtracting the $i$-th row of $C$ from the $i$-th row of $A \cdot B$. Then we have
+	\begin{align*}
+		\Pr(A \cdot (B \cdot v) = C \cdot v) &= \Pr((A \cdot B - C) \cdot v = 0) \\
+		&\leq \Pr(w^T v = 0).
+	\end{align*}
+	Since $w \in \Z^n$ and $w \neq 0$, there exists an index $j \in \{1, \ldots, n\}$ such that $w_j \neq 0$. The event $w^T v = 0$ can be rewritten as $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. For any fixed values of $\{v_\ell\}_{\ell \neq j}$, at most one of the two values $v_j = 0$ and $v_j = 1$ can satisfy $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. Hence we have $\Pr(w^T v = 0) \leq 1/2$.
+	\item For each $i=1, \ldots, k$, let $E_i$ be the event that $A \cdot (B \cdot v_i) = C \cdot v_i$. Since the events $E_1, \ldots, E_k$ are independent, by using the bound from i) we get
+	\begin{align*}
+		\Pr\left(\bigcap_{i=1}^k E_i\right) = \prod_{i=1}^k \Pr(E_i) \leq \prod_{i=1}^k \frac{1}{2} = \frac{1}{2^k}.
+	\end{align*}
+	\item
+	\textbf{Algorithm}: First draw $k$ vectors $v_1, \ldots, v_k \in \{0, 1\}^n$ i.i.d. at random and compute $A \cdot (B \cdot v_i)$ and $C \cdot v_i$ for each $i=1, \ldots, k$. 
+	The algorithm returns "Yes" if $A \cdot (B \cdot v_i) = C \cdot v_i$ for all $i=1, \ldots, k$ and "No" otherwise.
+	
+	\textbf{Runtime}: Drawing $k$ random vectors takes time $O(k \cdot n)$. Computing $B \cdot v_i$, $A \cdot (B \cdot v_i)$, and $C \cdot v_i$ for all $i=1, \ldots, k$ takes time $O(k \cdot n^2)$. Finally comparing $A \cdot (B \cdot v_i)$ and $C \cdot v_i$ for all $i=1, \ldots, k$ takes time $O(k \cdot n)$. Hence the overall runtime is $O(k \cdot n^2)$.
 
-\item Let $A$ be a square submatrix of $(M \ I_n)$. Let $a_1,..., a_k$ be the columns of $A$ that originate from $I_n$ . Hence, each of these columns has as most one 1-entry, the other entries are 0. Hence, using Laplace-expansion successively along these columns we get
-that $|\det(A)| = | \det(A')|$ for some square submatrix of $M$ . Since $M$ is TU, this shows
-$\det(A) ∈ \{−1,0,1\}$.
-
-\item Let $A$ be a square submatrix of $\begin{pmatrix} M&  -M \end{pmatrix}$. Let $a_1,..., a_k$ be the columns of $A$ that
-originate from $−M$. Let $A'$ be the matrix obtained from $A$ by multiplying $a_1,..., a_k$ with
-$-1$. Hence
-$| \det(A)| = | det(A')|$.
-Now we distinguish two cases.
-Case 1: $A'$ is (up to permutation of columns) a square submatrix of $M$ . Since $M$ is TU,
-we have $\det(A') ∈ \{−1,0,1\}$.
-Case 2: $A'$ has at least two identical columns. Hence $\det(A')= 0$.
-We conclude that in both cases we have $\det(A) ∈ \{−1,0,1\}$.
-\item Observe that $M\cdot (I_n− 2e_j e_j^T)$ is obtained from $M$ by multiplying one column with $-1$.
-Thus, $M\cdot (I_n− 2e_j e_j^T)$ is (up to permutation of columns) a submatrix of  $\begin{pmatrix}M & -M\end{pmatrix}$. Thus this matrix is also TU. 
+	\textbf{Error probability}: If $A \cdot B = C$, then the algorithm always returns "Yes". If $A \cdot B \neq C$, then by ii) the algorithm returns "Yes" with probability at most $1/2^k$.
 \end{enumerate}
 \end{solution}
 
-
-\item A family $\mathcal{F}$F of subsets of a finite groundset $E$ is laminar, if for all $C ,D ∈ \mathcal{F}$ , one of the following holds:
-\begin{enumerate}
-\item $C ∩ D = \emptyset$ 
-\item $C ⊆ D$
-\item $D ⊆ C$.
-\end{enumerate}
-Let $F_1$ and $F_2$ be two laminar families of the same groundset $E$ and consider its union
-$F_1 ∪ F_2$. Define the $|F_1 ∪ F_2| × |E |$ adjacency matrix $A$ as follows: For $F ∈ F_1 ∪ F_2$ and $e ∈ E$
-we have $A_{F,e} = 1$, if $e ∈ F$ and $A_{F,e} = 0$ otherwise.\\
-Show that A is totally unimodular.
+\item Recall that in the runtime analysis of the faster matrix multiplication, we have the following recursion: 
+\[
+	T(n) = 8 \cdot T(n/2) + \Theta(n^2).
+\]
+Show that this recursion has the solution $T(n) = \Theta(n^3)$.
 
 \begin{solution}
-Let $F_1$ and $F_2$ be two laminar families on the same groundset $E$ , and $A$ the corresponding
-adjacency matrix. Observe that every square submatrix of $A$ also is the adjacency matrix of
-two laminar families: Removing a row from $A$ corresponds to deleting a set from the laminar
-families. Removing a column from $A$ corresponds to removing an element of the ground-
-set from all sets of the laminar families. Both operations preserve the structure of laminar
-families.
-
-
-For that reason, it is sufficient to show the following statement: Every square matrix $A$ that
-is adjacency matrix of two laminar families has determinant $±1$ or $0$.
-We will transform $A$ with elementary column operations as follows: Let $e ∈ E$ be an element from the groundset that is contained in at least two sets from $F_1$. Let $S_1,...,S_k$ be
-the sets of $F_1$ with $e ∈ S_i$ . Using the properties of laminar families, we know that there is a
-$l ∈ \{1,...,k\}$ such that $S_l ⊆ S_i$ for all $i= 1,...,k$. Redefine $S_i := S_i \setminus S_l$ for all $i\neq l$ . Observe
-that $F_1$ is still a laminar family after this modification. Also observe that the operation of removing the set $S_l$ corresponds to subtraction the row $S_l$ from the other rows $S_i$ in the matrix
-A.
-Hence we can apply this transformation until each $e ∈ E$ is contained in at most one set of
-$F_1$. Similarly we can apply this transformation to $F_2$ until each $e ∈ E$ is contained in at most
-one set of $F_2$. Applying the corresponding elementary row operations to A yields a matrix
-$A'$ with $\det(A)= \det(A')$.  $A'$ has the property that there are two disjoint subsets of rows, the
-rows corresponding to $F_1$ and the rows corresponding to $F_2$, such that each column of $A'$
-has at most one 1-entry in the rows of $F_1$ and at most one 1-entry in the rows of $F_2$. All other
-entries are $0$.\\
-Let $A''$ be the submatrix of $A'$ consisting only of the columns with two 1-entries. Note
-that this is a node-edge incidence matrix of a bipartite graph. Hence $A''$ is TU. With Exercise 1.2 we get that $A'$ is TU. Hence $\det(A) ∈ \{−1,0,1\}$.
-\end{solution}
-
-
-\item Let $G$ be a graph and let $A$ be its node-edge incidence matrix. We have seen that if $G$ is
-bipartite then $A$ is totally unimodular. Prove the converse, i.e., if $A$ is totally unimodular then $G$
-is bipartite.
-
-\begin{solution}
-Let the incidence matrix of $G$ be totally unimodular and assume towards contradiction that $G$ is not bipartite. Then $G$ must contain a cycle of odd length. Let this cycle contain some vertices of $G$ $\{v_1, \hdots, v_{2k+1}\}$ for some $k \in \mathbb{N}$. Let the edges of this cycle be $\{e_1, \hdots, e_{2k+1}\}$. Now, consider the submatrix of $A$ indexed by $[v_1, \hdots, v_{2k+1}] \times [e_1, \hdots, e_{2k+1}]$.  
-Then this submatrix of the cycle (up to permutation of the columns) looks as follows: \\
-
-\begin{tabular}{l | l l l l l }
- & $e_1$ & $e_2$ &$e_3$ & $\hdots$ & $e_{2k+1}$ \\
- \midrule
-$v_1$ & 1 & 0 & 0 &  $\hdots$ & 0 \ 1 \\
-$v_2$ & 1 & 1 & 0 & $\hdots$ & 0 \ 0 \\
-$v_3$ & 0 & 1 & 1 & $\hdots$ &  0 \ 0  \\
-$\vdots$ & & $\ddots$ & & &  \\
-$v_{2k+1}$ & 0 & 0 & 0 & $\hdots$ & 1 \ 1
-\end{tabular}
-
-
-Then since the number of rows and columns is odd, we can do row reduction and end with one row that has a value 2 giving the whole submatrix a determinant of 2. This means $A$ is not submodular, a contradiction. 
-\end{solution}
-
-
-\item Given a graph $G=(V,E)$, the spanning tree polytope $PST(G)$ is defined as follows:
-$$PST (G) = \{x∈\setR^E : x(E(U)) ≤|U|−1 \ ∀U ⊂V, x(E) = |V|−1, x≥0\}.$$
-We will show that each vertex of $PST(G)$ is integral (i.e. $PST (G)$ is the convex hull of the incidence
-vectors of the spanning trees of G) by an uncrossing argument. 
-Given $x^*$ a vertex of $PST (G)$, let $F= \{U ⊂V : x^*(E(U)) = |U|−1\}$.
-\begin{enumerate}
-\item Let $A,B ∈F$, show that $A∩B,A∪B ∈F$.
-\item Show that if $L$ is a maximal laminar subfamily of $F$, then $span(L) = span(F)$ (where
-$span(F) = span\{χ^{E(A)},A∈F\}$, and similarly for L).
-\end{enumerate}
-
-
-
-\begin{solution}
-\begin{enumerate}
-\item We have:
-$$|A|−1 + |B|−1 = x*(E(A)) + x*(E(B)) ≤x*(E(A∪B)) + x*(E(A∩B))$$
-where the inequality follows since the edges in $E(A∩B)$ are counted twice and each other
-edge induced by $A$ or $B$ is also induced by $A∪B$. Now,
-$$x*(E(A∪B)) + x*(E(A∩B)) ≤|A∪B|−1 + |A∩B|−1 = |A|−1 + |B|−1$$
-hence all the inequalities hold with equality and in particular $x*(E(A∪B)) = |A∪B|−1$ and
-$x*(E(A∩B)) = |A∩B|−1$.
-\item  Similarly as in the proof seen before, for $A ∈ F$ we define $viol(A) = \{B ∈ L : A,B
-\text{ are intersecting}\}$. Assume by contradiction that $span(L)$ is a strict subset of $span(F)$, and
-let $A$ such that $χ^A ∈span(F) \setminus span(L)$ and $|viol(A)|$ is minimum. By maximality of $L$,
-$|viol(A)|≥1$ otherwise $L∪A$ would be a larger laminar family contained in $F$. Hence let
-$B ∈viol(A)$, we claim that $|viol(A∩B)|< |viol(A)|$. Indeed, let $C ∈viol(A∩B), C\neq B$,
-we have that $C\setminus A∩B,A∩B\setminus C,A∩B∩C$ are non-empty. Moreover, $C ∈L$, hence either
-$C ⊂B$, or $B ⊂C$ or $B∩C= \emptyset$. The last one is not possible as $A∩B∩C ⊂B∩C$. So assume
-$C ⊂B$: then if $C ⊂A$, $C ⊂A∩B$, a contradiction to $C\setminus A∩B$ being non-empty. If $A⊂C$,
-then $A⊂B$, a contradiction to $B ∈viol(A)$. If $A∩C= \emptyset$, then we get again a contradiction
-to $A∩B ∩C$ being non-empty. Hence in this case $A,C$ are intersecting and the claim is
-proved. In the case $B ⊂C$, the claim is proved similarly. With analogous arguments one
-proves that $|viol(A∪B)|< |viol(A)|$. Now, by minimality of $|viol(A)|$, we must have that
-$χ^{E(A∪B)},χ^{E(A∩B)} ∈span(L)$, but then $χ^{E(A)} = χ^{E(A∪B)} + χ^{E(A∩B)}−χ^{E(B)} ∈span(L)$, a
-contradiction. (Notice that the equality holds because $A,B ∈F$ as seen in the proof of part
-1).
-
-\bigskip
-We remark that we are now able to conclude that the vertices of $PST(G)$ are integral. In particular, $x*$ is the unique solution of the system $x(E(U)) = |U|−1$ for
+Apply this recursion $k$ times we get
+\[
+T(n) = 8^k \cdot T(n/2^k) + \Theta\left(\sum_{i=0}^{k-1} 8^i \cdot (n/2^i)^2\right).
+\]
+When $k = \log_2(n)$, we have 
 \begin{align*}
- x(E(U)) = |U|−1 \quad &∀U ∈F \\
-x_e = 0 \quad &∀e∈\bar{E}
+T(n) = 8^{\log_2(n)} \cdot T(1) + \Theta\left(\sum_{i=0}^{\log_2(n)-1} 8^i \cdot (n/2^i)^2\right).
 \end{align*}
-for some $\bar{E} ⊂E$. Using this argument, we can reduce the system to
-\begin{align*}
-x(E(U)) = |U|−1 & \quad ∀U ∈L \\
-x_e = 0 & \quad ∀e∈\bar{E} 
-\end{align*}
-Now, the matrix associated to the system is totally unimodular, hence $x^*$ is an integer vector.
-\end{enumerate}
+The first term is $8^{\log_2(n)} \cdot T(1) = n^{\log_2(8)} \cdot \Theta(1) = \Theta(n^3)$. The second term is 
+\[
+\Theta\left(n^2 \cdot \sum_{i=0}^{\log_2(n)-1} 8^i \cdot (1/2^i)^2\right) = \Theta\left(n^2 \cdot \sum_{i=0}^{\log_2(n)-1} 2^i\right) = \Theta\left(n^2 \cdot 2^{\log_2(n)}\right) = \Theta(n^3).	
+\]
+
+One may also conclude directly from the Master Theorem of the divide-and-conquer recurrences.
 \end{solution}
 
+\item Suppose that $n=2^\ell$ and $a, b \in \mathbb{N}$ are two $n$-bit integers. Consider the numbers $a_h$ and $a_l$ which are represented by the first $n/2$ bits and the last $n/2$ bits of a respectively. Likewise the numbers $b_h$ and $b_l$ are the numbers represented by the first half and the second half of the bit-representation of $b$.
+\begin{enumerate}[i)]
+	\item Show that $a = a_h \cdot 2^{n/2} + a_l$ and $b = b_h \cdot 2^{n/2} + b_l$.
 
+	\item Show that $a \cdot b = a_h \cdot b_h \cdot 2^n + (a_h \cdot b_l + a_l \cdot b_h) \cdot 2^{n/2} + a_l \cdot b_l$.		
 
+	\item Conclude very carefully that two $n$-bit numbers can be multiplied by resorting to three multiplications of $n/2$-bit numbers and $O(n)$ basic operations. 
 
+	\item Conclude that two $n$-bit numbers can be computed in time $O(n^{\log_2(3)})$.
+\end{enumerate}
 
+\begin{solution}
+	\begin{enumerate}[i)]
+		\item It suffices to prove the formula for $a$. Let $x_0, \ldots, x_{n-1} \in \{0, 1\}$ be the bit sequence of $a$. 
+		\begin{align*}
+		a &= \sum_{i=0}^{n-1} x_i \cdot 2^i \\
+		&= \sum_{i=0}^{n/2-1} x_i \cdot 2^i + \sum_{i=n/2}^{n-1} x_i \cdot 2^i \\
+		&= \sum_{i=0}^{n/2-1} x_i \cdot 2^i + \left(\sum_{i=n/2}^{n-1} x_i \cdot 2^{i-n/2}\right)2^{n/2} \\
+		&= a_l + a_h \cdot 2^{n/2}.
+		\end{align*}
+		\item Using the formulas from i), we have
+		\begin{align*}
+		a \cdot b &= (a_h \cdot 2^{n/2} + a_l) \cdot (b_h \cdot 2^{n/2} + b_l) \\
+		&= a_h \cdot b_h \cdot 2^n + (a_h \cdot b_l + a_l \cdot b_h) \cdot 2^{n/2} + a_l \cdot b_l.
+		\end{align*}
+		\item By ii), one can compute $a \cdot b$ by computing $a_h \cdot b_h$, $a_h \cdot b_l + a_l \cdot b_h$, and $a_l \cdot b_l$. 
+		An efficient way to do that is to first compute $a_h \cdot b_h$ and $a_l \cdot b_l$. Then compute $(a_h + a_l) \cdot (b_h + b_l)$ and subtract $a_h \cdot b_h$ and $a_l \cdot b_l$ from it to get $a_h \cdot b_l + a_l \cdot b_h$.
+
+		\item Let $T(n)$ be the time to multiply two $n$-bit numbers. By iii), we have the recursion
+		\[T(n) = 3 \cdot T(n/2) + O(n).\]
+		Solve this recursion to get $T(n) = O(n^{\log_2(3)})$.
+	\end{enumerate}
+\end{solution}
+
+\item Matrix multiplication can be reduced to matrix inversion. Let $K$ be a field and $A,B ∈ K^{n × n}$.
+  \begin{enumerate}[i)]
+  \item 
+  Let $D ∈ K^{3n ×3n}$ be the invertible  matrix
+  \begin{displaymath}
+    D =
+    \begin{pmatrix}
+      I & A & 0 \\
+      0 & I & B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+  Show that
+  \begin{displaymath}
+    D^{-1}  =
+    \begin{pmatrix}
+      I & -A & AB \\
+      0 & I & -B \\
+      0 & 0 & I
+    \end{pmatrix}. 
+  \end{displaymath}
+\item If one can invert an $n×n$ matrix with $T(n)$ field operations, where $T(n) ≥ n^2$, then one can multiply two $n×n$ matrices with  $O(T(n))$ field operations. 
+\end{enumerate}
+
+\begin{solution}
+\begin{enumerate}[i)]
+\item Verify by direct computations.
+\item To multiply $A$ and $B$, we construct the matrix $D$ as in i) and compute $D^{-1}$. The product $A \cdot B$ is then given by the upper right block of $D^{-1}$. The overall number of field operations is $O(T(n))$.
+\end{enumerate}
+\end{solution}
 
 \end{enumerate}
 
