@@ -150,28 +150,89 @@ Show that $A$ is totally unimodular.
 bipartite then $A$ is totally unimodular. Prove the converse, i.e., if $A$ is totally unimodular then $G$
 is bipartite.
 
-\item Which of these two matrices is totally unimodular? Justify your answer. 
+% \item Which of these two matrices is totally unimodular? Justify your answer. 
 
-\begin{align*}
-  i).&
-    \begin{pmatrix}
-      1 & 1  & 0 &  1 & 0 \\
-      0 & 0 &  1 &  0 &  1 \\
-      0 & 1 &  1 &  1 & 0 \\
-      1 & 1 &  0 &  0 & 0 \\
-      0 & 1 &  0 &  0 & 1
-    \end{pmatrix}
-    \\
-    \vspace{3mm}
-    \\
-  ii).&
-    \begin{pmatrix}
-      1&  1& 1& 1& 1 \\
-      1& 1& 0& 0& 0 \\
-      1& 1& 1& 0& 0 \\
-      1&  1& 1& 1& 0
-    \end{pmatrix}
-\end{align*}
+% \begin{align*}
+%   i).&
+%     \begin{pmatrix}
+%       1 & 1  & 0 &  1 & 0 \\
+%       0 & 0 &  1 &  0 &  1 \\
+%       0 & 1 &  1 &  1 & 0 \\
+%       1 & 1 &  0 &  0 & 0 \\
+%       0 & 1 &  0 &  0 & 1
+%     \end{pmatrix}
+%     \\
+%     \vspace{3mm}
+%     \\
+%   ii).&
+%     \begin{pmatrix}
+%       1&  1& 1& 1& 1 \\
+%       1& 1& 0& 0& 0 \\
+%       1& 1& 1& 0& 0 \\
+%       1&  1& 1& 1& 0
+%     \end{pmatrix}
+% \end{align*}
+
+\item \label{e:sudoku} Sudoku is the following puzzle: Given a matrix
+  \begin{displaymath}
+    A ∈ \{0,1,\dots,9,X\}^{9 ×9} 
+  \end{displaymath}
+  the task is to replace each $X$ in $A$ by a number in $\{0,\dots,9\}$ such that the following holds.
+  \begin{enumerate}[a)] 
+  \item Each line of $A$ contains all numbers in  $\{0,\dots,9\}$
+  \item Each column of $A$ contains all numbers in  $\{0,\dots,9\}$
+  \item If $A$ is written as
+    \begin{displaymath}
+      A =
+      \begin{pmatrix}
+        B_{11} & B_{12} & B_{13} \\
+        B_{21} & B_{22} & B_{23} \\
+        B_{31} & B_{32} & B_{33} 
+      \end{pmatrix}
+    \end{displaymath}
+    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{0,\dots,9\}$.
+
+    \bigskip \noindent
+
+    In the following, you are asked to design an integer program whose feasible solutions are solutions of a given Sudoku. The integer program has $9^3$ variables
+    \begin{displaymath}
+      x_{i,j,k} =
+      \begin{cases}
+        1 & \text{ if } s_{i,j} = k \\
+        0 & \text{ otherwise.} 
+      \end{cases}
+    \end{displaymath}
+    where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
+
+
+    The following set of constraints guarantees that each cell of the solution contains a number
+    \begin{displaymath}
+      1≤i,j≤9: \quad  ∑_{k=1}^9 x_{i,j,,k} = 1. 
+    \end{displaymath}
+
+    Write now constraints that guarantee the following.
+    \begin{enumerate}[i)] 
+    \item Each row must contain each number.
+    \item Each column must contain each number.
+    \item Each $B_{ij}$ must contain each number. 
+    \end{enumerate}    
+    Describe the final integer programming problem that links some of the variables to the input Sudoku. 
+ \end{enumerate}
+
+\item \label{e:weighted-vextex-cover}
+\emph{Bipartite vertex cover with demands} is the following problem. We are given a bipartite graph $G = (A\cup B,E)$ and edge costs $w: E ⟶ ℕ_0$. The \emph{weight} of a matching  $M ⊆ E$ is defined as  
+  \begin{displaymath}
+   w(M) = ∑_{e∈M} w_e. 
+  \end{displaymath}
+  A \emph{vertex cover for demands} $w$  for this setting is an integer vector $x ∈ ℕ_0^{|V|}$ such that
+    \begin{displaymath}
+      x_u + x_v ≥ w_{uv}, \text{ for each edge } uv ∈ E. 
+    \end{displaymath}
+    Show the following version of König's theorem:
+    \begin{quote}
+      The maximum weight of a matching of $G$ is equal to the minimum $ℓ_1$-norm of a weighted vertex cover. 
+    \end{quote}
+    
 \end{enumerate}
 
 
