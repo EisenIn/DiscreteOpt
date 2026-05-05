@@ -144,7 +144,13 @@ We could multiply $A$ and $B$ and then compare the result with $C$. This would a
 		\Pr(A \cdot (B \cdot v) = C \cdot v) &= \Pr((A \cdot B - C) \cdot v = 0) \\
 		&\leq \Pr(w^T v = 0).
 	\end{align*}
-	Since $w \in \Z^n$ and $w \neq 0$, there exists an index $j \in \{1, \ldots, n\}$ such that $w_j \neq 0$. The event $w^T v = 0$ can be rewritten as $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. For any fixed values of $\{v_\ell\}_{\ell \neq j}$, at most one of the two values $v_j = 0$ and $v_j = 1$ can satisfy $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. Hence we have $\Pr(w^T v = 0) \leq 1/2$.
+	Since $w \in \Z^n$ and $w \neq 0$, there exists an index $j \in \{1, \ldots, n\}$ such that $w_j \neq 0$. The event $w^T v = 0$ can be rewritten as $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. For any fixed values of $\{v_\ell\}_{\ell \neq j}$, at most one of the two values $v_j = 0$ and $v_j = 1$ can satisfy $w_j \cdot v_j + \sum_{\ell \neq j} w_\ell \cdot v_\ell = 0$. 
+	Hence we have 
+	\begin{align*}
+	\Pr(w^T v = 0) &= \sum_{a \in \{0,1\}^{n-1}} \Pr(w^T v = 0 | (v_\ell)_{\ell \neq j} = a) \Pr((v_\ell)_{\ell \neq j} = a) \\
+	 &\leq \sum_{a \in \{0,1\}^{n-1}} \frac{1}{2}\cdot \Pr((v_\ell)_{\ell \neq j} = a) \\
+	 &= \frac{1}{2}.
+	\end{align*}
 	\item For each $i=1, \ldots, k$, let $E_i$ be the event that $A \cdot (B \cdot v_i) = C \cdot v_i$. Since the events $E_1, \ldots, E_k$ are independent, by using the bound from i) we get
 	\begin{align*}
 		\Pr\left(\bigcap_{i=1}^k E_i\right) = \prod_{i=1}^k \Pr(E_i) \leq \prod_{i=1}^k \frac{1}{2} = \frac{1}{2^k}.
