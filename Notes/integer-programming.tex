@@ -301,7 +301,7 @@ notion is the one of an integral polyhedron.
   Let $A\in \setZ^{m\times n}$ be an integral matrix. The polyhedron $P = \{ x
   \in \setR^n \mid Ax\leq b, \, x\geq0\}$ is integral for each integral $b \in
   \setZ^m$ if and only if $A$ is totally unimodular. 
-\end{theorem}[Cambristi Lemani] Moment Musical au bord du lac le 10 mai
+\end{theorem}
 
 
 \begin{proof}
@@ -979,7 +979,7 @@ Show that $A$ is totally unimodular.
   \label{i:item:5}
 
 
-\item Sudoku is the following puzzle: Given a matrix
+\item \label{e:sudoku} Sudoku is the following puzzle: Given a matrix
   \begin{displaymath}
     A ∈ \{0,1,\dots,9,X\}^{9 ×9} 
   \end{displaymath}
@@ -1017,15 +1017,29 @@ Show that $A$ is totally unimodular.
     \end{displaymath}
 
     Write now constraints that guarantee the following.
-    \begin{itemize}
+    \begin{enumerate}[i)] 
     \item Each row must contain each number.
     \item Each column must contain each number.
     \item Each $B_{ij}$ must contain each number. 
-    \end{itemize}
-
+    \end{enumerate}    
     Describe the final integer programming problem that links some of the variables to the input Sudoku. 
+ \end{enumerate}
     
-  \end{enumerate}
+\item \label{e:weighted-vextex-cover}\emph{Bipartite vertex cover with demands} is the following problem. We are given a bipartite graph $G = (A+B,E)$ and edge costs $w: E ⟶ ℕ_0$.  The \emph{weight} of a matching  $M ⊆ E$ is defined as  
+  \begin{displaymath}
+   w(M) = ∑_{e ∈M} w_e. 
+  \end{displaymath}
+  A \emph{vertex cover for demands } $w$  for this setting is an integer vector $x ∈ ℕ_0^{|V|}$ such that
+    \begin{displaymath}
+      x_u + x_v ≥ w_{uv}, \text{ for each edge } uv ∈ E. 
+    \end{displaymath}
+    Show the following version of König's theorem.
+    \begin{quote}
+      The maximum weight of a matching of $G$ is equal to the minimum $ℓ_1$-norm of a weighted vertex cover. 
+    \end{quote}
+    
+    
+ 
 
   
  \item Consider the polyhedron $P = \{ x \in \setR^3 \colon x_1 + 2\,x_2 + 4\,
