@@ -918,6 +918,59 @@ This gives us the following corollary.
    using corollary~\ref{co:7}.
 \end{proof}
 
+
+\subsubsection*{Exercises}
+%\label{sec:exercises-1}
+
+\begin{enumerate}
+\item  \label{Ex:Node-Pot} Let $G = (V,A)$ be a directed graph and $c：A ⟶ ℝ$ be a length function. Consider the following set of linear inequalities with variables $π$:
+  \begin{equation}\label{eq:pot5}
+    ∀ (u,v) ∈ A ： π(v) ≤ π(u) + c_{uv}. 
+  \end{equation}
+  \begin{enumerate}[a)]
+  \item   Show that that this system of inequalities has a feasible solution if and only if $G$ does not possess a cycle of negative weight.
+  \item  Interpret a cycle of negative weight as a Farkas certificate of infeasibility (Theorem~\ref{thr:7}).
+  \item Let $s ∈ V$ be a vertex from where each other vertex of the graph can be reached.  Consider the linear program which maximizes $∑_{v ∈ V} π(v) $ subject to \eqref{eq:pot5} and the additional constraint $π(s) = 0$. Show that the linear program has a unique optimal solution $π^*$. \emph{Hint: What is $π^*$ in terms of distances from $s$? }
+\end{enumerate}
+
+\item \label{ex:count:paths} Let $G = (V,A)$ be a directed graph. The \emph{directed adjacency matrix} $A ∈ \{0,1\}^{V × V}$ is  defined as 
+\[
+a_{uv} =
+\begin{cases}
+1, & \text{if there is an arc } u\to v,\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+So \(A\) encodes exactly which directed edges, or arcs, are present in the graph.
+\begin{enumerate}[a)] 
+\item Show by induction that for  $k ∈ ℕ_+$ that  $A^k$ encodes the number of directed walks of length $k$ from $u$ to $v$. In other words
+  \[
+a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.} 
+\]
+\item Show that $A^k$ can be computed with $O(\log k ⋅ n^{2.805})$ arithmetic operations.
+\end{enumerate}
+
+\item \label{triangle-detection} Let $G = (V,E)$ be an undirected graph. A \emph{triangle} in $G$ is a set of distinct vertices $u,v,w ∈ V$ that are pairwise connected by an edge.
+  Design a randomized algorithm that decides whether $G$ contains a triangle. You can assume that $G$ is represented by its \emph{adjacency matrix} $A ∈ \{0,1\}^{V × V}$ where  $a_{uv} = 1$ if $uv ∈E$ and otherwise $a_{uv} = 0$.  
+  It should satisfy the following.
+  \begin{enumerate}[i)] 
+  \item If $G$ does not contain a triangle, then it always asserts \emph{No}.
+  \item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
+  \item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
+  \item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
+  \end{enumerate}
+
+\item The \emph{node-edge incidence matrix} $A_G ∈ \{0, \pm 1\}^{V ×A}$ of a directed graph $G = (V,A)$   is defined as
+  \begin{displaymath}
+    a_{ua} = \begin{cases}
+      1, & \text{if  } a= (x,u) \text{ for some } x ∈V\\
+      -1, & \text{if  } a= (u,x) \text{ for some } x ∈V\\
+0, & \text{otherwise.}
+    \end{cases}    
+  \end{displaymath}
+  Show that $A_G$ is totally unimodular. 
+\end{enumerate}
+
 \section{Maximum $s-t$-flows}
 \label{sec:maximum-s-t}
 
