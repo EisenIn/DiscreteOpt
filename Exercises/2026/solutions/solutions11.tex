@@ -243,14 +243,14 @@ Then since the number of rows and columns is odd, we can do row reduction and en
 %     \end{pmatrix}
 % \end{align*}
 
-\item \label{e:sudoku} Sudoku is the following puzzle: Given a matrix
+\item Sudoku is the following puzzle: Given a matrix
   \begin{displaymath}
-    A ∈ \{0,1,\dots,9,X\}^{9 ×9} 
+    A ∈ \{1,\dots,9,X\}^{9 ×9} 
   \end{displaymath}
-  the task is to replace each $X$ in $A$ by a number in $\{0,\dots,9\}$ such that the following holds.
+  the task is to replace each $X$ in $A$ by a number in $\{1,\dots,9\}$ such that the following holds.
   \begin{enumerate}[a)] 
-  \item Each line of $A$ contains all numbers in  $\{0,\dots,9\}$
-  \item Each column of $A$ contains all numbers in  $\{0,\dots,9\}$
+  \item Each line of $A$ contains all numbers in  $\{1,\dots,9\}$
+  \item Each column of $A$ contains all numbers in  $\{1,\dots,9\}$
   \item If $A$ is written as
     \begin{displaymath}
       A =
@@ -260,7 +260,7 @@ Then since the number of rows and columns is odd, we can do row reduction and en
         B_{31} & B_{32} & B_{33} 
       \end{pmatrix}
     \end{displaymath}
-    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{0,\dots,9\}$.
+    where the $B_{ij}$ are $3 ×3$ matrices, the each of them contains all numbers in  $\{1,\dots,9\}$.
 
     \bigskip \noindent
 
@@ -268,11 +268,10 @@ Then since the number of rows and columns is odd, we can do row reduction and en
     \begin{displaymath}
       x_{i,j,k} =
       \begin{cases}
-        1 & \text{ if } s_{i,j} = k \\
+        1 & \text{ if } k \text{ is the number in cell } (i,j),  \\
         0 & \text{ otherwise.} 
       \end{cases}
     \end{displaymath}
-    where $S ∈ \{0,\dots,9\}^{9 ×9}$ is the solution of the Sudoku represented by the variables. 
 
 
     The following set of constraints guarantees that each cell of the solution contains a number
@@ -281,13 +280,15 @@ Then since the number of rows and columns is odd, we can do row reduction and en
     \end{displaymath}
 
     Write now constraints that guarantee the following.
-    \begin{enumerate}[i)] 
+    \begin{itemize}
     \item Each row must contain each number.
     \item Each column must contain each number.
     \item Each $B_{ij}$ must contain each number. 
-    \end{enumerate}    
+    \end{itemize}
+
     Describe the final integer programming problem that links some of the variables to the input Sudoku. 
- \end{enumerate}
+    
+  \end{enumerate}
 
 \begin{solution}
 The condition that each row must contain each number, corresponds to the set of constraints
