@@ -3,7 +3,7 @@
 \usepackage{../ppackage}
 \usepackage{bbm}
 \usepackage{import}
-
+\usepackage{refstyle}
 
 
 
@@ -124,51 +124,56 @@
 
 \begin{enumerate}[1)]
 
-%\item A \emph{simplex}  is a polytope of the form
-  %\begin{displaymath}
-   % Σ = \conv\{v_0,\dots,v_n\}, 
-   % \end{displaymath}
-   % where $v_0,\dots,v_n ∈ ℝ^n$ are affinely independent, i.e. $v_1-v_0, \dots,v_n - v_0$ are linearly independent.
-
-    
-%\item Let $A ∈ ℤ^{m ×n}$ be a matrix of rank $n$ and let $b ∈ ℤ^m$. Show the following: If $P = \{ x ∈ ℝ^n ： Ax ≤ b\}$ is full-dimensional, then
-  %\begin{enumerate}
-  %\item   there exist $n+1$ vertices of $P$ that are affinely independent. 
-  %\end{enumerate}
-%\item Let $Ax ≤b$ be a system of inequalities.  % where $A ∈ R^{m ×n}$ and $b ∈ ℝ^m$ and let $P = \{ x ∈ ℝ^n ： Ax ≤b\}$.
-  %In inequality $a^T x ≤ β$ from $Ax ≤b$ is called an \emph{implicit equality} if
-    %$a^T x^*  = β$ holds for each $x^* ∈ ℝ^n$ satisfying $Ax ≤b$. %  \, \quad \text{ for all } x^* ∈ P. 
-
+\item \label{Ex:Node-Pot} Let $G = (V,A)$ be a directed graph and $c: A ⟶ \mathbb{R}$ be a length function. Consider the following set of linear inequalities with variables $π$:
+  \begin{equation}\label{eq:pot5}
+    ∀ (u,v) ∈ A: π(v) ≤ π(u) + c_{uv}. 
+  \end{equation}
+  \begin{enumerate}[i)]
+  \item   Show that this system of inequalities has a feasible solution if and only if $G$ does not possess a cycle of negative weight.
+  \item  Interpret a cycle of negative weight as a Farkas certificate of infeasibility.
+  \item Let $s ∈ V$ be a vertex from where each other vertex of the graph can be reached.  Consider the linear program which maximizes $∑_{v ∈ V} π(v) $ subject to \ref{eq:pot5} and the additional constraint $π(s) = 0$. Show that the linear program has a unique optimal solution $π^*$. 
   
-
-\item Show that the unit simplex $∆ = conv\{0,e_1,\hdots,e_n\}⊂\setR^n$ has volume $\frac{1}{n!}$.
-
-
-
-\item Let $P= \{x∈\setR^n : Ax≤b\}$ be a full dimensional $0/1$ polytope and $c ∈\setZ^n$. We will show how we
-can use the ellipsoid method to solve the optimization problem $\{\max c^Tx: x∈P\}$.
-Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
-\begin{enumerate}[i)]
-\item Show that $P$ is contained inside the ball centered at $1/2 \cdot \vec{1}$ with radius $\sqrt{n}/2$ and give an upper bound on the volume of this ball. 
-\item Show that $P$ contains a simplex of volume $1/n!$.
-\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta-1/2)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
-\item Show that the ellipsoid method requires $O(n^3 \log(n)c_{max})$ iterations to decide whether $P ∩
-(c^⊤x≥β-1/2) = ∅$ for some integer $β$, i.e., use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
-\item Show that we can use binary search to find $z^*$ with $\log(nc_{max})$ calls to the ellipsoid method.
-\item Show how you can find an optimal solution $x^*$ such that $c^Tx^*= z^*$ in polynomial time.
+  \emph{Hint: What is $π^*$ in terms of distances from $s$? }
 \end{enumerate}
 
-
-
-\item Consider the complete graph $G_n$ with 3 vertices, i.e., $G= (\{1,2,3\}, \binom{3}
-{2} )$. Is the polyhedron of the linear programming relaxation of the vertex-cover integer program integral?
-
-
-% \item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
-
-
-
+\item \label{ex:count:paths} Let $G = (V,A)$ be a directed graph. The \emph{directed adjacency matrix} $A ∈ \{0,1\}^{V \times V}$ is  defined as 
+\[
+a_{uv} =
+\begin{cases}
+1, & \text{if there is an arc } u\to v,\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+So \(A\) encodes exactly which directed edges, or arcs, are present in the graph.
+\begin{enumerate}[i)] 
+\item Show by induction that for  $k ∈ ℕ_+$ that  $A^k$ encodes the number of directed walks of length $k$ from $u$ to $v$. In other words
+  \[
+a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.} 
+\]
+\item Show that $A^k$ can be computed with $O(\log k ⋅ n^{2.805})$ arithmetic operations.
 \end{enumerate}
+
+\item \label{triangle-detection} Let $G = (V,E)$ be an undirected graph. A \emph{triangle} in $G$ is a set of distinct vertices $u,v,w ∈ V$ that are pairwise connected by an edge.
+  Design a randomized algorithm that decides whether $G$ contains a triangle. You can assume that $G$ is represented by its \emph{adjacency matrix} $A ∈ \{0,1\}^{V \times V}$ where  $a_{uv} = 1$ if $uv ∈E$ and otherwise $a_{uv} = 0$.  
+  It should satisfy the following.
+  \begin{enumerate}[i)] 
+  \item If $G$ does not contain a triangle, then it always asserts \emph{No}.
+  \item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
+  \item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
+  \item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
+  \end{enumerate}
+
+\item The \emph{node-edge incidence matrix} $A_G ∈ \{0, \pm 1\}^{V \times A}$ of a directed graph $G = (V,A)$   is defined as
+  \begin{displaymath}
+    a_{ua} = \begin{cases}
+      1, & \text{if  } a= (x,u) \text{ for some } x ∈V\\
+      -1, & \text{if  } a= (u,x) \text{ for some } x ∈V\\
+0, & \text{otherwise.}
+    \end{cases}    
+  \end{displaymath}
+  Show that $A_G$ is totally unimodular. 
+\end{enumerate}
+
 
 
 
