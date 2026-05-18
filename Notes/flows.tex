@@ -960,7 +960,7 @@ a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.}
   \item The algorithm should perform $O(n^{2.805} \log \log n )$ arithmetic operations on integers of size $O(\log \log n)$. 
   \end{enumerate}
 
-\item The \emph{node-edge incidence matrix} $A_G ∈ \{0, \pm 1\}^{V ×A}$ of a directed graph $G = (V,A)$   is defined as
+\item \label{arbitrage} The \emph{node-edge incidence matrix} $A_G ∈ \{0, \pm 1\}^{V ×A}$ of a directed graph $G = (V,A)$   is defined as
   \begin{displaymath}
     a_{ua} = \begin{cases}
       1, & \text{if  } a= (x,u) \text{ for some } x ∈V\\
@@ -983,7 +983,7 @@ such that
  Explain how Bellman--Ford can be used
  to detect such an opportunity.
 
-\item (Floyd-Warshall algorithm) Let $G = (V,A)$ be a weighted directed graph with weights $c: A ⟶ ℝ$.
+\item \label{Floyd} (Floyd-Warshall algorithm) Let $G = (V,A)$ be a weighted directed graph with weights $c: A ⟶ ℝ$.
 
   Define
 \[
@@ -1021,7 +1021,7 @@ c_{ij}, & ij\in E,\\
 \item Prove that the matrix $D^{(n)}$ can be computed in time $O(n^3)$ steps.
 \item  Show that $G$ contains a negative cycle if and only if there exists an $i ∈V$ such that $D^{(n)}_{ii} <0$. 
 \end{enumerate}
-\item (Hamilton path problem) The following problem is NP-complete. So far, no polynomial-time algorithm has been found to solve it:
+\item \label{hamilton} (Hamilton path problem) The following problem is NP-complete. So far, no polynomial-time algorithm has been found to solve it:
 
   Given a directed graph $G = (V,A)$ and two vertices $s≠t ∈ V$, decide whether there exists a path from $s$ to $t$ of length $|V|-1$. This is a path that spans all the vertices of $G$.
 
