@@ -947,7 +947,7 @@ So \(A\) encodes exactly which directed edges, or arcs, are present in the graph
   \[
 a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.} 
 \]
-\item Show that $A^k$ can be computed with $O(\log k ⋅ n^{2.805})$ arithmetic operations.
+\item Show that $A^k$ can be computed with $O(\log k ⋅ n^{2.805}  )$ arithmetic operations.
 \end{enumerate}
 
 \item \label{triangle-detection} Let $G = (V,E)$ be an undirected graph. A \emph{triangle} in $G$ is a set of distinct vertices $u,v,w ∈ V$ that are pairwise connected by an edge.
@@ -957,7 +957,7 @@ a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.}
   \item If $G$ does not contain a triangle, then it always asserts \emph{No}.
   \item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
   \item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
-  \item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
+  \item The algorithm should perform $O(n^{2.805} \log \log n )$ arithmetic operations on integers of size $O(\log \log n)$. 
   \end{enumerate}
 
 \item The \emph{node-edge incidence matrix} $A_G ∈ \{0, \pm 1\}^{V ×A}$ of a directed graph $G = (V,A)$   is defined as
@@ -968,7 +968,69 @@ a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.}
 0, & \text{otherwise.}
     \end{cases}    
   \end{displaymath}
-  Show that $A_G$ is totally unimodular. 
+  Show that $A_G$ is totally unimodular.
+\item Let \(C\) be a set of currencies and let \(r_{ij}\) denote the exchange
+rate from currency \(i\) to currency \(j\). We say that there is an
+\emph{arbitrage opportunity} if there exists a sequence 
+\[
+i_0,i_1,\ldots,i_k=i_0 ∈ C
+\]
+such that
+\[
+\prod_{\ell=0}^{k-1} r_{i_\ell i_{\ell+1}}>1.
+\]
+
+ Explain how Bellman--Ford can be used
+ to detect such an opportunity.
+
+\item (Floyd-Warshall algorithm) Let $G = (V,A)$ be a weighted directed graph with weights $c: A ⟶ ℝ$.
+
+  Define
+\[
+D^{(k)}_{ij}
+\]
+to be the length of a shortest path from \(i\) to \(j\) whose \emph{internal}
+vertices are only allowed to belong to
+\[
+\{1,\dots,k\}.
+\]
+
+For \(k=0\), no internal vertices are allowed. Therefore
+\[
+D^{(0)}_{ij}
+=
+\begin{cases}
+0, & i=j,\\
+c_{ij}, & ij\in E,\\
++\infty, & \text{otherwise.}
+\end{cases}
+\]
+
+\begin{enumerate}[i)] 
+\item
+ Suppose that $G$ does not contain a negative weight cycle. 
+  Show the recurrence
+  \[
+    D^{(k)}_{ij}
+    =
+    \min\left\{
+      D^{(k-1)}_{ij},
+      D^{(k-1)}_{ik}+D^{(k-1)}_{kj}
+    \right\}.
+  \]
+\item Prove that the matrix $D^{(n)}$ can be computed in time $O(n^3)$ steps.
+\item  Show that $G$ contains a negative cycle if and only if there exists an $i ∈V$ such that $D^{(n)}_{ii} <0$. 
+\end{enumerate}
+\item (Hamilton path problem) The following problem is NP-complete. So far, no polynomial-time algorithm has been found to solve it:
+
+  Given a directed graph $G = (V,A)$ and two vertices $s≠t ∈ V$, decide whether there exists a path from $s$ to $t$ of length $|V|-1$. This is a path that spans all the vertices of $G$.
+
+  \begin{enumerate}[i)] 
+  \item  Show that this problem can be solved in polynomial time, if the graph does not have any directed cycles.
+  \item Conclude that the shortest path problem (under presence of negative  cycles) should be difficult. 
+  \end{enumerate}
+
+  
 \end{enumerate}
 
 \section{Maximum $s-t$-flows}
