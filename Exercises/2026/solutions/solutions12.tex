@@ -197,77 +197,61 @@ a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.}
 
 \begin{solution}
 \begin{enumerate}[i)]
-\item We prove the statement by induction on $k$.
-
-For $k=1$, the claim is exactly the definition of the adjacency matrix: $a_{uv}=1$ if and only if there is a directed walk of length $1$ from $u$ to $v$, and otherwise $a_{uv}=0$.
-
-Assume now that the claim holds for some $k\geq 1$. Then
+\item For $k=1$ the claim is trivial. Suppose that the claim holds for some $k>1$. We will show that it holds for $k+1$. One has
 \[
 (A^{k+1})_{uv}=(A^kA)_{uv}=\sum_{w\in V}(A^k)_{uw}a_{wv}.
 \]
 By the induction hypothesis, $(A^k)_{uw}$ is the number of directed walks of length $k$ from $u$ to $w$. Multiplying by $a_{wv}$ keeps exactly those walks that can be extended by the arc $w\to v$. Hence the summand counts the directed walks of length $k+1$ from $u$ to $v$ whose penultimate vertex is $w$. Summing over all $w\in V$ counts all directed walks of length $k+1$ from $u$ to $v$. This proves the induction step.
 
-\item Compute $A^k$ by repeated squaring. Writing $k$ in binary, one needs $O(\log k)$ matrix multiplications: successively compute
-\[
-A, A^2, A^4, A^8,\ldots
-\]
-and multiply the powers corresponding to the $1$-bits in the binary expansion of $k$.
+\item Compute $A^k$ by repeated squaring. Writing $k$ in binary representation, one needs $O(\log k)$ matrix multiplications.
+Using the algorithm for multiplying two $n\times n$ matrices with arithmetic complexity $O(n^{2.805})$. Thus the total number of arithmetic operations is $O(\log k)\cdot O(n^{2.805})$.
 
-Using a matrix multiplication algorithm with arithmetic complexity $O(n^{2.805})$ for multiplying two $n\times n$ matrices, the total number of arithmetic operations is
-\[
-O(\log k)\cdot O(n^{2.805})=O(\log k\cdot n^{2.805}).
-\]
 \end{enumerate}
 \end{solution}
 
 \item \label{triangle-detection} Let $G = (V,E)$ be an undirected graph. A \emph{triangle} in $G$ is a set of distinct vertices $u,v,w \in V$ that are pairwise connected by an edge.
-  Design a randomized algorithm that decides whether $G$ contains a triangle. You can assume that $G$ is represented by its \emph{adjacency matrix} $A \in \{0,1\}^{V \times V}$ where  $a_{uv} = 1$ if $uv \in E$ and otherwise $a_{uv} = 0$.  
-  It should satisfy the following.
-  \begin{enumerate}[i)] 
-  \item If $G$ does not contain a triangle, then it always asserts \emph{No}.
-  \item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
-  \item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
-  \item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
-  \end{enumerate}
+Design a randomized algorithm that decides whether $G$ contains a triangle. You can assume that $G$ is represented by its \emph{adjacency matrix} $A \in \{0,1\}^{V \times V}$ where  $a_{uv} = 1$ if $uv \in E$ and otherwise $a_{uv} = 0$.  
+It should satisfy the following.
+\begin{enumerate}[i)] 
+\item If $G$ does not contain a triangle, then it always asserts \emph{No}.
+\item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
+\item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
+\item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
+\end{enumerate}
 
 \begin{solution}
-Let $t$ denote the number of triangles in $G$. Since $G$ is undirected and simple,
-\[
-\operatorname{tr}(A^3)=6t,
-\]
-because every triangle contributes exactly six closed directed walks of length $3$, corresponding to the two orientations and the three choices of starting vertex. Conversely, every closed walk of length $3$ in a simple undirected graph comes from a triangle.
+Let \(n := |V|\). First note that \(G\) contains a triangle if and only if there is an edge \(uv \in E\) such that $(A^2)_{uv} > 0$ since \((A^2)_{uv}\) counts the number of vertices \(w\) adjacent to both \(u\) and \(v\). 
 
-Choose uniformly at random a prime $p>3$ among the first
-\[
-m:=4\lceil \log_2 n\rceil
-\]
-primes larger than $3$. Compute $A^3$ over the field $\mathbb{F}_p$, and assert \emph{Yes} if
-\[
-\operatorname{tr}(A^3)\not\equiv 0 \pmod p.
-\]
-Otherwise assert \emph{No}.
+\textbf{Algorithm.}
+Let \(p_1,\dots,p_k\) be the first $k := \lceil 2 \log_2 n\rceil$ prime numbers. Do the following:
 
-We verify the required properties.
-
-If $G$ has no triangle, then $t=0$, so $\operatorname{tr}(A^3)=0$ over the integers. Therefore its reduction modulo every prime $p$ is also $0$, and the algorithm always asserts \emph{No}.
-
-If the algorithm asserts \emph{Yes}, then $\operatorname{tr}(A^3)\not\equiv 0\pmod p$. In particular, $\operatorname{tr}(A^3)\neq 0$ over the integers. Hence $t>0$, so $G$ contains a triangle.
-
-Now assume that $G$ contains at least one triangle. Then $1\leq t\leq \binom n3<n^3$. Since $p>3$, the condition
+\begin{enumerate}[1).]
+    \item Choose a prime \(p\) uniformly at random from \(\{p_1,\dots,p_k\}\).
+    \item Compute the matrix \(B := A^2 \bmod p\) by using fast matrix multiplication over the field \(\mathbb{F}_p\).
+    \item If there exists an edge \(uv \in E\) such that \(B_{uv} \neq 0\), then
+    output \emph{Yes}. Otherwise output \emph{No}.
+\end{enumerate}
+\textbf{Correctness.}
+\begin{enumerate}[i)]
+  \item If \(G\) does not contain a triangle, i.e., for each edge \(uv \in E\), \(u\) and \(v\) have no common neighbor. Hence $B_{uv} = 0$ for every \(uv \in E\). Thus the algorithm always outputs \emph{No}.
+  \item This statement is the same as i).
+  \item Let \(u,v,w\) be a triangle in $G$ and consider the edge \(uv\). Then $1\leq B_{uv} \leq n$.
+The algorithm fails to detect this edge if and only if
 \[
-\operatorname{tr}(A^3)=6t\equiv 0\pmod p
+B_{uv} \equiv 0 \pmod p.
 \]
-is equivalent to $p\mid t$. The integer $t$ has at most
+Since the number of distinct prime divisors of \(B_{uv}\) is at most \(\log_2 n\), one has
 \[
-\log_5(n^3)=3\log_5 n < 2\log_2 n
+\Pr[\text{Algorithm outputs \emph{No}} \mid G \text{ contains a triangle}\;uvw]
+\leq \frac{\log_2 n}{\lceil2\log_2 n\rceil}
+\leq \frac12.
 \]
-distinct prime divisors larger than $3$, because each such prime is at least $5$. Among the $m=4\lceil\log_2 n\rceil$ possible primes, fewer than half can divide $t$. Thus the probability that the chosen prime divides $t$, and hence the probability that the algorithm incorrectly asserts \emph{No}, is at most $1/2$.
+\item The \(k\)-th prime is \(O(k \log k)\) hence $p_k = O(\log n \log \log n)$.
+Thus every arithmetic operation is performed on integers of size $O(\log p_k) = O(\log \log n)$.
 
-Finally, the largest of the first $m=O(\log n)$ primes is $O(m\log m)=O(\log n\log\log n)$, so the modulus $p$ has bit length $O(\log\log n)$. Computing $A^3$ modulo $p$ requires two matrix multiplications over $\mathbb{F}_p$, hence
-\[
-O(n^{2.805})
-\]
-arithmetic operations on integers of size $O(\log\log n)$.
+Computing \(A^2 \bmod p\) can be done with \(O(n^{2.805})\) arithmetic operations over \(\mathbb{F}_p\) using fast matrix multiplication algorithms. 
+Finally searching all the entries of $B$ can be done in \(O(n^2)\) time.
+\end{enumerate}
 \end{solution}
 
 \item The \emph{node-edge incidence matrix} $A_G \in \{0, \pm 1\}^{V \times A}$ of a directed graph $G = (V,A)$   is defined as
@@ -283,7 +267,7 @@ arithmetic operations on integers of size $O(\log\log n)$.
 \begin{solution}
 We will prove by induction that $\det(B) \in \{0,\pm 1\}$ for any square submatrix $B$ of $A_G$. The base case is trivial. For the induction step, suppose that the claim holds for all square submatrices of size $\leq k-1$, and let $B$ be a square submatrix of size $k$.
 If $B$ has a column with at most one nonzero entry, we are done since by expanding the determinant along that column gives $\det(B) \in \{0,\pm \det(B')\}$,
-where $B'$ is a smaller square submatrix of $A_G$. By induction hypothesis,
+where $B'$ is a cofactor matrix of $B$ of size $k-1$. By induction hypothesis,
 $\det(B') \in \{0,\pm 1\}$, hence $\det(B)\in \{0,\pm 1\}$.
 
 Then it remains to show the case where every column of $B$ has exactly two nonzero entries. Since every column of the incidence matrix $A_G$ has at most
