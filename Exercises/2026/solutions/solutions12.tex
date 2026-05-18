@@ -3,6 +3,7 @@
 \usepackage{../ppackage}
 \usepackage{bbm}
 \usepackage{import}
+\usepackage{refstyle}
 
 
 
@@ -125,119 +126,155 @@
 
 \begin{enumerate}[1)]
 
-\item Show that the unit simplex $∆ = conv\{0,e_1,\hdots,e_n\}⊂\setR^n$ has volume $\frac{1}{n!}$.
-
-
-\begin{solution}
-We will solve the problem using induction on n. Starting with $n = 2$, we have that $∆ =
-∆((0,0),(1,0),(0,1)) = conv \{0,e_1,e_2\}$, where $∆((0,0),(1,0),(0,1))$ means the triangle between
-the three vertices $(0,0),(1,0) and (0,1)$. It is clear that the volume of $∆$ is equal to $1/2$.
-For the inductive step we use
-
-\begin{align*}
-vol_n(\Delta_n) & = \int_0^1 vol_{n-1}(x\cdot \Delta_{n-1}) dx \\
-& = \int_0^1 x^{n-1}vol_{n-1}(\Delta_{n-1}) dx \\
-& = \frac{1}{(n-1)!}\int_0^1 x^{n-1}dx \\
-& = \frac{1}{n!}
-\end{align*}
-In this equation, we have use the result that, $vol_n(λK) = λ^nvol_n(K)$, for any $K ⊂\setR^n$. We also
-have used the induction hypothesis in the third equation. Therefore, we get the desired result.
-
-\end{solution}
-
-
-
-\item Let $P= \{x∈\setR^n : Ax≤b\}$ be a full dimensional $0/1$ polytope and $c ∈\setZ^n$. We will show how we
-can use the ellipsoid method to solve the optimization problem $\{\max c^Tx: x∈P\}$.
-Define $z^*:= \max \{c^Tx: x∈P\}$ and $c_{max} := \max \{|c_i|: 1 ≤i≤n\}$.
-\begin{enumerate}[i)]
-\item Show that $P$ is contained inside the ball centered at $1/2 \cdot \vec{1}$ with radius $\sqrt{n}/2$ and give an upper bound on the volume of this ball. 
-\item Show that $P$ contains a simplex of volume $1/n!$.
-\item Scale down this simplex to obtain another simplex $\Delta'$ such that $P \cap (c^Tx\geq \beta-1/2)$ contains $\Delta'$ when nonempty. What is the volume of $\Delta'$?
-\item Show that the ellipsoid method requires $O(n^3 \log(n)c_{max})$ iterations to decide whether $P ∩
-(c^⊤x≥β-1/2) = ∅$ for some integer $β$, i.e., use parts (i) and (iii) as suitable initial volume $I_{init}$ and stopping volume $L$ for the ellipsoid method. The ellipsoid method then terminates in $O(n \log(vol(I_{init})/L))$. 
-\item Show that we can use binary search to find $z^*$ with $\log(nc_{max})$ calls to the ellipsoid method.
-\item Show how you can find an optimal solution $x^*$ such that $c^Tx^*= z^*$ in polynomial time.
+\item \label{Ex:Node-Pot} Let $G = (V,A)$ be a directed graph and $c: A \to \mathbb{R}$ be a length function. Consider the following set of linear inequalities with variables $\pi$:
+  \begin{equation}\label{eq:pot5}
+    \forall (u,v) \in A: \pi(v) \leq \pi(u) + c_{uv}.
+  \end{equation}
+  \begin{enumerate}[i)]
+  \item   Show that this system of inequalities has a feasible solution if and only if $G$ does not possess a cycle of negative weight.
+  \item  Interpret a cycle of negative weight as a Farkas certificate of infeasibility.
+  \item Let $s \in V$ be a vertex from where each other vertex of the graph can be reached.  Consider the linear program which maximizes $\sum_{v \in V} \pi(v) $ subject to \ref{eq:pot5} and the additional constraint $\pi(s) = 0$. Show that the linear program has a unique optimal solution $\pi^*$.
+  
+  \emph{Hint: What is $\pi^*$ in terms of distances from $s$? }
 \end{enumerate}
 
 \begin{solution}
 \begin{enumerate}[i)]
-\item Note that all $0/1$ polytopes are contained inside the ball centered at $1/2\cdot \vec{1}$ with radius $√n/2$.
-We can upper bound the volume of this ball by $√n^n$. 
-\item Since $P$ is full dimensional it contains a simplex $∆ = \conv \{x_0,x_1,\hdots,x_n\}$ of volume $1/n!$. 
-\item Let $P':= P ∩(c^Tx≥β−1/2)$ and suppose that $P^\prime$ is nonempty. Take $x_0 \in P^\prime \cap \{0,1\}^n$. We define $α=\frac{1}{2nc_{max}}$ and consider the simplex $∆'= \conv \{z_0,z_1,\hdots,z_{n}\}$ where $z_i = x_0 +α(x_i−x_0)$.
-To see that $∆'$ is contained in $P'$ we just need to check that each $z_i$ is in $P$ and satisfies $c^Tz_i ≥β-1/2$. Indeed, we have 
-$ c^Tz_i = c^Tx_0 + \alpha c^T(x_i-x_0) \geq \beta - 1/2 $.
-Then we
-obtain that
-$$vol(P') ≥vol(∆') ≥\frac{1}{n!}\left( \frac{1}{2nc_{max}}\right)^n.$$
-\item Observe that $P ∩(c^Tx ≥β) = ∅$ iﬀ
-$P':= P ∩(c^Tx≥β−1/2) = ∅$, since the vertices of $P$ are integral. So we want to lower bound the
-volume of $P'$. Let $x_0$ be an integral vertex in $P'$. The idea is to scale this simplex so that it is contained in
-$P'$. 
-Setting $L= vol(∆')$ and using the fact that the ellipsoid method terminates in $O(n\log(vol(I_{init})/L))$
-gives us the correct bound.
-\item We use the fact that the value of $c^Tx$ lies between $−nc_{max}$ and $nc_{max}$ for any vertex $x$ of $P$ to
-conclude that $z^*$ must also lie within these bounds. Using binary search on this interval of integer
-points takes $\log(nc_{max})$ steps.
-\item The algorithm described in (iv) and (v) gives us the optimal value $z^*$ but also a point $y ∈P$
-such that $z^*≥c^Ty≥z^*-1/2$. We now take this point and project it onto the hyperplane $c^Tx= z^*.$
-Let $y'$ be the projection. If $y'∈P$ then we are done, otherwise we find a point on the line segment
-$yy'$ that intersects a facet of $P$. We have now reduced the dimension of our problem by one and
-can proceed by once again projecting this new point onto the hyperplane $c^Tx= z^*.$ Continuing in
-this way we will arrive at an optimal solution in polynomial time.
+\item We first prove $\Rightarrow$. Suppose that there is a feasible solution $\pi: V \to \mathbb{R}$. For any cycle $C=v_0\rightarrow v_1\rightarrow \cdots \rightarrow v_{k-1}\rightarrow v_0$ in $G$, 
+apply equation (\ref{eq:pot5}) to each arc of $C$ to get
+\[
+\pi(v_{i+1}) \leq \pi(v_i) + c_{v_i v_{i+1}} \qquad i=0,\ldots,k-1,
+\]
+where indices are modulo $k$. Summing up all to get
+\[
+\sum_{i=0}^{k-1} \pi(v_{i+1})
+\leq
+\sum_{i=0}^{k-1} \pi(v_i) + \sum_{i=0}^{k-1} c_{v_i v_{i+1}} \quad\Rightarrow\quad 0 \leq \sum_{i=0}^{k-1} c_{v_i v_{i+1}}.
+\]
 
+Next we prove $\Leftarrow$. Assume that $G$ has no negative-weight directed cycle. Add a new vertex $r$ and arcs $(r,v)$ of length $0$ to every $v \in V$. Let $d(v)$ be the minimum distance from $r$ to $v$ in this new graph. Since there is no negative cycle, all these distances are well-defined. For every arc $(u,v) \in A$, by definition of $d$, we have $d(v) \leq d(u) + c_{uv}$. Hence $d(v)$ is a feasible solution.
 
+\item Let $C$ be a cycle of negative weight. 
+Define $\lambda\in \mathbb{R}^{A}_{\geq 0}$ such that $\lambda_{uv}=1$ if $(u,v)\in C$ and $\lambda_{uv}=0$ otherwise. Then
+$$\sum_{(u,v)\in A} \lambda_{uv} (\pi(v)-\pi(u)) = \sum_{(u,v)\in C} (\pi(v)-\pi(u)) = 0,$$ 
+and 
+$$\sum_{(u,v)\in A} \lambda_{uv} c_{uv} = \sum_{(u,v)\in C} c_{uv} < 0.$$
+Thus $\lambda$ is a Farkas certificate of infeasibility.
+
+\item For each vertex $v \in V$, let $\pi^*(v)$ be the distance of the shortest path from $s$ to $v$, which is finite since every vertex $v$ is reachable from $s$. Since there are no negative cycles, the distances are well-defined; also they satisfy
+\[
+\pi^*(v) \leq \pi^*(u)+c_{uv} \qquad \forall \;(u,v)\in A,
+\]
+and $\pi^*(s)=0$. Hence $\pi^*(v)$ is feasible for the linear program.
+
+Now let $\pi: V \to \mathbb{R}$ be any feasible solution which satisfies \ref{eq:pot5} with $\pi(s)=0$. For any vertex $v \in V$, consider a directed $s$--$v$ path
+$s=v_0 \to v_1 \to \cdots \to v_k=v$, one has
+\[
+\pi(v) \leq \pi(s)+\sum_{i=0}^{k-1} c_{v_i v_{i+1}}
+= \sum_{i=0}^{k-1} c_{v_i v_{i+1}},
+\]
+which implies that $\pi(v) \leq \pi^*(v)$. Thus $\pi^*$ maximizes $\sum_{v \in V} \pi(v)$. 
+Eventually we prove the uniqueness. Suppose that there exists another optimal solution $\pi'\neq \pi^*$. Then for some $v \in V$, we have $\pi'(v) < \pi^*(v)$. However, this implies that $\sum_{v \in V} \pi'(v) < \sum_{v \in V} \pi^*(v)$, contradicting the optimality of $\pi'$. 
 \end{enumerate}
-
 \end{solution}
 
-
-
-\item Consider the complete graph $G_n$ with 3 vertices, i.e., $G= (\{1,2,3\}, \binom{3}
-{2} )$. Is the polyhedron of the linear programming relaxation of the vertex-cover integer program integral?
+\item \label{ex:count:paths} Let $G = (V,A)$ be a directed graph. The \emph{directed adjacency matrix} $A \in \{0,1\}^{V \times V}$ is  defined as 
+\[
+a_{uv} =
+\begin{cases}
+1, & \text{if there is an arc } u\to v,\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+So \(A\) encodes exactly which directed edges, or arcs, are present in the graph.
+\begin{enumerate}[i)] 
+\item Show by induction that for  $k \in \mathbb{N}_+$ that  $A^k$ encodes the number of directed walks of length $k$ from $u$ to $v$. In other words
+  \[
+a^k_{uv} =  \text{ number of directed walks of length $k$ from $u$ to $v$.} 
+\]
+\item Show that $A^k$ can be computed with $O(\log k \cdot n^{2.805})$ arithmetic operations.
+\end{enumerate}
 
 \begin{solution}
-The vertex-cover IP for the $G_3$ looks as follows:
-\begin{align*}
-\min \quad w_1x_1 + & w_2x_2 + w_3x_3\\
-&x1 + x2  ≥ 1\\
-&x1 + x3 ≥ 1\\
-&x2 + x3 ≥ 1\\
-&x1, x2, x3 ∈ \setN.
-\end{align*}
-Let $w_1 = w_2 = w_3 = 1$. Observe that we need at least two of the vertices in our vertex cover,
-i.e. the optimum of this integer program is $2$. On the other hand, the vector $x =(1/2, 1/2, 1/2)$ is a
-feasible solution to the linear programming relaxation of objective value $3/2 < 2$.
-Assume that the polyhedron of the LP relaxation is integral. Thus, then the simplex algorithm will compute an optimal integer solution to the relaxation.
-As we have seen above, every integer solution has a value of at least 2, while an optimum
-fractional solution has a value of at less than $3/2$ , a contradiction.
-\end{solution}
+\begin{enumerate}[i)]
+\item For $k=1$ the claim is trivial. Suppose that the claim holds for some $k>1$. We will show that it holds for $k+1$. One has
+\[
+(A^{k+1})_{uv}=(A^kA)_{uv}=\sum_{w\in V}(A^k)_{uw}a_{wv}.
+\]
+By the induction hypothesis, $(A^k)_{uw}$ is the number of directed walks of length $k$ from $u$ to $w$. Multiplying by $a_{wv}$ keeps exactly those walks that can be extended by the arc $w\to v$. Hence the summand counts the directed walks of length $k+1$ from $u$ to $v$ whose penultimate vertex is $w$. Summing over all $w\in V$ counts all directed walks of length $k+1$ from $u$ to $v$. This proves the induction step.
 
-
-% \item Consider the polyhedron $P = \{x ∈ \setR^3 : x_1 + 2 x_2 + 4 x_3 ≤ 4, x ≥ 0\}$. Show that this polyhedron is integral. 
-
-
-% \begin{solution}
-% We can write $P$ as follows:
-% $P = \{x ∈ \setR^3 : Ax ≤ b\}$, where $$A = \begin{pmatrix} 1& 2&4 \\-1& 0 & 0 \\ 0 & -1& 0 \\0 & 0 & -1\end{pmatrix}$$ and $b= \begin{pmatrix}4 & 0 & 0 & 0\end{pmatrix}$ . Clearly $A$ is of full column rank, thus we know that $P$ has a vertex. It is sufficient to show
-% that every vertex is integral. The vertices of P are defined as the unique solutions of the $\binom{4}{3}$ many different subsystems obtained
-% by choosing three out of the four rows. Then, the unique solution of the system
-% $$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & -1 & 0\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-% is $x = (0, 0, 1)$. The unique solution to the system 
-% $$\begin{pmatrix} 1 & 2 & 4 \\ -1 & 0 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-% is $x = (0,2,0)$. The unique solution to the system 
-% $$\begin{pmatrix} 1 & 2 & 4 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 4 \\ 0 \\ 0 \end{pmatrix}$$
-% is $x = (4, 0, 0)$. The unique solution to the system 
-% $$\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}x = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$$
-% is $x = (0, 0, 0)$. 
-% Hence, P is integral.
-
-% \end{solution}
+\item Compute $A^k$ by repeated squaring. Writing $k$ in binary representation, one needs $O(\log k)$ matrix multiplications.
+Using the algorithm for multiplying two $n\times n$ matrices with arithmetic complexity $O(n^{2.805})$. Thus the total number of arithmetic operations is $O(\log k)\cdot O(n^{2.805})$.
 
 \end{enumerate}
+\end{solution}
 
+\item \label{triangle-detection} Let $G = (V,E)$ be an undirected graph. A \emph{triangle} in $G$ is a set of distinct vertices $u,v,w \in V$ that are pairwise connected by an edge.
+Design a randomized algorithm that decides whether $G$ contains a triangle. You can assume that $G$ is represented by its \emph{adjacency matrix} $A \in \{0,1\}^{V \times V}$ where  $a_{uv} = 1$ if $uv \in E$ and otherwise $a_{uv} = 0$.  
+It should satisfy the following.
+\begin{enumerate}[i)] 
+\item If $G$ does not contain a triangle, then it always asserts \emph{No}.
+\item If the algorithm asserts \emph{Yes}, then $G$ contains a triangle.
+\item The probability of the assertion \emph{No} provided that $G$ has a triangle should be bounded by $1/2$.
+\item The algorithm should perform $O(n^{2.805})$ arithmetic operations on integers of size $O(\log \log n)$. 
+\end{enumerate}
 
+\begin{solution}
+Let \(n := |V|\). First note that \(G\) contains a triangle if and only if there is an edge \(uv \in E\) such that $(A^2)_{uv} > 0$ since \((A^2)_{uv}\) counts the number of vertices \(w\) adjacent to both \(u\) and \(v\). 
+
+\textbf{Algorithm.}
+Let \(p_1,\dots,p_k\) be the first $k := \lceil 2 \log_2 n\rceil$ prime numbers. Do the following:
+
+\begin{enumerate}[1).]
+    \item Choose a prime \(p\) uniformly at random from \(\{p_1,\dots,p_k\}\).
+    \item Compute the matrix \(B := A^2 \bmod p\) by using fast matrix multiplication over the field \(\mathbb{F}_p\).
+    \item If there exists an edge \(uv \in E\) such that \(B_{uv} \neq 0\), then
+    output \emph{Yes}. Otherwise output \emph{No}.
+\end{enumerate}
+\textbf{Correctness.}
+\begin{enumerate}[i)]
+  \item If \(G\) does not contain a triangle, i.e., for each edge \(uv \in E\), \(u\) and \(v\) have no common neighbor. Hence $B_{uv} = 0$ for every \(uv \in E\). Thus the algorithm always outputs \emph{No}.
+  \item This statement is the same as i).
+  \item Let \(u,v,w\) be a triangle in $G$ and consider the edge \(uv\). Then $1\leq B_{uv} \leq n$.
+The algorithm fails to detect this edge if and only if
+\[
+B_{uv} \equiv 0 \pmod p.
+\]
+Since the number of distinct prime divisors of \(B_{uv}\) is at most \(\log_2 n\), one has
+\[
+\Pr[\text{Algorithm outputs \emph{No}} \mid G \text{ contains a triangle}\;uvw]
+\leq \frac{\log_2 n}{\lceil2\log_2 n\rceil}
+\leq \frac12.
+\]
+\item The \(k\)-th prime is \(O(k \log k)\) hence $p_k = O(\log n \log \log n)$.
+Thus every arithmetic operation is performed on integers of size $O(\log p_k) = O(\log \log n)$.
+
+Computing \(A^2 \bmod p\) can be done with \(O(n^{2.805})\) arithmetic operations over \(\mathbb{F}_p\) using fast matrix multiplication algorithms. 
+Finally searching all the entries of $B$ can be done in \(O(n^2)\) time.
+\end{enumerate}
+\end{solution}
+
+\item The \emph{node-edge incidence matrix} $A_G \in \{0, \pm 1\}^{V \times A}$ of a directed graph $G = (V,A)$   is defined as
+  \begin{displaymath}
+    a_{ua} = \begin{cases}
+      1, & \text{if  } a= (x,u) \text{ for some } x \in V,\\
+      -1, & \text{if  } a= (u,x) \text{ for some } x \in V,\\
+0, & \text{otherwise.}
+    \end{cases}    
+  \end{displaymath}
+  Show that $A_G$ is totally unimodular. 
+
+\begin{solution}
+We will prove by induction that $\det(B) \in \{0,\pm 1\}$ for any square submatrix $B$ of $A_G$. The base case is trivial. For the induction step, suppose that the claim holds for all square submatrices of size $\leq k-1$, and let $B$ be a square submatrix of size $k$.
+If $B$ has a column with at most one nonzero entry, we are done since by expanding the determinant along that column gives $\det(B) \in \{0,\pm \det(B')\}$,
+where $B'$ is a cofactor matrix of $B$ of size $k-1$. By induction hypothesis,
+$\det(B') \in \{0,\pm 1\}$, hence $\det(B)\in \{0,\pm 1\}$.
+
+Then it remains to show the case where every column of $B$ has exactly two nonzero entries. Since every column of the incidence matrix $A_G$ has at most
+two nonzero entries, namely one $1$ and one $-1$, each column of $B$ must
+contain both of these entries. Therefore, the sum of all rows of $B$ is zero. Hence the rows of $B$ are linearly dependent, i.e., $\det(B)=0$.
+\end{solution}
+\end{enumerate}
 
 
   
