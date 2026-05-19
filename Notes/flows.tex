@@ -863,22 +863,23 @@ method to compute minimum length walks.
 \end{theorem}
 
 \begin{proof}
-   $(\Leftarrow)$ Suppose there exists $t \in V$ such that 
+    Suppose there exists $t \in V$ such that 
    $f_n(t) < f_{n-1}(t) < \infty$. This implies that the shortest 
    $s-t$-walk traversing at most $n$ arcs (call it $W$) traverses 
    exactly $n$ arcs and thus contains a cycle (call it $C$). Consider 
    the $s-t$-walk $W'$ obtained by eliminating $C$ from $W$. 
    $W'$ traverses at most $n-1$ arcs and thus we have $c(W') > c(W)$.
    Since $c(W) = c(W') + c(C)$, we have that $c(C) < 0$.
-   
-   $(\Rightarrow)$ Let $C = v_0,v_1,\cdots,v_k,v_0$ be a cycle 
+
+   Suppose that one has, for all $v ∈ V$ $f_n(v) = f_{n-1}(v)$ and
+   let $C = v_0,v_1,\cdots,v_k,v_0$ be a cycle 
    reachable from $s$. Notice that 
    $f_{n-1}(v_i)<\infty$ $\forall 0 \leq i \leq k$. 
    We can show that $C$ is a non-negative cycle by these simple 
    calculations (notice that the node indices $i$ and $i+1$ are 
    considered modulo $k$ in the following sums).
    \begin{displaymath}
-      0 = \sum_{i = 0}^k f_n(v_{i+1}) - f_n(v_i) \leq
+      0 = \sum_{i = 0}^k f_n(v_{i+1}) - f_{n-1}(v_i) \leq
       \sum_{i = 0}^k c(v_i,v_{i+1}) = c(C)
    \end{displaymath}
 \end{proof}
