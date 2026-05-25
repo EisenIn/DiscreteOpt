@@ -125,159 +125,153 @@
 
 \begin{enumerate}[1)]
 
-%\item A \emph{simplex}  is a polytope of the form
-  %\begin{displaymath}
-    %Σ = \conv\{v_0,\dots,v_n\}, 
-    %\end{displaymath}
-   % where $v_0,\dots,v_n ∈ ℝ^n$ are affinely independent, i.e. $v_1-v_0, \dots,v_n - v_0$ are linearly independent.
+\item \label{arbitrage} Let \(C\) be a set of currencies and let \(r_{ij}\) denote the exchange
+rate from currency \(i\) to currency \(j\). We say that there is an
+\emph{arbitrage opportunity} if there exists a sequence 
+\[
+i_0,i_1,\ldots,i_k=i_0 ∈ C
+\]
+such that
+\[
+\prod_{\ell=0}^{k-1} r_{i_\ell i_{\ell+1}}>1.
+\]
 
-    
-\item Let $A ∈ ℤ^{m ×n}$ be a matrix of rank $n$ and let $b ∈ ℤ^m$. Show the following: If $P = \{ x ∈ ℝ^n ： Ax ≤ b\}$ is full-dimensional, then there exist $n+1$ vertices of $P$ that are \textit{affinely} independent. 
+ Explain how Bellman--Ford can be used
+ to detect such an opportunity.
 
 \begin{solution}
-Note that P is a polytope and thus the convex hull of its vertices. We will consecutively choose
-vertices of P while ensuring that each newly selected vertex is aﬃnely independent to the previous
-ones. Initially, we can choose the first vertex arbitrarily, as every single point is aﬃnely independent.
-Now, assume that we have already chosen vertices $v_1,...,v_k$. Out of the remaining vertices we pick
-as $v_{k+1}$ an arbitrary vertex of $P$ such that $v_1,...,v_k,v_{k+1}$ is aﬃnely independent. We continue this
-process until $k$ is such that all the remaining vertices are aﬃnely dependent with $v_1,...,v_k$. This
-means that all the vertices and thus their convex hull P are contained in the $k−1$-dimensional aﬃne
-subspace defined by $v_1,...,v_k$. Since P is full-dimensional, this can only happen for $k= n+ 1$. At
-that point we are done.
+First construct a directed graph \(G\) whose vertices are the currencies in \(C\) and whose arcs are between any pair of currencies \(i,j\) (assuming \(r_{ij}>0\)). 
+Assign each arc \(ij\) its weight \(c_{ij}=-\log(r_{ij})\). 
+Then, there is an arbitrage opportunity if and only if there is a cycle in \(G\) whose total weight is negative,
+since
+\[
+\left(\prod_{\ell=0}^{k-1} r_{i_\ell i_{\ell+1}}\right) > 1 \quad \Leftrightarrow \quad -\log\left(\prod_{\ell=0}^{k-1} r_{i_\ell i_{\ell+1}}\right) = \sum_{\ell=0}^{k-1} -\log(r_{i_\ell i_{\ell+1}}) = \sum_{\ell=0}^{k-1} c_{i_\ell i_{\ell+1}} < 0.
+\]
+This can be detected by the Bellman-Ford algorithm.
 \end{solution}
 
+\item \label{Floyd} (Floyd-Warshall algorithm) Let $G = (V,A)$ be a weighted directed graph with weights $c: A ⟶ ℝ$.
+Define $D^{(k)}_{ij}$ to be the length of a shortest path from \(i\) to \(j\) whose \emph{internal}
+vertices are only allowed to belong to $\{1,\dots,k\}$.
+For \(k=0\), no internal vertices are allowed. Therefore
+\[
+D^{(0)}_{ij}
+=
+\begin{cases}
+0, & i=j,\\
+c_{ij}, & ij\in E,\\
++\infty, & \text{otherwise.}
+\end{cases}
+\]
 
-
-\item Given vectors $c∈\setR^n$ and $a∈\setR^n$, and a symmetric positive definite matrix $A∈\setR^{n×n}$, provide a formula for the ellipsoid containing the half-ball $H= \{x∈\setR^n : ∥x∥_2≤1, c^Tx≥0\}$.
-  
-  
- \begin{solution}
-For convenience, we use a diﬀerent representation of the ellipsoid than before. Here, we define it as
-$$E(A,a) = \{x∈\setR^n :(x−a)^T A^{-1}(x−a) ≤1\}$$
-where $A∈\setR^{n×n}$ is a positive definite (PD) matrix, and $a∈\setR^n$ is the center. We remark that for every PD matrix
-$A$ there exists a unique PD matrix, denote it with $A^{1/2}$, such that $A= A^{1/2}A^{1/2}$. Thus,
-$E(A,a) = \{x∈\setR^n :(x−a)^T {(A^{1/2})}^{−1}
-{(A^{1/2})}^{−1}(x−a) ≤1\}$.
-
-Denote with $e_1 ∈\setR^n$ the unit vector with the first coordinate equal to $1$, and with $I_n$ the $n×n$
-identity matrix. When rewriting the ellipsoid, we
-obtain that the half-ball $\{x∈\setR^n :∥x∥≤1, e^T1 x≥0\}$ is contained in the ellipsoid
-$E(A(e_1),a(e_1))$, where $$A(e1) = \frac{n^2}{n^2 -1}\left(I_n - \frac{2}{n+1}e_1e_1^T\right) \quad \text{ and } a(e_1) = \frac{1}{n+1}e_1.$$
-
-Without loss of generality we could assume that $∥c∥= 1$. Similarly to the proof of the Half-ball
-lemma in the lecture notes, one can verify that $e_1$ can be replaced with $c$ in the above formulas.
-I.e., the ellipsoid $E(A(c),a(c))$ contains the half-ball H given in the problem statement.
-
-
-\item Let $n ∈ ℕ$ and consider the space $ℝ^{n^2}$. An element $x ∈ℝ^{n^2}$  be interpreted as a matrix $A ∈ ℝ^{n ×n}$  in the obvious way as
-  \begin{displaymath}
-    A =
-    \begin{pmatrix}
-      x_1 & x_2 & \cdots & x_n \\
-      x_{n+1} & x_{n+2} & \cdots & x_{2n} \\
-      & &  \vdots \\
-      x_{n^2-n+1} & x_{n^2-n+2} & \cdots &x_{n^2} \\
-    \end{pmatrix}
-  \end{displaymath}
-
-  Let  $X ⊆ ℝ^{n^2}$ be the subset of $ℝ^{n^2}$ consisting of symmetric and positive semidefinite matrices. 
-  \begin{enumerate}[i)]
-  \item Show that $X$ is convex.
-  \item Let $A ∈ ℝ^{n ×n}$, $A ∉ X$. Describe a hyperplane $a^Tx = β$ that separates $A$ from $X$. 
-  \end{enumerate}
-
-
+\begin{enumerate}[i)] 
+\item
+ Suppose that $G$ does not contain a negative weight cycle. 
+  Show the recurrence
+  \[
+    D^{(k)}_{ij}
+    =
+    \min\left\{
+      D^{(k-1)}_{ij},
+      D^{(k-1)}_{ik}+D^{(k-1)}_{kj}
+    \right\}.
+  \]
+\item Prove that the matrix $D^{(n)}$ can be computed in time $O(n^3)$ steps.
+\item  Show that $G$ contains a negative cycle if and only if there exists an $i ∈V$ such that $D^{(n)}_{ii} <0$. 
+\end{enumerate}
 
 \begin{solution}
 \begin{enumerate}[i)]
-\item Let $x, y \in X$ and let their matrix representations be $A_x, A_y$. Then for any $\lambda \in [0,1]$, take $z = \lambda x + (1-\lambda) y$. Then $A_z = \lambda A_x + (1-\lambda)A_y$ and for any indeces $i,j$, $$A_z[ij] = \lambda A_x[ij] + (1-\lambda) A_y[ij] =\lambda A_x[ji] + (1-\lambda) A_y[ji] = A_z[ji]$$ 
-where the second equality follows from symmetry of $A_x$ and $A_y$. Hence, $A_z$ is symmetric. Moreover, consider any vector $v \in \setR^n$, then $$v^TA_zv = v^T(\lambda A_x + (1-\lambda) A_y)v = \lambda v^TA_x v + (1-\lambda) v^A_yv \geq 0 + 0 = 0$$
-where the inequality follows from $A_x, A_y$ being PSD. Then $A_z$ is also PSD and therefore $z$ is in $X$. Thus $X$ is convex.
+\item
+For any \(i,j\in V\), consider a shortest path \(P\) from \(i\) to \(j\) whose internal vertices belong only to
+\(\{1,\dots,k\}\). We first show that $D^{(k)}_{ij}
+    \geq \min\left\{
+      D^{(k-1)}_{ij},
+      D^{(k-1)}_{ik}+D^{(k-1)}_{kj}
+    \right\}$. There are two cases.
+\begin{itemize}
+  \item If \(k\) is not an internal vertex of \(P\), then all internal vertices of \(P\) belong to
+  \(\{1,\dots,k-1\}\), so the length of \(P\) is at least \(D^{(k-1)}_{ij}\).
+  \item If \(k\) is an internal vertex of \(P\), since \(G\) has no negative weight cycle, we may assume that
+  \(P\) is simple. This is because removing a cycle cannot increase the length of the path. Hence \(k\) appears exactly once on
+  \(P\). We can then split \(P\) at \(k\) into an \(i\)-\(k\) path and a \(k\)-\(j\) path. The internal vertices of both
+  subpaths belong only to \(\{1,\dots,k-1\}\). Therefore the length of \(P\) is at least $D^{(k-1)}_{ik}+D^{(k-1)}_{kj}.$
+\end{itemize}
+Next we show that $D^{(k)}_{ij}
+    \leq \min\left\{
+      D^{(k-1)}_{ij},
+      D^{(k-1)}_{ik}+D^{(k-1)}_{kj}
+    \right\}$.
+Any path realizing \(D^{(k-1)}_{ij}\) is obviously a feasible path between \(i\) and \(j\) using only vertices from \(\{1,\dots,k\}\), and concatenating a path realizing
+\(D^{(k-1)}_{ik}\) with a path realizing \(D^{(k-1)}_{kj}\) gives an \(i\)-\(j\) walk whose internal vertices are allowed to belong to \(\{1,\dots,k\}\). Since there are no negative cycles, this \(i\)-\(j\) walk can be turned into a \(i\)-\(j\) path of no
+larger length. 
 
-\item Let $a$ be the vector representation of $A$. Since $A \notin X$, $A$ is either not symmetric or not PSD. In the case where $A$ is not symmetric, there exists indeces $i, j$ such that $A[ij] > A[ji]$ without loss of generality. Notice that in $a$, $A[ij]$ corresponds to the component $a_{(i-1)\cdot n + j}$. Then letting the vector $\alpha$ be defined by $$\alpha_k = \begin{cases} 0 & \text{ if }k \notin \{(i-1)\cdot n + j, (j-1)\cdot n + i\} \\ 1 & \text{ if } k = (i-1)\cdot n + j \\ -1 & \text{ if } k = (j-1)\cdot n + i \end{cases}.$$
+\item One can compute $D^{(n)}$ recursively. First we initialize the matrix \(D^{(0)}\) which takes \(O(n^2)\) time.
+% This takes \(O(n^2)\) time if the matrix representation is used.
+Then for the recursive step, assume that we have computed \(D^{(k-1)}\) for \(k\in\{1,\dots,n\}\). We can compute \(D^{(k)}\) from \(D^{(k-1)}\) using the recurrence in part i). This takes \(O(n^2)\) time, since there are \(n^2\) entries to update and each update takes \(O(1)\) time.
+Let $T(k)$ be the time to compute \(D^{(k)}\). We have the recurrence
+\[
+T(k) = T(k-1) + O(n^2),
+\]
+which solves to \(T(n)=O(n^3)\).
 
-Then $\alpha^Ta > 0$ by the assumption $A[ij]>A[ji]$, but $\alpha^Tx = 0$ for all $x \in X$ as these vectors are symmetric. Thus $\alpha^Tx = 0$ is a separating hyperplane. \\
-
-
-\medskip
-Now consider the case where $A$ is not PSD. Then there exists some vector $v \in \setR^n$ such that $v^TAv < 0$. Note that $v^TAv = \displaystyle\sum_{i = 1}^n \displaystyle\sum_{j=1}^n v_i A[ij]v_j$. Recall that $A[ij] = a_{(i-1)\cdot n + j}$. Then let $\alpha$ be the vector where $\alpha_{(i-1)\cdot n + j} = v_i v_j$ for each $i \in [n], j \in [n]$. Notice then that $\alpha \in \setR^{n^2}$ and $\alpha^T a = v^TAv < 0$. Moreover, for any $x \in X, \alpha^Tx = v^T A_x v \geq 0$ by positive semidefiniteness. Then $\alpha^Tx = 0$ is a separating hyperplane for $A$.  
+\item
+First if \(D^{(n)}_{ii}<0\) for some vertex \(i\), then the length of a shortest path from \(i\) to itself is negative, which gives us a negative cycle. 
+Conversely, suppose that \(G\) contains a negative cycle \(C\). Choose a vertex \(i\) on \(C\). If we start at \(i\)
+and go once around \(C\), we obtain a closed walk from \(i\) to \(i\) of negative total weight.
+Therefore
+\[
+D^{(n)}_{ii}\leq c(C)<0.
+\]
+Hence \(D^{(n)}_{ii}<0\).
 \end{enumerate}
 \end{solution}
 
- 
- \end{solution}
+\item \label{hamilton} (Hamilton path problem) The following problem is NP-complete. So far, no polynomial-time algorithm has been found to solve it:
 
+  Given a directed graph $G = (V,A)$ and two vertices $s≠t ∈ V$, decide whether there exists a path from $s$ to $t$ of length $|V|-1$. This is a path that spans all the vertices of $G$.
 
-
-\item Give an example for a linear program with no maximum (in other
-words, unbounded linear program) such that the corresponding integer
-program is not unbounded.
-\begin{solution}
-An example is to take the feasible region as a line through the origin that does not
-contain any integer point except for the origin (for example the line
-spanned by $(1,√2)$). Then let the objective maximize the x-coordinate of a point on
-this line. As the line is unbounded, so is the LP but the integer program only contains the point $(0,0)$ which has bounded objective value.
-\end{solution}
-
-
-\item Let $E ⊂\setR^3$ be the ellipsoid $E= \{(x,y,z) :x^2 + \frac{y^2}{4} + \frac{z^2}
-{9} ≤1\}$.
-Let $H^+$ be the half-space $H^+ = \{(x,y,z) : x+ y+ z ≥0\}$.
-Find an ellipsoid $E'$ such that $E'⊃E∩H^+$ and $Vol(E') ≤Vol(E)e^{−1/(2(3+1))}$.
+  \begin{enumerate}[i)] 
+  \item  Show that this problem can be solved in polynomial time, if the graph does not have any directed cycles.
+  \item Conclude that the shortest path problem (under presence of negative  cycles) should be difficult. 
+  \end{enumerate}
 
 \begin{solution}
-The linear transformation $T(x,y,z) = (x,y/2, z/3)$ takes the ellipsoid $E$ to the unit ball $B$. Notice that $T$ takes $H^+$ to the half-space
-$G^+ = \{x+2y+3z ≥0\}$. Now we find a linear transformation $R$ that will
-rotate the space about the origin such that $B$ will remain fixed but $G^+$
-will go to the half space $\{x ≥0\}$. One way to do this is to take the vector $u=1/√14 (1,2,3)$ and complete it to an
-orthonormal basis: take also the vector $v=1/√5 (−2,1,0)$ and the vector
-$w$ perpendicular to both $u$ and $v$ (you need to find it). Then consider
-the linear transformation $R$ that takes $u,v,w$ to $(1,0,0),(0,1,0)$, and
-$(0,0,1)$. This is the inverse of the matrix whose columns are $u,v,w$.
-The linear transformation $R(T(·))$ takes $E∩H^+$ to the half ball $B∩\{x≥
-0\}$. By the half-ball theorem, then the ellipsoid
-$F= \{\frac{16}{9}(x−\frac{1}{4})^2 + \frac{8}{9} y^2 + \frac{8}{9} z^2 ≤1\}$ contains the half ball $B∩\{x≥0\}$
-and we also have $Vol(F) ≤e^{−1/(2(3+1))} Vol(B)$.
-If we now apply $T^{−1}(R^{−1}(·))$ on $F$ we get the desired ellipsoid $E'$. One
-can get from here the algebraic description of $E'$. Technichally, we need
-to replace $x,y$, and $z$ in the algebraic discription of $F$ by $R(T(x,y,z))$.
+\begin{enumerate}[i)]
+\item 
+For a directed acyclic graph \(G\), define the topological ordering of $V$ to be a linear ordering of the vertices such that for every arc \(uv\) in \(G\), \(u\) appears before \(v\) in the ordering.
+
+\textbf{Algorithm}.
+
+We first compute a topological ordering of the vertices of \(G\): perform a depth-first search on \(G\) and record the vertices in the order they are finished. We then check whether \(s\) appears before \(t\) in the topological ordering. If not, then there is no path from \(s\) to \(t\). If yes, we check whether there is an arc from each vertex to the next vertex in the topological ordering. If not, then there is no path from \(s\) to \(t\). If yes, then there is a path from \(s\) to \(t\) of length \(|V|-1\).
+
+\textbf{Correctness}. 
+
+If there is a path from \(s\) to \(t\) of length \(|V|-1\), then it must be the case that \(s\) appears before \(t\) in the topological ordering, and there must be an arc from each vertex to the next vertex in the topological ordering. Conversely, if \(s\) appears before \(t\) in the topological ordering, and there is an arc from each vertex to the next vertex in the topological ordering, then there is a path from \(s\) to \(t\) of length \(|V|-1\).
+
+\textbf{Running time}. 
+
+Computing a topological ordering takes \(O(|V|+|A|)\) time, and checking the conditions takes \(O(|V|)\) time. Therefore, the overall running time is \(O(|V|+|A|)\).  
+
+\item Suppose not. Then we can solve the Hamilton path problem in polynomial time by solving the shortest path problem with negative cycles. Given an instance of the Hamilton path problem, we can assign a weight of \(-1\) to each arc and then check whether there is a path from \(s\) to \(t\) of length \(|V|-1\) by checking whether the shortest path from \(s\) to \(t\) has length \(-(|V|-1)\). This would contradict the NP-completeness of the Hamilton path problem. 
+\end{enumerate}
 \end{solution}
-  
-  
-  
-  \item (Bonus Question) Suppose we are given an oracle that tells us whether a
-   polyhedron defined by $Ax ≤b$ is full-dimensional. Based on this oracle,
-   this exercise develops a method to find an inequality $a^Tx ≤ β$ of
-   $Ax ≤b$ that is satisfied by every feasible solution with
-   \emph{equality} in the case where $P = \{ x ∈ ℝ^n ： Ax≤b\}$ is not
-   full-dimensional.
+
+\item Consider the following problem. We are given $B ∈\mathbb{N}$, and a set of integer points $S= \{p ∈\setZ^n :
+0 ≤p_i ≤B,\; ∀ i = 1,...,n\}$, whose points are all colored blue but one, which is red. We have an
+oracle that, given vectors $l,r ∈\setR^n$, tells us whether the red point in $S$ is contained in the box
+$S∩\{x ∈\setR^n : l_i ≤x_i ≤r_i,\;∀i = 1,...,n\}$ or not. Give an algorithm to find the red point using
+$O(n \log(B))$ many oracle calls.
 
 
-   First we split $Ax ≤ b$ into two systems $A_1x ≤ b_1$ and
-   $A_2 x ≤ b_2$, where $A_1x ≤ b_1$ are the inequalities that are
-   satisfied with equality by every feasible $x^* ∈ ℝ^n$. The system $A_1 x ≤b_1$ is
-   called the \emph{implicit equalities} of $Ax ≤b$.
-   \begin{enumerate}[i)] 
-   \item If $Ax ≤b$ is feasible, then there exists a feasible solution $x^*$ such that $A_2x^* < b_2$ holds.
-     \item Argue that the implicit equalities of $A_1x≤ b_1$ are  $A_1x ≤b_1$. 
-   \item Suppose that $Ax ≤ b$ is not full-dimensional and that
-     $A'x ≤ b'$ is full-dimensional, where $A'x ≤ b'$ stems from
-     $Ax ≤ b$ by deleting one inequality $a^Tx ≤ β$. Show that
-     $a^Tx ≤ β$ is an implicit equality of $Ax ≤b$.
-   \item If $a^Tx ≤ β$ is an implicit equality of $Ax≤ b$, then describe a feasibility problem in $ℝ^{n-1}$ that is equivalent to the one of $Ax ≤b$. 
-   \end{enumerate}
-   
-   
- %   \begin{solution}
-  %  \begin{enumerate}[i)]
- %  \item This is by definition of $A_2$ as if this were not the case for some row, then this row would be an \textit{implicit equality} and would be in $A_1$. 
-
-%   \end{enumerate}
-  % \end{solution}
-
-
-
-
+\begin{solution}
+We split the problem in $n$ subproblems: for $i∈\{1,...,n\}$, we want to obtain the i-th component
+of the red point. This is a simple binary search problem, and we illustrate how to solve it for $i= 1$:
+we first call the oracle with $l = (0,...,0),r = (B/2,B,...,B)$. Then we call the oracle with $l=
+(0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/2,B,...,B)$
+(if the answer is negative), and so on. In this way, we are guaranteed to find each component of the
+red point with $O(\log(B))$ oracle calls, for a total of $O(n\log(B))$ many oracle calls.
+\end{solution}
 
 \end{enumerate}
 
