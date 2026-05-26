@@ -159,7 +159,7 @@ D^{(0)}_{ij}
 =
 \begin{cases}
 0, & i=j,\\
-c_{ij}, & ij\in E,\\
+c_{ij}, & ij\in A,\\
 +\infty, & \text{otherwise.}
 \end{cases}
 \]
@@ -287,7 +287,7 @@ $O(n \log(B))$ many oracle calls.
 We split the problem in $n$ subproblems: for $i∈\{1,...,n\}$, we want to obtain the i-th component
 of the red point. This is a simple binary search problem, and we illustrate how to solve it for $i= 1$:
 we first call the oracle with $l = (0,...,0),r = (B/2,B,...,B)$. Then we call the oracle with $l=
-(0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/2,B,...,B)$
+(0,...,0),r = (B/4,B,...,B)$ (if the answer is positive) or $l = (B/2,...,0),r = (3B/4,B,...,B)$
 (if the answer is negative), and so on. In this way, we are guaranteed to find each component of the
 red point with $O(\log(B))$ oracle calls, for a total of $O(n\log(B))$ many oracle calls.
 \end{solution}
