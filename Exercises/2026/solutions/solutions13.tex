@@ -239,15 +239,34 @@ Hence \(D^{(n)}_{ii}<0\).
 \begin{solution}
 \begin{enumerate}[i)]
 \item 
-For a directed acyclic graph \(G\), define the topological ordering of $V$ to be a linear ordering of the vertices such that for every arc \(uv\) in \(G\), \(u\) appears before \(v\) in the ordering.
+For a directed acyclic graph \(G\), define the \emph{topological ordering} of $V$ to be a linear ordering of the vertices such that for every arc \(uv\) in \(G\), \(u\) appears before \(v\) in the ordering.
 
 \textbf{Algorithm}.
-
-We first compute a topological ordering of the vertices of \(G\): perform a depth-first search on \(G\) and record the vertices in the order they are finished. We then check whether \(s\) appears before \(t\) in the topological ordering. If not, then there is no path from \(s\) to \(t\). If yes, we check whether there is an arc from each vertex to the next vertex in the topological ordering. If not, then there is no path from \(s\) to \(t\). If yes, then there is a path from \(s\) to \(t\) of length \(|V|-1\).
+\begin{enumerate}[1.]
+  \item Compute a topological ordering of the vertices of \(G\). This can be done as follows (known as Kahn's algorithm):
+  \begin{itemize}
+    \item Initialize a queue \(Q\) with all vertices of in-degree zero.
+    \item Initialize an empty list \(L\) to store the topological ordering.
+    \item While \(Q\) is not empty:
+    \begin{itemize}
+      \item Remove a vertex \(u\) from \(Q\) and append it to \(L\).
+      \item For each vertex \(v\) such that there is an arc \(uv\) in \(G\):
+      \begin{itemize}
+        \item Remove the arc \(uv\) from \(G\).
+        \item If \(v\) has no other incoming arcs, add \(v\) to \(Q\).
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  \item Check whether \(s\) appears before \(t\) in the topological ordering. If not, then there is no Hamilton path from \(s\) to \(t\).
+  \item If \(s\) appears before \(t\) in the topological ordering, then check whether there is an arc from each vertex to the next vertex in the topological ordering. If not, then there is no Hamilton path from \(s\) to \(t\). If yes, then there is a path from \(s\) to \(t\) of length \(|V|-1\).
+\end{enumerate}
 
 \textbf{Correctness}. 
 
-If there is a path from \(s\) to \(t\) of length \(|V|-1\), then it must be the case that \(s\) appears before \(t\) in the topological ordering, and there must be an arc from each vertex to the next vertex in the topological ordering. Conversely, if \(s\) appears before \(t\) in the topological ordering, and there is an arc from each vertex to the next vertex in the topological ordering, then there is a path from \(s\) to \(t\) of length \(|V|-1\).
+We claim that $G$ has a Hamilton path from \(s\) to \(t\) if and only if \(s\) appears before \(t\) in the topological ordering and there is an arc from each vertex to the next vertex in the topological ordering.
+
+Let's prove the "if" direction first. Assume that \(s\) appears before \(t\) in the topological ordering and there is an arc from each vertex to the next vertex in the topological ordering. Then we can construct a path from \(s\) to \(t\) by following the arcs in the order of the topological ordering. Since there are \(|V|\) vertices and we are following a path that visits each vertex exactly once, this path has length \(|V|-1\).
+Next we prove the "only if" direction. Assume that there is a Hamilton path from \(s\) to \(t\). Since \(G\) is acyclic, the vertices on this path must appear in the order they are visited. Therefore, \(s\) must appear before \(t\) in any topological ordering of \(G\). Moreover, since the path visits each vertex exactly once, there must be an arc from each vertex to the next vertex in the topological ordering.
 
 \textbf{Running time}. 
 
